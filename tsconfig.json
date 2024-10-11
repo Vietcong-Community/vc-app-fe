@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "esnext.intl",
+      "es2017.intl",
+      "es2018.intl"
+    ],
+    "target": "ES2022",
+    "module": "ES2022",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "types": ["vite/client"],
+
+    /* Bundler mode */
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"]
+}

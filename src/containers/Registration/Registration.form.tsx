@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 
 export const RegistrationForm: React.FC = () => {
   const onSubmitSuccess = (values: object) => {
@@ -12,14 +12,24 @@ export const RegistrationForm: React.FC = () => {
 
   return (
     <>
+    <h3>Registrace</h3>
+    <Row justify="center"
+    align="middle"
+    style={{
+      minHeight: '80vh', // Nastavení výšky, posun výš (můžeš upravit podle potřeby)
+      marginTop: '-40px',  // Upravení vertikálního zarovnání
+      marginLeft: '-120px'
+      }}>
+      <Col>
       <Form
         name="basic"
         labelCol={{
-          span: 8,
+          span: 11,
         }}
         wrapperCol={{
           span: 16,
         }}
+        
         style={{
           maxWidth: 600,
         }}
@@ -136,6 +146,7 @@ export const RegistrationForm: React.FC = () => {
             offset: 8,
             span: 16,
           }}
+          style={{ display: 'flex', whiteSpace: 'nowrap' }}
           rules={[
             {
               validator: (_, value) =>
@@ -147,18 +158,20 @@ export const RegistrationForm: React.FC = () => {
             Souhlasím s <a href="www.google.com/obchodni_podminky">podmínkami používání</a>
           </Checkbox>
         </Form.Item>
-
+          
         <Form.Item
           wrapperCol={{
             offset: 8,
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button htmlType="submit">
             Registrovat
           </Button>
         </Form.Item>
       </Form>
+      </Col>
+    </Row>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Row, Col } from 'antd';
 
 export const LoginForm: React.FC = () => {
   const onSubmitSuccess = (values: object) => {
@@ -12,10 +12,19 @@ export const LoginForm: React.FC = () => {
 
   return (
     <>
+    <h3>Přihlášení</h3>
+    <Row justify="center"
+    align="middle"
+    style={{
+      minHeight: '80vh', // Nastavení výšky, posun výš (můžeš upravit podle potřeby)
+      marginTop: '-191px',  // Upravení vertikálního zarovnání
+      marginLeft: '-120px'
+    }}>
+    <Col>
       <Form
         name="basic"
         labelCol={{
-          span: 8,
+          span: 11,
         }}
         wrapperCol={{
           span: 16,
@@ -73,11 +82,13 @@ export const LoginForm: React.FC = () => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button htmlType="submit">
+            Přihlásit
           </Button>
         </Form.Item>
       </Form>
-    </>
+      </Col>
+      </Row>
+      </>
   );
 };

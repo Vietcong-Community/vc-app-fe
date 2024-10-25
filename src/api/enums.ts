@@ -1,0 +1,3 @@
+export enum BeErrors {
+  INVALID_MATCH_STATUS = 'INVALID_MATCH_STATUS',
+}

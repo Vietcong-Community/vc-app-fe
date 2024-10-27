@@ -1,12 +1,10 @@
-import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import pluginChecker from 'vite-plugin-checker';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), basicSsl(), viteTsconfigPaths(), pluginChecker({ typescript: true })],
+  plugins: [react(), viteTsconfigPaths(), pluginChecker({ typescript: true })],
   server: {
     open: true,
     // this sets a default port to 3000

@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { LoginForm } from './Login.form';
+
 export const LoginCont: React.FC = () => {
   return (
     <>
-      LOGIN PAGE
-      <br />
-      Formularik na prihlasenei
+      <LoginForm />
     </>
   );
 };

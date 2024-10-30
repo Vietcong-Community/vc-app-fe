@@ -15,7 +15,6 @@ export const HomeCont: React.FC = () => {
 
   return (
     <>
-<<<<<<< HEAD
       HOME PAGE VJETKONGA
       <br />
       sem dat nejake super cool veci
@@ -53,7 +52,6 @@ export const HomeCont: React.FC = () => {
         </Button>
         <Button onClick={() => showNotification('Chybka', 'Chybova notifikace', NotificationType.ERROR)}>Error</Button>
       </Space>
-=======
       <div className="home-container">
         <header className="hero-section">
           <h1 className="hero-title">Vítejte v MCRVC Lize</h1>
@@ -77,7 +75,6 @@ export const HomeCont: React.FC = () => {
         </section>
       </div>
       <input type="checkbox" defaultChecked={false} />
->>>>>>> 34965fd (bascciprvnishit)
     </>
   );
 };

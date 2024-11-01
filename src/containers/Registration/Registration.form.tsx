@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
+import registerPic from '../../assets/registerPic.png';
 
 export const RegistrationForm: React.FC = () => {
   const onSubmitSuccess = (values: object) => {
@@ -16,18 +17,27 @@ export const RegistrationForm: React.FC = () => {
     <Row justify="center"
     align="middle"
     style={{
-      minHeight: '80vh', // Nastavení výšky, posun výš (můžeš upravit podle potřeby)
-      marginTop: '-40px',  // Upravení vertikálního zarovnání
-      marginLeft: '-120px'
+      minHeight: '100vh', // Nastavení výšky, posun výš (můžeš upravit podle potřeby)
+      marginTop: '-10px',  // Upravení vertikálního zarovnání
+      marginLeft: '100px'
       }}>
+
+      <Col xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
+        <img
+          src={registerPic}
+          alt="Voják na loginu"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+      </Col>
       <Col>
       <Form
+        layout='vertical'
         name="basic"
         labelCol={{
           span: 11,
         }}
         wrapperCol={{
-          span: 16,
+          span: 19,
         }}
         
         style={{

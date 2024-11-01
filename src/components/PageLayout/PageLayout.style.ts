@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { IThemeProps } from '../../theme/theme';
+import { IThemeProps } from '../../../theme/theme';
 
 export const PageContainer = styled.div`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.background};

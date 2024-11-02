@@ -5,12 +5,15 @@ import { FormattedMessage } from 'react-intl';
 
 import { useMaps } from '../../api/hooks/enums/api';
 import { useNotifications } from '../../hooks/NotificationsHook';
+import { useRouter } from '../../hooks/RouterHook';
 import { NotificationType } from '../../providers/NotificationsProvider/enums';
+import { Routes } from '../../routes/enums';
 
 import { messages } from './messages';
 
 export const HomeCont: React.FC = () => {
-  const { data } = useMaps();
+  const { navigate } = useRouter();
+  const maps = useMaps();
   const { showNotification } = useNotifications();
 
   return (
@@ -22,7 +25,7 @@ export const HomeCont: React.FC = () => {
         <FormattedMessage {...messages.title} />
       </Typography.Title>
       <Select
-        options={data?.map((item) => ({ value: item.id, label: <span>{item.name}</span> })) ?? []}
+        options={maps.data?.map((item) => ({ value: item.id, label: <span>{item.name}</span> })) ?? []}
         style={{ margin: '0 auto', width: '10rem' }}
       />
       <Space>
@@ -52,6 +55,9 @@ export const HomeCont: React.FC = () => {
         </Button>
         <Button onClick={() => showNotification('Chybka', 'Chybova notifikace', NotificationType.ERROR)}>Error</Button>
       </Space>
+      <br />
+      <Button onClick={() => navigate(Routes.MIX_LEAGUE_OVERVIEW)}>Mix sezony ou je</Button>
+      <br />
       <div className="home-container">
         <header className="hero-section">
           <h1 className="hero-title">Vítejte v MCRVC Lize</h1>

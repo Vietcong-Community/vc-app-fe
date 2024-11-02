@@ -7,22 +7,39 @@ interface IProps {
   disabled?: boolean;
   children?: React.ReactNode;
   fullWidth?: boolean;
+  icon?: React.ReactNode;
+  iconPosition?: 'start' | 'end';
   loading?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   style?: CSSProperties;
-  type?: ButtonType;
+  type?: 'submit' | 'button';
+  variant?: ButtonType;
 }
 
 export const Button: React.FC<IProps> = (props) => {
-  const { disabled, children, fullWidth = false, loading = false, onClick, style, type = 'primary' } = props;
+  const {
+    disabled,
+    children,
+    fullWidth = false,
+    icon,
+    iconPosition = 'start',
+    loading = false,
+    onClick,
+    style,
+    type = 'button',
+    variant = 'primary',
+  } = props;
 
   const isDisabled = disabled || loading;
 
   return (
     <AntDButton
       disabled={isDisabled}
+      htmlType={type}
+      icon={icon}
+      iconPosition={iconPosition}
       onClick={onClick}
-      type={type as ButtonType}
+      type={variant as ButtonType}
       style={{ width: fullWidth ? '100%' : 'fit-content', ...style }}
     >
       {loading && <Spin size="small" />}

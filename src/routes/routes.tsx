@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router-dom';
 import { ProfileCont } from 'src/containers/Profile/Profile.cont';
 
-import { PageLayout } from '../components/Layouts/PageLayout/PageLayout';
+import { PageLayout } from '../components/PageLayout/PageLayout';
 import { HomeCont } from '../containers/Home/Home.cont';
 import { LoginCont } from '../containers/Login/Login.cont';
 import { MixedMatchDetail } from '../containers/MixedLeague/MixedMatchDetail/MixedMatchDetail.cont';

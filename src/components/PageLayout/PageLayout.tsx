@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { useRouter } from '../../hooks/RouterHook';
-import { Footer } from '../../Footer/Footer';
-import { Header } from '../../Header/Header';
+import { Footer } from '../Footer/Footer';
+import { Header } from '../Header/Header';
 
 import * as S from './PageLayout.style';
 

@@ -3,10 +3,10 @@ import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 export const LoginForm: React.FC = () => {
-  const onSubmitSuccess = (values: any) => {
+  const onSubmitSuccess = (values: object) => {
     console.log('Úspěšné přihlášení:', values);
   };
-  const onSubmitFailed = (errorInfo: any) => {
+  const onSubmitFailed = (errorInfo: object) => {
     console.log('Chyba při přihlášení:', errorInfo);
   };
 

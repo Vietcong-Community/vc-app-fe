@@ -3,10 +3,10 @@ import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 export const RegistrationForm: React.FC = () => {
-  const onSubmitSuccess = (values: any) => {
+  const onSubmitSuccess = (values: object) => {
     console.log('Úspěšná registrace:', values);
   };
-  const onSubmitFailed = (errorInfo: any) => {
+  const onSubmitFailed = (errorInfo: object) => {
     console.log('Chyba při registraci:', errorInfo);
   };
 
@@ -144,7 +144,7 @@ export const RegistrationForm: React.FC = () => {
           ]}
         >
           <Checkbox>
-            Souhlasím s <a href="">podmínkami používání</a>
+            Souhlasím s <a href="www.google.com/obchodni_podminky">podmínkami používání</a>
           </Checkbox>
         </Form.Item>
 

@@ -15,6 +15,7 @@ export const Container = styled.header`
   position: sticky;
   top: 0;
   width: 100%;
+  z-index: 1;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`

@@ -1,4 +1,5 @@
 import { RouteObject } from 'react-router-dom';
+import { ProfileCont } from 'src/containers/Profile/Profile.cont';
 
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { HomeCont } from '../containers/Home/Home.cont';
@@ -18,6 +19,7 @@ export const routesObject: RouteObject[] = [
       { element: <HomeCont />, path: Routes.HOME },
       { element: <LoginCont />, path: Routes.LOGIN },
       { element: <RegistrationCont />, path: Routes.REGISTRATION },
+      { element: <ProfileCont />, path: Routes.USER },
       { element: <OverviewCont />, path: Routes.MIX_LEAGUE_OVERVIEW },
       { element: <SeasonDetailCont />, path: Routes.SEASON_DETAIL },
       { element: <CreateSeasonCont />, path: Routes.SEASON_CREATE },

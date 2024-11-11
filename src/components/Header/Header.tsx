@@ -15,19 +15,32 @@ import * as S from './Header.style';
 export const Header: React.FC = () => {
   const { navigate } = useRouter();
 
-  const userMenu = (
-    <Menu>
-      <Menu.Item key="profile" onClick={() => navigate(Routes.HOME)}>
-        <FormattedMessage id={'Profil'} defaultMessage="Profil" />
-      </Menu.Item>
-      <Menu.Item key="change-password" onClick={() => navigate(Routes.HOME)}>
-        <FormattedMessage id={'Změna hesla'} defaultMessage="Změna hesla" />
-      </Menu.Item>
-      <Menu.Item key="logout" onClick={() => navigate(Routes.HOME)}>
-        <FormattedMessage id={'Odhlásit se'} defaultMessage="Odhlásit se" />
-      </Menu.Item>
-    </Menu>
-  );
+  const userMenuItems = [
+    {
+      key: 'profile',
+      label: (
+        <span onClick={() => navigate(Routes.USER)}>
+          <FormattedMessage id={messages.goToProfilePage.id} defaultMessage={messages.goToProfilePage.defaultMessage} />
+        </span>
+      ),
+    },
+    {
+      key: 'change-password',
+      label: (
+        <span onClick={() => navigate(Routes.HOME)}>
+          <FormattedMessage id="Změna hesla" defaultMessage="Změna hesla" />
+        </span>
+      ),
+    },
+    {
+      key: 'logout',
+      label: (
+        <span onClick={() => navigate(Routes.HOME)}>
+          <FormattedMessage id="Odhlásit se" defaultMessage="Odhlásit se" />
+        </span>
+      ),
+    },
+  ];
 
   return (
     <S.Container>
@@ -41,7 +54,7 @@ export const Header: React.FC = () => {
           <Menu.Item key="home" onClick={() => navigate(Routes.HOME)}>
             <FormattedMessage id={messages.goToHomePage.id} defaultMessage={messages.goToHomePage.defaultMessage} />
           </Menu.Item>
-          <Menu.Item key="rules" onClick={() => navigate(Routes.LOGIN)}>
+          <Menu.Item key="mixLeague" onClick={() => navigate(Routes.MIX_LEAGUE_OVERVIEW)}>
             <FormattedMessage
               id={messages.goToMixLeaguePage.id}
               defaultMessage={messages.goToMixLeaguePage.defaultMessage}
@@ -62,7 +75,7 @@ export const Header: React.FC = () => {
         </Menu>
       </S.MenuContainer>
       <S.RightSection>
-        <Dropdown overlay={userMenu} trigger={['click']}>
+        <Dropdown menu={{ items: userMenuItems }} trigger={['click']}>
           <span style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <UserOutlined style={{ fontSize: '24px', marginRight: '8px' }} />
             <span style={{ fontSize: '15px', marginTop: '3px', marginRight: '8px' }}>#Basccino</span>

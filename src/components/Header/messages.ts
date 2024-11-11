@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export const messages = defineMessages({
   title: {
     id: 'app.components.Header.title',
-    defaultMessage: 'VIETCONG JEDE',
+    defaultMessage: 'Bascci je frayer',
   },
   goToLogin: {
     id: 'app.components.Header.goToLogin',

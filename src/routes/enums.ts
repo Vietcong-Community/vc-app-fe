@@ -12,4 +12,8 @@ export enum Routes {
   MIXED_MATCH_RESULT = '/zadat-vysledek-mix-zapasu/:id',
   REGISTRATION = '/registrace',
   USER = '/uzivatel',
+  MCRVC = '/mcrvc',
+  HALLOFFAME = '/sin-slavy',
+  CONTACT = '/kontakty',
+  LOGOUT = '/logout',
 }

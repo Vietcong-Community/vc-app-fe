@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Button, Checkbox, Form, Input, Row, Col } from 'antd';
+
 import loginPic from '../../assets/loginPic.png';
 
 export const LoginForm: React.FC = () => {
@@ -16,7 +18,6 @@ export const LoginForm: React.FC = () => {
       <br />
       <br />
       <Row
-      
         justify="center"
         align="middle"
         style={{
@@ -25,15 +26,11 @@ export const LoginForm: React.FC = () => {
         }}
       >
         <Col xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
-          <img
-            src={loginPic}
-            alt="Voják na loginu"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
+          <img src={loginPic} alt="Voják na loginu" style={{ maxWidth: '100%', height: 'auto' }} />
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Form
-          layout='vertical'
+            layout="vertical"
             name="basic"
             labelCol={{
               span: 11,
@@ -51,10 +48,9 @@ export const LoginForm: React.FC = () => {
             onFinishFailed={onSubmitFailed}
             autoComplete="off"
           >
-            <h2 style={{ marginLeft: '-180px', marginTop: '10px', marginBottom: '30px'}}>Přihlášení</h2>
+            <h2 style={{ marginLeft: '-180px', marginTop: '10px', marginBottom: '30px' }}>Přihlášení</h2>
             <br />
             <Form.Item
-              
               label="Uživatelské jméno"
               name="username"
               rules={[
@@ -97,9 +93,7 @@ export const LoginForm: React.FC = () => {
                 span: 16,
               }}
             >
-              <Button htmlType="submit">
-                Přihlásit
-              </Button>
+              <Button htmlType="submit">Přihlásit</Button>
             </Form.Item>
           </Form>
         </Col>

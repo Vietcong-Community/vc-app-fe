@@ -3,6 +3,7 @@
   "app.api.tooManyRequests": "",
   "app.api.unexpectedError": "",
   "app.components.Footer.title": "",
+  "app.components.Header.goToContactPage": "",
   "app.components.Header.goToGloryPage": "",
   "app.components.Header.goToHomePage": "",
   "app.components.Header.goToLogin": "",

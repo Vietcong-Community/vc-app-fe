@@ -86,7 +86,6 @@ export const LoginForm: React.FC = () => {
             >
               <Checkbox>Zapamatuj si mě</Checkbox>
             </Form.Item>
-
             <Form.Item
               wrapperCol={{
                 offset: 5.5,

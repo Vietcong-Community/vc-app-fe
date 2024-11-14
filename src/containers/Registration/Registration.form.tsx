@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 
-import registerPic from '../../assets/registerPic.png';
+import vojakReg from '../../assets/vojak_reg.png';
 
 export const RegistrationForm: React.FC = () => {
   const onSubmitSuccess = (values: object) => {
@@ -27,7 +27,7 @@ export const RegistrationForm: React.FC = () => {
         }}
       >
         <Col xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
-          <img src={registerPic} alt="Voják na registraci" style={{ maxWidth: '70%', height: 'auto' }} />
+          <img src={vojakReg} alt="Voják na registraci" style={{ maxWidth: '70%', height: 'auto' }} />
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Form
@@ -166,7 +166,7 @@ export const RegistrationForm: React.FC = () => {
               ]}
             >
               <Checkbox>
-                Souhlasím s <a href="">podmínkami používání</a>
+                Souhlasím s <a href="http://www.basccijebuh.cz">podmínkami používání</a>
               </Checkbox>
             </Form.Item>
 

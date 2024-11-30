@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
+import { Button, Checkbox, Col, Form, Row } from 'antd';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import vojakReg from '../../assets/vojak_reg.png';
+import { InputField } from '../../components/Fields/InputField/InputField';
 
-export const RegistrationForm: React.FC = () => {
-  const onSubmitSuccess = (values: object) => {
+import { fields, IFormData } from './Registration.fields';
+import { messages } from './messages';
+
+interface IProps {
+  initialValues?: Partial<IFormData>;
+  isSubmitting?: boolean;
+  onCancel: () => void;
+  onSubmit: (values: IFormData) => void;
+  title: ReactNode;
+}
+
+export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
+  {
+    /**
+    const onSubmitSuccess = (values: object) => {
     console.log('Úspěšná registrace:', values);
   };
   const onSubmitFailed = (errorInfo: object) => {
     console.log('Chyba při registraci:', errorInfo);
   };
+        **/
+  }
+  const { initialValues, isSubmitting = false, onSubmit } = props;
+  const [form] = Form.useForm();
+  const { formatMessage } = useIntl();
 
   return (
     <>
@@ -30,115 +50,49 @@ export const RegistrationForm: React.FC = () => {
           <img src={vojakReg} alt="Voják na registraci" style={{ maxWidth: '70%', height: 'auto' }} />
         </Col>
         <Col xs={24} sm={12} md={8}>
-          <Form
-            layout="vertical"
-            name="basic"
-            labelCol={{
-              span: 11,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onSubmitSuccess}
-            onFinishFailed={onSubmitFailed}
-            autoComplete="off"
-          >
+          <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onSubmit}>
             <h2 style={{ marginLeft: '-180px', marginTop: '120px', marginBottom: '30px' }}>Registrace</h2>
             <br />
-            <Form.Item
-              label="Jméno"
-              name="name"
+            <InputField
+              {...fields.name}
+              label={<FormattedMessage {...messages.nameLabel} />}
+              placeholder={formatMessage(messages.nameLabel)}
+            />
+            <InputField
+              {...fields.surname}
+              label={<FormattedMessage {...messages.surnameLabel} />}
+              placeholder={formatMessage(messages.surnameLabel)}
+            />
+            <InputField
+              {...fields.username}
+              label={<FormattedMessage {...messages.usernameLabel} />}
+              placeholder={formatMessage(messages.usernameLabel)}
+            />
+            <InputField
+              {...fields.email}
+              label={<FormattedMessage {...messages.emailLabel} />}
+              placeholder={formatMessage(messages.emailLabel)}
+            />
+            <InputField
+              {...fields.password}
+              label={<FormattedMessage {...messages.passwordLabel} />}
+              placeholder={formatMessage(messages.passwordLabel)}
+            />
+            <InputField
+              {...fields.passwordConfirm}
+              label={<FormattedMessage {...messages.confirmPasswordLabel} />}
+              placeholder={formatMessage(messages.confirmPasswordLabel)}
               rules={[
-                {
-                  required: false,
-                  message: 'Zadejte své jméno, prosím!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Příjmení"
-              name="surname"
-              rules={[
-                {
-                  required: false,
-                  message: 'Zadejte své příjmení, prosím!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Uživatelské jméno"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: 'Zadejte uživatelské jméno, prosím!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: 'Zadejte svůj email, prosím!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <br />
-
-            <Form.Item
-              label="Heslo"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: 'Zadejte heslo, prosím!',
-                },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-
-            <Form.Item
-              label="Heslo znovu"
-              name="confirmPassword"
-              rules={[
-                {
-                  required: true,
-                  message: 'Potvrďte heslo, prosím!',
-                },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (!value || getFieldValue(fields.password) === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(new Error('Hesla se neshodují!'));
                   },
                 }),
               ]}
-            >
-              <Input.Password />
-            </Form.Item>
-
+            />
             <Form.Item
               name="remember"
               valuePropName="checked"
@@ -169,7 +123,7 @@ export const RegistrationForm: React.FC = () => {
                 Souhlasím s <a href="http://www.basccijebuh.cz">podmínkami používání</a>
               </Checkbox>
             </Form.Item>
-
+            {/**
             <Form.Item
               wrapperCol={{
                 offset: 8,
@@ -178,185 +132,13 @@ export const RegistrationForm: React.FC = () => {
             >
               <Button htmlType="submit">Registrovat</Button>
             </Form.Item>
+                **/}
+            <Button loading={isSubmitting} htmlType="submit">
+              <FormattedMessage {...messages.loginButtonLabel} />
+            </Button>
           </Form>
         </Col>
       </Row>
-
-      {/*  
-    <br />
-      <br />
-      <br />
-    
-    <Row justify="center"
-    align="middle"
-    style={{
-      minHeight: '100vh', // Nastavení výšky, posun výš (můžeš upravit podle potřeby)
-      marginTop: '-10px',  // Upravení vertikálního zarovnání
-      marginLeft: '100px'
-      }}>
-
-      <Col xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
-        <img
-          src={registerPic}
-          alt="Voják na loginu"
-          style={{ maxWidth: '100%', height: 'auto' }}
-        />
-      </Col>
-      <Col>
-      <Form
-        layout='vertical'
-        name="basic"
-        labelCol={{
-          span: 11,
-        }}
-        wrapperCol={{
-          span: 19,
-        }}
-        
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onSubmitSuccess}
-        onFinishFailed={onSubmitFailed}
-        autoComplete="off"
-      >
-        <h2 style={{ marginLeft: '-180px', marginTop: '10px', marginBottom: '30px'}}>Registrace</h2>
-        <Form.Item
-          label="Jméno"
-          name="name"
-          rules={[
-            {
-              required: false,
-              message: 'Zadejte své jméno, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Příjmení"
-          name="surname"
-          rules={[
-            {
-              required: false,
-              message: 'Zadejte své příjmení, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Uživatelské jméno"
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: 'Zadejte uživatelské jméno, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: 'Zadejte svůj email, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <br />
-
-        <Form.Item
-          label="Heslo"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Zadejte heslo, prosím!',
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          label="Heslo znovu"
-          name="confirmPassword"
-          rules={[
-            {
-              required: true,
-              message: 'Potvrďte heslo, prosím!',
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Hesla se neshodují!'));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Checkbox>Zapamatuj si mě</Checkbox>
-        </Form.Item>
-
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-          style={{ display: 'flex', whiteSpace: 'nowrap' }}
-          rules={[
-            {
-              validator: (_, value) =>
-                value ? Promise.resolve() : Promise.reject(new Error('Musíte souhlasit s podmínkami!')),
-            },
-          ]}
-        >
-          <Checkbox>
-            Souhlasím s <a href="www.google.com/obchodni_podminky">podmínkami používání</a>
-          </Checkbox>
-        </Form.Item>
-          
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button htmlType="submit">
-            Registrovat
-          </Button>
-        </Form.Item>
-      </Form>
-      </Col>
-    </Row>
-    */}
     </>
   );
 };

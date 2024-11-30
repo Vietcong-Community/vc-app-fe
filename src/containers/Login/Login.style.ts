@@ -14,12 +14,12 @@ const slideIn = keyframes`
 
 export const ClipPath = styled.div`
   position: relative;
-  background-color: #063970;
+  background-color: #1f1c12;
   width: 100%;
-  height: 100vh;
-  clip-path: polygon(0% 0%, 100% 17%, 100% 100%, 0 100%);
+  height: 50vh;
+  clip-path: polygon(0% 0%, 100% 25%, 100% 100%, 0 100%);
   color: white;
-  margin-top: -285px;
+  margin-top: -255px;
 `;
 
 export const LoginText = styled.div`
@@ -33,4 +33,12 @@ export const SlideIn = styled.h1`
   transform: translateX(-100%);
   animation: ${slideIn} 1s ease-out forwards; /* Nastavení animace */
   margin: 10px 0;
+`;
+
+export const Highlight2 = styled.h2`
+  color: #1f1c12;
+  margin-left: -180px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: 30px;
 `;

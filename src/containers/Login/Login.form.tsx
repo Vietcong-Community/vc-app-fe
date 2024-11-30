@@ -4,6 +4,8 @@ import { Button, Checkbox, Form, Input, Row, Col } from 'antd';
 
 import loginPic from '../../assets/loginPic.png';
 
+import * as S from './Login.style';
+
 export const LoginForm: React.FC = () => {
   const onSubmitSuccess = (values: object) => {
     console.log('Úspěšné přihlášení:', values);
@@ -26,7 +28,7 @@ export const LoginForm: React.FC = () => {
         }}
       >
         <Col xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
-          <img src={loginPic} alt="Voják na loginu" style={{ maxWidth: '100%', height: 'auto' }} />
+          <img src={loginPic} alt="Voják na loginu" style={{ maxWidth: '100%', height: 'auto', marginTop: '35px' }} />
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Form
@@ -48,14 +50,14 @@ export const LoginForm: React.FC = () => {
             onFinishFailed={onSubmitFailed}
             autoComplete="off"
           >
-            <h2 style={{ marginLeft: '-180px', marginTop: '10px', marginBottom: '30px' }}>Přihlášení</h2>
+            <S.Highlight2>Přihlášení</S.Highlight2>
             <br />
             <Form.Item
               label="Uživatelské jméno"
               name="username"
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: 'Zadejte uživatelské jméno, prosím!',
                 },
               ]}
@@ -68,7 +70,7 @@ export const LoginForm: React.FC = () => {
               name="password"
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: 'Zadejte heslo, prosím!',
                 },
               ]}

@@ -1,57 +1,81 @@
 import React from 'react';
 
 import { RightOutlined } from '@ant-design/icons';
-import { Flex, Table, Typography } from 'antd';
+import { Flex, Space, Table, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { IMixedMatch, MixedMatchStatus, SeasonStatus } from '../../../../../api/hooks/mixedLeague/interfaces';
+import { useMatchesBySeason } from '../../../../../api/hooks/mixedLeague/seasons/api';
 import { Button } from '../../../../../components/Button/Button';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
 import { BreakPoints } from '../../../../../theme/theme';
+import { MatchRow } from '../../../components/MatchRow/MatchRow';
+import { players } from '../../../mock';
+import { IPlayersTable, PLAYERS_COLUMNS } from '../../../types';
 
 import { messages } from './messages';
-import { players } from './mock';
-import { IPlayersTable, PLAYERS_COLUMNS } from './types';
 
 import * as S from './SeasonPreview.style';
 
 interface IProps {
+  isOpen: boolean;
   seasonId: string;
+  status: SeasonStatus;
 }
 
 export const SeasonPreview: React.FC<IProps> = (props) => {
-  const { seasonId } = props;
+  const { isOpen, seasonId, status } = props;
   const { navigate } = useRouter();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
+
+  const matches = useMatchesBySeason(seasonId, true, isOpen);
 
   const playersTableData = players.map((item) => {
     return { ...item, ratio: Number((item.kills / item.deaths).toFixed(2)) };
   });
 
+  const upcomingMatches = matches.data?.filter((item) => item.status !== MixedMatchStatus.FINISHED) ?? [];
+  const finishedMatches = matches.data?.filter((item) => item.status === MixedMatchStatus.FINISHED) ?? [];
+  const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
+  const firstFiveFinishedMatches = finishedMatches.slice(0, 5);
+
+  const noUpcomingMatches = upcomingMatches.length === 0;
+  const noFinishedMatches = finishedMatches.length === 0;
+  const isSeasonActive = status === SeasonStatus.ACTIVE;
+
   return (
     <Flex vertical>
       <S.Matches>
-        <Flex justify="center" vertical>
-          <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
-            <FormattedMessage {...messages.openMatches} />
-          </Typography.Title>
-          TODO NEJAKE ZAAPSY CO SE BUDOU HRAT A FALLBACK KDYZ NIC
-        </Flex>
+        {isSeasonActive && (
+          <Flex justify="center" vertical>
+            <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
+              <FormattedMessage {...messages.openMatches} />
+            </Typography.Title>
+            <Space direction="vertical" style={{ width: '100%' }}>
+              {!noUpcomingMatches &&
+                firstFiveUpcomingMatches.map((item: IMixedMatch) => {
+                  return <MatchRow match={item} />;
+                })}
+            </Space>
+          </Flex>
+        )}
         <Flex justify="center" vertical>
           <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
             <FormattedMessage {...messages.playedMatches} />
           </Typography.Title>
-          TODO Poslednich 5 zapasu a proklik na ne
-          <br />
-          TODO Poslednich 5 zapasu a proklik na ne
-          <br />
-          TODO Poslednich 5 zapasu a proklik na ne
-          <br />
-          TODO Poslednich 5 zapasu a proklik na ne
-          <br />
-          TODO Poslednich 5 zapasu a proklik na ne
+          {noFinishedMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
+          {!noFinishedMatches && (
+            <>
+              <Space direction="vertical" style={{ width: '100%' }}>
+                {firstFiveFinishedMatches.map((item: IMixedMatch) => {
+                  return <MatchRow match={item} />;
+                })}
+              </Space>
+            </>
+          )}
         </Flex>
       </S.Matches>
       <br />

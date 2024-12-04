@@ -6,6 +6,10 @@ export enum Routes {
   SEASON_DETAIL = '/detail-sezona/:id',
   SEASON_CREATE = '/vytvoreni-sezony',
   SEASON_UPDATE = '/uprava-sezony/:id',
+  MIXED_MATCH_CREATE = '/vytvoreni-mix-zapasu/:id',
+  MIXED_MATCH_DETAIL = '/detail-mix-zapasu/:id',
+  MIXED_MATCH_UPDATE = '/uprava-mix-zapasu/:id',
+  MIXED_MATCH_RESULT = '/zadat-vysledek-mix-zapasu/:id',
   REGISTRATION = '/registrace',
   USER = '/uzivatel',
 }

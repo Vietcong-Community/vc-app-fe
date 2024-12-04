@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { del, get, patch, post, put } from '../../apiFactory';
+import { del, get, patch, post, put } from '../../../apiFactory';
+import { IMixedMatch, ISaveMixedMatch, ISaveSeason, ISeason } from '../interfaces';
 
 import { SeasonsEndpoints } from './endpoints';
-import { ISaveSeason, ISeason } from './interfaces';
 
 export const useSeasons = () => {
   return useQuery({
@@ -16,7 +16,7 @@ export const useSeasons = () => {
   });
 };
 
-export const useSeasonDetail = (id: string) => {
+export const useSeasonDetail = (id: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
     queryKey: ['season', id],
     queryFn: async () => {
@@ -24,7 +24,20 @@ export const useSeasonDetail = (id: string) => {
       return data;
     },
     staleTime: Infinity,
-    refetchOnMount: 'always',
+    refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useMatchesBySeason = (id: string, refetchOnMount?: boolean | 'always', enabled = true) => {
+  return useQuery({
+    queryKey: ['matchesBySeason', id],
+    queryFn: async () => {
+      const { data } = await get<IMixedMatch[]>(SeasonsEndpoints.MATCHES_BY_SEASON, { id });
+      return data;
+    },
+    enabled,
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
   });
 };
 
@@ -32,6 +45,14 @@ export const useCreateSeason = () => {
   return useMutation({
     mutationFn: async (payload: ISaveSeason) => {
       return post<ISaveSeason, ISeason>(SeasonsEndpoints.SEASONS, payload);
+    },
+  });
+};
+
+export const useCreateMixedMatch = (seasonId: string) => {
+  return useMutation({
+    mutationFn: async (payload: ISaveMixedMatch) => {
+      return post<ISaveMixedMatch, { id: string }>(SeasonsEndpoints.CREATE_MATCH, payload, { id: seasonId });
     },
   });
 };

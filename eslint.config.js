@@ -55,6 +55,12 @@ export default tseslint.config(
           ignorePattern: '^import\\s.+\\sfrom\\s.+;$',
         },
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          caughtErrors: 'none',
+        },
+      ],
       'prettier/prettier': 2,
       '@typescript-eslint/explicit-function-return-type': 0,
       '@typescript-eslint/no-empty-object-type': 0,

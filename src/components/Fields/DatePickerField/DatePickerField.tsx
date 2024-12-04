@@ -32,7 +32,7 @@ export const DatePickerField: React.FC<IProps> = (props: IProps) => {
   } = props;
 
   return (
-    <Form.Item name={name} label={label} required={required} rules={rules}>
+    <Form.Item name={name} label={label} required={required} rules={rules} style={{ marginBottom: 8 }}>
       <DatePicker
         disabled={disabled}
         format={format}

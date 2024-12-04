@@ -14,7 +14,12 @@ export const LanguageProvider: React.FC<IProps> = (props: IProps) => {
   const { children } = props;
 
   return (
-    <IntlProvider locale={DEFAULT_LANGUAGE} key={DEFAULT_LANGUAGE} messages={csMessages}>
+    <IntlProvider
+      defaultRichTextElements={{ b: (msg) => <b>{msg}</b> }}
+      locale={DEFAULT_LANGUAGE}
+      key={DEFAULT_LANGUAGE}
+      messages={csMessages}
+    >
       {children}
     </IntlProvider>
   );

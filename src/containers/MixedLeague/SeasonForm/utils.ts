@@ -1,4 +1,4 @@
-import { ISaveSeason } from '../../../api/hooks/seasons/interfaces';
+import { ISaveSeason } from '../../../api/hooks/mixedLeague/interfaces';
 import { formatDateForSystem } from '../../../utils/dateUtils';
 
 import { IFormData } from './Season.fields';

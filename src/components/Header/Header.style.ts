@@ -4,11 +4,6 @@ import { BreakPoints, IThemeProps } from '../../theme/theme';
 import { makeMediaQuery } from '../../utils/mediaQuery';
 
 export const Container = styled.header`
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: space-between; /* Zajistí, že mezi levým, středním a pravým obsahem bude prostor */
-  padding: 0 24px;
   background-color: ${(props: IThemeProps) => props.theme.colors.white};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   height: 4.4rem;
@@ -22,6 +17,18 @@ export const Container = styled.header`
       height: 3.4rem;
     `}
   `};
+`;
+
+export const Content = styled.div`
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  height: 4.4rem;
+  justify-content: space-between; /* Zajistí, že mezi levým, středním a pravým obsahem bude prostor */
+  margin: 0 auto;
+  max-width: ${(props: IThemeProps) => props.theme.sizes.maxPageWidth};
+  padding: 0 1.5rem;
+  width: 100%;
 `;
 
 export const LeftSection = styled.div`

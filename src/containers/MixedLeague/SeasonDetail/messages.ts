@@ -1,56 +1,52 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  update: {
-    id: 'app.containers.MixedLeague.SeasonDetail.update',
-    defaultMessage: 'Upravit',
+  playersRankingTitle: {
+    id: 'app.containers.MixedLeague.SeasonDetail.playersRankingTitle',
+    defaultMessage: 'Pořadí hráčů',
   },
-  activate: {
-    id: 'app.containers.MixedLeague.SeasonDetail.activate',
-    defaultMessage: 'Zahájit',
+  allMatchesTitle: {
+    id: 'app.containers.MixedLeague.SeasonDetail.allMatchesTitle',
+    defaultMessage: 'Seznam zápasů',
   },
-  activateSuccess: {
-    id: 'app.containers.MixedLeague.SeasonDetail.activateSuccess',
-    defaultMessage: 'Sezóna byla zahájena',
+  seasonInformationTitle: {
+    id: 'app.containers.MixedLeague.SeasonDetail.seasonInformationTitle',
+    defaultMessage: 'Základní informace',
   },
-  activateFailed: {
-    id: 'app.containers.MixedLeague.SeasonDetail.activateFailed',
-    defaultMessage: 'Sezónu se nepovedlo zahájit',
+  upcomingMatches: {
+    id: 'app.containers.MixedLeague.SeasonDetail.upcomingMatches',
+    defaultMessage: 'Nadcházející zápasy',
   },
-  seasonIsNotInTheStatusActive: {
-    id: 'app.containers.MixedLeague.SeasonDetail.seasonIsNotInTheStatusActive',
-    defaultMessage: 'Sezóna musí být ve stavu Aktivní.',
+  noUpcomingMatches: {
+    id: 'app.containers.MixedLeague.SeasonDetail.noUpcomingMatches',
+    defaultMessage: 'Žádný zápas není naplánován, vytvořte nový <b>zde</b>.',
   },
-  seasonIsNotInTheStatusNew: {
-    id: 'app.containers.MixedLeague.SeasonDetail.seasonIsNotInTheStatusNew',
-    defaultMessage: 'Sezóna musí být ve stavu Nová.',
+  finishedMatches: {
+    id: 'app.containers.MixedLeague.SeasonDetail.finishedMatches',
+    defaultMessage: 'Odehrané zápasy',
   },
-  archive: {
-    id: 'app.containers.MixedLeague.SeasonDetail.archive',
-    defaultMessage: 'Ukončit',
+  createMatch: {
+    id: 'app.containers.MixedLeague.SeasonDetail.createMatch',
+    defaultMessage: 'Nový zápas',
   },
-  archiveSuccess: {
-    id: 'app.containers.MixedLeague.SeasonDetail.archiveSuccess',
-    defaultMessage: 'Sezóna byla úspěšně ukončena',
+  seasonStatus: {
+    id: 'app.containers.MixedLeague.SeasonDetail.seasonStatus',
+    defaultMessage: 'Stav',
   },
-  archiveFailed: {
-    id: 'app.containers.MixedLeague.SeasonDetail.archiveFailed',
-    defaultMessage: 'Sezónu se nepovedlo ukončit',
+  seasonBeginDate: {
+    id: 'app.containers.MixedLeague.SeasonDetail.seasonBeginDate',
+    defaultMessage: 'Datum zahájení',
   },
-  archiveFailedDescription: {
-    id: 'app.containers.MixedLeague.SeasonDetail.archiveFailedDescription',
-    defaultMessage: 'Je možné, že v sezóně stále existují probíhající zápasy. Nejprve musí být všechny ukončeny.',
+  seasonEndDate: {
+    id: 'app.containers.MixedLeague.SeasonDetail.seasonEndDate',
+    defaultMessage: 'Datum ukončení',
   },
-  delete: {
-    id: 'app.containers.MixedLeague.SeasonDetail.delete',
-    defaultMessage: 'Smazat',
+  dateNotSpecified: {
+    id: 'app.containers.MixedLeague.SeasonDetail.dateNotSpecified',
+    defaultMessage: 'Nespecifikované',
   },
-  deleteSuccess: {
-    id: 'app.containers.MixedLeague.SeasonDetail.deleteSuccess',
-    defaultMessage: 'Smazání bylo úspěšné',
-  },
-  deleteFailed: {
-    id: 'app.containers.MixedLeague.SeasonDetail.deleteFailed',
-    defaultMessage: 'Sezónu se nepovedlo smazat',
+  scrollToAllMatches: {
+    id: 'app.containers.MixedLeague.SeasonDetail.scrollToAllMatches',
+    defaultMessage: 'Přejít na všechny zápasy',
   },
 });

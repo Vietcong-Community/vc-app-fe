@@ -1,3 +1,11 @@
+export enum BreakPoints {
+  xs = 320,
+  sm = 426,
+  md = 767,
+  lg = 992,
+  xl = 1440,
+}
+
 export const theme = {
   colors: {
     black: '#262626',
@@ -12,16 +20,12 @@ export const theme = {
   fontSize: {
     normal: '18px',
   },
+  sizes: {
+    contentPageWidth: `${BreakPoints.lg}px`,
+    maxPageWidth: '1980px',
+  },
 };
 
 export interface IThemeProps {
   theme: typeof theme;
-}
-
-export enum BreakPoints {
-  xs = 320,
-  sm = 426,
-  md = 767,
-  lg = 992,
-  xl = 1440,
 }

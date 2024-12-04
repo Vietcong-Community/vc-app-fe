@@ -19,7 +19,9 @@ export const PageLayout: React.FC = () => {
     <>
       <Header />
       <S.PageContainer>
-        <Outlet />
+        <S.ContentContainer>
+          <Outlet />
+        </S.ContentContainer>
       </S.PageContainer>
       <Footer />
     </>

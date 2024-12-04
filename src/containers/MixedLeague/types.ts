@@ -1,7 +1,10 @@
+import { ReactNode } from 'react';
+
 import { TableColumnsType } from 'antd';
 
 export interface IPlayersTable {
   id: string;
+  order: number;
   name: string;
   played: number;
   kills: number;
@@ -11,8 +14,18 @@ export interface IPlayersTable {
   points: number;
 }
 
+export interface IMixedMatchesTable {
+  id: string;
+  date: string;
+  status: ReactNode;
+  result: string;
+  firstCaptain: string;
+  secondCaptain: string;
+}
+
 export const PLAYERS_COLUMNS = (hidden: boolean): TableColumnsType<IPlayersTable> => {
   return [
+    { dataIndex: 'order', key: '0' },
     { title: 'Hráč', dataIndex: 'name', key: '1' },
     {
       title: 'Počet zápasů',
@@ -55,6 +68,29 @@ export const PLAYERS_COLUMNS = (hidden: boolean): TableColumnsType<IPlayersTable
       key: '7',
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.points - b.points,
+    },
+  ];
+};
+
+export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMixedMatchesTable> => {
+  return [
+    { title: 'Datum', dataIndex: 'date', key: '0', defaultSortOrder: 'descend' },
+    { title: 'Stav', dataIndex: 'status', key: '1' },
+    {
+      title: 'Kapitán 1',
+      dataIndex: 'firstCaptain',
+      key: '2',
+      hidden,
+    },
+    {
+      title: 'Kapitán 2',
+      dataIndex: 'secondCaptain',
+      key: '3',
+    },
+    {
+      title: 'Výsledek',
+      dataIndex: 'result',
+      key: '4',
     },
   ];
 };

@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../theme/theme';
 import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const Container = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-width: ${BreakPoints.xl}px;
+  max-width: ${(props: IThemeProps) => props.theme.breakpoints.xl}px;
   margin: 0 auto;
   width: 100%;
 

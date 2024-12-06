@@ -37,4 +37,12 @@ export const messages = defineMessages({
     id: 'app.components.Header.goToGloryPage',
     defaultMessage: 'Síň Slávy',
   },
+  lightTheme: {
+    id: 'app.components.Header.lightTheme',
+    defaultMessage: 'Světlý',
+  },
+  darkTheme: {
+    id: 'app.components.Header.darkTheme',
+    defaultMessage: 'Tmavý',
+  },
 });

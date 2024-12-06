@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
-import { Menu, Dropdown } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import logo from '../../assets/vclogo-removebg-preview.png';
 import { useRouter } from '../../hooks/RouterHook';
+import { ThemeContext } from '../../providers/ThemeProvider/ThemeContext';
+import { ThemeType } from '../../providers/ThemeProvider/constants';
 import { Routes } from '../../routes/enums';
+import { Button } from '../Button/Button';
 
 import { messages } from './messages';
 
@@ -14,6 +17,8 @@ import * as S from './Header.style';
 
 export const Header: React.FC = () => {
   const { navigate } = useRouter();
+
+  const { selectedTheme, toggleTheme } = useContext(ThemeContext);
 
   const userMenuItems = [
     {
@@ -76,6 +81,9 @@ export const Header: React.FC = () => {
           </Menu>
         </S.MenuContainer>
         <S.RightSection>
+          <Button onClick={toggleTheme}>
+            <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
+          </Button>
           <Dropdown menu={{ items: userMenuItems }} trigger={['click']}>
             <span style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <UserOutlined style={{ fontSize: '24px', marginRight: '8px' }} />

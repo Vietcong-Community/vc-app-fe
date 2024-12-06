@@ -7,9 +7,13 @@ export enum BreakPoints {
 }
 
 export const theme = {
+  breakpoints: BreakPoints,
   colors: {
     black: '#262626',
     white: '#ffffff',
+  },
+  fontSize: {
+    normal: '18px',
   },
   fontWeight: {
     bold: 600,
@@ -17,8 +21,10 @@ export const theme = {
     light: 400,
     normal: 500,
   },
-  fontSize: {
-    normal: '18px',
+  mainColors: {
+    background: '#fbf1c7',
+    primary: '#458588',
+    secondary: '#d79921',
   },
   sizes: {
     contentPageWidth: `${BreakPoints.lg}px`,

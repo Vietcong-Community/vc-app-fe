@@ -10,6 +10,11 @@ export enum Routes {
   MIXED_MATCH_DETAIL = '/detail-mix-zapasu/:id',
   MIXED_MATCH_UPDATE = '/uprava-mix-zapasu/:id',
   MIXED_MATCH_RESULT = '/zadat-vysledek-mix-zapasu/:id',
+  // TEAMS
+  TEAM_CREATE = '/vytvoreni-tymu',
+  TEAM_UPDATE = '/uprava-tymu/:id',
+  TEAM_DETAIL = '/tym/:id',
+  // USERS
   REGISTRATION = '/registrace',
   USER = '/uzivatel',
   MCRVC = '/mcrvc',

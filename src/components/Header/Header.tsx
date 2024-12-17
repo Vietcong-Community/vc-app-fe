@@ -51,16 +51,16 @@ export const Header: React.FC = () => {
     <S.Container>
       <S.Content>
         <S.LeftSection>
-        <S.Logo onClick={() => navigate(Routes.HOME)}>
-          <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
-        </S.Logo>
-      </S.LeftSection>
-      <S.MenuContainer>
-        <Menu
-          mode="horizontal"
-          selectable={false}
-          style={{ borderBottom: 'none', width: '100%', justifyContent: 'center' }}
-        >
+          <S.Logo onClick={() => navigate(Routes.HOME)}>
+            <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
+          </S.Logo>
+        </S.LeftSection>
+        <S.MenuContainer>
+          <Menu
+            mode="horizontal"
+            selectable={false}
+            style={{ borderBottom: 'none', width: '100%', justifyContent: 'center' }}
+          >
             <Menu.Item key="mixLeague" onClick={() => navigate(Routes.MIX_LEAGUE_OVERVIEW)}>
               <FormattedMessage
                 id={messages.goToMixLeaguePage.id}
@@ -74,10 +74,10 @@ export const Header: React.FC = () => {
               <FormattedMessage id={messages.goToGloryPage.id} defaultMessage={messages.goToGloryPage.defaultMessage} />
             </Menu.Item>
             <Menu.Item key="contact" onClick={() => navigate(Routes.CONTACT)}>
-            <FormattedMessage
-              id={messages.goToContactPage.id}
-              defaultMessage={messages.goToContactPage.defaultMessage}
-            />
+              <FormattedMessage
+                id={messages.goToContactPage.id}
+                defaultMessage={messages.goToContactPage.defaultMessage}
+              />
             </Menu.Item>
           </Menu>
         </S.MenuContainer>
@@ -92,14 +92,14 @@ export const Header: React.FC = () => {
             </span>
           </Dropdown>
           <Menu mode="horizontal" selectable={false}>
-          <Menu.Item key="registration" onClick={() => navigate(Routes.REGISTRATION)}>
-            <FormattedMessage
-              id={messages.goToRegistration.id}
-              defaultMessage={messages.goToRegistration.defaultMessage}
-            />
-          </Menu.Item>
-          <Menu.Item key="login" onClick={() => navigate(Routes.LOGIN)}>
-            <FormattedMessage id={messages.goToLogin.id} defaultMessage={messages.goToLogin.defaultMessage} />
+            <Menu.Item key="registration" onClick={() => navigate(Routes.REGISTRATION)}>
+              <FormattedMessage
+                id={messages.goToRegistration.id}
+                defaultMessage={messages.goToRegistration.defaultMessage}
+              />
+            </Menu.Item>
+            <Menu.Item key="login" onClick={() => navigate(Routes.LOGIN)}>
+              <FormattedMessage id={messages.goToLogin.id} defaultMessage={messages.goToLogin.defaultMessage} />
             </Menu.Item>
           </Menu>
         </S.RightSection>

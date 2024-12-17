@@ -15,5 +15,6 @@ export enum Routes {
   MCRVC = '/mcrvc',
   HALLOFFAME = '/sin-slavy',
   CONTACT = '/kontakty',
-  LOGOUT = '/logout',
+  LOGOUT = '/odhlaseni',
+  REGISTRATION_SUCCESS = '/uspesna-registrace',
 }

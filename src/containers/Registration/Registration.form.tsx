@@ -1,10 +1,13 @@
 import React, { ReactNode } from 'react';
 
-import { Button, Checkbox, Col, Form, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import vojakReg from '../../assets/vojak_reg.png';
+import { Button } from '../../components/Button/Button';
+import { CheckboxField } from '../../components/Checkbox/Checkbox';
 import { InputField } from '../../components/Fields/InputField/InputField';
+import { PasswordField } from '../../components/Fields/PasswordField/PasswordField';
 
 import { fields, IFormData } from './Registration.fields';
 import { messages } from './messages';
@@ -12,22 +15,11 @@ import { messages } from './messages';
 interface IProps {
   initialValues?: Partial<IFormData>;
   isSubmitting?: boolean;
-  onCancel: () => void;
   onSubmit: (values: IFormData) => void;
   title: ReactNode;
 }
 
 export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
-  {
-    /**
-    const onSubmitSuccess = (values: object) => {
-    console.log('Úspěšná registrace:', values);
-  };
-  const onSubmitFailed = (errorInfo: object) => {
-    console.log('Chyba při registraci:', errorInfo);
-  };
-        **/
-  }
   const { initialValues, isSubmitting = false, onSubmit } = props;
   const [form] = Form.useForm();
   const { formatMessage } = useIntl();
@@ -54,12 +46,12 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
             <h2 style={{ marginLeft: '-180px', marginTop: '120px', marginBottom: '30px' }}>Registrace</h2>
             <br />
             <InputField
-              {...fields.name}
+              {...fields.firstName}
               label={<FormattedMessage {...messages.nameLabel} />}
               placeholder={formatMessage(messages.nameLabel)}
             />
             <InputField
-              {...fields.surname}
+              {...fields.lastName}
               label={<FormattedMessage {...messages.surnameLabel} />}
               placeholder={formatMessage(messages.surnameLabel)}
             />
@@ -73,19 +65,19 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
               label={<FormattedMessage {...messages.emailLabel} />}
               placeholder={formatMessage(messages.emailLabel)}
             />
-            <InputField
+            <PasswordField
               {...fields.password}
               label={<FormattedMessage {...messages.passwordLabel} />}
               placeholder={formatMessage(messages.passwordLabel)}
             />
-            <InputField
+            <PasswordField
               {...fields.passwordConfirm}
               label={<FormattedMessage {...messages.confirmPasswordLabel} />}
               placeholder={formatMessage(messages.confirmPasswordLabel)}
               rules={[
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue(fields.password) === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(new Error('Hesla se neshodují!'));
@@ -93,48 +85,31 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
                 }),
               ]}
             />
-            <Form.Item
+            <CheckboxField
               name="remember"
-              valuePropName="checked"
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
-              <Checkbox>Zapamatuj si mě</Checkbox>
-            </Form.Item>
-
-            <Form.Item
+              label={<FormattedMessage {...messages.rememberCBLabel} />}
+              required={false}
+              rules={[{ required: false }]}
+            />
+            <CheckboxField
               name="agreement"
-              valuePropName="checked"
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-              style={{ display: 'flex', whiteSpace: 'nowrap' }}
-              rules={[
-                {
-                  validator: (_, value) =>
-                    value ? Promise.resolve() : Promise.reject(new Error('Musíte souhlasit s podmínkami!')),
-                },
-              ]}
-            >
-              <Checkbox>
-                Souhlasím s <a href="http://www.basccijebuh.cz">podmínkami používání</a>
-              </Checkbox>
-            </Form.Item>
-            {/**
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
-              <Button htmlType="submit">Registrovat</Button>
-            </Form.Item>
-                **/}
-            <Button loading={isSubmitting} htmlType="submit">
-              <FormattedMessage {...messages.loginButtonLabel} />
+              label={
+                <FormattedMessage
+                  {...messages.agreementCBLabel}
+                  values={{
+                    a: (chunks: React.ReactNode) => (
+                      <a href="http://www.basccijebuh.cz" target="_blank" rel="noopener noreferrer">
+                        {chunks}
+                      </a>
+                    ),
+                  }}
+                />
+              }
+              required={true}
+              rules={[{ required: true, message: formatMessage(messages.agreementCBFailed) }]}
+            />
+            <Button loading={isSubmitting} type="submit">
+              <FormattedMessage {...messages.registerButtonLabel} />
             </Button>
           </Form>
         </Col>

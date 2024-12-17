@@ -1,10 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  createTitle: {
-    id: 'app.containers.MixedLeague.SeasonForm.createTitle',
-    defaultMessage: 'Vytvoření nové sezóny',
-  },
   nameLabel: {
     id: 'app.containers.Registration.RegistrationForm.nameLabel',
     defaultMessage: 'Jméno',
@@ -29,8 +25,28 @@ export const messages = defineMessages({
     id: 'app.containers.Registration.RegistrationForm.confirmPasswordLabel',
     defaultMessage: 'Heslo znovu',
   },
-  loginButtonLabel: {
+  registerButtonLabel: {
     id: 'app.containers.Registration.RegistrationForm.loginButtonLabel',
-    defaultMessage: 'Přihlásit',
+    defaultMessage: 'Registrovat',
+  },
+  registerFailed: {
+    id: 'app.containers.Registration.RegistrationForm.registerFailed',
+    defaultMessage: 'Nastala chyba při registraci',
+  },
+  rememberCBLabel: {
+    id: 'app.containers.Registration.RegistrationForm.rememberCBLabel',
+    defaultMessage: 'Zapamatuj si mě',
+  },
+  agreementCBLabel: {
+    id: 'app.containers.Registration.RegistrationForm.agreementCBLabel',
+    defaultMessage: 'Souhlasím s <a>podmínkami používání</a>',
+  },
+  agreementCBFailed: {
+    id: 'app.containers.Registration.RegistrationForm.agreementCBFailed',
+    defaultMessage: 'S podmínkami musíte souhlasit!',
+  },
+  createTitle: {
+    id: 'app.containers.Registration.RegistrationForm.createTitle',
+    defaultMessage: 'Registrace',
   },
 });

@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-import { Button, Checkbox, Form, Input, Row, Col } from 'antd';
+import { Form, Row, Col } from 'antd';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import loginPic from '../../assets/loginPic.png';
+import { Button } from '../../components/Button/Button';
+import { CheckboxField } from '../../components/Checkbox/Checkbox';
+import { InputField } from '../../components/Fields/InputField/InputField';
+import { PasswordField } from '../../components/Fields/PasswordField/PasswordField';
+
+import { fields, IFormData } from './Login.fields';
+import { messages } from './messages';
 
 import * as S from './Login.style';
 
-export const LoginForm: React.FC = () => {
-  const onSubmitSuccess = (values: object) => {
-    console.log('Úspěšné přihlášení:', values);
-  };
-  const onSubmitFailed = (errorInfo: object) => {
-    console.log('Chyba při přihlášení:', errorInfo);
-  };
+interface IProps {
+  initialValues?: Partial<IFormData>;
+  isSubmitting?: boolean;
+  onSubmit: (values: IFormData) => void;
+  title: ReactNode;
+}
+
+export const LoginForm: React.FC<IProps> = (props: IProps) => {
+  const { initialValues, isSubmitting = false, onSubmit } = props;
+  const [form] = Form.useForm();
+  const { formatMessage } = useIntl();
 
   return (
     <>
@@ -31,71 +43,30 @@ export const LoginForm: React.FC = () => {
           <img src={loginPic} alt="Voják na loginu" style={{ maxWidth: '100%', height: 'auto', marginTop: '35px' }} />
         </Col>
         <Col xs={24} sm={12} md={8}>
-          <Form
-            layout="vertical"
-            name="basic"
-            labelCol={{
-              span: 11,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onSubmitSuccess}
-            onFinishFailed={onSubmitFailed}
-            autoComplete="off"
-          >
+          <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onSubmit}>
             <S.Highlight2>Přihlášení</S.Highlight2>
             <br />
-            <Form.Item
-              label="Uživatelské jméno"
-              name="username"
-              rules={[
-                {
-                  required: false,
-                  message: 'Zadejte uživatelské jméno, prosím!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <InputField
+              {...fields.username}
+              label={<FormattedMessage {...messages.usernameLabel} />}
+              placeholder={formatMessage(messages.usernameLabel)}
+            />
 
-            <Form.Item
-              label="Heslo"
-              name="password"
-              rules={[
-                {
-                  required: false,
-                  message: 'Zadejte heslo, prosím!',
-                },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
+            <PasswordField
+              {...fields.password}
+              label={<FormattedMessage {...messages.passwordLabel} />}
+              placeholder={formatMessage(messages.passwordLabel)}
+            />
 
-            <Form.Item
+            <CheckboxField
               name="remember"
-              valuePropName="checked"
-              wrapperCol={{
-                offset: 5.5,
-                span: 16,
-              }}
-            >
-              <Checkbox>Zapamatuj si mě</Checkbox>
-            </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 5.5,
-                span: 16,
-              }}
-            >
-              <Button htmlType="submit">Přihlásit</Button>
-            </Form.Item>
+              label={<FormattedMessage {...messages.rememberCBLabel} />}
+              required={false}
+              rules={[{ required: false }]}
+            />
+            <Button loading={isSubmitting} type="submit">
+              <FormattedMessage {...messages.loginButtonLabel} />
+            </Button>
           </Form>
         </Col>
       </Row>

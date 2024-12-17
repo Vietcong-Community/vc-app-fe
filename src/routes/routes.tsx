@@ -6,17 +6,18 @@ import { ContactCont } from '../containers/Contact/Contact.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
 import { LoginCont } from '../containers/Login/Login.cont';
+import { LogoutCont } from '../containers/Logout/Logout.cont';
+import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { MixedMatchDetail } from '../containers/MixedLeague/MixedMatchDetail/MixedMatchDetail.cont';
 import { CreateMixedMatchCont } from '../containers/MixedLeague/MixedMatchForm/CreateMixedMatch.cont';
 import { UpdateMixedMatchCont } from '../containers/MixedLeague/MixedMatchForm/UpdateMixedMatch.cont';
 import { MixedMatchResult } from '../containers/MixedLeague/MixedMatchResult/MixedMatchResult';
-import { LogoutCont } from '../containers/Logout/Logout.cont';
-import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { OverviewCont } from '../containers/MixedLeague/Overview/Overview.cont';
 import { SeasonDetailCont } from '../containers/MixedLeague/SeasonDetail/SeasonDetail.cont';
 import { CreateSeasonCont } from '../containers/MixedLeague/SeasonForm/CreateSeason.cont';
 import { UpdateSeasonCont } from '../containers/MixedLeague/SeasonForm/UpdateSeason.cont';
 import { RegistrationCont } from '../containers/Registration/Registration.cont';
+import { RegistrationSuccessCont } from '../containers/RegistrationSuccess/RegistrationSuccess.cont';
 
 import { Routes } from './enums';
 
@@ -42,6 +43,7 @@ export const routesObject: RouteObject[] = [
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
       { element: <ContactCont />, path: Routes.CONTACT },
       { element: <LogoutCont />, path: Routes.LOGOUT },
+      { element: <RegistrationSuccessCont />, path: Routes.REGISTRATION_SUCCESS },
       // TODO NOT FOUND PAGE
     ],
   },

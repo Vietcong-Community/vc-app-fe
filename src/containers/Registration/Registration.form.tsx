@@ -1,164 +1,123 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Col, Form, Row } from 'antd';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-export const RegistrationForm: React.FC = () => {
-  const onSubmitSuccess = (values: object) => {
-    console.log('Úspěšná registrace:', values);
-  };
-  const onSubmitFailed = (errorInfo: object) => {
-    console.log('Chyba při registraci:', errorInfo);
-  };
+import vojakReg from '../../assets/vojak_reg.png';
+import { Button } from '../../components/Button/Button';
+import { CheckboxField } from '../../components/Checkbox/Checkbox';
+import { InputField } from '../../components/Fields/InputField/InputField';
+import { PasswordField } from '../../components/Fields/PasswordField/PasswordField';
+
+import { fields, IFormData } from './Registration.fields';
+import { messages } from './messages';
+
+import * as S from './Registration.style';
+
+interface IProps {
+  initialValues?: Partial<IFormData>;
+  isSubmitting?: boolean;
+  onSubmit: (values: IFormData) => void;
+  title: ReactNode;
+}
+
+export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
+  const { initialValues, isSubmitting = false, onSubmit } = props;
+  const [form] = Form.useForm();
+  const { formatMessage } = useIntl();
 
   return (
     <>
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
+      <br />
+      <br />
+      <br />
+      <br />
+      <Row
+        justify="center"
+        align="middle"
         style={{
-          maxWidth: 600,
+          minHeight: '80vh',
+          marginTop: '-191px',
         }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onSubmitSuccess}
-        onFinishFailed={onSubmitFailed}
-        autoComplete="off"
       >
-        <Form.Item
-          label="Jméno"
-          name="name"
-          rules={[
-            {
-              required: false,
-              message: 'Zadejte své jméno, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Příjmení"
-          name="surname"
-          rules={[
-            {
-              required: false,
-              message: 'Zadejte své příjmení, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Uživatelské jméno"
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: 'Zadejte uživatelské jméno, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: 'Zadejte svůj email, prosím!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <br />
-
-        <Form.Item
-          label="Heslo"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Zadejte heslo, prosím!',
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          label="Heslo znovu"
-          name="confirmPassword"
-          rules={[
-            {
-              required: true,
-              message: 'Potvrďte heslo, prosím!',
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Hesla se neshodují!'));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Checkbox>Zapamatuj si mě</Checkbox>
-        </Form.Item>
-
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-          rules={[
-            {
-              validator: (_, value) =>
-                value ? Promise.resolve() : Promise.reject(new Error('Musíte souhlasit s podmínkami!')),
-            },
-          ]}
-        >
-          <Checkbox>
-            Souhlasím s <a href="www.google.com/obchodni_podminky">podmínkami používání</a>
-          </Checkbox>
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Registrovat
-          </Button>
-        </Form.Item>
-      </Form>
+        <Col xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
+          <img src={vojakReg} alt="Voják na registraci" style={{ maxWidth: '70%', height: 'auto' }} />
+        </Col>
+        <Col xs={24} sm={12} md={8}>
+          <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onSubmit}>
+            <S.Highlight2>
+              <FormattedMessage {...messages.title} />
+            </S.Highlight2>
+            <br />
+            <InputField
+              {...fields.firstName}
+              label={<FormattedMessage {...messages.nameLabel} />}
+              placeholder={formatMessage(messages.nameLabel)}
+            />
+            <InputField
+              {...fields.lastName}
+              label={<FormattedMessage {...messages.surnameLabel} />}
+              placeholder={formatMessage(messages.surnameLabel)}
+            />
+            <InputField
+              {...fields.username}
+              label={<FormattedMessage {...messages.usernameLabel} />}
+              placeholder={formatMessage(messages.usernameLabel)}
+            />
+            <InputField
+              {...fields.email}
+              label={<FormattedMessage {...messages.emailLabel} />}
+              placeholder={formatMessage(messages.emailLabel)}
+            />
+            <PasswordField
+              {...fields.password}
+              label={<FormattedMessage {...messages.passwordLabel} />}
+              placeholder={formatMessage(messages.passwordLabel)}
+            />
+            <PasswordField
+              {...fields.passwordConfirm}
+              label={<FormattedMessage {...messages.confirmPasswordLabel} />}
+              placeholder={formatMessage(messages.confirmPasswordLabel)}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Hesla se neshodují!'));
+                  },
+                }),
+              ]}
+            />
+            <CheckboxField
+              name="remember"
+              label={<FormattedMessage {...messages.rememberCBLabel} />}
+              required={false}
+              rules={[{ required: false }]}
+            />
+            <CheckboxField
+              name="agreement"
+              label={
+                <FormattedMessage
+                  {...messages.agreementCBLabel}
+                  values={{
+                    a: (chunks: React.ReactNode) => (
+                      <a href="http://www.basccijebuh.cz" target="_blank" rel="noopener noreferrer">
+                        {chunks}
+                      </a>
+                    ),
+                  }}
+                />
+              }
+              required={true}
+              rules={[{ required: true, message: formatMessage(messages.agreementCBFailed) }]}
+            />
+            <Button loading={isSubmitting} type="submit">
+              <FormattedMessage {...messages.registerButtonLabel} />
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     </>
   );
 };

@@ -1,6 +1,10 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
+  title: {
+    id: 'app.containers.Registration.RegistrationForm.title',
+    defaultMessage: 'Přihlášení',
+  },
   usernameLabel: {
     id: 'app.containers.Registration.RegistrationForm.usernameLabel',
     defaultMessage: 'Uživatelské jméno',
@@ -20,5 +24,13 @@ export const messages = defineMessages({
   createTitle: {
     id: 'app.containers.Registration.RegistrationForm.createTitle',
     defaultMessage: 'Přihlášení',
+  },
+  slideTextA: {
+    id: 'app.containers.Registration.RegistrationForm.slideTextA',
+    defaultMessage: ' Přihlaš se a bojuj o své místo v mix lize',
+  },
+  slideTextB: {
+    id: 'app.containers.Registration.RegistrationForm.slideTextB',
+    defaultMessage: ' Za své statistiky sbírej ocenění',
   },
 });

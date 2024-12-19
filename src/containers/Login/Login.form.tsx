@@ -44,7 +44,9 @@ export const LoginForm: React.FC<IProps> = (props: IProps) => {
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onSubmit}>
-            <S.Highlight2>Přihlášení</S.Highlight2>
+            <S.Highlight2>
+              <FormattedMessage {...messages.title} />
+            </S.Highlight2>
             <br />
             <InputField
               {...fields.username}

@@ -37,8 +37,8 @@ export const SlideIn = styled.h1`
 
 export const Highlight2 = styled.h2`
   color: #1f1c12;
-  margin-left: -180px;
+  margin-left: -17px;
   margin-top: 10px;
   margin-bottom: 30px;
-  font-size: 30px;
+  font-size: 25px;
 `;

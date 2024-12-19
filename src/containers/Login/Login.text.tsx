@@ -1,6 +1,9 @@
 import React from 'react';
 
 import { StarOutlined } from '@ant-design/icons';
+import { FormattedMessage } from 'react-intl';
+
+import { messages } from './messages';
 
 import * as S from './Login.style';
 
@@ -9,10 +12,12 @@ export const LoginText: React.FC = () => {
     <>
       <S.LoginText>
         <S.SlideIn>
-          <StarOutlined></StarOutlined> Přihlaš se a bojuj o své místo v mix lize
+          <StarOutlined></StarOutlined>
+          <FormattedMessage {...messages.slideTextA} />
         </S.SlideIn>
         <S.SlideIn>
-          <StarOutlined></StarOutlined> Za své statistiky sbírej ocenění
+          <StarOutlined></StarOutlined>
+          <FormattedMessage {...messages.slideTextB} />
         </S.SlideIn>
       </S.LoginText>
     </>

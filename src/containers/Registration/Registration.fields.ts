@@ -2,8 +2,8 @@ import { IFormFields } from '../../@types/forms';
 import { isRequired } from '../../utils/validations/validations';
 
 export interface IFormData {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   username: string;
   email: string;
   password: string;

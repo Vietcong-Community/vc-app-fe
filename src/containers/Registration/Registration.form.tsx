@@ -12,6 +12,8 @@ import { PasswordField } from '../../components/Fields/PasswordField/PasswordFie
 import { fields, IFormData } from './Registration.fields';
 import { messages } from './messages';
 
+import * as S from './Registration.style';
+
 interface IProps {
   initialValues?: Partial<IFormData>;
   isSubmitting?: boolean;
@@ -43,7 +45,9 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onSubmit}>
-            <h2 style={{ marginLeft: '-180px', marginTop: '120px', marginBottom: '30px' }}>Registrace</h2>
+            <S.Highlight2>
+              <FormattedMessage {...messages.title} />
+            </S.Highlight2>
             <br />
             <InputField
               {...fields.firstName}

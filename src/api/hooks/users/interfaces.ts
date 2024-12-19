@@ -22,3 +22,11 @@ export interface IUser {
   status: UserStatus;
   roles: Role[];
 }
+
+export interface IRegisterUser {
+  email: string;
+  username: string;
+  firstName?: string;
+  lastName?: string;
+  password: string;
+}

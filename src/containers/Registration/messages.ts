@@ -1,6 +1,10 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
+  title: {
+    id: 'app.containers.Registration.RegistrationForm.title',
+    defaultMessage: 'Registrace',
+  },
   nameLabel: {
     id: 'app.containers.Registration.RegistrationForm.nameLabel',
     defaultMessage: 'Jméno',

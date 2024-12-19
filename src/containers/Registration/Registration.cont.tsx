@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useRegisterUsers } from '../../api/hooks/registration/api';
+import { useRegisterUsers } from '../../api/hooks/users/api';
 import { useNotifications } from '../../hooks/NotificationsHook';
 import { useRouter } from '../../hooks/RouterHook';
 import { NotificationType } from '../../providers/NotificationsProvider/enums';

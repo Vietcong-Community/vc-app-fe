@@ -45,4 +45,8 @@ export const messages = defineMessages({
     id: 'app.components.Header.darkTheme',
     defaultMessage: 'Tmavý',
   },
+  goToContactPage: {
+    id: 'app.components.Header.goToContactPage',
+    defaultMessage: 'Kontakty',
+  },
 });

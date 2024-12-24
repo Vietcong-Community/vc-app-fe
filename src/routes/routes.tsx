@@ -18,6 +18,9 @@ import { CreateSeasonCont } from '../containers/MixedLeague/SeasonForm/CreateSea
 import { UpdateSeasonCont } from '../containers/MixedLeague/SeasonForm/UpdateSeason.cont';
 import { RegistrationCont } from '../containers/Registration/Registration.cont';
 import { RegistrationSuccessCont } from '../containers/RegistrationSuccess/RegistrationSuccess.cont';
+import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
+import { CreateTeamCont } from '../containers/Teams/TeamForm/CreateTeam.cont';
+import { UpdateTeamCont } from '../containers/Teams/TeamForm/UpdateTeam.cont';
 
 import { Routes } from './enums';
 
@@ -44,6 +47,10 @@ export const routesObject: RouteObject[] = [
       { element: <ContactCont />, path: Routes.CONTACT },
       { element: <LogoutCont />, path: Routes.LOGOUT },
       { element: <RegistrationSuccessCont />, path: Routes.REGISTRATION_SUCCESS },
+      // TEAMS
+      { element: <CreateTeamCont />, path: Routes.TEAM_CREATE },
+      { element: <UpdateTeamCont />, path: Routes.TEAM_UPDATE },
+      { element: <TeamDetailCont />, path: Routes.TEAM_DETAIL },
       // TODO NOT FOUND PAGE
     ],
   },

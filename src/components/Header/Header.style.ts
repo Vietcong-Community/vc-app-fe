@@ -50,6 +50,7 @@ export const MenuContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 2;
+  flex-shrink: 0;
 `;
 
 export const RightSection = styled.div`

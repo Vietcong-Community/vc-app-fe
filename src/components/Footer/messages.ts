@@ -13,7 +13,7 @@ export const messages = defineMessages({
     id: 'app.components.Footer.aboutContent',
     defaultMessage:
       'Jsme oficiální poskytovatel ligy pro hru Vietcong. Nabízíme několik herních módů. ' +
-        'Připoj se, hraj a získávej ocenění.',
+      'Připoj se, hraj a získávej ocenění.',
   },
   contact: {
     id: 'app.components.Footer.contact',

@@ -22,4 +22,5 @@ export enum Routes {
   CONTACT = '/kontakty',
   LOGOUT = '/odhlaseni',
   REGISTRATION_SUCCESS = '/uspesna-registrace',
+  EDIT_PROFILE = '/edit-profile',
 }

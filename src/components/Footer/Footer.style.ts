@@ -1,66 +1,129 @@
-import styled from 'styled-components';
+import { BreakPoints } from 'src/theme/theme';
+import styled, { css } from 'styled-components';
 
 import footerBg from '../../assets/heli-footer1.webp';
+import { makeMediaQuery } from '../../utils/mediaQuery';
 
 export const Background = styled.footer`
   background-image: url(${footerBg});
-  background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
-  min-height: 40vh;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: azure;
-  clip-path: polygon(0 5%, 50% 0, 100% 5%, 100% 100%, 0 100%);
+  clip-path: polygon(0 4%, 50% 0, 100% 4%, 100% 100%, 0 100%);
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      clip-path: polygon(0 1%, 50% 0, 100% 1%, 100% 100%, 0 100%);
+    `}
+  `};
 `;
 
 export const FooterContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
+  flex-direction: column;
+  font-size: 16px;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: flex-start;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+
+  h4 {
+    font-size: 20px;
+  }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      font-size: 14px;
+
+      h4 {
+        font-size: 18px;
+      }
+    `}
+  `};
 `;
 
-export const FooterSection = styled.div`
+export const ColumnsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+      gap: 0.5rem;
+    `}
+  `};
+`;
+
+export const Column = styled.div`
+  align-items: center;
+  display: flex;
   flex: 1;
-  min-width: 200px;
-  margin: 40px 20px 0 20px;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: flex-start;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      align-items: flex-start;
+    `}
+  `};
 `;
 
-export const IconContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const IconWrapper = styled.div`
-  height: 35px;
-  width: 35px;
-  margin: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: azure;
-  font-size: 35px;
-
+export const Link = styled.div`
   &:hover {
+    cursor: pointer;
     color: gold;
-    font-size: 48px;
-    transition: font-size 0.3s ease;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+      color: gold;
+    }
   }
 `;
 
-export const ContactIconWrapper = styled.div`
-  height: 20px;
-  width: 20px;
-  margin: 0 2px;
+export const CopyrightAndSocialsLevel = styled.div`
   display: flex;
+  font-size: 13px;
+  min-height: 30px;
+  justify-content: space-between;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      align-items: flex-start;
+      gap: 10px;
+      flex-direction: column-reverse;
+    `}
+  `};
+`;
+
+export const Socials = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+`;
+
+export const IconWrapper = styled.div`
+  align-items: center;
   color: azure;
-  font-size: 20px;
+  display: flex;
+  font-size: 22px;
+  justify-content: center;
 
   &:hover {
     color: gold;
-    font-size: 25px;
+    font-size: 30px;
     transition: font-size 0.3s ease;
   }
 `;

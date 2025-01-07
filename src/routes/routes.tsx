@@ -34,7 +34,7 @@ export const routesObject: RouteObject[] = [
       { element: <RegistrationCont />, path: Routes.REGISTRATION },
       { element: <ProfileCont />, path: Routes.USER },
       // MIX LEAGUE
-      { element: <OverviewCont />, path: Routes.MIX_LEAGUE_OVERVIEW },
+      { element: <OverviewCont />, path: Routes.LEAGUES_OVERVIEW },
       { element: <SeasonDetailCont />, path: Routes.SEASON_DETAIL },
       { element: <CreateSeasonCont />, path: Routes.SEASON_CREATE },
       { element: <UpdateSeasonCont />, path: Routes.SEASON_UPDATE },

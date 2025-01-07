@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
             selectable={false}
             style={{ borderBottom: 'none', width: '100%', justifyContent: 'center' }}
           >
-            <Menu.Item key="mixLeague" onClick={() => navigate(Routes.MIX_LEAGUE_OVERVIEW)}>
+            <Menu.Item key="mixLeague" onClick={() => navigate(Routes.LEAGUES_OVERVIEW)}>
               <FormattedMessage
                 id={messages.goToMixLeaguePage.id}
                 defaultMessage={messages.goToMixLeaguePage.defaultMessage}

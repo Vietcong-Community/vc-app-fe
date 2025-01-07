@@ -15,32 +15,40 @@ export const messages = defineMessages({
       'Jsme oficiální poskytovatel ligy pro hru Vietcong. Nabízíme několik herních módů. ' +
       'Připoj se, hraj a získávej ocenění.',
   },
+  quickLinks: {
+    id: 'app.components.Footer.quickLinks',
+    defaultMessage: 'Důležité odkazy',
+  },
+  leaguesOverview: {
+    id: 'app.components.Footer.leaguesOverview',
+    defaultMessage: 'Ligy a sezóny',
+  },
+  statistics: {
+    id: 'app.components.Footer.statistics',
+    defaultMessage: 'Statistiky',
+  },
+  mcrvcKarez: {
+    id: 'app.components.Footer.mcrvcKarez',
+    defaultMessage: 'MČRVC',
+  },
   contact: {
     id: 'app.components.Footer.contact',
     defaultMessage: 'Kontakt',
   },
   contactEmail: {
     id: 'app.components.Footer.contactEmail',
-    defaultMessage: 'wearevietcong@mail.com',
-  },
-  contactMobil: {
-    id: 'app.components.Footer.contactMobil',
-    defaultMessage: '+420 123 456 789',
-  },
-  author1: {
-    id: 'app.components.Footer.author1',
-    defaultMessage: 'Martin "Bascci" Chotětický',
-  },
-  author2: {
-    id: 'app.components.Footer.author2',
-    defaultMessage: 'Vojtěch "Trapper" Polcar',
-  },
-  followUs: {
-    id: 'app.components.Footer.followUs',
-    defaultMessage: 'Sledujte nás',
+    defaultMessage: 'support@veitconghub.eu',
   },
   sponsors: {
     id: 'app.components.Footer.sponsors',
     defaultMessage: 'Sponzoři',
+  },
+  xsStore: {
+    id: 'app.components.Footer.xsStore',
+    defaultMessage: 'XS Store CZ',
+  },
+  copyright: {
+    id: 'app.components.Footer.copyright',
+    defaultMessage: '© 2025 VietcongHUB',
   },
 });

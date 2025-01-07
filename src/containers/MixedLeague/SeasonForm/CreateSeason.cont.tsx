@@ -20,7 +20,7 @@ export const CreateSeasonCont: React.FC = () => {
   const { showNotification } = useNotifications();
   const { formatMessage } = useIntl();
 
-  const onCancel = () => navigate(Routes.MIX_LEAGUE_OVERVIEW);
+  const onCancel = () => navigate(Routes.LEAGUES_OVERVIEW);
 
   const onSubmit = async (values: IFormData) => {
     try {

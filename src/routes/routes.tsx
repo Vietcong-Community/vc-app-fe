@@ -3,6 +3,7 @@ import { ProfileCont } from 'src/containers/Profile/Profile.cont';
 
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { ContactCont } from '../containers/Contact/Contact.cont';
+import { EditProfileCont } from '../containers/EditProfile/EditProfile.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
 import { LoginCont } from '../containers/Login/Login.cont';
@@ -33,7 +34,7 @@ export const routesObject: RouteObject[] = [
       { element: <RegistrationCont />, path: Routes.REGISTRATION },
       { element: <ProfileCont />, path: Routes.USER },
       // MIX LEAGUE
-      { element: <OverviewCont />, path: Routes.MIX_LEAGUE_OVERVIEW },
+      { element: <OverviewCont />, path: Routes.LEAGUES_OVERVIEW },
       { element: <SeasonDetailCont />, path: Routes.SEASON_DETAIL },
       { element: <CreateSeasonCont />, path: Routes.SEASON_CREATE },
       { element: <UpdateSeasonCont />, path: Routes.SEASON_UPDATE },
@@ -51,6 +52,7 @@ export const routesObject: RouteObject[] = [
       { element: <CreateTeamCont />, path: Routes.TEAM_CREATE },
       { element: <UpdateTeamCont />, path: Routes.TEAM_UPDATE },
       { element: <TeamDetailCont />, path: Routes.TEAM_DETAIL },
+      { element: <EditProfileCont />, path: Routes.EDIT_PROFILE },
       // TODO NOT FOUND PAGE
     ],
   },

@@ -65,7 +65,7 @@ export const ManageMenu: React.FC = () => {
     try {
       await deleteSeason.mutateAsync({ id: query.id });
       showNotification(messages.deleteSuccess);
-      navigate(Routes.MIX_LEAGUE_OVERVIEW);
+      navigate(Routes.LEAGUES_OVERVIEW);
     } catch (e) {
       const error = getSingleErrorFromResponse(e as AxiosResponse);
       showNotification(

@@ -31,7 +31,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     try {
       await deleteMatch.mutateAsync({ id: query.id });
       showNotification(messages.deleteSuccess);
-      navigate(Routes.MIX_LEAGUE_OVERVIEW);
+      navigate(Routes.LEAGUES_OVERVIEW);
     } catch (e) {
       showNotification(messages.deleteFailed, undefined, NotificationType.ERROR);
     }
@@ -51,7 +51,6 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.update} />,
       key: '0',
-      onClick: () => navigate(Routes.MIXED_MATCH_UPDATE.replace(':id', query.id)),
       disabled: status !== MixedMatchStatus.NEW,
     },
     {
@@ -63,7 +62,6 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '2',
-      onClick: () => navigate(Routes.MIXED_MATCH_RESULT.replace(':id', query.id)),
       disabled: status !== MixedMatchStatus.READY,
     },
     {

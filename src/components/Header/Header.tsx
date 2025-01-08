@@ -30,10 +30,10 @@ export const Header: React.FC = () => {
       ),
     },
     {
-      key: 'change-password',
+      key: 'edit-profile',
       label: (
-        <span onClick={() => navigate(Routes.HOME)}>
-          <FormattedMessage id="Změna hesla" defaultMessage="Změna hesla" />
+        <span onClick={() => navigate(Routes.EDIT_PROFILE)}>
+          <FormattedMessage id="Upravit profil" defaultMessage="Upravit profil" />
         </span>
       ),
     },
@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
             selectable={false}
             style={{ borderBottom: 'none', width: '100%', justifyContent: 'center' }}
           >
-            <Menu.Item key="mixLeague" onClick={() => navigate(Routes.MIX_LEAGUE_OVERVIEW)}>
+            <Menu.Item key="mixLeague" onClick={() => navigate(Routes.LEAGUES_OVERVIEW)}>
               <FormattedMessage
                 id={messages.goToMixLeaguePage.id}
                 defaultMessage={messages.goToMixLeaguePage.defaultMessage}

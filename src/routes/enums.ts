@@ -2,7 +2,8 @@ export enum Routes {
   HOME = '/',
   LOGIN = '/prihlaseni',
   LEAGUES = '/ligy',
-  MIX_LEAGUE_OVERVIEW = '/mix-ligy',
+  LEAGUES_OVERVIEW = '/mix-ligy',
+  STATISTICS = '/statistiky',
   SEASON_DETAIL = '/detail-sezona/:id',
   SEASON_CREATE = '/vytvoreni-sezony',
   SEASON_UPDATE = '/uprava-sezony/:id',
@@ -22,4 +23,5 @@ export enum Routes {
   CONTACT = '/kontakty',
   LOGOUT = '/odhlaseni',
   REGISTRATION_SUCCESS = '/uspesna-registrace',
+  EDIT_PROFILE = '/edit-profile',
 }

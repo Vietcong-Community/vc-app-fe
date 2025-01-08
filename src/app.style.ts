@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { IThemeProps } from './theme/theme';
 
 export const AppContainer = styled.div`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.background};
   color: ${(props: IThemeProps) => props.theme.colors.black};
   display: flex;
   flex-direction: column;

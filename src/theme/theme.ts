@@ -25,6 +25,7 @@ export const theme = {
     background: '#fbf1c7',
     primary: '#458588',
     secondary: '#d79921',
+    borderColor: '#dddddd',
   },
   sizes: {
     contentPageWidth: `${BreakPoints.lg}px`,

@@ -1,9 +1,25 @@
 export enum Routes {
+  // GENERAL ROUTES
   HOME = '/',
   LOGIN = '/prihlaseni',
-  LEAGUES = '/ligy',
-  LEAGUES_OVERVIEW = '/mix-ligy',
   STATISTICS = '/statistiky',
+  REGISTRATION = '/registrace',
+  REGISTRATION_SUCCESS = '/uspesna-registrace',
+  ABOUT_US = '/o-nas',
+  HALLOFFAME = '/sin-slavy',
+  PUBLIC_CHANGE_PASSWORD = '/zmena-hesla/:token',
+  // USER ROUTES
+  MCRVC = '/mcrvc',
+  USER = '/uzivatel',
+  PRIVATE_CHANGE_PASSWORD = '/zmena-hesla',
+  EDIT_PROFILE = '/uprava-uzivatele/:id',
+  // TEAM ROUTES
+  TEAM_CREATE = '/vytvoreni-tymu',
+  TEAM_UPDATE = '/uprava-tymu/:id',
+  TEAM_DETAIL = '/tym/:id',
+  // LEAGUE
+  LEAGUES_OVERVIEW = '/mix-ligy',
+  // DEPRECATED
   SEASON_DETAIL = '/detail-sezona/:id',
   SEASON_CREATE = '/vytvoreni-sezony',
   SEASON_UPDATE = '/uprava-sezony/:id',
@@ -11,17 +27,4 @@ export enum Routes {
   MIXED_MATCH_DETAIL = '/detail-mix-zapasu/:id',
   MIXED_MATCH_UPDATE = '/uprava-mix-zapasu/:id',
   MIXED_MATCH_RESULT = '/zadat-vysledek-mix-zapasu/:id',
-  // TEAMS
-  TEAM_CREATE = '/vytvoreni-tymu',
-  TEAM_UPDATE = '/uprava-tymu/:id',
-  TEAM_DETAIL = '/tym/:id',
-  // USERS
-  REGISTRATION = '/registrace',
-  USER = '/uzivatel',
-  MCRVC = '/mcrvc',
-  HALLOFFAME = '/sin-slavy',
-  CONTACT = '/kontakty',
-  LOGOUT = '/odhlaseni',
-  REGISTRATION_SUCCESS = '/uspesna-registrace',
-  EDIT_PROFILE = '/edit-profile',
 }

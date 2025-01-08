@@ -14,7 +14,7 @@ export const Container = styled.header`
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      height: 3.4rem;
+      height: 4.4rem;
     `}
   `};
 `;
@@ -32,10 +32,11 @@ export const Content = styled.div`
 `;
 
 export const LeftSection = styled.div`
-  display: flex;
-  justify-content: flex-start; /* Ujistí se, že logo bude vlevo */
   align-items: center;
+  display: flex;
+  flex: 1;
   height: 100%;
+  justify-content: flex-start; /* Ujistí se, že logo bude vlevo */
 `;
 
 export const Logo = styled.div`
@@ -49,12 +50,92 @@ export const MenuContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 2;
-  flex-shrink: 0;
+  flex: 2;
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: none;
+    `}
+  `};
 `;
 
 export const RightSection = styled.div`
-  display: flex;
-  justify-content: flex-end; /* Ujistí se, že prvky vpravo budou na pravé straně */
   align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end; /* Ujistí se, že prvky vpravo budou na pravé straně */
+`;
+
+export const UserMenu = styled.div`
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+`;
+
+export const HamburgerCont = styled.div`
+  align-items: flex-end;
+  justify-content: flex-end;
+  display: none;
+
+  @media screen and (max-width: ${BreakPoints.md}px) {
+    display: flex;
+  }
+`;
+
+export const MobileHamburger = styled.div<{ isOpen: boolean }>`
+  width: 28px;
+  height: 22px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+
+  span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: ${(props: IThemeProps) => props.theme.colors.black};
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+  }
+
+  span:nth-child(1) {
+    top: 0;
+  }
+
+  span:nth-child(2),
+  span:nth-child(3) {
+    top: 9px;
+  }
+
+  span:nth-child(4) {
+    top: 18px;
+  }
+
+  ${(props) =>
+    props.isOpen &&
+    css`
+      span:nth-child(1) {
+        top: 18px;
+        width: 0;
+        left: 50%;
+        opacity: 0;
+      }
+      span:nth-child(2) {
+        transform: rotate(45deg);
+      }
+      span:nth-child(3) {
+        transform: rotate(-45deg);
+      }
+      span:nth-child(4) {
+        top: 5px;
+        width: 0;
+        opacity: 0;
+        left: 50%;
+      }
+    `}
 `;

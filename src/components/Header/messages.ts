@@ -17,36 +17,48 @@ export const messages = defineMessages({
     id: 'app.components.Header.goToHomePage',
     defaultMessage: 'Domů',
   },
+  changePasswordLink: {
+    id: 'app.components.Header.changePasswordLink',
+    defaultMessage: 'Změna hesla',
+  },
+  logout: {
+    id: 'app.components.Header.logout',
+    defaultMessage: 'Odhlásit se',
+  },
   goToProfilePage: {
     id: 'app.components.Header.goToProfilePage',
     defaultMessage: 'Profil',
   },
-  goToRulesPage: {
-    id: 'app.components.Header.goToRulesPage',
-    defaultMessage: 'Pravidla',
+  goToProfileEditPage: {
+    id: 'app.components.Header.goToProfileEditPage',
+    defaultMessage: 'Upravit profil',
   },
-  goToMcrvcPage: {
-    id: 'app.components.Header.goToMcrvcPage',
+  mcrvcLink: {
+    id: 'app.components.Header.mcrvcLink',
     defaultMessage: 'MČRVC',
   },
-  goToMixLeaguePage: {
-    id: 'app.components.Header.goToMixLeaguePage',
-    defaultMessage: 'Mix Liga',
+  leaguesLink: {
+    id: 'app.components.Header.leaguesLink',
+    defaultMessage: 'Liga',
   },
-  goToGloryPage: {
-    id: 'app.components.Header.goToGloryPage',
-    defaultMessage: 'Síň Slávy',
+  statisticsLink: {
+    id: 'app.components.Header.statisticsLink',
+    defaultMessage: 'Statistiky',
   },
   lightTheme: {
     id: 'app.components.Header.lightTheme',
-    defaultMessage: 'Světlý',
+    defaultMessage: 'Světlý design',
   },
   darkTheme: {
     id: 'app.components.Header.darkTheme',
-    defaultMessage: 'Tmavý',
+    defaultMessage: 'Tmavý design',
   },
-  goToContactPage: {
-    id: 'app.components.Header.goToContactPage',
-    defaultMessage: 'Kontakty',
+  aboutUsLink: {
+    id: 'app.components.Header.aboutUsLink',
+    defaultMessage: 'O nás',
+  },
+  userNotLoggedIn: {
+    id: 'app.components.Header.userNotLoggedIn',
+    defaultMessage: 'Nepřihlášen',
   },
 });

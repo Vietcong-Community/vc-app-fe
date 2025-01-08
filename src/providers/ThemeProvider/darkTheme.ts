@@ -6,4 +6,5 @@ export const DarkAppTheme = {
   background: '#282828',
   primary: '#458588',
   secondary: '#d79921',
+  borderColor: '#dddddd',
 };

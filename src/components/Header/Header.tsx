@@ -1,0 +1,109 @@
+import React, { useContext } from 'react';
+
+import { UserOutlined } from '@ant-design/icons';
+import { Dropdown, Menu } from 'antd';
+import { FormattedMessage } from 'react-intl';
+
+import logo from '../../assets/vclogo-removebg-preview.png';
+import { useRouter } from '../../hooks/RouterHook';
+import { ThemeContext } from '../../providers/ThemeProvider/ThemeContext';
+import { ThemeType } from '../../providers/ThemeProvider/constants';
+import { Routes } from '../../routes/enums';
+import { Button } from '../Button/Button';
+
+import { messages } from './messages';
+
+import * as S from './Header.style';
+
+export const Header: React.FC = () => {
+  const { navigate } = useRouter();
+
+  const { selectedTheme, toggleTheme } = useContext(ThemeContext);
+
+  const userMenuItems = [
+    {
+      key: 'profile',
+      label: (
+        <span onClick={() => navigate(Routes.USER)}>
+          <FormattedMessage id={messages.goToProfilePage.id} defaultMessage={messages.goToProfilePage.defaultMessage} />
+        </span>
+      ),
+    },
+    {
+      key: 'edit-profile',
+      label: (
+        <span onClick={() => navigate(Routes.EDIT_PROFILE)}>
+          <FormattedMessage id="Upravit profil" defaultMessage="Upravit profil" />
+        </span>
+      ),
+    },
+    {
+      key: 'logout',
+      label: (
+        <span onClick={() => navigate(Routes.LOGOUT)}>
+          <FormattedMessage id="Odhlásit se" defaultMessage="Odhlásit se" />
+        </span>
+      ),
+    },
+  ];
+
+  return (
+    <S.Container>
+      <S.Content>
+        <S.LeftSection>
+          <S.Logo onClick={() => navigate(Routes.HOME)}>
+            <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
+          </S.Logo>
+        </S.LeftSection>
+        <S.MenuContainer>
+          <Menu
+            mode="horizontal"
+            selectable={false}
+            style={{ borderBottom: 'none', width: '100%', justifyContent: 'center' }}
+          >
+            <Menu.Item key="mixLeague" onClick={() => navigate(Routes.LEAGUES_OVERVIEW)}>
+              <FormattedMessage
+                id={messages.goToMixLeaguePage.id}
+                defaultMessage={messages.goToMixLeaguePage.defaultMessage}
+              />
+            </Menu.Item>
+            <Menu.Item key="mcrvc" onClick={() => navigate(Routes.MCRVC)}>
+              <FormattedMessage id={messages.goToMcrvcPage.id} defaultMessage={messages.goToMcrvcPage.defaultMessage} />
+            </Menu.Item>
+            <Menu.Item key="hallOfFame" onClick={() => navigate(Routes.HALLOFFAME)}>
+              <FormattedMessage id={messages.goToGloryPage.id} defaultMessage={messages.goToGloryPage.defaultMessage} />
+            </Menu.Item>
+            <Menu.Item key="contact" onClick={() => navigate(Routes.CONTACT)}>
+              <FormattedMessage
+                id={messages.goToContactPage.id}
+                defaultMessage={messages.goToContactPage.defaultMessage}
+              />
+            </Menu.Item>
+          </Menu>
+        </S.MenuContainer>
+        <S.RightSection>
+          <Button onClick={toggleTheme}>
+            <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
+          </Button>
+          <Dropdown menu={{ items: userMenuItems }} trigger={['click']}>
+            <span style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <UserOutlined style={{ fontSize: '24px', marginRight: '8px' }} />
+              <span style={{ fontSize: '15px', marginTop: '3px', marginRight: '8px' }}>#Basccino</span>
+            </span>
+          </Dropdown>
+          <Menu mode="horizontal" selectable={false}>
+            <Menu.Item key="registration" onClick={() => navigate(Routes.REGISTRATION)}>
+              <FormattedMessage
+                id={messages.goToRegistration.id}
+                defaultMessage={messages.goToRegistration.defaultMessage}
+              />
+            </Menu.Item>
+            <Menu.Item key="login" onClick={() => navigate(Routes.LOGIN)}>
+              <FormattedMessage id={messages.goToLogin.id} defaultMessage={messages.goToLogin.defaultMessage} />
+            </Menu.Item>
+          </Menu>
+        </S.RightSection>
+      </S.Content>
+    </S.Container>
+  );
+};

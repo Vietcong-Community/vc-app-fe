@@ -124,7 +124,6 @@ export const get = async <T, S = {}>(
   showErrorToastMessage = true,
 ) => {
   try {
-    console.log(urlParams);
     return await axiosApi.get<T>(paramEndpoint(path, urlParams), {
       params: queryParams || {},
       responseType,

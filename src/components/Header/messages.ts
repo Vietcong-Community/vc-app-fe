@@ -45,13 +45,29 @@ export const messages = defineMessages({
     id: 'app.components.Header.statisticsLink',
     defaultMessage: 'Statistiky',
   },
+  themeTitle: {
+    id: 'app.components.Header.themeTitle',
+    defaultMessage: 'Design',
+  },
   lightTheme: {
     id: 'app.components.Header.lightTheme',
-    defaultMessage: 'Světlý design',
+    defaultMessage: 'Světlý',
   },
   darkTheme: {
     id: 'app.components.Header.darkTheme',
-    defaultMessage: 'Tmavý design',
+    defaultMessage: 'Tmavý',
+  },
+  languageTitle: {
+    id: 'app.components.Header.languageTitle',
+    defaultMessage: 'Jazyk',
+  },
+  czech: {
+    id: 'app.components.Header.czech',
+    defaultMessage: 'CZ',
+  },
+  english: {
+    id: 'app.components.Header.english',
+    defaultMessage: 'EN',
   },
   aboutUsLink: {
     id: 'app.components.Header.aboutUsLink',

@@ -29,8 +29,6 @@ export const CreateSeasonCont: React.FC = () => {
       showNotification(messages.createSuccess);
       navigate(Routes.SEASON_DETAIL.replace(':id', response.data.id));
     } catch (e) {
-      // TODO Handle error
-      console.log(e);
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
     }
   };

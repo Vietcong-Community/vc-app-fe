@@ -1,7 +1,10 @@
 import React, { CSSProperties } from 'react';
 
-import { Button as AntDButton, Spin } from 'antd';
-import { ButtonType } from 'antd/lib/button';
+import { Spin } from 'antd';
+
+import { MainButtonVariant } from './enums';
+
+import * as S from './Button.style';
 
 interface IProps {
   disabled?: boolean;
@@ -11,9 +14,10 @@ interface IProps {
   iconPosition?: 'start' | 'end';
   loading?: boolean;
   onClick?: () => void;
+  outlined?: boolean;
   style?: CSSProperties;
   type?: 'submit' | 'button';
-  variant?: ButtonType;
+  variant?: MainButtonVariant;
 }
 
 export const Button: React.FC<IProps> = (props) => {
@@ -27,23 +31,66 @@ export const Button: React.FC<IProps> = (props) => {
     onClick,
     style,
     type = 'button',
-    variant = 'primary',
+    variant = MainButtonVariant.PRIMARY,
   } = props;
 
   const isDisabled = disabled || loading;
 
+  if (variant === MainButtonVariant.OUTLINED) {
+    return (
+      <S.ButtonWrapper
+        disabled={isDisabled}
+        $fullWidth={fullWidth}
+        htmlType={type}
+        icon={icon}
+        iconPosition={iconPosition}
+        $isOutlined
+        onClick={onClick}
+        type="default"
+        style={{
+          ...style,
+        }}
+        variant="outlined"
+      >
+        {loading && <Spin size="small" />}
+        {!loading && children}
+      </S.ButtonWrapper>
+    );
+  }
+
+  if (variant === MainButtonVariant.SECONDARY) {
+    return (
+      <S.ButtonWrapper
+        disabled={isDisabled}
+        $fullWidth={fullWidth}
+        htmlType={type}
+        icon={icon}
+        iconPosition={iconPosition}
+        $isSecondary
+        onClick={onClick}
+        type="default"
+        style={style}
+        variant="filled"
+      >
+        {loading && <Spin size="small" />}
+        {!loading && children}
+      </S.ButtonWrapper>
+    );
+  }
+
   return (
-    <AntDButton
+    <S.ButtonWrapper
       disabled={isDisabled}
+      $fullWidth={fullWidth}
       htmlType={type}
       icon={icon}
       iconPosition={iconPosition}
       onClick={onClick}
-      type={variant as ButtonType}
-      style={{ width: fullWidth ? '100%' : 'fit-content', ...style }}
+      type="primary"
+      style={style}
     >
       {loading && <Spin size="small" />}
       {!loading && children}
-    </AntDButton>
+    </S.ButtonWrapper>
   );
 };

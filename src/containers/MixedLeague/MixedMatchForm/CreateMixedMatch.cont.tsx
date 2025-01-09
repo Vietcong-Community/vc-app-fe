@@ -29,7 +29,6 @@ export const CreateMixedMatchCont: React.FC = () => {
   const onCancel = () => navigate(Routes.SEASON_DETAIL.replace(':id', query.id));
 
   const onSubmit = async (values: IFormData) => {
-    console.log(values);
     try {
       const submitValues = transformSubmitValues(values);
       const response = await createMatch.mutateAsync(submitValues);

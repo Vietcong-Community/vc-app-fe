@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { IUser } from '../../../../../api/hooks/users/interfaces';
 import { Button } from '../../../../../components/Button/Button';
+import { MainButtonVariant } from '../../../../../components/Button/enums';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 
 import { IFormData } from './RoundsInformation.fields';
@@ -18,10 +19,8 @@ interface IProps {
 }
 
 export const RoundsInformation: React.FC<IProps> = (props: IProps) => {
-  const { goBack, initialValues, onSubmit, players } = props;
+  const { goBack, initialValues, onSubmit } = props;
   const [form] = Form.useForm();
-
-  console.log(players);
 
   return (
     <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onSubmit}>
@@ -31,7 +30,7 @@ export const RoundsInformation: React.FC<IProps> = (props: IProps) => {
         </H2>
       </Flex>
       <Space style={{ justifyContent: 'flex-end', width: '100%' }}>
-        <Button variant="default" onClick={goBack}>
+        <Button onClick={goBack} variant={MainButtonVariant.SECONDARY}>
           <FormattedMessage {...messages.goBack} />
         </Button>
         <Button type="submit">

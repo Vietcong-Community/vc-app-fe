@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 
 import { LoginOutlined, RightOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Divider } from 'antd';
+import { Avatar, Divider, Space, Switch } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { Transition } from 'react-transition-group';
 
@@ -155,31 +155,37 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                     />
                     <S.MenuItem onClick={() => onMenuItemClick(Routes.LOGIN)}>
                       <div>
-                        <Avatar
-                          size={28}
-                          icon={<LoginOutlined />}
-                          style={{ backgroundColor: theme.mainColors.primary, marginRight: '0.5rem' }}
-                        />
+                        <S.AvatarIcon size={28} icon={<LoginOutlined />} />
                         <FormattedMessage {...messages.goToLogin} />
                       </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>
                     <S.MenuItem onClick={() => onMenuItemClick(Routes.REGISTRATION)}>
                       <div>
-                        <Avatar
-                          size={28}
-                          icon={<UserAddOutlined />}
-                          style={{ backgroundColor: theme.mainColors.primary, marginRight: '0.5rem' }}
-                        />
+                        <S.AvatarIcon size={28} icon={<UserAddOutlined />} />
                         <FormattedMessage {...messages.goToRegistration} />
                       </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>
-                    <S.MenuLink onClick={toggleTheme}>
-                      <FormattedMessage
-                        {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)}
-                      />
-                    </S.MenuLink>
+                    <Space size="large">
+                      <S.SwitchContainer>
+                        <FormattedMessage {...messages.themeTitle} />
+                        <Switch
+                          checkedChildren={<FormattedMessage {...messages.lightTheme} />}
+                          unCheckedChildren={<FormattedMessage {...messages.darkTheme} />}
+                          onChange={toggleTheme}
+                          defaultChecked={selectedTheme === ThemeType.LIGHT}
+                        />
+                      </S.SwitchContainer>
+                      <S.SwitchContainer>
+                        <FormattedMessage {...messages.languageTitle} />
+                        <Switch
+                          checkedChildren={<FormattedMessage {...messages.czech} />}
+                          unCheckedChildren={<FormattedMessage {...messages.english} />}
+                          defaultChecked
+                        />
+                      </S.SwitchContainer>
+                    </Space>
                   </>
                 )}
               </S.MenuContent>

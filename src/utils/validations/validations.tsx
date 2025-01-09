@@ -9,7 +9,6 @@ export const isRequired = {
 
 export const maxLength = (length: number) => ({
   validator: (_unused: object, value: string) => {
-    console.log(value);
     if (value?.length > length) {
       return Promise.reject('Some message here');
     } else {

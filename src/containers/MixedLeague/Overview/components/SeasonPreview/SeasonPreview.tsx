@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { IMixedMatch, MixedMatchStatus, SeasonStatus } from '../../../../../api/hooks/mixedLeague/interfaces';
 import { useMatchesBySeason } from '../../../../../api/hooks/mixedLeague/seasons/api';
 import { Button } from '../../../../../components/Button/Button';
+import { MainButtonVariant } from '../../../../../components/Button/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
@@ -83,7 +84,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
         <Typography.Title level={4} style={{ margin: 'auto 0' }}>
           <FormattedMessage {...messages.bestPlayers} />
         </Typography.Title>
-        <Button icon={<RightOutlined />} iconPosition={'end'} onClick={() => {}} variant="default">
+        <Button icon={<RightOutlined />} iconPosition={'end'} onClick={() => {}} variant={MainButtonVariant.SECONDARY}>
           <FormattedMessage {...messages.goToStats} />
         </Button>
       </Flex>

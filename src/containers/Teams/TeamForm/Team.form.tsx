@@ -4,6 +4,7 @@ import { Form, Space } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button } from '../../../components/Button/Button';
+import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
 import { InputAreaField } from '../../../components/Fields/InputAreaField/InputAreaField';
 import { InputField } from '../../../components/Fields/InputField/InputField';
@@ -44,7 +45,7 @@ export const TeamForm: React.FC<IProps> = (props: IProps) => {
           placeholder={formatMessage(messages.descriptionLabel)}
         />
         <Space style={{ justifyContent: 'flex-end', width: '100%' }}>
-          <Button onClick={onCancel} variant="default">
+          <Button onClick={onCancel} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.cancelButtonLabel} />
           </Button>
           <Button loading={isSubmitting} type="submit">

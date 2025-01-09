@@ -39,7 +39,6 @@ export const MixedMatchDetail: React.FC = () => {
   const isPossibleToConfirmMatch =
     maps.length === 2 && !!matchDetail.data?.firstCaptain && !!matchDetail.data?.secondCaptain;
 
-  console.log(maps);
   return (
     <ContentLayout>
       <Flex align="center" justify="space-between">

@@ -1,3 +1,4 @@
+import { Avatar } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { IThemeProps } from '../../../../theme/theme';
@@ -8,7 +9,7 @@ export const Container = styled.div<{ isOpen: boolean }>`
   width: 100vw;
   height: 100%;
   position: fixed;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.mainColors.background};
   transition: all 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -37,7 +38,7 @@ export const MobileHamburger = styled.div<{ isOpen: boolean }>`
     position: absolute;
     height: 4px;
     width: 100%;
-    background: ${(props: IThemeProps) => props.theme.colors.black};
+    background: ${(props: IThemeProps) => props.theme.mainColors.text};
     border-radius: 9px;
     opacity: 1;
     left: 0;
@@ -125,4 +126,16 @@ export const LogoutLink = styled.a`
   left: 0;
   position: absolute;
   right: 0;
+`;
+
+export const SwitchContainer = styled.div`
+  align-items: start;
+  display: flex;
+  font-size: 14px;
+  flex-direction: column;
+`;
+
+export const AvatarIcon = styled(Avatar)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  margin-right: 0.5rem;
 `;

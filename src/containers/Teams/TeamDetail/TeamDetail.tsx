@@ -13,7 +13,6 @@ export const TeamDetailCont: React.FC = () => {
   const { query } = useRouter<{ id: string }>();
   const team = useTeamDetail(query.id);
 
-  console.log(query.id);
   return (
     <ContentLayout>
       <Flex align="center" justify="space-between">

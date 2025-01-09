@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button } from '../../../components/Button/Button';
+import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
 import { DatePickerField } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { InputField } from '../../../components/Fields/InputField/InputField';
@@ -47,7 +48,7 @@ export const SeasonForm: React.FC<IProps> = (props: IProps) => {
           label={<FormattedMessage {...messages.endDateLabel} />}
         />
         <Space style={{ justifyContent: 'flex-end', width: '100%' }}>
-          <Button onClick={onCancel} variant="default">
+          <Button onClick={onCancel} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.cancelButtonLabel} />
           </Button>
           <Button loading={isSubmitting} type="submit">

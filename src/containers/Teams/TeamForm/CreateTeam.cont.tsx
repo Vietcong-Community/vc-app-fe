@@ -27,8 +27,6 @@ export const CreateTeamCont: React.FC = () => {
       showNotification(messages.createSuccess);
       navigate(Routes.TEAM_DETAIL.replace(':id', response.data.id?.toString()));
     } catch (e) {
-      // TODO Handle error
-      console.log(e);
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
     }
   };

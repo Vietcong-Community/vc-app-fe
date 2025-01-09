@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { useSeasons } from '../../../api/hooks/mixedLeague/seasons/api';
 import { Button } from '../../../components/Button/Button';
+import { MainButtonVariant } from '../../../components/Button/enums';
+import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
@@ -88,6 +90,14 @@ export const OverviewCont: React.FC = () => {
         />
         <br />
         <Button onClick={() => navigate(Routes.SEASON_CREATE)}>
+          <FormattedMessage {...messages.createNewSeason} />
+        </Button>
+        <Gap defaultHeight={16} />
+        <Button variant={MainButtonVariant.SECONDARY}>
+          <FormattedMessage {...messages.createNewSeason} />
+        </Button>
+        <Gap defaultHeight={16} />
+        <Button variant={MainButtonVariant.OUTLINED}>
           <FormattedMessage {...messages.createNewSeason} />
         </Button>
       </Flex>

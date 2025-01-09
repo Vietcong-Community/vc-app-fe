@@ -4,7 +4,7 @@ import { BreakPoints, IThemeProps } from '../../theme/theme';
 import { makeMediaQuery } from '../../utils/mediaQuery';
 
 export const Container = styled.header`
-  background-color: ${(props: IThemeProps) => props.theme.colors.white};
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.background};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   height: 4.4rem;
   position: sticky;
@@ -95,7 +95,7 @@ export const MobileHamburger = styled.div<{ isOpen: boolean }>`
     position: absolute;
     height: 4px;
     width: 100%;
-    background: ${(props: IThemeProps) => props.theme.colors.black};
+    background: ${(props: IThemeProps) => props.theme.mainColors.text};
     border-radius: 9px;
     opacity: 1;
     left: 0;

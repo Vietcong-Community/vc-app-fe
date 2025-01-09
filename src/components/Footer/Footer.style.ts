@@ -1,4 +1,4 @@
-import { BreakPoints } from 'src/theme/theme';
+import { BreakPoints, IThemeProps } from 'src/theme/theme';
 import styled, { css } from 'styled-components';
 
 import footerBg from '../../assets/heli-footer1.webp';
@@ -77,7 +77,7 @@ export const Column = styled.div`
 export const Link = styled.div`
   &:hover {
     cursor: pointer;
-    color: gold;
+    color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   }
 
   a {
@@ -86,7 +86,7 @@ export const Link = styled.div`
 
     &:hover {
       cursor: pointer;
-      color: gold;
+      color: ${(props: IThemeProps) => props.theme.mainColors.accent};
     }
   }
 `;
@@ -122,7 +122,7 @@ export const IconWrapper = styled.div`
   justify-content: center;
 
   &:hover {
-    color: gold;
+    color: ${(props: IThemeProps) => props.theme.mainColors.accent};
     font-size: 30px;
     transition: font-size 0.3s ease;
   }

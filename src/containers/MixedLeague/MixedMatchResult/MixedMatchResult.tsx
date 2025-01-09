@@ -10,6 +10,7 @@ import { useMatchById, useSaveMatchResult } from '../../../api/hooks/mixedLeague
 import { useUsers } from '../../../api/hooks/users/api';
 import { IUser } from '../../../api/hooks/users/interfaces';
 import { Button } from '../../../components/Button/Button';
+import { MainButtonVariant } from '../../../components/Button/enums';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { useRouter } from '../../../hooks/RouterHook';
@@ -70,9 +71,7 @@ export const MixedMatchResult: React.FC = () => {
     }
   }, [JSON.stringify(mixedMatchFormData.BASIC_INFORMATION?.players ?? [])]);
 
-  const onSubmit = () => {
-    console.log(mixedMatchFormData);
-  };
+  const onSubmit = () => {};
 
   const goBackToMatchDetail = () => navigate(Routes.MIXED_MATCH_DETAIL.replace(':id', query.id));
 
@@ -96,8 +95,6 @@ export const MixedMatchResult: React.FC = () => {
     goForward();
   };
 
-  console.log(mixedMatchFormData);
-
   return (
     <>
       <Helmet title={formatMessage(messages.title)} />
@@ -106,7 +103,7 @@ export const MixedMatchResult: React.FC = () => {
           <H1>
             <FormattedMessage {...messages.title} />
           </H1>
-          <Button onClick={goBackToMatchDetail} variant="default">
+          <Button onClick={goBackToMatchDetail} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.goBack} />
           </Button>
         </Flex>

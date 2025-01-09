@@ -22,10 +22,12 @@ export const theme = {
     normal: 500,
   },
   mainColors: {
-    background: '#fbf1c7',
-    primary: '#458588',
-    secondary: '#d79921',
+    text: '#17170d',
+    background: '#f9f9f6',
+    primary: '#a2a966',
+    secondary: '#aacfac',
     borderColor: '#dddddd',
+    accent: '#7cb698',
   },
   sizes: {
     contentPageWidth: `${BreakPoints.lg}px`,

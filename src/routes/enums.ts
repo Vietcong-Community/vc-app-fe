@@ -18,7 +18,7 @@ export enum Routes {
   TEAM_UPDATE = '/uprava-tymu/:id',
   TEAM_DETAIL = '/tym/:id',
   // LEAGUE
-  LEAGUES_OVERVIEW = '/mix-ligy',
+  LEAGUES_OVERVIEW = '/liga',
   // DEPRECATED
   SEASON_DETAIL = '/detail-sezona/:id',
   SEASON_CREATE = '/vytvoreni-sezony',

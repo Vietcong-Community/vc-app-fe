@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { IMap } from '../../../../../api/hooks/enums/interfaces';
 import { IUser } from '../../../../../api/hooks/users/interfaces';
 import { Button } from '../../../../../components/Button/Button';
+import { MainButtonVariant } from '../../../../../components/Button/enums';
 import { MultiSelectField } from '../../../../../components/Fields/MultiSelectField/MultiSelectField';
 import { SelectField } from '../../../../../components/Fields/SelectField/SelectField';
 import { H2 } from '../../../../../components/Titles/H2/H2';
@@ -68,7 +69,7 @@ export const BasicInformation: React.FC<IProps> = (props: IProps) => {
         </Col>
       </Row>
       <Space style={{ justifyContent: 'flex-end', width: '100%' }}>
-        <Button variant="default" onClick={goBack}>
+        <Button onClick={goBack} variant={MainButtonVariant.SECONDARY}>
           <FormattedMessage {...messages.goBack} />
         </Button>
         <Button type="submit">

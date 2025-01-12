@@ -112,7 +112,7 @@ export const Header: React.FC = () => {
             selectable={false}
             style={{ borderBottom: 'none', display: 'flex', justifyContent: 'center', width: '100%' }}
           >
-            <Menu.Item key="leagues" onClick={() => navigate(Routes.LEAGUES_OVERVIEW)} style={{ fontSize: 16 }}>
+            <Menu.Item key="leagues" onClick={() => navigate(Routes.LEAGUE)} style={{ fontSize: 16 }}>
               <FormattedMessage {...messages.leaguesLink} />
             </Menu.Item>
             <Menu.Item key="mcrvc" onClick={() => navigate(Routes.MCRVC)} style={{ fontSize: 16 }}>

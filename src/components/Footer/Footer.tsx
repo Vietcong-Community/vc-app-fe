@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
               <FormattedMessage {...messages.quickLinks} />
             </h4>
-            <S.Link onClick={() => navigate(Routes.LEAGUES_OVERVIEW)}>
+            <S.Link onClick={() => navigate(Routes.LEAGUE)}>
               <FormattedMessage {...messages.leaguesOverview} />
             </S.Link>
             <S.Link onClick={() => navigate(Routes.STATISTICS)}>

@@ -6,16 +6,11 @@ import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
 import { EditProfileCont } from '../containers/EditProfile/EditProfile.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
+import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
+import { OverviewCont } from '../containers/League/Overview/Overview.cont';
+import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail.cont';
 import { LoginCont } from '../containers/Login/Login.cont';
 import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
-import { MixedMatchDetail } from '../containers/MixedLeague/MixedMatchDetail/MixedMatchDetail.cont';
-import { CreateMixedMatchCont } from '../containers/MixedLeague/MixedMatchForm/CreateMixedMatch.cont';
-import { UpdateMixedMatchCont } from '../containers/MixedLeague/MixedMatchForm/UpdateMixedMatch.cont';
-import { MixedMatchResult } from '../containers/MixedLeague/MixedMatchResult/MixedMatchResult';
-import { OverviewCont } from '../containers/MixedLeague/Overview/Overview.cont';
-import { SeasonDetailCont } from '../containers/MixedLeague/SeasonDetail/SeasonDetail.cont';
-import { CreateSeasonCont } from '../containers/MixedLeague/SeasonForm/CreateSeason.cont';
-import { UpdateSeasonCont } from '../containers/MixedLeague/SeasonForm/UpdateSeason.cont';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
 import { RegistrationCont } from '../containers/Registration/Registration.cont';
 import { RegistrationSuccessCont } from '../containers/RegistrationSuccess/RegistrationSuccess.cont';
@@ -46,15 +41,10 @@ export const routesObject: RouteObject[] = [
       { element: <TeamDetailCont />, path: Routes.TEAM_DETAIL },
 
       // MIX LEAGUE
-      { element: <OverviewCont />, path: Routes.LEAGUES_OVERVIEW },
+      { element: <OverviewCont />, path: Routes.LEAGUE },
       { element: <SeasonDetailCont />, path: Routes.SEASON_DETAIL },
-      { element: <CreateSeasonCont />, path: Routes.SEASON_CREATE },
-      { element: <UpdateSeasonCont />, path: Routes.SEASON_UPDATE },
       // MIX MATCHES
-      { element: <CreateMixedMatchCont />, path: Routes.MIXED_MATCH_CREATE },
-      { element: <UpdateMixedMatchCont />, path: Routes.MIXED_MATCH_UPDATE },
-      { element: <MixedMatchDetail />, path: Routes.MIXED_MATCH_DETAIL },
-      { element: <MixedMatchResult />, path: Routes.MIXED_MATCH_RESULT },
+      { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
       { element: <McrvcCont />, path: Routes.MCRVC },
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
       { element: <RegistrationSuccessCont />, path: Routes.REGISTRATION_SUCCESS },

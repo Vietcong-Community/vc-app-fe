@@ -18,13 +18,8 @@ export enum Routes {
   TEAM_UPDATE = '/uprava-tymu/:id',
   TEAM_DETAIL = '/tym/:id',
   // LEAGUE
-  LEAGUES_OVERVIEW = '/liga',
-  // DEPRECATED
-  SEASON_DETAIL = '/detail-sezona/:id',
-  SEASON_CREATE = '/vytvoreni-sezony',
-  SEASON_UPDATE = '/uprava-sezony/:id',
-  MIXED_MATCH_CREATE = '/vytvoreni-mix-zapasu/:id',
-  MIXED_MATCH_DETAIL = '/detail-mix-zapasu/:id',
-  MIXED_MATCH_UPDATE = '/uprava-mix-zapasu/:id',
-  MIXED_MATCH_RESULT = '/zadat-vysledek-mix-zapasu/:id',
+  LEAGUE = '/liga',
+  SEASON_DETAIL = '/detail-sezony/:id',
+  MATCH_CREATE = '/vytvoreni-zapasu/:id',
+  MATCH_DETAIL = '/detail-zapasu/:id',
 }

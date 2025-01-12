@@ -52,7 +52,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
   const renderGeneralLinks = () => {
     return (
       <>
-        <S.MenuItem onClick={() => onMenuItemClick(Routes.LEAGUES_OVERVIEW)}>
+        <S.MenuItem onClick={() => onMenuItemClick(Routes.LEAGUE)}>
           <FormattedMessage {...messages.leaguesLink} />
           <RightOutlined style={{ fontSize: 22 }} />
         </S.MenuItem>

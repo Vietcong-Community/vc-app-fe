@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { MixedMatchStatus, SeasonStatus } from '../api/hooks/mixedLeague/interfaces';
+import { MatchStatus, SeasonStatus } from '../api/hooks/league/interfaces';
 import { Nation, PlayersCount } from '../constants/enums';
 
 import { messages } from './messages';
@@ -20,17 +20,17 @@ export const mapSeasonStatusToTranslation = (status?: SeasonStatus): ReactNode |
   }
 };
 
-export const mapMatchStatusToTranslation = (status?: MixedMatchStatus): ReactNode | undefined => {
+export const mapMatchStatusToTranslation = (status?: MatchStatus): ReactNode | undefined => {
   switch (status) {
-    case MixedMatchStatus.NEW:
+    case MatchStatus.NEW:
       return <FormattedMessage {...messages.matchStatusNew} />;
-    case MixedMatchStatus.READY:
+    case MatchStatus.READY:
       return <FormattedMessage {...messages.matchStatusReady} />;
-    case MixedMatchStatus.WAITING_FOR_CONFIRMATION:
+    case MatchStatus.WAITING_FOR_CONFIRMATION:
       return <FormattedMessage {...messages.matchStatusWaitingForConfirmation} />;
-    case MixedMatchStatus.COMPLAINT:
+    case MatchStatus.COMPLAINT:
       return <FormattedMessage {...messages.matchStatusComplaint} />;
-    case MixedMatchStatus.FINISHED:
+    case MatchStatus.FINISHED:
       return <FormattedMessage {...messages.matchStatusFinished} />;
     default:
       return undefined;

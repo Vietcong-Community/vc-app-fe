@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Column = styled.div`
   padding: 20px;
-  background-color: #063970;
   border-radius: 8px;
 `;
 

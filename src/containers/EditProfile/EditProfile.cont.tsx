@@ -1,15 +1,11 @@
 import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
-import { messages } from './messages';
+import { EditProfileForm } from './EditProfile.form';
 
 export const EditProfileCont: React.FC = () => {
   return (
     <>
-      <h1>
-        <FormattedMessage {...messages.title} />
-      </h1>
+      <EditProfileForm />
     </>
   );
 };

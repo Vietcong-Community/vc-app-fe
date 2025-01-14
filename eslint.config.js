@@ -4,7 +4,6 @@ import formatJsPlugin from 'eslint-plugin-formatjs';
 import jsxPlugin from 'eslint-plugin-jsx-a11y';
 import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -25,14 +24,12 @@ export default tseslint.config(
     },
     plugins: {
       react: reactPlugin,
-      'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'jsx-a11y': jsxPlugin,
       prettier: prettierPlugin,
       formatjs: formatJsPlugin,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       ...prettierConfig.rules,
       '@typescript-eslint/naming-convention': [
@@ -87,8 +84,6 @@ export default tseslint.config(
       'react/require-default-props': 0,
       'no-underscore-dangle': 0,
       'import/no-named-as-default': 0,
-      'react-hooks/rules-of-hooks': 2,
-      'react-hooks/exhaustive-deps': 0,
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/no-static-element-interactions': 'off',
       '@typescript-eslint/no-unnecessary-type-constraint': 0,

@@ -3,21 +3,8 @@ import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { notification } from 'antd';
 import { FormattedMessage, MessageDescriptor, useIntl } from 'react-intl';
 
+import { NotificationsContext } from './NotificationsContext';
 import { NotificationType } from './enums';
-
-interface INotificationsContext {
-  showNotification: (
-    title: MessageDescriptor | string,
-    description?: MessageDescriptor | string,
-    type?: NotificationType,
-    duration?: number,
-  ) => void;
-}
-
-export const NotificationsContext = React.createContext<INotificationsContext>({
-  showNotification: () => {},
-});
-NotificationsContext.displayName = 'NotificationsContext';
 
 interface IProps {
   children: ReactElement;

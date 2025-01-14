@@ -4,7 +4,6 @@ export interface IFormData {
   firstName?: string;
   lastName?: string;
   username: string;
-  playerName: string;
   facebookLink: string;
   twitchLink: string;
   steamName: string;
@@ -24,10 +23,6 @@ export const fields: IFormFields<IFormData> = {
   },
   username: {
     name: 'username',
-    required: false,
-  },
-  playerName: {
-    name: 'email',
     required: false,
   },
   facebookLink: {

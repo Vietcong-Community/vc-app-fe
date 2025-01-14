@@ -21,8 +21,8 @@ export const EditProfileForm: React.FC = () => {
     console.log('Current tab:', key);
   };
 
-  const handlePhotoChange = (info: any) => {
-    console.log('Photo updated:', info);
+  const handlePhotoChange = () => {
+    console.log('Photo updated:');
   };
   return (
     <>
@@ -69,11 +69,6 @@ export const EditProfileForm: React.FC = () => {
                     {...fields.username}
                     label={<FormattedMessage {...messages.usernameLabel} />}
                     placeholder={formatMessage(messages.usernameLabel)}
-                  />
-                  <InputField
-                    {...fields.playerName}
-                    label={<FormattedMessage {...messages.playerNameLabel} />}
-                    placeholder={formatMessage(messages.playerNameLabel)}
                   />
                 </Form>
               </TabPane>

@@ -15,11 +15,7 @@ export const messages = defineMessages({
   },
   usernameLabel: {
     id: 'app.containers.EditProfile.EditProfileForm.usernameLabel',
-    defaultMessage: 'Uživatelské jméno',
-  },
-  playerNameLabel: {
-    id: 'app.containers.EditProfile.EditProfileForm.playerNameLabel',
-    defaultMessage: 'Jméno ve hře',
+    defaultMessage: 'Nickname',
   },
   facebookLinkLabel: {
     id: 'app.containers.EditProfile.EditProfileForm.facebookLinkLabel',

@@ -5,8 +5,21 @@ export const messages = defineMessages({
     id: 'app.utils.validations.required',
     defaultMessage: 'Vyplňte povinné pole',
   },
+  minLength: {
+    id: 'app.utils.validations.minLength',
+    defaultMessage: 'Minimální počet znaků je {length}',
+  },
   maxLength: {
     id: 'app.utils.validations.maxLength',
     defaultMessage: 'Maximální počet znaků je {length}',
+  },
+  passwordValidation: {
+    id: 'app.utils.validations.passwordValidation',
+    defaultMessage:
+      'Heslo musí obsahovat alespoň jedno velké písmeno, malé písmeno, číslici a speciální znak v délce 8-20 znaků.',
+  },
+  passwordConfirm: {
+    id: 'app.utils.validations.passwordConfirm',
+    defaultMessage: 'Hesla se neshodují!',
   },
 });

@@ -13,7 +13,7 @@ export const theme = {
     white: '#ffffff',
   },
   fontSize: {
-    normal: '18px',
+    normal: '16px',
   },
   fontWeight: {
     bold: 600,

@@ -3,3 +3,7 @@ export interface ICreateUser {
   password: string;
   nickname: string;
 }
+
+export interface IForgottenPassword {
+  email: string;
+}

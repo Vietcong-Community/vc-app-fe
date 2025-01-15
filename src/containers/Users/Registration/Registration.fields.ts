@@ -1,5 +1,11 @@
 import { IFormFields } from '../../../@types/forms';
-import { isPasswordSame, isPasswordValid, isRequired, minLength } from '../../../utils/validations/validations';
+import {
+  isEmailValid,
+  isPasswordSame,
+  isPasswordValid,
+  isRequired,
+  minLength,
+} from '../../../utils/validations/validations';
 
 export interface IFormData {
   nickname: string;
@@ -18,7 +24,7 @@ export const fields: IFormFields<IFormData> = {
   email: {
     name: 'email',
     required: true,
-    rules: [isRequired],
+    rules: [isRequired, isEmailValid],
   },
   password: {
     name: 'password',

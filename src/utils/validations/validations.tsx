@@ -21,6 +21,23 @@ export const isPasswordValid = () => ({
   message: <FormattedMessage {...messages.passwordValidation} />,
 });
 
+const EMAIL_REGEX =
+  // eslint-disable-next-line max-len
+  /^(([^<>()[\]\\.,;:\s@"%À-ÖØ-öø-ž]+(\.[^<>()[\]\\.,;:\s@"%À-ÖØ-öø-ž]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const isEmailValid = () => ({
+  validator: (_unused: object, value: string) => {
+    if (value) {
+      const cleanValue = `${value}`.replace(/ /g, '');
+      if (cleanValue && !EMAIL_REGEX.test(cleanValue)) {
+        return Promise.reject();
+      }
+    }
+    return Promise.resolve();
+  },
+  message: <FormattedMessage {...messages.emailValidation} />,
+});
+
 export const minLength = (length: number) => ({
   validator: (_unused: object, value: string) => {
     if (value?.length < length) {

@@ -12,12 +12,11 @@ import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail
 import { LoginCont } from '../containers/Login/Login.cont';
 import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
-import { RegistrationCont } from '../containers/Registration/Registration.cont';
-import { RegistrationSuccessCont } from '../containers/RegistrationSuccess/RegistrationSuccess.cont';
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
 import { CreateTeamCont } from '../containers/Teams/TeamForm/CreateTeam.cont';
 import { UpdateTeamCont } from '../containers/Teams/TeamForm/UpdateTeam.cont';
+import { RegistrationCont } from '../containers/Users/Registration/Registration.cont';
 
 import { Routes } from './enums';
 
@@ -47,7 +46,6 @@ export const routesObject: RouteObject[] = [
       { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
       { element: <McrvcCont />, path: Routes.MCRVC },
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
-      { element: <RegistrationSuccessCont />, path: Routes.REGISTRATION_SUCCESS },
       // TODO NOT FOUND PAGE
     ],
   },

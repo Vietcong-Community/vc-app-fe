@@ -4,7 +4,6 @@ export enum Routes {
   LOGIN = '/prihlaseni',
   STATISTICS = '/statistiky',
   REGISTRATION = '/registrace',
-  REGISTRATION_SUCCESS = '/uspesna-registrace',
   ABOUT_US = '/o-nas',
   HALLOFFAME = '/sin-slavy',
   PUBLIC_CHANGE_PASSWORD = '/zmena-hesla/:token',

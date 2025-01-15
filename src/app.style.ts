@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { IThemeProps } from './theme/theme';
+import { BreakPoints, IThemeProps } from './theme/theme';
+import { makeMediaQuery } from './utils/mediaQuery';
 
 export const AppContainer = styled.div`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.background};
@@ -20,4 +21,10 @@ export const AppContainer = styled.div`
   padding: 0;
   position: relative;
   text-align: center;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      font-size: 14px;
+    `}
+  `};
 `;

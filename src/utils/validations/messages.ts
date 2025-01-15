@@ -22,4 +22,8 @@ export const messages = defineMessages({
     id: 'app.utils.validations.passwordConfirm',
     defaultMessage: 'Hesla se neshodují!',
   },
+  emailValidation: {
+    id: 'app.utils.validations.emailValidation',
+    defaultMessage: 'Email není validní.',
+  },
 });

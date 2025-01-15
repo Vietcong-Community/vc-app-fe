@@ -51,6 +51,11 @@ export const MenuContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex: 2;
+
+  .ant-menu-horizontal {
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.background} !important;
+  }
+
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       display: none;

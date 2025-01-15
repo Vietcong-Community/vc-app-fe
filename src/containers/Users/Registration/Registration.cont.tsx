@@ -19,7 +19,7 @@ import * as S from './Registration.style';
 export const RegistrationCont: React.FC = () => {
   const { showNotification } = useNotifications();
   const { formatMessage } = useIntl();
-  const [userMail, setUserMail] = useState<string | undefined>('test.rixo.test.vojta+caasffa312f@seznam.cz');
+  const [userMail, setUserMail] = useState<string | undefined>(undefined);
 
   const createUser = useCreateUser();
 

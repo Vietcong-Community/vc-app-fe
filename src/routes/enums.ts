@@ -6,8 +6,8 @@ export enum Routes {
   REGISTRATION = '/registrace',
   ABOUT_US = '/o-nas',
   HALLOFFAME = '/sin-slavy',
-  FORGOTTEN_PASSWORD = '/zapomenute-heslo',
-  PUBLIC_CHANGE_PASSWORD = '/zmena-hesla/:token',
+  FORGOTTEN_PASSWORD = '/obnoveni-hesla',
+  PUBLIC_CHANGE_PASSWORD = '/zapomenute-heslo/:token',
   // USER ROUTES
   MCRVC = '/mcrvc',
   USER = '/uzivatel',

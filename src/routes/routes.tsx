@@ -16,6 +16,7 @@ import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
 import { CreateTeamCont } from '../containers/Teams/TeamForm/CreateTeam.cont';
 import { UpdateTeamCont } from '../containers/Teams/TeamForm/UpdateTeam.cont';
+import { ChangePasswordCont } from '../containers/Users/ChangePassword/ChangePassword.cont';
 import { ForgottenPasswordCont } from '../containers/Users/ForgottenPassword/ForgottenPassword.cont';
 import { RegistrationCont } from '../containers/Users/Registration/Registration.cont';
 
@@ -29,6 +30,7 @@ export const routesObject: RouteObject[] = [
       { element: <LoginCont />, path: Routes.LOGIN },
       { element: <RegistrationCont />, path: Routes.REGISTRATION },
       { element: <ForgottenPasswordCont />, path: Routes.FORGOTTEN_PASSWORD },
+      { element: <ChangePasswordCont />, path: Routes.PUBLIC_CHANGE_PASSWORD },
       // GENERAL ROUTES
       { element: <StatisticsCont />, path: Routes.STATISTICS },
       { element: <AboutUsCont />, path: Routes.ABOUT_US },

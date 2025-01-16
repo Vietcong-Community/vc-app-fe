@@ -4,7 +4,7 @@ import { post } from '../../apiFactory';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { AuthEndpoints } from './endpoints';
-import { ICreateUser, IForgottenPassword } from './interfaces';
+import { IChangePassword, ICreateUser, IForgottenPassword } from './interfaces';
 
 export const useCreateUser = () => {
   return useMutation({
@@ -19,6 +19,15 @@ export const useForgottenPasswordRequest = () => {
   return useMutation({
     mutationFn: async (payload: IForgottenPassword) => {
       const { data } = await post<IForgottenPassword, undefined>(AuthEndpoints.FORGOTTEN_PASSWORD, payload);
+      return data;
+    },
+  });
+};
+
+export const useChangePasswordWithToken = () => {
+  return useMutation({
+    mutationFn: async (payload: IChangePassword) => {
+      const { data } = await post<IChangePassword, undefined>(AuthEndpoints.CHANGE_PASSWORD, payload);
       return data;
     },
   });

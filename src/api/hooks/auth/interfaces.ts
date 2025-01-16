@@ -7,3 +7,8 @@ export interface ICreateUser {
 export interface IForgottenPassword {
   email: string;
 }
+
+export interface IChangePassword {
+  token: string;
+  password: string;
+}

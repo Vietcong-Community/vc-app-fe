@@ -3,6 +3,7 @@ import React from 'react';
 import { Collapse, Flex, Tabs, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { useUserMe } from '../../../api/hooks/auth/api';
 import { useSeasonsInLeague } from '../../../api/hooks/league/api';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 
@@ -12,6 +13,7 @@ import { messages } from './messages';
 export const OverviewCont: React.FC = () => {
   const seasons = useSeasonsInLeague('');
 
+  useUserMe();
   return (
     <ContentLayout>
       <Flex justify="flex-start" align="flex-start" style={{ padding: '0 1rem' }} vertical>

@@ -11,7 +11,7 @@ import * as S from './Profile.style';
 export const ProfileCont: React.FC = () => {
   const user = {
     name: 'Martin Chotětický',
-    username: 'Bascci',
+    nickname: 'Bascci',
     inGameName: '#uNik0rn . basccino',
     avatar:
       'https://yt3.googleusercontent.com/ytc/AIdro_myqhcBlGAgfbLJGgA_llswXSkDKlvG0T-hA1siGmm_yC0=s900-c-k-c0x00ffffff-no-rj', // Odkaz na profilovou fotku

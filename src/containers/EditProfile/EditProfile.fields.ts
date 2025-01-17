@@ -3,7 +3,7 @@ import { IFormFields } from '../../@types/forms';
 export interface IFormData {
   firstName?: string;
   lastName?: string;
-  username: string;
+  nickname: string;
   facebookLink: string;
   twitchLink: string;
   steamName: string;
@@ -21,8 +21,8 @@ export const fields: IFormFields<IFormData> = {
     name: 'lastName',
     required: false,
   },
-  username: {
-    name: 'username',
+  nickname: {
+    name: 'nickname',
     required: false,
   },
   facebookLink: {

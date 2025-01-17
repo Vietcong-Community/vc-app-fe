@@ -19,12 +19,12 @@ export interface IUserLogin {
 }
 
 export interface ILoginSuccess {
-  access_token: string;
+  token: string;
 }
 
 export interface IUserMe {
   email: string;
-  username: string;
+  nickname: string;
   firstName?: string;
   lastName?: string;
   createdAt: string;

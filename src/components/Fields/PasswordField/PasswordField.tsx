@@ -18,7 +18,7 @@ export const PasswordField: React.FC<IProps> = (props: IProps) => {
   const toggleVisibility = () => setVisible(!visible);
 
   return (
-    <Form.Item name={name} label={label} required={required} rules={rules}>
+    <Form.Item name={name} label={label} required={required} rules={rules} style={{ marginBottom: 8 }}>
       <Input
         disabled={disabled}
         placeholder={placeholder}

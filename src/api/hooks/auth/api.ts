@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post, put } from '../../apiFactory';
+import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { AuthEndpoints } from './endpoints';
@@ -50,13 +51,18 @@ export const useChangePasswordWithToken = () => {
   });
 };
 
-export const useUserMe = (refetchOnMount?: boolean | 'always') => {
+export const useUserMe = (
+  refetchOnMount?: boolean | 'always',
+  ignoreErrorCodes?: IgnoredErrorCodes,
+  enabled = true,
+) => {
   return useQuery({
     queryKey: ['userMe'],
     queryFn: async () => {
-      const { data } = await get<IUserMe[]>(AuthEndpoints.USER_ME);
+      const { data } = await get<IUserMe>(AuthEndpoints.USER_ME, undefined, undefined, ignoreErrorCodes);
       return data;
     },
+    enabled,
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? false,
   });

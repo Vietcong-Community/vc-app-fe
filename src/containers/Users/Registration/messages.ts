@@ -22,8 +22,12 @@ export const messages = defineMessages({
     defaultMessage: 'Heslo znovu',
   },
   registerButtonLabel: {
-    id: 'app.containers.Users.Registration.loginButtonLabel',
+    id: 'app.containers.Users.Registration.registerButtonLabel',
     defaultMessage: 'Registrovat',
+  },
+  goToLogin: {
+    id: 'app.containers.Users.Registration.goToLogin',
+    defaultMessage: 'Už máte svůj účet?',
   },
   registerFailed: {
     id: 'app.containers.Users.Registration.registerFailed',

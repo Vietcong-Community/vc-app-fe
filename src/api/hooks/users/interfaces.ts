@@ -15,7 +15,7 @@ export interface IUser {
 
 export interface IRegisterUser {
   email: string;
-  username: string;
+  nickname: string;
   firstName?: string;
   lastName?: string;
   password: string;

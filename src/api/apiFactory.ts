@@ -4,15 +4,25 @@ import isNil from 'lodash/isNil';
 import omitBy from 'lodash/omitBy';
 
 import { appConfig } from '../config/config';
+import { Routes } from '../routes/enums';
+import { USER_AUTHENTICATION_STORAGE_KEY } from '../utils/storageUtils';
 
 import { Endpoints } from './endpoints';
 import { IgnoredErrorCodes, UrlParameter } from './types';
+
+const assembleSecuredHeader = () => {
+  const accessToken = localStorage.getItem(USER_AUTHENTICATION_STORAGE_KEY);
+  return accessToken !== null && accessToken !== undefined ? { Authorization: window.atob(accessToken) } : undefined;
+};
 
 const axiosApi = axios.create({
   baseURL: appConfig.apiUrl,
 });
 
-const requestConfig: AxiosRequestConfig = { withCredentials: true };
+const requestConfig: AxiosRequestConfig = {
+  withCredentials: true,
+  responseType: 'json',
+};
 
 const getFileSuffixByMimeType = (mimeType: string) => {
   switch (mimeType) {
@@ -31,7 +41,7 @@ export const handleUnauthorized = () => {
   const { pathname, search } = window.location;
 
   if (pathname && pathname !== '/') {
-    window.location.replace(`/?redirect=${encodeURIComponent(pathname + (search || ''))}`);
+    window.location.replace(`${Routes.LOGIN}/?redirect=${encodeURIComponent(pathname + (search || ''))}`);
   }
 };
 
@@ -127,6 +137,7 @@ export const get = async <T, S = {}>(
     return await axiosApi.get<T>(paramEndpoint(path, urlParams), {
       params: queryParams || {},
       responseType,
+      headers: assembleSecuredHeader(),
       ...requestConfig,
     } as AxiosRequestConfig);
   } catch (e) {
@@ -167,6 +178,7 @@ export const post = async <T, U>(
         responseType,
         params: queryParams || {},
         headers: {
+          ...assembleSecuredHeader(),
           ...(isMultipart ? { 'content-type': 'multipart/form-data' } : {}),
         },
       } as AxiosRequestConfig,
@@ -197,7 +209,7 @@ export const put = async <T, U>(
   isMultipart?: boolean,
 ) => {
   try {
-    const headers: { [key: string]: string | number | boolean } = {};
+    const headers: { [key: string]: string | number | boolean } = { ...assembleSecuredHeader() };
 
     if (isMultipart) {
       headers['content-type'] = 'multipart/form-data';
@@ -237,7 +249,7 @@ export const patch = async <T, U>(
   isMultipart?: boolean,
 ) => {
   try {
-    const headers: { [key: string]: string | number | boolean } = {};
+    const headers: { [key: string]: string | number | boolean } = { ...assembleSecuredHeader() };
 
     if (isMultipart) {
       headers['content-type'] = 'multipart/form-data';
@@ -272,7 +284,10 @@ export const del = async <U extends object>(
   ignoreErrorCode?: IgnoredErrorCodes,
 ) => {
   try {
-    return await axiosApi.delete<unknown, AxiosResponse<U>>(paramEndpoint(path, urlParams), requestConfig);
+    return await axiosApi.delete<unknown, AxiosResponse<U>>(paramEndpoint(path, urlParams), {
+      headers: assembleSecuredHeader(),
+      ...requestConfig,
+    });
   } catch (e) {
     const { response } = e as AxiosError;
     handleError(e as AxiosError, ignoreErrorCode);

@@ -9,13 +9,13 @@ import { HomeCont } from '../containers/Home/Home.cont';
 import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
 import { OverviewCont } from '../containers/League/Overview/Overview.cont';
 import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail.cont';
-import { LoginCont } from '../containers/Login/Login.cont';
 import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
 import { ChangePasswordCont } from '../containers/Users/ChangePassword/ChangePassword.cont';
 import { ForgottenPasswordCont } from '../containers/Users/ForgottenPassword/ForgottenPassword.cont';
+import { LoginCont } from '../containers/Users/Login/Login.cont';
 import { RegistrationCont } from '../containers/Users/Registration/Registration.cont';
 
 import { Routes } from './enums';

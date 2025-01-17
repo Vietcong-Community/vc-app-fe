@@ -13,8 +13,8 @@ export const messages = defineMessages({
     id: 'app.containers.EditProfile.EditProfileForm.surnameLabel',
     defaultMessage: 'Příjmení',
   },
-  usernameLabel: {
-    id: 'app.containers.EditProfile.EditProfileForm.usernameLabel',
+  nicknameLabel: {
+    id: 'app.containers.EditProfile.EditProfileForm.nicknameLabel',
     defaultMessage: 'Nickname',
   },
   facebookLinkLabel: {

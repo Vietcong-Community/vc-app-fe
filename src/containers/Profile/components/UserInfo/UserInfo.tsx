@@ -10,7 +10,7 @@ const { Title, Text } = Typography;
 interface IProfileInfoProps {
   user: {
     name: string;
-    username: string;
+    nickname: string;
     inGameName: string;
     avatar?: string;
   };
@@ -26,7 +26,7 @@ export const UserInfo: React.FC<IProfileInfoProps> = ({ user }) => {
           src={user.avatar} // Lze využít user.avatar pro dynamickou fotku
           style={{ marginBottom: 16 }}
         />
-        <Title level={3}>{user.username}</Title>
+        <Title level={3}>{user.nickname}</Title>
         <Row justify="center" gutter={[8, 8]}>
           <Col>
             <Text strong>

@@ -4,6 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown, Menu } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { useUserMe } from '../../api/hooks/auth/api';
 import logo from '../../assets/vclogo-removebg-preview.png';
 import { useRouter } from '../../hooks/RouterHook';
 import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
@@ -11,6 +12,7 @@ import { ThemeContext } from '../../providers/ThemeProvider/ThemeContext';
 import { ThemeType } from '../../providers/ThemeProvider/constants';
 import { Routes } from '../../routes/enums';
 import { BreakPoints } from '../../theme/theme';
+import { USER_AUTHENTICATION_STORAGE_KEY } from '../../utils/storageUtils';
 
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
 import { messages } from './messages';
@@ -25,7 +27,15 @@ export const Header: React.FC = () => {
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
 
-  const isUserLoggedIn = false; // TODO Connect to BE
+  const userMe = useUserMe('always', [401]);
+
+  const isUserLoggedIn = userMe.isSuccess;
+
+  const handleLogout = async () => {
+    localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
+    await userMe.refetch();
+    navigate(Routes.HOME, { replace: true });
+  };
 
   const loggedUserMenu = [
     {
@@ -63,8 +73,7 @@ export const Header: React.FC = () => {
     {
       key: 'logout',
       label: (
-        // TODO LOGOUT FUNCTION
-        <span onClick={() => {}}>
+        <span onClick={handleLogout}>
           <FormattedMessage {...messages.logout} />
         </span>
       ),
@@ -143,7 +152,7 @@ export const Header: React.FC = () => {
               <S.UserMenu>
                 <Avatar size={32} icon={<UserOutlined />} />
                 <span style={{ fontSize: '14px' }}>
-                  <FormattedMessage {...messages.userNotLoggedIn} />
+                  {isUserLoggedIn ? userMe.data?.nickname : <FormattedMessage {...messages.userNotLoggedIn} />}
                 </span>
               </S.UserMenu>
             </Dropdown>

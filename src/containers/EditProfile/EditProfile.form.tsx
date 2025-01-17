@@ -66,9 +66,9 @@ export const EditProfileForm: React.FC = () => {
                     placeholder={formatMessage(messages.surnameLabel)}
                   />
                   <InputField
-                    {...fields.username}
-                    label={<FormattedMessage {...messages.usernameLabel} />}
-                    placeholder={formatMessage(messages.usernameLabel)}
+                    {...fields.nickname}
+                    label={<FormattedMessage {...messages.nicknameLabel} />}
+                    placeholder={formatMessage(messages.nicknameLabel)}
                   />
                 </Form>
               </TabPane>

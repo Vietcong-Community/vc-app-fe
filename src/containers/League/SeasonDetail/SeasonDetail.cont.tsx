@@ -3,13 +3,14 @@ import React, { ReactNode } from 'react';
 import { Divider, Flex, Space, Table } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { IMatch, MatchStatus, SeasonStatus } from '../../../api/hooks/league/interfaces';
-import { useMatchesBySeason, useSeasonDetail } from '../../../api/hooks/league/seasons/api';
+import { useSeasonsDetail } from '../../../api/hooks/league/api';
+import { IMatch } from '../../../api/hooks/league/interfaces';
 import { Button } from '../../../components/Button/Button';
 import { Card } from '../../../components/Card/Card';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
+import { MatchStatus, SeasonStatus } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
@@ -25,12 +26,12 @@ import { messages } from './messages';
 import * as S from './SeasonDetail.style';
 
 export const SeasonDetailCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ id: string }>();
+  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string }>();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const season = useSeasonDetail(query.id);
-  const matches = useMatchesBySeason(query.id);
+  const season = useSeasonsDetail(query.leagueId, query.seasonId);
+  const matches: IMatch[] = [];
 
   const playersTableData =
     players.map((item, index) => {
@@ -38,7 +39,7 @@ export const SeasonDetailCont: React.FC = () => {
     }) ?? [];
 
   const allMatchesTableData =
-    matches.data?.map((item) => {
+    matches?.map((item) => {
       return {
         id: item.id,
         date: formatDateForUser(item.date) ?? '',
@@ -52,10 +53,10 @@ export const SeasonDetailCont: React.FC = () => {
       };
     }) ?? [];
 
-  const onMatchCreateClick = () => navigate(Routes.MATCH_CREATE.replace(':id', query.id));
+  const onMatchCreateClick = () => {};
 
-  const upcomingMatches = matches.data?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
-  const finishedMatches = matches.data?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
+  const upcomingMatches = matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
+  const finishedMatches = matches?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
   const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
   const firstFiveFinishedMatches = finishedMatches.slice(0, 5);
 

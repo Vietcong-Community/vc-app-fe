@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { MatchStatus } from '../../../../../api/hooks/league/interfaces';
+import { MatchStatus } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';

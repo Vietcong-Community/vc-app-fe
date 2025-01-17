@@ -1,4 +1,4 @@
 export enum UsersEndpoints {
-  USERS = '/user',
-  REGISTER = 'user/create',
+  USERS = '/users',
+  USER_BY_ID = '/users/{id}',
 }

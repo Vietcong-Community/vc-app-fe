@@ -1,10 +1,27 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { post } from '../../apiFactory';
+import { get, post, put } from '../../apiFactory';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { AuthEndpoints } from './endpoints';
-import { IChangePassword, ICreateUser, IForgottenPassword } from './interfaces';
+import {
+  IChangePassword,
+  ICreateUser,
+  IForgottenPassword,
+  ILoginSuccess,
+  IUpdateUser,
+  IUserLogin,
+  IUserMe,
+} from './interfaces';
+
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: async (payload: IUserLogin) => {
+      const { data } = await post<IUserLogin, ILoginSuccess>(AuthEndpoints.LOGIN, payload);
+      return data;
+    },
+  });
+};
 
 export const useCreateUser = () => {
   return useMutation({
@@ -28,6 +45,27 @@ export const useChangePasswordWithToken = () => {
   return useMutation({
     mutationFn: async (payload: IChangePassword) => {
       const { data } = await post<IChangePassword, undefined>(AuthEndpoints.CHANGE_PASSWORD, payload);
+      return data;
+    },
+  });
+};
+
+export const useUserMe = (refetchOnMount?: boolean | 'always') => {
+  return useQuery({
+    queryKey: ['userMe'],
+    queryFn: async () => {
+      const { data } = await get<IUserMe[]>(AuthEndpoints.USER_ME);
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? false,
+  });
+};
+
+export const useUpdateMe = () => {
+  return useMutation({
+    mutationFn: async (payload: IUpdateUser) => {
+      const { data } = await put<IUpdateUser, IIdentifiedEntity>(AuthEndpoints.USER_ME, payload);
       return data;
     },
   });

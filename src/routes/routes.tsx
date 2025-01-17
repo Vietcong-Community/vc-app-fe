@@ -14,8 +14,6 @@ import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
-import { CreateTeamCont } from '../containers/Teams/TeamForm/CreateTeam.cont';
-import { UpdateTeamCont } from '../containers/Teams/TeamForm/UpdateTeam.cont';
 import { ChangePasswordCont } from '../containers/Users/ChangePassword/ChangePassword.cont';
 import { ForgottenPasswordCont } from '../containers/Users/ForgottenPassword/ForgottenPassword.cont';
 import { RegistrationCont } from '../containers/Users/Registration/Registration.cont';
@@ -39,8 +37,6 @@ export const routesObject: RouteObject[] = [
       { element: <EditProfileCont />, path: Routes.EDIT_PROFILE },
       { element: <PrivatePasswordChangeCont />, path: Routes.PRIVATE_CHANGE_PASSWORD },
       // TEAM ROUTES
-      { element: <CreateTeamCont />, path: Routes.TEAM_CREATE },
-      { element: <UpdateTeamCont />, path: Routes.TEAM_UPDATE },
       { element: <TeamDetailCont />, path: Routes.TEAM_DETAIL },
 
       // MIX LEAGUE

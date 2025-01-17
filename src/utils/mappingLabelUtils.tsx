@@ -2,8 +2,7 @@ import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { MatchStatus, SeasonStatus } from '../api/hooks/league/interfaces';
-import { Nation, PlayersCount } from '../constants/enums';
+import { MatchStatus, Nation, PlayersCount, SeasonStatus } from '../constants/enums';
 
 import { messages } from './messages';
 

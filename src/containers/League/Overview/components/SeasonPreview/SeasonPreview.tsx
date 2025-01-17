@@ -4,10 +4,10 @@ import { RightOutlined } from '@ant-design/icons';
 import { Flex, Space, Table, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { IMatch, MatchStatus, SeasonStatus } from '../../../../../api/hooks/league/interfaces';
-import { useMatchesBySeason } from '../../../../../api/hooks/league/seasons/api';
+import { IMatch } from '../../../../../api/hooks/league/interfaces';
 import { Button } from '../../../../../components/Button/Button';
 import { MainButtonVariant } from '../../../../../components/Button/enums';
+import { MatchStatus, SeasonStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
@@ -27,19 +27,19 @@ interface IProps {
 }
 
 export const SeasonPreview: React.FC<IProps> = (props) => {
-  const { isOpen, seasonId, status } = props;
+  const { seasonId, status } = props;
   const { navigate } = useRouter();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const matches = useMatchesBySeason(seasonId, true, isOpen);
+  const matches: IMatch[] = [];
 
   const playersTableData = players.map((item) => {
     return { ...item, ratio: Number((item.kills / item.deaths).toFixed(2)) };
   });
 
-  const upcomingMatches = matches.data?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
-  const finishedMatches = matches.data?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
+  const upcomingMatches = matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
+  const finishedMatches = matches?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
   const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
   const firstFiveFinishedMatches = finishedMatches.slice(0, 5);
 

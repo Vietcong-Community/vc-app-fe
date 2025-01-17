@@ -12,3 +12,21 @@ export enum PlayersCount {
   NINE = 'NINE',
   TEN = 'TEN',
 }
+
+export enum LeagueType {
+  TEAMPLAY = 'TEAMPLAY',
+}
+
+export enum SeasonStatus {
+  NEW = 'NEW',
+  ACTIVE = 'ACTIVE',
+  ARCHIVED = 'ARCHIVED',
+}
+
+export enum MatchStatus {
+  NEW = 'NEW',
+  READY = 'READY',
+  WAITING_FOR_CONFIRMATION = 'WAITING_FOR_CONFIRMATION',
+  COMPLAINT = 'COMPLAINT',
+  FINISHED = 'FINISHED',
+}

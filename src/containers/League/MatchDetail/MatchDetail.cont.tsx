@@ -4,12 +4,11 @@ import { Divider, Flex, Spin } from 'antd';
 import { uniqBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { MatchStatus } from '../../../api/hooks/league/interfaces';
-import { useMatchById } from '../../../api/hooks/league/match/api';
+import { IMatch } from '../../../api/hooks/league/interfaces';
 import { Card } from '../../../components/Card/Card';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { useRouter } from '../../../hooks/RouterHook';
+import { MatchStatus } from '../../../constants/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 
@@ -20,9 +19,9 @@ import { messages } from './messages';
 import * as S from './MatchDetail.style';
 
 export const MatchDetail: React.FC = () => {
-  const { query } = useRouter<{ id: string }>();
+  // const { query } = useRouter<{ id: string }>();
 
-  const matchDetail = useMatchById(query.id);
+  const matchDetail: { data?: IMatch; isLoading: boolean; isFetched: boolean } = { isLoading: false, isFetched: false };
 
   const scoreExists = matchDetail.data?.status !== MatchStatus.NEW && matchDetail.data?.status !== MatchStatus.READY;
   const showLoading = matchDetail.isLoading;

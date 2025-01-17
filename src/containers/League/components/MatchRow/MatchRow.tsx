@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { IMatch, MatchStatus } from '../../../../api/hooks/league/interfaces';
+import { IMatch } from '../../../../api/hooks/league/interfaces';
+import { MatchStatus } from '../../../../constants/enums';
 import { useRouter } from '../../../../hooks/RouterHook';
 import { Routes } from '../../../../routes/enums';
 import { formatDateForUser } from '../../../../utils/dateUtils';

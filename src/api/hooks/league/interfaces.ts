@@ -1,29 +1,16 @@
-import { Nation } from '../../../constants/enums';
+import { LeagueType, MatchStatus, Nation, SeasonStatus } from '../../../constants/enums';
 
-export enum SeasonStatus {
-  NEW = 'NEW',
-  ACTIVE = 'ACTIVE',
-  ARCHIVED = 'ARCHIVED',
-}
-
-export enum MatchStatus {
-  NEW = 'NEW',
-  READY = 'READY',
-  WAITING_FOR_CONFIRMATION = 'WAITING_FOR_CONFIRMATION',
-  COMPLAINT = 'COMPLAINT',
-  FINISHED = 'FINISHED',
+export interface ILeagueDetail {
+  id: string;
+  name: string;
+  description: string;
+  type: LeagueType;
 }
 
 export interface ISeason {
   id: string;
   name: string;
   status: SeasonStatus;
-  startDate?: string;
-  endDate?: string;
-}
-
-export interface ISaveSeason {
-  name: string;
   startDate?: string;
   endDate?: string;
 }

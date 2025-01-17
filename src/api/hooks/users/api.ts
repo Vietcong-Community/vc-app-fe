@@ -15,3 +15,14 @@ export const useUsers = () => {
     staleTime: Infinity,
   });
 };
+
+export const useUserDetail = (id: string) => {
+  return useQuery({
+    queryKey: ['userDetail', id],
+    queryFn: async () => {
+      const { data } = await get<IUser>(UsersEndpoints.USER_BY_ID, { id });
+      return data;
+    },
+    staleTime: Infinity,
+  });
+};

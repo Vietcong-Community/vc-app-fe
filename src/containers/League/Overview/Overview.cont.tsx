@@ -3,14 +3,14 @@ import React from 'react';
 import { Collapse, Flex, Tabs, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasons } from '../../../api/hooks/league/seasons/api';
+import { useSeasonsInLeague } from '../../../api/hooks/league/api';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 
 import { SeasonPreview } from './components/SeasonPreview/SeasonPreview';
 import { messages } from './messages';
 
 export const OverviewCont: React.FC = () => {
-  const seasons = useSeasons();
+  const seasons = useSeasonsInLeague('');
 
   return (
     <ContentLayout>

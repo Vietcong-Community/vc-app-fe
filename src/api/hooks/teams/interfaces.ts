@@ -1,16 +1,16 @@
+import { IUser } from '../users/interfaces';
+
 export enum TeamRole {
   OWNER = 'OWNER',
   MATCH_ORGANIZER = 'MATCH_ORGANIZER',
   MEMBER = 'MEMBER',
 }
 
-export interface ITeamPlayer {
+export interface ITeamPlayers {
   id: number;
-  userId: string;
-  nickname: string;
+  user: IUser;
   role: TeamRole;
   createdAt: string;
-  removedAt?: string;
 }
 
 export interface ITeam {
@@ -18,12 +18,5 @@ export interface ITeam {
   name: string;
   tag: string;
   description?: string;
-  archived?: boolean;
-  players: ITeamPlayer[];
-}
-
-export interface ISaveTeam {
-  name: string;
-  tag: string;
-  description?: string;
+  createdAt: string;
 }

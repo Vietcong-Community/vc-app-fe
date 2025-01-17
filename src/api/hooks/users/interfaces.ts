@@ -4,23 +4,13 @@ export enum UserStatus {
   CANCELED = 'CANCELED',
 }
 
-export enum Role {
-  DEVELOPER = 'DEVELOPER',
-  USER = 'USER',
-  ADMIN_SEASON = 'ADMIN_SEASON',
-  ADMIN_MATCH = 'ADMIN_MATCH',
-  ADMIN_TOURNAMENT = 'ADMIN_TOURNAMENT',
-  FEEDBACK_MANAGER = 'FEEDBACK_MANAGER',
-}
-
 export interface IUser {
   id: string;
   email: string;
-  username: string;
+  nickname: string;
   firstName?: string;
   lastName?: string;
-  status: UserStatus;
-  roles: Role[];
+  createdAt: string;
 }
 
 export interface IRegisterUser {

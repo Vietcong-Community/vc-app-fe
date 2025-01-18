@@ -14,7 +14,7 @@ export interface ITeamPlayers {
 }
 
 export interface ITeam {
-  id: number;
+  id: string;
   name: string;
   tag: string;
   description?: string;

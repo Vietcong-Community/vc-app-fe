@@ -1,6 +1,9 @@
 import { ReactNode } from 'react';
 
 import { TableColumnsType } from 'antd';
+import { FormattedMessage } from 'react-intl';
+
+import { messages } from './messages';
 
 export interface IPlayersTable {
   id: string;
@@ -91,6 +94,56 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTable> 
       title: 'Výsledek',
       dataIndex: 'result',
       key: '4',
+    },
+  ];
+};
+
+export interface ILadderTableRow {
+  id: string;
+  position: number;
+  name: string;
+  countOfMatches: number;
+  wins: number;
+  draws: number;
+  loses: number;
+}
+
+export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadderTableRow> => {
+  return [
+    {
+      title: showShortLabels ? (
+        <FormattedMessage {...messages.teamPositionShortcut} />
+      ) : (
+        <FormattedMessage {...messages.teamPosition} />
+      ),
+      dataIndex: 'position',
+      key: '0',
+      defaultSortOrder: 'descend',
+    },
+    { title: <FormattedMessage {...messages.teamName} />, dataIndex: 'name', key: '1' },
+    {
+      title: <FormattedMessage {...messages.countOfMatches} />,
+      dataIndex: 'countOfMatches',
+      key: '2',
+      hidden: showShortLabels,
+    },
+    {
+      title: <FormattedMessage {...messages.wins} />,
+      dataIndex: 'wins',
+      key: '3',
+      hidden: showShortLabels,
+    },
+    {
+      title: <FormattedMessage {...messages.draws} />,
+      dataIndex: 'draws',
+      key: '4',
+      hidden: showShortLabels,
+    },
+    {
+      title: <FormattedMessage {...messages.loses} />,
+      dataIndex: 'loses',
+      key: '5',
+      hidden: showShortLabels,
     },
   ];
 };

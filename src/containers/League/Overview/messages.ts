@@ -3,25 +3,18 @@ import { defineMessages } from 'react-intl';
 export const messages = defineMessages({
   title: {
     id: 'app.containers.League.Overview.title',
-    defaultMessage: 'Vietcong League',
+    defaultMessage: 'Ligy a sezóny',
   },
-  descriptionTab: {
-    id: 'app.containers.League.Overview.descriptionTab',
-    defaultMessage: 'Popis',
-  },
-  rulesTab: {
-    id: 'app.containers.League.Overview.rulesTab',
-    defaultMessage: 'Pravidla a bodování',
-  },
-  descriptionContent: {
-    id: 'app.containers.League.Overview.descriptionContent',
+  description: {
+    id: 'app.containers.League.Overview.description',
     defaultMessage:
-      'Sezónní ligové zápasy – nové týmy každé 3 měsíce.{br}Přidej se kdykoliv, akce tě čeká hned teď!{br}' +
-      'Učíme nováčky, zlepšujeme hráče.{br}Zábava, emoce, komunita – online i offline.',
+      'Pod záštitou serveru VietcongHUB, probíhají různé ligy, ve kterých se pravidelně střídají nové sezóny. ' +
+      'V každé sezóně budeme bedlivě sledovat tvoje statistiky, na základě kterých můžeš získávat mnoho ocenění! ' +
+      'Proto neváhej, prozkoumávej a přidej se do ligy podle svých preferencí.',
   },
-  rulesContent: {
-    id: 'app.containers.League.Overview.rulesContent',
-    defaultMessage: 'Tady popsat jak to probiha a jak se boduje',
+  leaguesTitle: {
+    id: 'app.containers.League.Overview.leaguesTitle',
+    defaultMessage: 'Ligy',
   },
   seasonsTitle: {
     id: 'app.containers.League.Overview.seasonsTitle',

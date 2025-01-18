@@ -17,7 +17,7 @@ export enum Routes {
   TEAM_DETAIL = '/tym/:id',
   // LEAGUE
   LEAGUE = '/liga',
-  SEASON_DETAIL = '/detail-sezony/:id',
+  SEASON_DETAIL = '/detail-sezony/:leagueId/:seasonId',
   MATCH_CREATE = '/vytvoreni-zapasu/:id',
   MATCH_DETAIL = '/detail-zapasu/:id',
 }

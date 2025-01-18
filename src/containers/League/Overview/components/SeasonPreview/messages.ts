@@ -7,15 +7,11 @@ export const messages = defineMessages({
   },
   openMatches: {
     id: 'app.containers.League.Overview.component.SeasonPreview.openMatches',
-    defaultMessage: 'Budoucí zápasy',
+    defaultMessage: 'Naplánované zápasy',
   },
-  bestPlayers: {
-    id: 'app.containers.League.Overview.component.SeasonPreview.bestPlayers',
-    defaultMessage: 'Nejlepší hráči',
-  },
-  goToStats: {
-    id: 'app.containers.League.Overview.component.SeasonPreview.goToStats',
-    defaultMessage: 'Více',
+  ladderTitle: {
+    id: 'app.containers.League.Overview.component.SeasonPreview.ladderTitle',
+    defaultMessage: 'Tabulka',
   },
   goToDetail: {
     id: 'app.containers.League.Overview.component.SeasonPreview.goToDetail',

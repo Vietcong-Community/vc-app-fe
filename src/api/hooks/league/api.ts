@@ -4,7 +4,18 @@ import { get } from '../../apiFactory';
 import { IMap } from '../interfaces';
 
 import { LeagueEndpoints } from './endpoints';
-import { ILeagueDetail, ISeason } from './interfaces';
+import { ILadderItem, ILeagueDetail, ISeason } from './interfaces';
+
+export const useLeagueList = () => {
+  return useQuery({
+    queryKey: ['leagueList'],
+    queryFn: async () => {
+      const { data } = await get<{ items: ILeagueDetail[] }>(LeagueEndpoints.LEAGUES);
+      return data;
+    },
+    staleTime: Infinity,
+  });
+};
 
 export const useLeagueDetail = (id: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
@@ -22,7 +33,7 @@ export const useSeasonsInLeague = (id: string, refetchOnMount?: boolean | 'alway
   return useQuery({
     queryKey: ['seasonsByLeague', id],
     queryFn: async () => {
-      const { data } = await get<ISeason[]>(LeagueEndpoints.LEAGUE_SEASONS, { id });
+      const { data } = await get<{ items: ISeason[] }>(LeagueEndpoints.LEAGUE_SEASONS, { id });
       return data;
     },
     staleTime: Infinity,
@@ -50,5 +61,17 @@ export const useMapsInSeason = (leagueId: string, seasonId: string) => {
       return data;
     },
     staleTime: Infinity,
+  });
+};
+
+export const useSeasonLadder = (leagueId: string, seasonId: string, refetchOnMount?: boolean | 'always') => {
+  return useQuery({
+    queryKey: ['seasonLadder', leagueId, seasonId],
+    queryFn: async () => {
+      const { data } = await get<{ items: ILadderItem[] }>(LeagueEndpoints.LADDER_LIST, { leagueId, seasonId });
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
   });
 };

@@ -1,4 +1,5 @@
 import { LeagueType, MatchStatus, Nation, SeasonStatus } from '../../../constants/enums';
+import { ITeam } from '../teams/interfaces';
 
 export interface ILeagueDetail {
   id: string;
@@ -13,6 +14,17 @@ export interface ISeason {
   status: SeasonStatus;
   startDate?: string;
   endDate?: string;
+}
+
+export interface ILadderItem {
+  id: string;
+  team: ITeam;
+  wins: number;
+  draws: number;
+  loses: number;
+  countOfMatches: number;
+  points: number;
+  joinedAt: string;
 }
 
 export interface IMatchRound {

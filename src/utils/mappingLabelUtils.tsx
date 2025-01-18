@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { MatchStatus, Nation, PlayersCount, SeasonStatus } from '../constants/enums';
+import { LeagueType, MatchStatus, Nation, PlayersCount, SeasonStatus } from '../constants/enums';
 
 import { messages } from './messages';
 
@@ -31,6 +31,15 @@ export const mapMatchStatusToTranslation = (status?: MatchStatus): ReactNode | u
       return <FormattedMessage {...messages.matchStatusComplaint} />;
     case MatchStatus.FINISHED:
       return <FormattedMessage {...messages.matchStatusFinished} />;
+    default:
+      return undefined;
+  }
+};
+
+export const mapLeagueTypeToTranslation = (type?: LeagueType): ReactNode | undefined => {
+  switch (type) {
+    case LeagueType.TEAMPLAY:
+      return <FormattedMessage {...messages.teamplay} />;
     default:
       return undefined;
   }

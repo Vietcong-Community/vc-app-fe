@@ -69,4 +69,8 @@ export const messages = defineMessages({
     id: 'app.utils.usNation',
     defaultMessage: 'US',
   },
+  teamplay: {
+    id: 'app.utils.teamplay',
+    defaultMessage: 'Teamplay',
+  },
 });

@@ -5,11 +5,11 @@ import { BreakPoints } from '../../theme/theme';
 import { IGapHeight } from './Gap';
 
 interface IGapProps extends IGapHeight {
-  defaultHeight: number;
+  $defaultHeight: number;
 }
 
 export const GapContainer = styled.div<IGapProps>`
-  height: ${(props: IGapProps) => props.defaultHeight}px;
+  height: ${(props: IGapProps) => props.$defaultHeight}px;
 
   @media screen and (max-width: ${BreakPoints.lg}px) {
     height: ${(props: IGapProps) => props.lg}px;

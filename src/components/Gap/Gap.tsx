@@ -18,5 +18,5 @@ interface IProps {
 export const Gap: React.FC<IProps> = (props) => {
   const { height = {}, defaultHeight } = props;
   const { lg = defaultHeight, md = lg, sm = md, xs = sm } = height;
-  return <S.GapContainer lg={lg} md={md} sm={sm} xs={xs} defaultHeight={defaultHeight} />;
+  return <S.GapContainer lg={lg} md={md} sm={sm} xs={xs} $defaultHeight={defaultHeight} />;
 };

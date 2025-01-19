@@ -1,18 +1,20 @@
 import React, { CSSProperties } from 'react';
 
-import { Card as AntDCard } from 'antd';
+import * as S from './Card.style';
 
 interface IProps {
+  bordered?: boolean;
   children?: React.ReactNode;
   style?: CSSProperties;
+  transparentBackground?: boolean;
   title?: React.ReactNode;
 }
 export const Card: React.FC<IProps> = (props: IProps) => {
-  const { children, style, title } = props;
+  const { bordered = false, children, style, transparentBackground = false, title } = props;
 
   return (
-    <AntDCard bordered style={{ width: '100%', ...style }} title={title}>
+    <S.CardContainer bordered={bordered} style={style} $transparentBackground={transparentBackground} title={title}>
       {children}
-    </AntDCard>
+    </S.CardContainer>
   );
 };

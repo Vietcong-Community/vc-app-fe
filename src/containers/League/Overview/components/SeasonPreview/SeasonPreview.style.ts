@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
 import { makeMediaQuery } from '../../../../../utils/mediaQuery';
 
 export const Matches = styled.div`
@@ -17,4 +17,11 @@ export const Matches = styled.div`
       flex-direction: column;
     `}
   `};
+`;
+
+export const TableContainer = styled.div`
+  width: 100%;
+  .ant-table-thead .ant-table-cell {
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30};
+  }
 `;

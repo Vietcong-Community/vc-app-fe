@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
-import { uniqBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { IMatch } from '../../../api/hooks/league/interfaces';
@@ -26,16 +25,8 @@ export const MatchDetail: React.FC = () => {
   const scoreExists = matchDetail.data?.status !== MatchStatus.NEW && matchDetail.data?.status !== MatchStatus.READY;
   const showLoading = matchDetail.isLoading;
 
-  const maps = useMemo(
-    () =>
-      uniqBy(
-        matchDetail.data?.rounds?.map((item) => item.map).filter((item) => !!item.name),
-        'name',
-      ),
-    [matchDetail.isFetched],
-  );
-  const isPossibleToConfirmMatch =
-    maps.length === 2 && !!matchDetail.data?.firstCaptain && !!matchDetail.data?.secondCaptain;
+  const maps = useMemo(() => [], [matchDetail.isFetched]);
+  const isPossibleToConfirmMatch = maps.length === 2;
 
   return (
     <ContentLayout>
@@ -75,14 +66,14 @@ export const MatchDetail: React.FC = () => {
                 </Flex>
                 <br />
                 <Flex justify="space-between" gap={16}>
-                  <Card style={{ textAlign: 'start' }}>
+                  <Card bordered style={{ textAlign: 'start' }}>
                     <S.TeamsLabel>
                       <FormattedMessage {...messages.firstTeam} />
                     </S.TeamsLabel>
                     <b>
                       <FormattedMessage {...messages.captain} />
                     </b>
-                    {matchDetail.data?.firstCaptain?.nickname}
+                    {matchDetail.data?.challengerTeam?.name}
                   </Card>
                   <Card style={{ textAlign: 'start' }}>
                     <S.TeamsLabel>
@@ -91,7 +82,7 @@ export const MatchDetail: React.FC = () => {
                     <b>
                       <FormattedMessage {...messages.captain} />
                     </b>
-                    {matchDetail.data?.secondCaptain?.nickname}
+                    {matchDetail.data?.opponentTeam?.name}
                   </Card>
                 </Flex>
               </Card>

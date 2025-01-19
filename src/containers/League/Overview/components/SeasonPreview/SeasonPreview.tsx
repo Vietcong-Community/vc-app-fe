@@ -91,19 +91,21 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       </S.Matches>
       <Gap defaultHeight={32} />
       <Flex vertical align="flex-start">
-        <Table<ILadderTableRow>
-          columns={LADDER_COLUMNS(isSmallerThanMd)}
-          dataSource={ladderTableData}
-          onRow={(item) => {
-            return {
-              onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-              style: {
-                cursor: 'pointer',
-              },
-            };
-          }}
-          style={{ width: '100%' }}
-        />
+        <S.TableContainer>
+          <Table<ILadderTableRow>
+            columns={LADDER_COLUMNS(isSmallerThanMd)}
+            dataSource={ladderTableData}
+            onRow={(item) => {
+              return {
+                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
+                style: {
+                  cursor: 'pointer',
+                },
+              };
+            }}
+            style={{ width: '100%' }}
+          />
+        </S.TableContainer>
       </Flex>
       <Gap defaultHeight={16} />
       <Flex justify="flex-end">

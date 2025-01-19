@@ -22,7 +22,6 @@ export const ButtonWrapper = styled(Button)<IButtonProps>`
     `}
 
   &:hover {
-    color: ${(props: IThemeProps) => props.theme.mainColors.text} !important;
     transform: scale(1.05);
   }
 `;

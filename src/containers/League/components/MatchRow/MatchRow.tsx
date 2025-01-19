@@ -22,7 +22,7 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
     <S.Container onClick={() => navigate(Routes.MATCH_DETAIL.replace(':id', match.id))}>
       {formatDateForUser(match.date) ?? ''}
       <div>
-        {match.firstCaptain?.nickname} vs. {match.secondCaptain?.nickname}
+        {match.challengerTeam?.name} vs. {match.opponentTeam?.name}
       </div>
       <S.Score>{scoreExists ? `${match.firstTeamScore} - ${match.secondTeamScore}` : '? - ?'}</S.Score>
     </S.Container>

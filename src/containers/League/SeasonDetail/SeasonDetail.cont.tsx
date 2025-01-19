@@ -1,12 +1,14 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-import { Divider, Flex, Space, Table } from 'antd';
+import { Flex, Space, Table } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasonsDetail } from '../../../api/hooks/league/api';
+import { useSeasonLadder, useSeasonsDetail } from '../../../api/hooks/league/api';
 import { IMatch } from '../../../api/hooks/league/interfaces';
 import { Button } from '../../../components/Button/Button';
+import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
+import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
@@ -18,8 +20,7 @@ import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation, mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
-import { players } from '../mock';
-import { IMatchesTable, IPlayersTable, MATCH_COLUMNS, PLAYERS_COLUMNS } from '../types';
+import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from '../types';
 
 import { messages } from './messages';
 
@@ -31,21 +32,38 @@ export const SeasonDetailCont: React.FC = () => {
   const isSmallerThanMd = width < BreakPoints.md;
 
   const season = useSeasonsDetail(query.leagueId, query.seasonId);
+  const ladder = useSeasonLadder(query.leagueId, query.seasonId);
+
+  const ladderTableData: ILadderTableRow[] =
+    ladder.data?.items.map((item, index) => {
+      return {
+        id: item.team.id,
+        position: index + 1,
+        name: item.team.name,
+        countOfMatches: item.countOfMatches,
+        wins: item.wins,
+        draws: item.draws,
+        loses: item.loses,
+      };
+    }) ?? [];
   const matches: IMatch[] = [];
 
-  const playersTableData =
-    players.map((item, index) => {
-      return { ...item, order: index + 1, ratio: Number((item.kills / item.deaths).toFixed(2)) };
-    }) ?? [];
-
-  const allMatchesTableData =
+  const allMatchesTableData: IMatchesTableRow[] =
     matches?.map((item) => {
+      const getOpponentTeamName = () => {
+        if (!item.opponentTeam) {
+          return '-';
+        }
+
+        return isSmallerThanMd ? item.opponentTeam.tag : item.opponentTeam?.name;
+      };
+
       return {
         id: item.id,
         date: formatDateForUser(item.date) ?? '',
         status: mapMatchStatusToTranslation(item.status),
-        firstCaptain: item.firstCaptain?.nickname ?? '-',
-        secondCaptain: item.secondCaptain?.nickname ?? '-',
+        challengerTeamName: isSmallerThanMd ? item.challengerTeam.tag : item.challengerTeam.name,
+        opponentTeamName: getOpponentTeamName(),
         result:
           item.status !== MatchStatus.NEW && item.status !== MatchStatus.READY
             ? `${item.firstTeamScore} - ${item.secondTeamScore}`
@@ -62,20 +80,20 @@ export const SeasonDetailCont: React.FC = () => {
 
   const noUpcomingMatches = upcomingMatches.length === 0;
   const noFinishedMatches = finishedMatches.length === 0;
-  const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
+  const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE; // TODO AND USER HAVE AUTHORITY
 
   return (
     <ContentLayout>
       <Flex align="center" justify="space-between">
         <H1>{season.data?.name}</H1>
       </Flex>
-      <Divider style={{ marginTop: 0 }} />
+      <S.Divider style={{ marginTop: 0 }} />
       <S.Matches>
         <Card style={{ flex: 0.5 }}>
           <S.CardTitle>
             <FormattedMessage {...messages.seasonInformationTitle} />
           </S.CardTitle>
-          <Flex vertical align="flex-start">
+          <Flex vertical align="flex-start" style={{ textAlign: 'start' }}>
             <S.InformationLabel>
               <FormattedMessage {...messages.seasonStatus} />
             </S.InformationLabel>
@@ -109,17 +127,12 @@ export const SeasonDetailCont: React.FC = () => {
             <S.CardTitle>
               <FormattedMessage {...messages.upcomingMatches} />
             </S.CardTitle>
+            {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
             {noUpcomingMatches && (
-              <FormattedMessage
-                {...messages.noUpcomingMatches}
-                values={{
-                  b: (msg: ReactNode) => (
-                    <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                      {msg}
-                    </b>
-                  ),
-                }}
-              />
+              <>
+                <br />
+                TODO MATCH ORGA LINK NA MATCH
+              </>
             )}
             <Space direction="vertical" style={{ width: '100%' }}>
               {!noUpcomingMatches &&
@@ -145,45 +158,68 @@ export const SeasonDetailCont: React.FC = () => {
           )}
         </Card>
       </S.Matches>
-      <br />
+      <Gap defaultHeight={16} />
       {isSeasonActive && (
         <Flex justify="flex-end">
-          <Button onClick={onMatchCreateClick}>
+          <Button
+            onClick={onMatchCreateClick}
+            variant={MainButtonVariant.PRIMARY}
+            style={{ color: 'white', fontWeight: 'bold' }}
+          >
             <FormattedMessage {...messages.createMatch} />
           </Button>
         </Flex>
       )}
-      <Divider style={{ marginBottom: 0 }} />
+      <S.Divider />
       <Flex vertical align="flex-start">
         <H2>
-          <FormattedMessage {...messages.playersRankingTitle} />
+          <FormattedMessage {...messages.ladderTitle} />
         </H2>
-        <Table<IPlayersTable>
-          columns={PLAYERS_COLUMNS(isSmallerThanMd)}
-          dataSource={playersTableData as unknown as IPlayersTable[]}
-          pagination={false}
-          style={{ width: '100%' }}
-        />
+        <S.TableContainer>
+          <Table<ILadderTableRow>
+            columns={LADDER_COLUMNS(isSmallerThanMd)}
+            dataSource={ladderTableData}
+            onRow={(item) => {
+              return {
+                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
+                style: {
+                  cursor: 'pointer',
+                },
+              };
+            }}
+            style={{ width: '100%' }}
+          />
+        </S.TableContainer>
       </Flex>
-      <Divider style={{ marginBottom: 0 }} />
+      <S.Divider />
       <Flex vertical align="flex-start">
         <H2>
           <FormattedMessage {...messages.allMatchesTitle} />
         </H2>
-        <Table<IMatchesTable>
-          columns={MATCH_COLUMNS(isSmallerThanMd)}
-          dataSource={allMatchesTableData}
-          onRow={(item) => {
-            return {
-              onClick: () => navigate(Routes.MATCH_DETAIL.replace(':id', item.id)),
-              style: {
-                cursor: 'pointer',
-              },
-            };
-          }}
-          style={{ width: '100%' }}
-        />
+        <S.TableContainer>
+          <Table<IMatchesTableRow>
+            columns={MATCH_COLUMNS(isSmallerThanMd)}
+            dataSource={allMatchesTableData}
+            onRow={(item) => {
+              return {
+                onClick: () => navigate(Routes.MATCH_DETAIL.replace(':id', item.id)),
+                style: {
+                  cursor: 'pointer',
+                },
+              };
+            }}
+            style={{ width: '100%' }}
+          />
+        </S.TableContainer>
+        <S.Divider />
+        <Flex vertical align="flex-start">
+          <H2>
+            <FormattedMessage {...messages.statisticsTitle} />
+          </H2>
+          <FormattedMessage {...messages.statisticsDescription} />
+        </Flex>
       </Flex>
+      <Gap defaultHeight={48} />
     </ContentLayout>
   );
 };

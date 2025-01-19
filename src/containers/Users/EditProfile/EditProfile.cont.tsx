@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
@@ -20,6 +21,7 @@ export const EditProfileCont: React.FC = () => {
   const { navigate } = useRouter();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
+  const queryClient = useQueryClient();
 
   const userMe = useUserMe('always', undefined);
   const updateMe = useUpdateMe();
@@ -33,6 +35,7 @@ export const EditProfileCont: React.FC = () => {
   const onSubmit = async (values: IFormData) => {
     try {
       await updateMe.mutateAsync(values);
+      queryClient.removeQueries({ queryKey: ['userDetail', userMe.data?.id] });
       showNotification(messages.updateSuccess);
       navigate(Routes.USER_PROFILE.replace(':id', userMe.data?.id ?? ''));
     } catch (e) {

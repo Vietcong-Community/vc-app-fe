@@ -22,19 +22,6 @@ export interface ILoginSuccess {
   token: string;
 }
 
-export interface IUserMe {
-  id: string;
-  email: string;
-  nickname: string;
-  firstName?: string;
-  lastName?: string;
-  createdAt: string;
-  facebookLink?: string;
-  twitchLink?: string;
-  steamLink?: string;
-  description?: string;
-}
-
 export interface IUpdateUser {
   email: string;
   nickname: string;

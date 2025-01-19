@@ -1,5 +1,10 @@
 import React from 'react';
 
+import { compact } from 'lodash';
+
+import { useUserDetail } from '../../api/hooks/users/api';
+import { useRouter } from '../../hooks/RouterHook';
+
 import { AchievementProgress } from './components/Achievements/Achievements';
 import { MatchHistory } from './components/MatchHistory/MatchHistory';
 import { IMatch } from './components/MatchHistory/MatchHistory';
@@ -9,9 +14,13 @@ import { UserInfo } from './components/UserInfo/UserInfo';
 import * as S from './Profile.style';
 
 export const ProfileCont: React.FC = () => {
+  const { query } = useRouter<{ id: string }>();
+
+  const userDetail = useUserDetail(query.id);
+
   const user = {
-    name: 'Martin Chotětický',
-    nickname: 'Bascci',
+    name: compact([userDetail.data?.firstName, userDetail.data?.lastName]).join(' '),
+    nickname: userDetail.data?.nickname ?? '',
     inGameName: '#uNik0rn . basccino',
     avatar:
       'https://yt3.googleusercontent.com/ytc/AIdro_myqhcBlGAgfbLJGgA_llswXSkDKlvG0T-hA1siGmm_yC0=s900-c-k-c0x00ffffff-no-rj', // Odkaz na profilovou fotku

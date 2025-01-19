@@ -7,3 +7,16 @@ export interface IMap {
   name: string;
   official: boolean;
 }
+
+export interface IUser {
+  id: string;
+  email: string;
+  nickname: string;
+  firstName?: string;
+  lastName?: string;
+  createdAt: string;
+  facebookLink?: string;
+  twitchLink?: string;
+  steamLink?: string;
+  description?: string;
+}

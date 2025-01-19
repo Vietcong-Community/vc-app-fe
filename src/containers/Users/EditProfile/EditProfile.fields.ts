@@ -1,29 +1,37 @@
-import { IFormFields } from '../../@types/forms';
+import { IFormFields } from '../../../@types/forms';
+import { isEmailValid, isRequired, maxLength, minLength } from '../../../utils/validations/validations';
 
 export interface IFormData {
   firstName?: string;
   lastName?: string;
   nickname: string;
-  facebookLink: string;
-  twitchLink: string;
-  steamName: string;
-  originalTeam: string;
-  favouriteTeam: string;
-  description: string;
+  email: string;
+  facebookLink?: string;
+  twitchLink?: string;
+  steamLink?: string;
+  description?: string;
 }
 
 export const fields: IFormFields<IFormData> = {
   firstName: {
     name: 'firstName',
     required: false,
+    rules: [maxLength(30)],
   },
   lastName: {
     name: 'lastName',
     required: false,
+    rules: [maxLength(30)],
   },
   nickname: {
     name: 'nickname',
     required: false,
+    rules: [isRequired, minLength(3), maxLength(30)],
+  },
+  email: {
+    name: 'email',
+    required: true,
+    rules: [isRequired, isEmailValid, maxLength(30)],
   },
   facebookLink: {
     name: 'facebookLink',
@@ -33,16 +41,8 @@ export const fields: IFormFields<IFormData> = {
     name: 'twitchLink',
     required: false,
   },
-  steamName: {
-    name: 'steamName',
-    required: false,
-  },
-  originalTeam: {
-    name: 'originalTeam',
-    required: false,
-  },
-  favouriteTeam: {
-    name: 'favouriteTeam',
+  steamLink: {
+    name: 'steamLink',
     required: false,
   },
   description: {

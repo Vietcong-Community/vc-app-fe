@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Col, Form, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import vojakReg from '../../../assets/vojak_reg.png';
 import { Button } from '../../../components/Button/Button';
 import { InputField } from '../../../components/Fields/InputField/InputField';
+import { Form } from '../../../components/Form/Form';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
 
@@ -22,7 +23,6 @@ interface IProps {
 
 export const ForgottenPasswordForm: React.FC<IProps> = (props: IProps) => {
   const { goBackToLogin, isSubmitting, onSubmit } = props;
-  const [form] = Form.useForm();
   const { formatMessage } = useIntl();
 
   return (
@@ -31,7 +31,7 @@ export const ForgottenPasswordForm: React.FC<IProps> = (props: IProps) => {
         <S.Image src={vojakReg} alt="Voják na registraci" />
       </Col>
       <Col xs={24} sm={12} md={12} lg={6}>
-        <Form form={form} layout="vertical" onFinish={onSubmit} scrollToFirstError validateTrigger="onBlur">
+        <Form onSubmit={onSubmit}>
           <H2>
             <FormattedMessage {...messages.title} />
           </H2>

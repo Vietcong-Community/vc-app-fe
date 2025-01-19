@@ -63,7 +63,7 @@ export const useUserMe = (
       return data;
     },
     enabled,
-    staleTime: Infinity,
+    staleTime: 0,
     refetchOnMount: refetchOnMount ?? false,
   });
 };

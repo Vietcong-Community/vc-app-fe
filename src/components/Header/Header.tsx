@@ -41,41 +41,33 @@ export const Header: React.FC = () => {
     {
       key: 'profile',
       label: (
-        <span onClick={() => navigate(Routes.USER)}>
+        <S.DropdownLabel onClick={() => navigate(Routes.USER_PROFILE.replace(':id', userMe.data?.id ?? ''))}>
           <FormattedMessage {...messages.goToProfilePage} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
     {
       key: 'edit-profile',
       label: (
-        <span onClick={() => navigate(Routes.EDIT_PROFILE)}>
+        <S.DropdownLabel onClick={() => navigate(Routes.EDIT_PROFILE.replace(':id', userMe.data?.id ?? ''))}>
           <FormattedMessage {...messages.goToProfileEditPage} />
-        </span>
-      ),
-    },
-    {
-      key: 'change-password',
-      label: (
-        <span onClick={() => navigate(Routes.PRIVATE_CHANGE_PASSWORD)}>
-          <FormattedMessage {...messages.changePasswordLink} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
     {
       key: 'theme',
       label: (
-        <span onClick={toggleTheme}>
+        <S.DropdownLabel onClick={toggleTheme}>
           <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
     {
       key: 'logout',
       label: (
-        <span onClick={handleLogout}>
+        <S.DropdownLabel onClick={handleLogout}>
           <FormattedMessage {...messages.logout} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
   ];
@@ -84,25 +76,25 @@ export const Header: React.FC = () => {
     {
       key: 'login',
       label: (
-        <span onClick={() => navigate(Routes.LOGIN)}>
+        <S.DropdownLabel onClick={() => navigate(Routes.LOGIN)}>
           <FormattedMessage {...messages.goToLogin} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
     {
       key: 'registration',
       label: (
-        <span onClick={() => navigate(Routes.REGISTRATION)}>
+        <S.DropdownLabel onClick={() => navigate(Routes.REGISTRATION)}>
           <FormattedMessage {...messages.goToRegistration} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
     {
       key: 'theme',
       label: (
-        <span onClick={toggleTheme}>
+        <S.DropdownLabel onClick={toggleTheme}>
           <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
-        </span>
+        </S.DropdownLabel>
       ),
     },
   ];
@@ -163,6 +155,7 @@ export const Header: React.FC = () => {
         isOpen={isMobileMenuOpen}
         onCloseButtonClick={() => setIsMobileMenuOpen(false)}
         isUserLoggedIn={isUserLoggedIn}
+        userId={userMe.data?.id}
       />
     </S.Container>
   );

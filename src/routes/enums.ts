@@ -10,7 +10,7 @@ export enum Routes {
   PUBLIC_CHANGE_PASSWORD = '/zapomenute-heslo/:token',
   // USER ROUTES
   MCRVC = '/mcrvc',
-  USER = '/uzivatel',
+  USER_PROFILE = '/uzivatel/:id',
   PRIVATE_CHANGE_PASSWORD = '/zmena-hesla',
   EDIT_PROFILE = '/uprava-uzivatele/:id',
   // TEAM ROUTES

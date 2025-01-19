@@ -3,7 +3,6 @@ import { ProfileCont } from 'src/containers/Profile/Profile.cont';
 
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
-import { EditProfileCont } from '../containers/EditProfile/EditProfile.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
 import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
@@ -14,6 +13,7 @@ import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/P
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
 import { ChangePasswordCont } from '../containers/Users/ChangePassword/ChangePassword.cont';
+import { EditProfileCont } from '../containers/Users/EditProfile/EditProfile.cont';
 import { ForgottenPasswordCont } from '../containers/Users/ForgottenPassword/ForgottenPassword.cont';
 import { LoginCont } from '../containers/Users/Login/Login.cont';
 import { RegistrationCont } from '../containers/Users/Registration/Registration.cont';
@@ -33,7 +33,7 @@ export const routesObject: RouteObject[] = [
       { element: <StatisticsCont />, path: Routes.STATISTICS },
       { element: <AboutUsCont />, path: Routes.ABOUT_US },
       // USER ROUTES
-      { element: <ProfileCont />, path: Routes.USER },
+      { element: <ProfileCont />, path: Routes.USER_PROFILE },
       { element: <EditProfileCont />, path: Routes.EDIT_PROFILE },
       { element: <PrivatePasswordChangeCont />, path: Routes.PRIVATE_CHANGE_PASSWORD },
       // TEAM ROUTES

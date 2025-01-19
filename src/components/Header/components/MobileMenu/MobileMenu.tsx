@@ -34,10 +34,11 @@ interface IProps {
   isOpen: boolean;
   onCloseButtonClick: () => void;
   isUserLoggedIn: boolean;
+  userId?: string;
 }
 
 export const MobileMenu: React.FC<IProps> = (props) => {
-  const { isOpen, onCloseButtonClick, isUserLoggedIn } = props;
+  const { isOpen, onCloseButtonClick, isUserLoggedIn, userId } = props;
   const nodeRef = useRef(null);
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
@@ -120,7 +121,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                     <Divider
                       style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}
                     />
-                    <S.MenuItem onClick={() => onMenuItemClick(Routes.USER)}>
+                    <S.MenuItem onClick={() => onMenuItemClick(Routes.USER_PROFILE.replace(':id', userId ?? ''))}>
                       <FormattedMessage {...messages.goToProfilePage} />
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>

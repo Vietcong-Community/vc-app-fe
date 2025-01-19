@@ -144,3 +144,7 @@ export const MobileHamburger = styled.div<{ isOpen: boolean }>`
       }
     `}
 `;
+
+export const DropdownLabel = styled.span`
+  width: 100%;
+`;

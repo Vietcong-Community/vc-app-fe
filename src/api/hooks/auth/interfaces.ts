@@ -23,11 +23,16 @@ export interface ILoginSuccess {
 }
 
 export interface IUserMe {
+  id: string;
   email: string;
   nickname: string;
   firstName?: string;
   lastName?: string;
   createdAt: string;
+  facebookLink?: string;
+  twitchLink?: string;
+  steamLink?: string;
+  description?: string;
 }
 
 export interface IUpdateUser {
@@ -35,4 +40,8 @@ export interface IUpdateUser {
   nickname: string;
   firstName?: string;
   lastName?: string;
+  facebookLink?: string;
+  twitchLink?: string;
+  steamLink?: string;
+  description?: string;
 }

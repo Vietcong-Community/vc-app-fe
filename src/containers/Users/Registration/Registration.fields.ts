@@ -4,6 +4,7 @@ import {
   isPasswordSame,
   isPasswordValid,
   isRequired,
+  maxLength,
   minLength,
 } from '../../../utils/validations/validations';
 
@@ -19,7 +20,7 @@ export const fields: IFormFields<IFormData> = {
   nickname: {
     name: 'nickname',
     required: true,
-    rules: [isRequired, minLength(3)],
+    rules: [isRequired, minLength(3), maxLength(30)],
   },
   email: {
     name: 'email',

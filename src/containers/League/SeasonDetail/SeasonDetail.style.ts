@@ -1,6 +1,7 @@
+import { Divider as AntDDivider } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../theme/theme';
 import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const CardTitle = styled.h3`
@@ -13,7 +14,7 @@ export const InformationLabel = styled.span`
 `;
 
 export const InformationValue = styled.span`
-  color: darkolivegreen;
+  color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   font-size: 15px;
   font-weight: 600;
 `;
@@ -29,4 +30,15 @@ export const Matches = styled.div`
       flex-direction: column;
     `}
   `};
+`;
+
+export const Divider = styled(AntDDivider)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30};
+`;
+
+export const TableContainer = styled.div`
+  width: 100%;
+  .ant-table-thead .ant-table-cell {
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30};
+  }
 `;

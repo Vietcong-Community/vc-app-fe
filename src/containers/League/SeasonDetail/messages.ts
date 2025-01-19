@@ -1,13 +1,17 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  playersRankingTitle: {
-    id: 'app.containers.League.SeasonDetail.playersRankingTitle',
-    defaultMessage: 'Pořadí hráčů',
+  ladderTitle: {
+    id: 'app.containers.League.SeasonDetail.ladderTitle',
+    defaultMessage: 'Pořadí týmů',
   },
   allMatchesTitle: {
     id: 'app.containers.League.SeasonDetail.allMatchesTitle',
-    defaultMessage: 'Seznam zápasů',
+    defaultMessage: 'Seznam všech zápasů',
+  },
+  statisticsTitle: {
+    id: 'app.containers.League.SeasonDetail.statisticsTitle',
+    defaultMessage: 'Statistiky hráčů',
   },
   seasonInformationTitle: {
     id: 'app.containers.League.SeasonDetail.seasonInformationTitle',
@@ -19,7 +23,7 @@ export const messages = defineMessages({
   },
   noUpcomingMatches: {
     id: 'app.containers.League.SeasonDetail.noUpcomingMatches',
-    defaultMessage: 'Žádný zápas není naplánován, vytvořte nový <b>zde</b>.',
+    defaultMessage: 'Žádný zápas není naplánován.',
   },
   finishedMatches: {
     id: 'app.containers.League.SeasonDetail.finishedMatches',
@@ -45,8 +49,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.dateNotSpecified',
     defaultMessage: 'Nespecifikované',
   },
-  scrollToAllMatches: {
-    id: 'app.containers.League.SeasonDetail.scrollToAllMatches',
-    defaultMessage: 'Přejít na všechny zápasy',
+  statisticsDescription: {
+    id: 'app.containers.League.SeasonDetail.statisticsDescription',
+    defaultMessage: 'Makáme na tom, abychom statistiky zprovoznili co nejdříve, můžete se těšit v dalších verzích.',
   },
 });

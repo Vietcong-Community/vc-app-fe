@@ -26,6 +26,7 @@ export const theme = {
     background: '#f9f9f6',
     primary: '#a2a966',
     secondary: '#aacfac',
+    secondary30: 'hsl(111, 13%, 31%, 30%)',
     borderColor: '#dddddd',
     accent: '#7cb698',
   },

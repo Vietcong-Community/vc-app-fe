@@ -37,20 +37,12 @@ export interface IMatchRound {
 
 export interface IMatch {
   id: string;
-  firstCaptain?: {
-    id: string;
-    nickname: string;
-  };
-  secondCaptain?: {
-    id: string;
-    nickname: string;
-  };
+  challengerTeam: ITeam;
+  opponentTeam?: ITeam;
   firstTeamScore?: number;
   secondTeamScore?: number;
   status: MatchStatus;
   date: string;
-  players: object[];
-  rounds: IMatchRound[];
 }
 
 export interface IMatchResult {

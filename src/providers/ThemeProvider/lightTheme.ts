@@ -1,19 +1,20 @@
 export const LightAntDTheme = {
-  colorPrimary: '#a2a966',
-  colorSecondary: '#aacfac',
+  colorPrimary: '#557765',
+  colorSecondary: '#485945',
   // Backgrounds
-  colorBgBase: '#f9f9f6',
+  colorBgBase: '#e9edea',
   // Texts
-  colorTextLabel: '#17170d',
-  colorText: '#17170d',
+  colorTextLabel: '#2c302c',
+  colorText: '#2c302c',
 };
 
 // https://www.figma.com/community/file/840895380520234275/gruvbox-syntax-highlighting
 export const LightAppTheme = {
-  text: '#17170d',
-  background: '#f9f9f6',
-  primary: '#a2a966',
-  secondary: '#aacfac',
+  text: '#2c302c',
+  background: '#e9edea',
+  primary: '#557765',
+  secondary: '#485945',
+  secondary30: 'hsl(111, 13%, 31%, 30%)',
   borderColor: '#dddddd',
-  accent: '#7cb698',
+  accent: '#425742',
 };

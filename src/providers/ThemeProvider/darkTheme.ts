@@ -1,20 +1,20 @@
 export const DarkAntDTheme = {
-  colorPrimary: '#1E2E24',
-  colorSecondary: '#4A5A4F',
-  colorBorder: '#84847f',
+  colorPrimary: '#382d29',
+  colorSecondary: '#d69a9e',
   // Backgrounds
-  colorBgBase: '#2E4C3A',
+  colorBgBase: '#1a1a1a',
   // Text
-  colorTextLabel: '#D9D9D9',
-  colorText: '#D9D9D9',
+  colorTextLabel: '#e8e8e8',
+  colorText: '#e8e8e8',
   colorTextPlaceholder: '#84847f',
 };
 
 export const DarkAppTheme = {
-  text: '#D9D9D9',
-  background: '#2E4C3A',
-  primary: '#1E2E24',
-  secondary: '#4A5A4F',
+  text: '#e8e8e8',
+  background: '#1a1a1a',
+  primary: '#382d29',
+  secondary: '#d69a9e',
+  secondary30: 'hsl(356, 42%, 72%, 30%)',
   borderColor: '#dddddd',
-  accent: '#A3C1AD',
+  accent: '#ff757e',
 };

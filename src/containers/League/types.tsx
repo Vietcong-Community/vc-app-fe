@@ -17,13 +17,13 @@ export interface IPlayersTable {
   points: number;
 }
 
-export interface IMatchesTable {
+export interface IMatchesTableRow {
   id: string;
   date: string;
   status: ReactNode;
   result: string;
-  firstCaptain: string;
-  secondCaptain: string;
+  challengerTeamName: string;
+  opponentTeamName: string;
 }
 
 export const PLAYERS_COLUMNS = (hidden: boolean): TableColumnsType<IPlayersTable> => {
@@ -75,25 +75,29 @@ export const PLAYERS_COLUMNS = (hidden: boolean): TableColumnsType<IPlayersTable
   ];
 };
 
-export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTable> => {
+export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRow> => {
   return [
-    { title: 'Datum', dataIndex: 'date', key: '0', defaultSortOrder: 'descend' },
-    { title: 'Stav', dataIndex: 'status', key: '1' },
+    { title: <FormattedMessage {...messages.matchDate} />, dataIndex: 'date', key: '0', defaultSortOrder: 'descend' },
     {
-      title: 'Kapitán 1',
-      dataIndex: 'firstCaptain',
-      key: '2',
-      hidden,
+      title: <FormattedMessage {...messages.challenger} />,
+      dataIndex: 'challengerTeamName',
+      key: '1',
     },
     {
-      title: 'Kapitán 2',
-      dataIndex: 'secondCaptain',
+      title: <FormattedMessage {...messages.opponent} />,
+      dataIndex: 'opponentTeamName',
+      key: '2',
+    },
+    {
+      title: <FormattedMessage {...messages.result} />,
+      dataIndex: 'result',
       key: '3',
     },
     {
-      title: 'Výsledek',
-      dataIndex: 'result',
+      title: <FormattedMessage {...messages.matchStatus} />,
+      dataIndex: 'status',
       key: '4',
+      hidden,
     },
   ];
 };

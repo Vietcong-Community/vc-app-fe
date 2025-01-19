@@ -29,4 +29,24 @@ export const messages = defineMessages({
     id: 'app.containers.League.teamPositionShortcut',
     defaultMessage: '#',
   },
+  matchDate: {
+    id: 'app.containers.League.matchDate',
+    defaultMessage: 'Datum a čas',
+  },
+  challenger: {
+    id: 'app.containers.League.challenger',
+    defaultMessage: 'Vyzyvatel',
+  },
+  opponent: {
+    id: 'app.containers.League.opponent',
+    defaultMessage: 'Oponent',
+  },
+  result: {
+    id: 'app.containers.League.result',
+    defaultMessage: 'Výsledek',
+  },
+  matchStatus: {
+    id: 'app.containers.League.matchStatus',
+    defaultMessage: 'Stav',
+  },
 });

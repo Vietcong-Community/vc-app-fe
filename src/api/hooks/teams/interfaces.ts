@@ -1,4 +1,4 @@
-import { IUser } from '../users/interfaces';
+import { IUser } from '../interfaces';
 
 export enum TeamRole {
   OWNER = 'OWNER',

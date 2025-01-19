@@ -2,18 +2,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post, put } from '../../apiFactory';
 import { IgnoredErrorCodes } from '../../types';
-import { IIdentifiedEntity } from '../interfaces';
+import { IIdentifiedEntity, IUser } from '../interfaces';
 
 import { AuthEndpoints } from './endpoints';
-import {
-  IChangePassword,
-  ICreateUser,
-  IForgottenPassword,
-  ILoginSuccess,
-  IUpdateUser,
-  IUserLogin,
-  IUserMe,
-} from './interfaces';
+import { IChangePassword, ICreateUser, IForgottenPassword, ILoginSuccess, IUpdateUser, IUserLogin } from './interfaces';
 
 export const useLogin = () => {
   return useMutation({
@@ -59,7 +51,7 @@ export const useUserMe = (
   return useQuery({
     queryKey: ['userMe'],
     queryFn: async () => {
-      const { data } = await get<IUserMe>(AuthEndpoints.USER_ME, undefined, undefined, ignoreErrorCodes);
+      const { data } = await get<IUser>(AuthEndpoints.USER_ME, undefined, undefined, ignoreErrorCodes);
       return data;
     },
     enabled,

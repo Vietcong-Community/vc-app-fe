@@ -40,7 +40,12 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
         <FormattedMessage {...messages.title} />
       </H2>
       <Row gutter={24} justify="center">
-        <Col xs={24} md={6} lg={4} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Col
+          xs={24}
+          md={6}
+          lg={4}
+          style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+        >
           <S.Image src={avatar} alt="Profile" style={{}} />
           <Upload disabled onChange={handlePhotoChange} showUploadList={false}>
             <Button disabled icon={<UploadOutlined />}>
@@ -48,7 +53,7 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
             </Button>
           </Upload>
         </Col>
-        <Col xs={2} md={2} lg={2}>
+        <Col xs={2} md={2} lg={1}>
           <Gap defaultHeight={32} />
         </Col>
         {/* Right Side - Tabs and Form */}

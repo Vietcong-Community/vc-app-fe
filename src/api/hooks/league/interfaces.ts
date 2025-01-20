@@ -27,6 +27,22 @@ export interface ILadderItem {
   joinedAt: string;
 }
 
+export interface ISeasonTeamItem {
+  team: ILadderItem;
+  userIsMemberOfTeam: boolean;
+}
+
+export interface ICreateMatchChallenge {
+  opponentId: string;
+  challengerMapId: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface IAcceptMatchChallenge {
+  opponentMapId: string;
+}
+
 export interface IMatchRound {
   id: string;
   map: {

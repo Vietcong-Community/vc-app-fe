@@ -71,7 +71,9 @@ export const SeasonDetailCont: React.FC = () => {
       };
     }) ?? [];
 
-  const onMatchCreateClick = () => {};
+  const onMatchCreateClick = () => {
+    navigate(Routes.MATCH_CREATE.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId));
+  };
 
   const upcomingMatches = matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
   const finishedMatches = matches?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
@@ -137,7 +139,7 @@ export const SeasonDetailCont: React.FC = () => {
             <Space direction="vertical" style={{ width: '100%' }}>
               {!noUpcomingMatches &&
                 firstFiveUpcomingMatches.map((item: IMatch) => {
-                  return <MatchRow match={item} />;
+                  return <MatchRow leagueId={query.leagueId} seasonId={query.seasonId} match={item} />;
                 })}
             </Space>
           </Card>
@@ -151,7 +153,7 @@ export const SeasonDetailCont: React.FC = () => {
             <>
               <Space direction="vertical" style={{ width: '100%' }}>
                 {firstFiveFinishedMatches.map((item: IMatch) => {
-                  return <MatchRow match={item} />;
+                  return <MatchRow leagueId={query.leagueId} seasonId={query.seasonId} match={item} />;
                 })}
               </Space>
             </>
@@ -201,8 +203,15 @@ export const SeasonDetailCont: React.FC = () => {
             columns={MATCH_COLUMNS(isSmallerThanMd)}
             dataSource={allMatchesTableData}
             onRow={(item) => {
+              const onClick = () =>
+                navigate(
+                  Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
+                    .replace(':seasonId', query.seasonId)
+                    .replace(':matchId', item.id),
+                );
+
               return {
-                onClick: () => navigate(Routes.MATCH_DETAIL.replace(':id', item.id)),
+                onClick,
                 style: {
                   cursor: 'pointer',
                 },

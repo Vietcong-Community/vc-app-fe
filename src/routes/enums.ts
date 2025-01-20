@@ -19,6 +19,7 @@ export enum Routes {
   // LEAGUE
   LEAGUE = '/liga',
   SEASON_DETAIL = '/detail-sezony/:leagueId/:seasonId',
-  MATCH_CREATE = '/vytvoreni-zapasu/:id',
-  MATCH_DETAIL = '/detail-zapasu/:id',
+  MATCH_CREATE = '/vytvoreni-zapasu/:leagueId/:seasonId',
+  MATCH_CHALLENGE = '/vyzva-k-zapasu/:leagueId/:seasonId/:matchId',
+  MATCH_DETAIL = '/detail-zapasu/:leagueId/:seasonId/:matchId',
 }

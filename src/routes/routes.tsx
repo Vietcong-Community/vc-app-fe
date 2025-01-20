@@ -5,6 +5,8 @@ import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
+import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
+import { CreateMatchCont } from '../containers/League/CreateMatch/CreateMatch.cont';
 import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
 import { OverviewCont } from '../containers/League/Overview/Overview.cont';
 import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail.cont';
@@ -25,28 +27,31 @@ export const routesObject: RouteObject[] = [
   {
     element: <PageLayout />,
     children: [
-      { element: <HomeCont />, path: Routes.HOME },
-      { element: <LoginCont />, path: Routes.LOGIN },
-      { element: <RegistrationCont />, path: Routes.REGISTRATION },
-      { element: <ForgottenPasswordCont />, path: Routes.FORGOTTEN_PASSWORD },
-      { element: <ChangePasswordCont />, path: Routes.PUBLIC_CHANGE_PASSWORD },
-      // GENERAL ROUTES
-      { element: <StatisticsCont />, path: Routes.STATISTICS },
-      { element: <AboutUsCont />, path: Routes.ABOUT_US },
       // USER ROUTES
       { element: <ProfileCont />, path: Routes.USER_PROFILE },
       { element: <EditProfileCont />, path: Routes.EDIT_PROFILE },
       { element: <PrivatePasswordChangeCont />, path: Routes.PRIVATE_CHANGE_PASSWORD },
       // TEAM ROUTES
       { element: <TeamDetailCont />, path: Routes.TEAM_DETAIL },
-
-      // MIX LEAGUE
+      // LEAGUE
       { element: <OverviewCont />, path: Routes.LEAGUE },
       { element: <SeasonDetailCont />, path: Routes.SEASON_DETAIL },
-      // MIX MATCHES
+      // MATCHES
       { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
+      { element: <CreateMatchCont />, path: Routes.MATCH_CREATE },
+      { element: <AcceptMatchChallengeCont />, path: Routes.MATCH_CHALLENGE },
+
+      // GENERAL ROUTES
+      { element: <HomeCont />, path: Routes.HOME },
+      { element: <LoginCont />, path: Routes.LOGIN },
+      { element: <RegistrationCont />, path: Routes.REGISTRATION },
+      { element: <ForgottenPasswordCont />, path: Routes.FORGOTTEN_PASSWORD },
+      { element: <ChangePasswordCont />, path: Routes.PUBLIC_CHANGE_PASSWORD },
+      { element: <StatisticsCont />, path: Routes.STATISTICS },
+      { element: <AboutUsCont />, path: Routes.ABOUT_US },
       { element: <McrvcCont />, path: Routes.MCRVC },
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
+
       { element: <NotFoundPage />, path: Routes.NOT_FOUND },
       { element: <NotFoundPage />, path: '*' },
     ],

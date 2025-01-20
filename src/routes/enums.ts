@@ -8,6 +8,7 @@ export enum Routes {
   HALLOFFAME = '/sin-slavy',
   FORGOTTEN_PASSWORD = '/obnoveni-hesla',
   PUBLIC_CHANGE_PASSWORD = '/zapomenute-heslo/:token',
+  NOT_FOUND = '/stranka-nenalezena',
   // USER ROUTES
   MCRVC = '/mcrvc',
   USER_PROFILE = '/uzivatel/:id',

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { useRouter } from '../../hooks/RouterHook';
+import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 
@@ -16,7 +17,7 @@ export const PageLayout: React.FC = () => {
   }, [pathname]);
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <S.PageContainer>
         <S.ContentContainer>
@@ -24,6 +25,6 @@ export const PageLayout: React.FC = () => {
         </S.ContentContainer>
       </S.PageContainer>
       <Footer />
-    </>
+    </ErrorBoundary>
   );
 };

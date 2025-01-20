@@ -9,6 +9,7 @@ import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
 import { OverviewCont } from '../containers/League/Overview/Overview.cont';
 import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail.cont';
 import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
+import { NotFoundPage } from '../containers/NotFoundPage/NotFoundPage';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
@@ -46,7 +47,8 @@ export const routesObject: RouteObject[] = [
       { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
       { element: <McrvcCont />, path: Routes.MCRVC },
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
-      // TODO NOT FOUND PAGE
+      { element: <NotFoundPage />, path: Routes.NOT_FOUND },
+      { element: <NotFoundPage />, path: '*' },
     ],
   },
 ];

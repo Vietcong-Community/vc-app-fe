@@ -5,4 +5,9 @@ export enum LeagueEndpoints {
   SEASON_DETAIL = '/leagues/{leagueId}/seasons/{seasonId}',
   MAPS_IN_SEASON = '/leagues/{leagueId}/seasons/{seasonId}/maps',
   LADDER_LIST = '/leagues/{leagueId}/seasons/{seasonId}/ladder',
+  SEASON_TEAM_LIST = '/leagues/{leagueId}/seasons/{seasonId}/teams',
+  CREATE_MATCH_CHALLENGE = '/leagues/{leagueId}/seasons/{seasonId}/create-match-challenge',
+  ACCEPT_MATCH_CHALLENGE = '/leagues/{leagueId}/seasons/{seasonId}/matches/{matchId}/accept-match-challenge',
+  REJECT_MATCH_CHALLENGE = '/leagues/{leagueId}/seasons/{seasonId}/matches/{matchId}/reject-match-challenge',
+  MATCH_DETAIL = '/leagues/{leagueId}/seasons/{seasonId}/matches/{matchId}',
 }

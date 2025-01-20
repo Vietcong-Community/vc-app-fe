@@ -68,7 +68,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
               {noUpcomingMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
               {!noUpcomingMatches &&
                 firstFiveUpcomingMatches.map((item: IMatch) => {
-                  return <MatchRow match={item} />;
+                  return <MatchRow leagueId={leagueId} seasonId={seasonDetail.id} match={item} />;
                 })}
             </Space>
           </Flex>
@@ -82,7 +82,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
             <>
               <Space direction="vertical" style={{ width: '100%' }}>
                 {firstFiveFinishedMatches.map((item: IMatch) => {
-                  return <MatchRow match={item} />;
+                  return <MatchRow leagueId={leagueId} seasonId={seasonDetail.id} match={item} />;
                 })}
               </Space>
             </>

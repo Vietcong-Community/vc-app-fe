@@ -16,6 +16,7 @@ interface IProps {
   placeholder?: string;
   required?: boolean;
   rules?: FormRule[];
+  showTime?: boolean;
 }
 
 export const DatePickerField: React.FC<IProps> = (props: IProps) => {
@@ -29,6 +30,7 @@ export const DatePickerField: React.FC<IProps> = (props: IProps) => {
     placeholder,
     required = true,
     rules,
+    showTime = false,
   } = props;
 
   return (
@@ -39,6 +41,7 @@ export const DatePickerField: React.FC<IProps> = (props: IProps) => {
         placeholder={placeholder}
         minDate={minimalDate}
         maxDate={maximalDate}
+        showTime={showTime}
         style={{ width: '100%' }}
       />
     </Form.Item>

@@ -6,10 +6,12 @@ import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
+import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
 import { CreateMatchCont } from '../containers/League/CreateMatch/CreateMatch.cont';
 import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
 import { OverviewCont } from '../containers/League/Overview/Overview.cont';
 import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail.cont';
+import { SetMatchScoreCont } from '../containers/League/SetMatchResult/SetMatchResult.cont';
 import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { NotFoundPage } from '../containers/NotFoundPage/NotFoundPage';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
@@ -40,6 +42,8 @@ export const routesObject: RouteObject[] = [
       { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
       { element: <CreateMatchCont />, path: Routes.MATCH_CREATE },
       { element: <AcceptMatchChallengeCont />, path: Routes.MATCH_CHALLENGE },
+      { element: <ConfirmMatchResultCont />, path: Routes.CONFIRM_MATCH_SCORE },
+      { element: <SetMatchScoreCont />, path: Routes.SET_MATCH_SCORE },
 
       // GENERAL ROUTES
       { element: <HomeCont />, path: Routes.HOME },

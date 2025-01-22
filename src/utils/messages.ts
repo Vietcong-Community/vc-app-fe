@@ -17,13 +17,21 @@ export const messages = defineMessages({
     id: 'app.utils.matchStatusNew',
     defaultMessage: 'Nový',
   },
-  matchStatusReady: {
-    id: 'app.utils.matchStatusReady',
+  matchStatusAccepted: {
+    id: 'app.utils.matchStatusAccepted',
     defaultMessage: 'K odehrání',
   },
   matchStatusWaitingForConfirmation: {
     id: 'app.utils.matchStatusWaitingForConfirmation',
     defaultMessage: 'Čeká na potvrzení',
+  },
+  matchStatusWaitingForScoreConfirmation: {
+    id: 'app.utils.matchStatusWaitingForScoreConfirmation',
+    defaultMessage: 'Potvrzení výsledku',
+  },
+  matchStatusRejected: {
+    id: 'app.utils.matchStatusRejected',
+    defaultMessage: 'Odmítnuto',
   },
   matchStatusComplaint: {
     id: 'app.utils.matchStatusComplaint',

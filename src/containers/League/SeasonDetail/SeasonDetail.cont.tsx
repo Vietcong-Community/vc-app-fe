@@ -3,8 +3,8 @@ import React from 'react';
 import { Flex, Space, Table } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasonLadder, useSeasonsDetail } from '../../../api/hooks/league/api';
-import { IMatch } from '../../../api/hooks/league/interfaces';
+import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail } from '../../../api/hooks/league/api';
+import { IMatchListItem } from '../../../api/hooks/league/interfaces';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
@@ -33,6 +33,7 @@ export const SeasonDetailCont: React.FC = () => {
 
   const season = useSeasonsDetail(query.leagueId, query.seasonId);
   const ladder = useSeasonLadder(query.leagueId, query.seasonId);
+  const matches = useSeasonMatchList(query.leagueId, query.seasonId);
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {
@@ -46,27 +47,26 @@ export const SeasonDetailCont: React.FC = () => {
         loses: item.loses,
       };
     }) ?? [];
-  const matches: IMatch[] = [];
 
   const allMatchesTableData: IMatchesTableRow[] =
-    matches?.map((item) => {
+    matches.data?.matches?.map((item) => {
       const getOpponentTeamName = () => {
-        if (!item.opponentTeam) {
+        if (!item.opponent?.team.name) {
           return '-';
         }
 
-        return isSmallerThanMd ? item.opponentTeam.tag : item.opponentTeam?.name;
+        return isSmallerThanMd ? item.opponent?.team.tag : item.opponent?.team.name;
       };
 
       return {
         id: item.id,
-        date: formatDateForUser(item.date) ?? '',
+        date: formatDateForUser(item.startDate) ?? '',
         status: mapMatchStatusToTranslation(item.status),
-        challengerTeamName: isSmallerThanMd ? item.challengerTeam.tag : item.challengerTeam.name,
+        challengerTeamName: isSmallerThanMd ? item.challenger?.team.tag : item.challenger.team.name,
         opponentTeamName: getOpponentTeamName(),
         result:
-          item.status !== MatchStatus.NEW && item.status !== MatchStatus.READY
-            ? `${item.firstTeamScore} - ${item.secondTeamScore}`
+          item.status === MatchStatus.FINISHED || item.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION
+            ? `${item.challengerScore} - ${item.opponentScore}`
             : '? - ?',
       };
     }) ?? [];
@@ -75,8 +75,8 @@ export const SeasonDetailCont: React.FC = () => {
     navigate(Routes.MATCH_CREATE.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId));
   };
 
-  const upcomingMatches = matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
-  const finishedMatches = matches?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
+  const upcomingMatches = matches.data?.matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
+  const finishedMatches = matches.data?.matches?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
   const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
   const firstFiveFinishedMatches = finishedMatches.slice(0, 5);
 
@@ -138,7 +138,7 @@ export const SeasonDetailCont: React.FC = () => {
             )}
             <Space direction="vertical" style={{ width: '100%' }}>
               {!noUpcomingMatches &&
-                firstFiveUpcomingMatches.map((item: IMatch) => {
+                firstFiveUpcomingMatches.map((item: IMatchListItem) => {
                   return <MatchRow leagueId={query.leagueId} seasonId={query.seasonId} match={item} />;
                 })}
             </Space>
@@ -152,7 +152,7 @@ export const SeasonDetailCont: React.FC = () => {
           {!noFinishedMatches && (
             <>
               <Space direction="vertical" style={{ width: '100%' }}>
-                {firstFiveFinishedMatches.map((item: IMatch) => {
+                {firstFiveFinishedMatches.map((item: IMatchListItem) => {
                   return <MatchRow leagueId={query.leagueId} seasonId={query.seasonId} match={item} />;
                 })}
               </Space>

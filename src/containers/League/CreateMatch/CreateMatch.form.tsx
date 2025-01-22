@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Space } from 'antd';
+import { Form, Space } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { IMap } from '../../../api/hooks/interfaces';
@@ -10,7 +10,7 @@ import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
 import { DatePickerField } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { SelectField } from '../../../components/Fields/SelectField/SelectField';
-import { Form } from '../../../components/Form/Form';
+import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { BreakPoints } from '../../../theme/theme';
 
@@ -28,6 +28,7 @@ interface IProps {
 export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
   const { isSubmitting, maps, onCancel, onSubmit, teams } = props;
   const { formatMessage } = useIntl();
+  const [form] = Form.useForm<IFormData>();
 
   const opponentOptions =
     teams?.map((item) => ({ id: item.team.id, value: item.team.id, label: item.team.team.name })) ?? [];
@@ -35,7 +36,7 @@ export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
 
   return (
     <Card style={{ margin: '1rem auto', maxWidth: BreakPoints.sm }} title={<FormattedMessage {...messages.title} />}>
-      <Form onSubmit={onSubmit}>
+      <FormComponent form={form} onSubmit={onSubmit}>
         <SelectField
           {...fields.opponentId}
           label={<FormattedMessage {...messages.opponentId} />}
@@ -63,7 +64,7 @@ export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
             <FormattedMessage {...messages.submitButton} />
           </Button>
         </Space>
-      </Form>
+      </FormComponent>
     </Card>
   );
 };

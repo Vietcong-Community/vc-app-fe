@@ -1,4 +1,5 @@
-import { LeagueType, MatchStatus, Nation, SeasonStatus } from '../../../constants/enums';
+import { LeagueType, MatchStatus, SeasonStatus } from '../../../constants/enums';
+import { IMap, IUser } from '../interfaces';
 import { ITeam } from '../teams/interfaces';
 
 export interface ILeagueDetail {
@@ -45,34 +46,51 @@ export interface IAcceptMatchChallenge {
 
 export interface IMatchRound {
   id: string;
-  map: {
-    id: string;
-    name: string;
-  };
+  round: number;
+  map: IMap;
+  scoreChallenger: number;
+  scoreOpponent: number;
+  createdAt: string;
+  createdBy: IUser;
+  confirmationDate?: string;
+  confirmedBy?: IUser;
 }
 
 export interface IMatch {
   id: string;
-  challengerTeam: ITeam;
-  opponentTeam?: ITeam;
-  firstTeamScore?: number;
-  secondTeamScore?: number;
+  challenger: ILadderItem;
+  opponent?: ILadderItem;
+  startDate: string;
+  endDate?: string;
+  challengerMap: IMap;
+  opponentMap?: IMap;
   status: MatchStatus;
-  date: string;
+  challengerScore?: number;
+  opponentScore?: number;
+  createdAt: string;
+  createdBy: IUser;
+  confirmationOpponentDate?: string;
+  confirmedBy?: IUser;
+  rejectedAt?: string;
+  rejectedBy?: IUser;
+  rounds: IMatchRound[];
 }
 
-export interface IMatchResult {
-  matchId: string;
-  firstTeamScore: number;
-  secondTeamScore: number;
-  players: { userId: string; team: number }[];
+export interface IMatchListItem {
+  id: string;
+  challenger: ILadderItem;
+  opponent?: ILadderItem;
+  startDate: string;
+  endDate?: string;
+  status: MatchStatus;
+  challengerScore?: number;
+  opponentScore?: number;
+}
+
+export interface ISetMatchScore {
   rounds: {
-    id: number;
-    playerId?: number;
-    userId: string;
-    nation: Nation;
-    flags: number;
-    kills: number;
-    deaths: number;
+    mapId: string;
+    scoreChallenger: number;
+    scoreOpponent: number;
   }[];
 }

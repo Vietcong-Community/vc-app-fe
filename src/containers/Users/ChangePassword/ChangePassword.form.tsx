@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Col, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button } from '../../../components/Button/Button';
 import { PasswordField } from '../../../components/Fields/PasswordField/PasswordField';
-import { Form } from '../../../components/Form/Form';
+import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
 
@@ -20,11 +20,12 @@ interface IProps {
 export const ChangePasswordForm: React.FC<IProps> = (props: IProps) => {
   const { isSubmitting, onSubmit } = props;
   const { formatMessage } = useIntl();
+  const [form] = Form.useForm<IFormData>();
 
   return (
     <Row justify="center" align="middle">
       <Col xs={24} sm={12} md={12} lg={6}>
-        <Form onSubmit={onSubmit}>
+        <FormComponent form={form} onSubmit={onSubmit}>
           <H2>
             <FormattedMessage {...messages.title} />
           </H2>
@@ -45,7 +46,7 @@ export const ChangePasswordForm: React.FC<IProps> = (props: IProps) => {
           <Button loading={isSubmitting} type="submit">
             <FormattedMessage {...messages.submitButton} />
           </Button>
-        </Form>
+        </FormComponent>
       </Col>
     </Row>
   );

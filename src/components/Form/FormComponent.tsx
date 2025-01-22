@@ -1,26 +1,29 @@
 import React from 'react';
 
-import { Form as AntDForm } from 'antd';
+import { Form as AntDForm, FormInstance } from 'antd';
 
 export interface IProps<T> {
   children?: React.ReactNode;
+  form: FormInstance<T>;
   initialValues?: Partial<T>;
   layout?: 'horizontal' | 'inline' | 'vertical';
+  requiredMark?: boolean;
   onSubmit: (values: T) => void;
   scrollToFirstError?: boolean;
   validateTrigger?: string | string[] | false;
 }
 
-export function Form<T>(props: IProps<T>) {
+export function FormComponent<T>(props: IProps<T>) {
   const {
     children,
+    form,
     initialValues,
     layout = 'vertical',
     onSubmit,
+    requiredMark = true,
     scrollToFirstError = true,
     validateTrigger = 'onBlur',
   } = props;
-  const [form] = AntDForm.useForm<T>();
 
   return (
     <AntDForm
@@ -28,6 +31,7 @@ export function Form<T>(props: IProps<T>) {
       initialValues={initialValues}
       onFinish={onSubmit}
       scrollToFirstError={scrollToFirstError}
+      requiredMark={requiredMark}
       layout={layout}
       validateTrigger={validateTrigger}
     >

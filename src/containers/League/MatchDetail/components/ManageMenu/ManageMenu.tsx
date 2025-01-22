@@ -14,11 +14,14 @@ import { messages } from './messages';
 
 interface IProps {
   isPossibleToConfirmMatch: boolean;
+  leagueId: string;
+  matchId: string;
+  seasonId: string;
   status?: MatchStatus;
 }
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
-  const { isPossibleToConfirmMatch, status } = props;
+  const { isPossibleToConfirmMatch, matchId, leagueId, seasonId, status } = props;
   const { navigate, query } = useRouter<{ id: string }>();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
@@ -56,19 +59,26 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '2',
-      disabled: status !== MatchStatus.READY,
+      onClick: () =>
+        navigate(
+          Routes.SET_MATCH_SCORE.replace(':leagueId', leagueId)
+            .replace(':seasonId', seasonId)
+            .replace(':matchId', matchId),
+        ),
+      disabled: status !== MatchStatus.ACCEPTED,
     },
+
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '3',
-      onClick: () => {},
-      disabled: status !== MatchStatus.WAITING_FOR_CONFIRMATION,
+      onClick: () => navigate(Routes.SET_MATCH_SCORE),
+      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
     },
     {
       label: <FormattedMessage {...messages.delete} />,
       key: '4',
       onClick: onDeleteMatch,
-      disabled: status !== MatchStatus.NEW && status !== MatchStatus.READY,
+      disabled: status !== MatchStatus.NEW && status !== MatchStatus.WAITING_FOR_CONFIRMATION,
     },
   ];
 

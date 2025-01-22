@@ -60,6 +60,28 @@ export const maxLength = (length: number) => ({
   message: <FormattedMessage {...messages.maxLength} values={{ length }} />,
 });
 
+export const minValue = (minValue: number) => ({
+  validator: (_unused: object, value: number) => {
+    if (isNaN(value) && value >= minValue) {
+      return Promise.reject();
+    } else {
+      return Promise.resolve();
+    }
+  },
+  message: <FormattedMessage {...messages.minValue} values={{ minValue }} />,
+});
+
+export const maxValue = (maxValue: number) => ({
+  validator: (_unused: object, value: number) => {
+    if (isNaN(value) && value <= maxValue) {
+      return Promise.reject();
+    } else {
+      return Promise.resolve();
+    }
+  },
+  message: <FormattedMessage {...messages.maxValue} values={{ maxValue }} />,
+});
+
 export const isPasswordSame = ({ getFieldValue }: { getFieldValue: (value: string) => string }) => ({
   validator(_unused: object, value: string) {
     if (!value || getFieldValue('password') === value) {

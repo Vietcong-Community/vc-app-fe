@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Row, Col } from 'antd';
+import { Row, Col, Form } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import loginPic from '../../../assets/loginPic.png';
 import { Button } from '../../../components/Button/Button';
 import { InputField } from '../../../components/Fields/InputField/InputField';
 import { PasswordField } from '../../../components/Fields/PasswordField/PasswordField';
-import { Form } from '../../../components/Form/Form';
+import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
 
@@ -26,6 +26,7 @@ interface IProps {
 export const LoginForm: React.FC<IProps> = (props: IProps) => {
   const { goToResetPassword, goToRegistration, isSubmitting = false, onSubmit } = props;
   const { formatMessage } = useIntl();
+  const [form] = Form.useForm<IFormData>();
 
   return (
     <>
@@ -35,7 +36,7 @@ export const LoginForm: React.FC<IProps> = (props: IProps) => {
         </Col>
         <Col sm={0} md={2} lg={2} />
         <Col xs={24} sm={12} md={8} lg={6}>
-          <Form onSubmit={onSubmit}>
+          <FormComponent form={form} onSubmit={onSubmit}>
             <Gap defaultHeight={48} />
             <H2>
               <FormattedMessage {...messages.title} />
@@ -61,7 +62,7 @@ export const LoginForm: React.FC<IProps> = (props: IProps) => {
             <S.LinkButton onClick={goToRegistration}>
               <FormattedMessage {...messages.registrationButton} values={{ br: <br /> }} />
             </S.LinkButton>
-          </Form>
+          </FormComponent>
         </Col>
       </Row>
     </>

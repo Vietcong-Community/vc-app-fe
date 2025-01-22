@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMatch } from '../../../../api/hooks/league/interfaces';
+import { IMatchListItem } from '../../../../api/hooks/league/interfaces';
 import { MatchStatus } from '../../../../constants/enums';
 import { useRouter } from '../../../../hooks/RouterHook';
 import { Routes } from '../../../../routes/enums';
@@ -11,14 +11,15 @@ import * as S from './MatchRow.style';
 interface IProps {
   leagueId: string;
   seasonId: string;
-  match: IMatch;
+  match: IMatchListItem;
 }
 
 export const MatchRow: React.FC<IProps> = (props: IProps) => {
   const { leagueId, match, seasonId } = props;
   const { navigate } = useRouter();
 
-  const scoreExists = match.status !== MatchStatus.NEW && match.status !== MatchStatus.READY;
+  const scoreExists =
+    match.status === MatchStatus.FINISHED || match.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
 
   const onMatchClick = () => {
     navigate(
@@ -28,11 +29,11 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
 
   return (
     <S.Container onClick={onMatchClick}>
-      {formatDateForUser(match.date) ?? ''}
+      {formatDateForUser(match.startDate) ?? ''}
       <div>
-        {match.challengerTeam?.name} vs. {match.opponentTeam?.name}
+        {match.challenger?.team.name} vs. {match.opponent?.team.name}
       </div>
-      <S.Score>{scoreExists ? `${match.firstTeamScore} - ${match.secondTeamScore}` : '? - ?'}</S.Score>
+      <S.Score>{scoreExists ? `${match.challengerScore} - ${match.opponentScore}` : '? - ?'}</S.Score>
     </S.Container>
   );
 };

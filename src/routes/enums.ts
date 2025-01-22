@@ -21,5 +21,7 @@ export enum Routes {
   SEASON_DETAIL = '/detail-sezony/:leagueId/:seasonId',
   MATCH_CREATE = '/vytvoreni-zapasu/:leagueId/:seasonId',
   MATCH_CHALLENGE = '/vyzva-k-zapasu/:leagueId/:seasonId/:matchId',
+  SET_MATCH_SCORE = '/zadani-vysledku-zapasu/:leagueId/:seasonId/:matchId',
+  CONFIRM_MATCH_SCORE = '/potvrzeni-vysledku-zapasu/:leagueId/:seasonId/:matchId',
   MATCH_DETAIL = '/detail-zapasu/:leagueId/:seasonId/:matchId',
 }

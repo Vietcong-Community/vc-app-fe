@@ -9,8 +9,11 @@ import {
   ICreateMatchChallenge,
   ILadderItem,
   ILeagueDetail,
+  IMatch,
+  IMatchListItem,
   ISeason,
   ISeasonTeamItem,
+  ISetMatchScore,
 } from './interfaces';
 
 export const useLeagueList = () => {
@@ -83,7 +86,7 @@ export const useSeasonLadder = (leagueId: string, seasonId: string, refetchOnMou
   });
 };
 
-export const useSeasonTeams = (leagueId: string, seasonId: string, refetchOnMount?: boolean | 'always') => {
+export const useSeasonTeams = (leagueId: string, seasonId: string) => {
   return useQuery({
     queryKey: ['seasonTeams', leagueId, seasonId],
     queryFn: async () => {
@@ -94,7 +97,25 @@ export const useSeasonTeams = (leagueId: string, seasonId: string, refetchOnMoun
       return data;
     },
     staleTime: Infinity,
-    refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useSeasonMatchList = (leagueId: string, seasonId: string) => {
+  return useQuery({
+    queryKey: ['matchList', leagueId, seasonId],
+    queryFn: async () => {
+      const { data } = await get<{ matches: IMatchListItem[]; total: number }>(
+        LeagueEndpoints.MATCH_LIST,
+        {
+          leagueId,
+          seasonId,
+        },
+        undefined,
+        [401],
+      );
+      return data;
+    },
+    staleTime: Infinity,
   });
 };
 
@@ -127,7 +148,50 @@ export const useAcceptMatchChallenge = (leagueId: string, seasonId: string, matc
 export const useRejectMatchChallenge = (leagueId: string, seasonId: string, matchId: string) => {
   return useMutation({
     mutationFn: async () => {
-      const { data } = await post<undefined, undefined>(LeagueEndpoints.ACCEPT_MATCH_CHALLENGE, undefined, {
+      const { data } = await post<undefined, undefined>(LeagueEndpoints.REJECT_MATCH_CHALLENGE, undefined, {
+        leagueId,
+        seasonId,
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useMatchDetail = (
+  leagueId: string,
+  seasonId: string,
+  matchId: string,
+  refetchOnMount?: boolean | 'always',
+) => {
+  return useQuery({
+    queryKey: ['matchDetail', leagueId, seasonId, matchId],
+    queryFn: async () => {
+      const { data } = await get<IMatch>(LeagueEndpoints.MATCH_DETAIL, { leagueId, seasonId, matchId });
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useSetMatchScore = (leagueId: string, seasonId: string, matchId: string) => {
+  return useMutation({
+    mutationFn: async (payload: ISetMatchScore) => {
+      const { data } = await post<ISetMatchScore, undefined>(LeagueEndpoints.SET_MATCH_SCORE, payload, {
+        leagueId,
+        seasonId,
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useConfirmMatchScore = (leagueId: string, seasonId: string, matchId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await post<undefined, undefined>(LeagueEndpoints.CONFIRM_MATCH_SCORE, undefined, {
         leagueId,
         seasonId,
         matchId,

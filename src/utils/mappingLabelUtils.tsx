@@ -23,10 +23,16 @@ export const mapMatchStatusToTranslation = (status?: MatchStatus): ReactNode | u
   switch (status) {
     case MatchStatus.NEW:
       return <FormattedMessage {...messages.matchStatusNew} />;
-    case MatchStatus.READY:
-      return <FormattedMessage {...messages.matchStatusReady} />;
     case MatchStatus.WAITING_FOR_CONFIRMATION:
       return <FormattedMessage {...messages.matchStatusWaitingForConfirmation} />;
+    case MatchStatus.ACCEPTED:
+      return <FormattedMessage {...messages.matchStatusAccepted} />;
+    case MatchStatus.WAITING_FOR_SCORE_CONFIRMATION:
+      return <FormattedMessage {...messages.matchStatusWaitingForConfirmation} />;
+    case MatchStatus.REJECTED_BY_ADMIN:
+    case MatchStatus.REJECTED_BY_CHALLENGER:
+    case MatchStatus.REJECTED_BY_OPPONENT:
+      return <FormattedMessage {...messages.matchStatusRejected} />;
     case MatchStatus.COMPLAINT:
       return <FormattedMessage {...messages.matchStatusComplaint} />;
     case MatchStatus.FINISHED:

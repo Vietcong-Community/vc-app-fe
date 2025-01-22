@@ -5,6 +5,14 @@ export const messages = defineMessages({
     id: 'app.utils.validations.required',
     defaultMessage: 'Vyplňte povinné pole',
   },
+  minValue: {
+    id: 'app.utils.validations.minValue',
+    defaultMessage: 'Minimální hodnota je {value}',
+  },
+  maxValue: {
+    id: 'app.utils.validations.maxValue',
+    defaultMessage: 'Maximální hodnota je {value}',
+  },
   minLength: {
     id: 'app.utils.validations.minLength',
     defaultMessage: 'Minimální počet znaků je {length}',

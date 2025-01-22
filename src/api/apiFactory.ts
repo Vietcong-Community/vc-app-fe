@@ -20,7 +20,6 @@ const axiosApi = axios.create({
 });
 
 const requestConfig: AxiosRequestConfig = {
-  withCredentials: true,
   responseType: 'json',
 };
 

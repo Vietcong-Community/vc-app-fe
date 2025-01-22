@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Col, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import vojakReg from '../../../assets/vojak_reg.png';
 import { Button } from '../../../components/Button/Button';
 import { InputField } from '../../../components/Fields/InputField/InputField';
-import { Form } from '../../../components/Form/Form';
+import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
 
@@ -24,6 +24,7 @@ interface IProps {
 export const ForgottenPasswordForm: React.FC<IProps> = (props: IProps) => {
   const { goBackToLogin, isSubmitting, onSubmit } = props;
   const { formatMessage } = useIntl();
+  const [form] = Form.useForm<IFormData>();
 
   return (
     <Row justify="center" align="middle">
@@ -31,7 +32,7 @@ export const ForgottenPasswordForm: React.FC<IProps> = (props: IProps) => {
         <S.Image src={vojakReg} alt="Voják na registraci" />
       </Col>
       <Col xs={24} sm={12} md={12} lg={6}>
-        <Form onSubmit={onSubmit}>
+        <FormComponent form={form} onSubmit={onSubmit}>
           <H2>
             <FormattedMessage {...messages.title} />
           </H2>
@@ -47,7 +48,7 @@ export const ForgottenPasswordForm: React.FC<IProps> = (props: IProps) => {
           <Button loading={isSubmitting} type="submit">
             <FormattedMessage {...messages.submitButton} />
           </Button>
-        </Form>
+        </FormComponent>
         <Gap defaultHeight={32} />
         <S.LinkButton onClick={goBackToLogin}>
           <FormattedMessage {...messages.backToLogin} />

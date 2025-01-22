@@ -1,0 +1,13 @@
+image:
+  repository: registry.digitalocean.com/placestore/vietcong-hub-fe
+  pullPolicy: ""
+
+secretName: ""
+
+ingress:
+  annotations: {}
+  hosts:
+
+resources:
+  requests:
+    memory: 200Mi

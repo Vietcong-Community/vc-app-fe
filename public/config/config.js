@@ -1,3 +1,3 @@
 window.vcAppConfig = {
-  API_URL: 'http://localhost:5000/api',
+  API_URL: 'https://api.vietconghub.eu/api',
 };

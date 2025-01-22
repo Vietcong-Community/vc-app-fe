@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -13,7 +12,6 @@ import { Routes } from '../../../../../routes/enums';
 import { messages } from './messages';
 
 interface IProps {
-  isPossibleToConfirmMatch: boolean;
   leagueId: string;
   matchId: string;
   seasonId: string;
@@ -21,10 +19,9 @@ interface IProps {
 }
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
-  const { isPossibleToConfirmMatch, matchId, leagueId, seasonId, status } = props;
-  const { navigate, query } = useRouter<{ id: string }>();
+  const { matchId, leagueId, seasonId, status } = props;
+  const { navigate } = useRouter<{ id: string }>();
   const { showNotification } = useNotifications();
-  const queryClient = useQueryClient();
 
   const onDeleteMatch = async () => {
     try {
@@ -36,25 +33,17 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   };
 
   const onConfirmMatch = async () => {
-    try {
-      await queryClient.invalidateQueries({ queryKey: ['matchesById', query.id] });
-      showNotification(messages.confirmMatchSuccess);
-    } catch (e) {
-      showNotification(messages.confirmMatchFailed, undefined, NotificationType.ERROR);
-    }
+    navigate(
+      Routes.MATCH_CHALLENGE.replace(':leagueId', leagueId).replace(':seasonId', seasonId).replace(':matchId', matchId),
+    );
   };
 
   const items: MenuProps['items'] = [
     {
-      label: <FormattedMessage {...messages.update} />,
-      key: '0',
-      disabled: status !== MatchStatus.NEW,
-    },
-    {
       label: <FormattedMessage {...messages.confirmTheMatch} />,
       key: '1',
       onClick: onConfirmMatch,
-      disabled: status !== MatchStatus.NEW || !isPossibleToConfirmMatch,
+      disabled: status !== MatchStatus.NEW,
     },
     {
       label: <FormattedMessage {...messages.enterTheResult} />,

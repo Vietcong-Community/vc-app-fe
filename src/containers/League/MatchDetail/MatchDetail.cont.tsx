@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
@@ -13,7 +13,6 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
-import { Maps } from './components/Maps/Maps';
 import { messages } from './messages';
 
 import * as S from './MatchDetail.style';
@@ -28,9 +27,6 @@ export const MatchDetail: React.FC = () => {
     matchDetail.data?.status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
   const showLoading = matchDetail.isLoading;
 
-  const maps = useMemo(() => [], [matchDetail.isFetched]);
-  const isPossibleToConfirmMatch = maps.length === 2;
-
   return (
     <ContentLayout>
       <Flex align="center" justify="space-between">
@@ -38,7 +34,6 @@ export const MatchDetail: React.FC = () => {
           <FormattedMessage {...messages.title} />
         </H1>
         <ManageMenu
-          isPossibleToConfirmMatch={isPossibleToConfirmMatch}
           leagueId={query.leagueId}
           matchId={query.matchId}
           seasonId={query.seasonId}
@@ -96,7 +91,6 @@ export const MatchDetail: React.FC = () => {
                 </Flex>
               </Card>
             </S.TeamsContainer>
-            <Maps maps={maps} />
           </>
         )}
       </S.MatchInformationContainer>

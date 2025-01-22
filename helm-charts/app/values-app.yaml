@@ -1,0 +1,14 @@
+image:
+  repository: registry.digitalocean.com/placestore/vietcong-hub-fe
+
+secretName: "app"
+
+ingress:
+  hosts:
+    - host: www.vietconghub.eu
+  tls:
+    - secretName: vc-hub-app.tls
+      hosts:
+        - vietconghub.eu
+        - www.vietconghub.eu
+

@@ -1,0 +1,47 @@
+name: Docker image
+
+env:
+  DOCKER_REGISTRY: registry.digitalocean.com/placestore
+
+on:
+  workflow_call:
+    inputs:
+      image_tag:
+        description: PR number or other identfier
+        required: true
+        type: string
+
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN:
+        required: true
+
+jobs:
+  build-image:
+    name: Build
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Login to docker registry
+        run: doctl registry login -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} --expiry-seconds 600
+
+      - name: Create image tag
+        id: tag
+        run: echo "::set-output name=tag::${{ inputs.image_tag }}"
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build image
+        run: |
+          docker buildx build . \
+          --tag registry.digitalocean.com/placestore/${{ steps.tag.outputs.tag }} \
+          --push

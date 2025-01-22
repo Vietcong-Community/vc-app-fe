@@ -1,0 +1,68 @@
+name: Update app in Kubernetes cluster
+
+on:
+  workflow_call:
+    inputs:
+      namespace:
+        description: Target namespace
+        required: true
+        type: string
+
+      release_name:
+        description: Name of the release
+        required: true
+        type: string
+
+      values_file:
+        description: Path of the values file
+        required: true
+        type: string
+
+      revision:
+        description: Target revision
+        required: true
+        type: string
+
+      helm_dir:
+        description: Helm directory
+        required: true
+        type: string
+
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN:
+        required: true
+
+jobs:
+  update:
+    name: Update app
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+#      - uses: chrnorm/deployment-action@releases/v1
+#        name: Create GitHub deployment
+#        id: deployment
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          environment: ${{ inputs.release_name }}
+
+      - uses: actions/checkout@v3
+
+      - name: Set up kubectl
+        uses: matootie/dokube@v1.4.0
+        with:
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          clusterName: xs-cluster
+          namespace: ${{ inputs.namespace }}
+
+      - uses: azure/setup-helm@v3
+        with:
+          version: '3.10.1'
+
+      - name: Run production preview
+        run: |
+          helm upgrade ${{ inputs.release_name }} -i \
+          helm-charts/${{ inputs.helm_dir }} \
+          -f ${{ inputs.values_file }} \
+          --namespace=${{ inputs.namespace }} \
+          --set-string image.tag=${{ inputs.revision }}

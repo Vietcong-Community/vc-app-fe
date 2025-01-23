@@ -60,14 +60,19 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '3',
-      onClick: () => navigate(Routes.SET_MATCH_SCORE),
+      onClick: () =>
+        navigate(
+          Routes.CONFIRM_MATCH_SCORE.replace(':leagueId', leagueId)
+            .replace(':seasonId', seasonId)
+            .replace(':matchId', matchId),
+        ),
       disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
     },
     {
       label: <FormattedMessage {...messages.delete} />,
       key: '4',
       onClick: onDeleteMatch,
-      disabled: status !== MatchStatus.NEW && status !== MatchStatus.WAITING_FOR_CONFIRMATION,
+      disabled: status !== MatchStatus.NEW,
     },
   ];
 

@@ -31,6 +31,7 @@ const transitionStyles: { [key: string]: object } = {
 };
 
 interface IProps {
+  handleLogout: () => void;
   isOpen: boolean;
   onCloseButtonClick: () => void;
   isUserLoggedIn: boolean;
@@ -38,7 +39,7 @@ interface IProps {
 }
 
 export const MobileMenu: React.FC<IProps> = (props) => {
-  const { isOpen, onCloseButtonClick, isUserLoggedIn, userId } = props;
+  const { handleLogout, isOpen, onCloseButtonClick, isUserLoggedIn, userId } = props;
   const nodeRef = useRef(null);
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
@@ -134,7 +135,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                         {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)}
                       />
                     </S.MenuLink>
-                    <S.LogoutLink onClick={() => {}}>
+                    <S.LogoutLink onClick={handleLogout}>
                       <FormattedMessage {...messages.logout} />
                     </S.LogoutLink>
                   </>

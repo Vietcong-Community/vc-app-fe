@@ -152,6 +152,7 @@ export const Header: React.FC = () => {
         </S.RightSection>
       </S.Content>
       <MobileMenu
+        handleLogout={handleLogout}
         isOpen={isMobileMenuOpen}
         onCloseButtonClick={() => setIsMobileMenuOpen(false)}
         isUserLoggedIn={isUserLoggedIn}

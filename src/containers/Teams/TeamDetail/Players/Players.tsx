@@ -3,7 +3,7 @@ import React from 'react';
 import { Flex } from 'antd';
 import avatar from 'src/assets/avatars/avatar_us_web.webp';
 
-import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { ContentLayout } from '../../../../components/Layouts/ContentLayout/ContentLayout';
 
 import * as S from './Players.style';
 
@@ -23,19 +23,8 @@ export const Players: React.FC<IPlayersProps> = ({ players }) => {
   return (
     <>
       <ContentLayout>
-        <h3>Kapitán</h3>
-        <Flex style={{ justifyContent: 'center', gap: '10px' }}>
-          <S.PlayerCard>
-            <S.PlayerImage src={avatar} />
-            <S.PlayerInfo>
-              <S.PlayerRole>{'CEO'}</S.PlayerRole>
-              <S.PlayerName>{'Basccino'}</S.PlayerName>
-              <S.PlayerRealName>{'Martin Chotětický'}</S.PlayerRealName>
-            </S.PlayerInfo>
-          </S.PlayerCard>
-        </Flex>
-        <h3>Členové</h3>
-        <Flex style={{ justifyContent: 'center', gap: '10px' }}>
+        <Flex style={{ flexDirection: 'column' }}>
+          <h3>Členové týmu</h3>
           {players.map((player, index) => (
             <S.PlayerCard key={index}>
               <S.PlayerImage src={avatar} alt={`${player.userName}`} />

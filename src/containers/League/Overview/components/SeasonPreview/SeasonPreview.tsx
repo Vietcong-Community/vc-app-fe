@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Flex, Space, Table, Typography } from 'antd';
+import { Flex, Table, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useSeasonLadder, useSeasonMatchList } from '../../../../../api/hooks/league/api';
@@ -31,7 +31,8 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const isSmallerThanMd = width < BreakPoints.md;
 
   const ladder = useSeasonLadder(leagueId, seasonDetail.id);
-  const matches = useSeasonMatchList(leagueId, seasonDetail.id);
+  const finishedMatches = useSeasonMatchList(leagueId, seasonDetail.id, { status: MatchStatus.FINISHED, limit: 5 });
+  const matches = useSeasonMatchList(leagueId, seasonDetail.id, {});
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {
@@ -46,13 +47,12 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       };
     }) ?? [];
 
-  const upcomingMatches = matches.data?.matches.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
-  const finishedMatches = matches.data?.matches.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
+  // const upcomingMatches = matches.data?.matches.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
+  const upcomingMatches = matches.data?.matches ?? [];
   const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
-  const firstFiveFinishedMatches = finishedMatches.slice(0, 5);
 
   const noUpcomingMatches = upcomingMatches.length === 0;
-  const noFinishedMatches = finishedMatches.length === 0;
+  const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = seasonDetail.status === SeasonStatus.ACTIVE;
 
   return (
@@ -63,13 +63,13 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
             <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
               <FormattedMessage {...messages.openMatches} />
             </Typography.Title>
-            <Space direction="vertical" style={{ width: '100%' }}>
+            <S.LastMatchesContainer>
               {noUpcomingMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
               {!noUpcomingMatches &&
                 firstFiveUpcomingMatches.map((item: IMatchListItem) => {
                   return <MatchRow leagueId={leagueId} seasonId={seasonDetail.id} match={item} />;
                 })}
-            </Space>
+            </S.LastMatchesContainer>
           </Flex>
         )}
         <Flex justify="center" vertical>
@@ -79,11 +79,11 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
           {noFinishedMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
           {!noFinishedMatches && (
             <>
-              <Space direction="vertical" style={{ width: '100%' }}>
-                {firstFiveFinishedMatches.map((item: IMatchListItem) => {
+              <S.LastMatchesContainer>
+                {finishedMatches.data?.matches?.map((item: IMatchListItem) => {
                   return <MatchRow leagueId={leagueId} seasonId={seasonDetail.id} match={item} />;
                 })}
-              </Space>
+              </S.LastMatchesContainer>
             </>
           )}
         </Flex>

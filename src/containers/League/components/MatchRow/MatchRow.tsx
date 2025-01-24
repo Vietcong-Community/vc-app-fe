@@ -27,13 +27,44 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
     );
   };
 
+  const challengerWon =
+    scoreExists &&
+    match.challengerScore !== undefined &&
+    match.opponentScore !== undefined &&
+    match.challengerScore > match.opponentScore;
+  const opponentWon =
+    scoreExists &&
+    match.challengerScore !== undefined &&
+    match.opponentScore !== undefined &&
+    match.challengerScore < match.opponentScore;
+
   return (
     <S.Container onClick={onMatchClick}>
       {formatDateForUser(match.startDate) ?? ''}
       <div>
-        {match.challenger?.team.name} vs. {match.opponent?.team.name}
+        <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
+          {match.challenger?.team.tag}
+        </S.HighlightedText>
+        <span style={{ fontSize: 12, margin: '0 8px' }}>{' vs. '}</span>
+        <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
+          {match.opponent?.team.tag}
+        </S.HighlightedText>
       </div>
-      <S.Score>{scoreExists ? `${match.challengerScore} - ${match.opponentScore}` : '? - ?'}</S.Score>
+      <S.Score>
+        {scoreExists ? (
+          <>
+            <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
+              {match.challengerScore}
+            </S.HighlightedText>{' '}
+            -{' '}
+            <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
+              {match.opponentScore}
+            </S.HighlightedText>
+          </>
+        ) : (
+          '? - ?'
+        )}
+      </S.Score>
     </S.Container>
   );
 };

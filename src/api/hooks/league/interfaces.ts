@@ -59,7 +59,7 @@ export interface IMatchRound {
 export interface IMatch {
   id: string;
   challenger: ILadderItem;
-  opponent?: ILadderItem;
+  opponent: ILadderItem;
   startDate: string;
   endDate?: string;
   challengerMap: IMap;
@@ -85,6 +85,16 @@ export interface IMatchListItem {
   status: MatchStatus;
   challengerScore?: number;
   opponentScore?: number;
+}
+
+export interface IMatchListQuery {
+  teamId?: string;
+  mapId?: string;
+  startDateFrom?: string;
+  startDateTo?: string;
+  status?: MatchStatus;
+  page?: number;
+  limit?: number;
 }
 
 export interface ISetMatchScore {

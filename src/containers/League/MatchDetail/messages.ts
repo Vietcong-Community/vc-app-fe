@@ -13,20 +13,14 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.status',
     defaultMessage: 'Stav',
   },
-  firstTeam: {
-    id: 'app.containers.League.MatchDetail.firstTeam',
-    defaultMessage: 'Tým 1',
+  lineup: {
+    id: 'app.containers.League.MatchDetail.lineup',
+    defaultMessage: 'Sestava',
   },
-  secondTeam: {
-    id: 'app.containers.League.MatchDetail.secondTeam',
-    defaultMessage: 'Tým 2',
-  },
-  captain: {
-    id: 'app.containers.League.MatchDetail.captain',
-    defaultMessage: 'Kapitán: ',
-  },
-  players: {
-    id: 'app.containers.League.MatchDetail.players',
-    defaultMessage: 'Hráči',
+  lineupTBA: {
+    id: 'app.containers.League.MatchDetail.lineupTBA',
+    defaultMessage:
+      'To koukáš, že tu nic neni, co? Neboj, pracujeme na tom, abychom v dalších ' +
+      'updatech evidovali hráče, kteří hráli zápas.',
   },
 });

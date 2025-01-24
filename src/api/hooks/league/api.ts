@@ -11,6 +11,7 @@ import {
   ILeagueDetail,
   IMatch,
   IMatchListItem,
+  IMatchListQuery,
   ISeason,
   ISeasonTeamItem,
   ISetMatchScore,
@@ -100,9 +101,9 @@ export const useSeasonTeams = (leagueId: string, seasonId: string) => {
   });
 };
 
-export const useSeasonMatchList = (leagueId: string, seasonId: string) => {
+export const useSeasonMatchList = (leagueId: string, seasonId: string, query?: IMatchListQuery) => {
   return useQuery({
-    queryKey: ['matchList', leagueId, seasonId],
+    queryKey: ['matchList', leagueId, seasonId, JSON.stringify(query ?? {})],
     queryFn: async () => {
       const { data } = await get<{ matches: IMatchListItem[]; total: number }>(
         LeagueEndpoints.MATCH_LIST,
@@ -110,7 +111,7 @@ export const useSeasonMatchList = (leagueId: string, seasonId: string) => {
           leagueId,
           seasonId,
         },
-        undefined,
+        query,
         [401],
       );
       return data;

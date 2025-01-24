@@ -76,14 +76,14 @@ export const Score = styled.div<IScoreProps>`
     font-size: 18px;
   }
 
-  ${(props: IScoreProps) =>
+  ${(props: IThemeProps & IScoreProps) =>
     props.$isWinning &&
     css`
-      background-color: #759116;
+      background-color: ${props.theme.colors.green};
     `};
-  ${(props: IScoreProps) =>
+  ${(props: IThemeProps & IScoreProps) =>
     props.$isLosing &&
     css`
-      background-color: #bf1029;
+      background-color: ${props.theme.colors.red};
     `};
 `;

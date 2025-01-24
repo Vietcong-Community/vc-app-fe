@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useMatchDetail } from '../../../api/hooks/league/api';
 import { Card } from '../../../components/Card/Card';
+import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { MatchStatus } from '../../../constants/enums';
@@ -13,6 +14,8 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
+import { Rounds } from './components/Rounds/Rounds';
+import { Team } from './components/Team/Team';
 import { messages } from './messages';
 
 import * as S from './MatchDetail.style';
@@ -24,7 +27,7 @@ export const MatchDetail: React.FC = () => {
 
   const scoreExists =
     matchDetail.data?.status === MatchStatus.FINISHED ||
-    matchDetail.data?.status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
+    matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
   const showLoading = matchDetail.isLoading;
 
   return (
@@ -45,7 +48,7 @@ export const MatchDetail: React.FC = () => {
         {showLoading && <Spin size="large" />}
         {!showLoading && (
           <>
-            <S.TeamsContainer>
+            <S.ContentContainer>
               <Card>
                 <Flex justify="space-between">
                   <div style={{ flex: 1, textAlign: 'start' }}>
@@ -69,31 +72,24 @@ export const MatchDetail: React.FC = () => {
                   </div>
                 </Flex>
                 <br />
-                <Flex justify="space-between" gap={16}>
-                  <Card bordered style={{ textAlign: 'start' }}>
-                    <S.TeamsLabel>
-                      <FormattedMessage {...messages.firstTeam} />
-                    </S.TeamsLabel>
-                    <b>
-                      <FormattedMessage {...messages.captain} />
-                    </b>
-                    {matchDetail.data?.challenger?.team?.name}
-                  </Card>
-                  <Card style={{ textAlign: 'start' }}>
-                    <S.TeamsLabel>
-                      <FormattedMessage {...messages.secondTeam} />
-                    </S.TeamsLabel>
-                    <b>
-                      <FormattedMessage {...messages.captain} />
-                    </b>
-                    {matchDetail.data?.opponent?.team?.name}
-                  </Card>
-                </Flex>
+                <S.TeamsContainer>
+                  <Team team={matchDetail.data?.challenger?.team} />
+                  <Team team={matchDetail.data?.opponent?.team} />
+                </S.TeamsContainer>
               </Card>
-            </S.TeamsContainer>
+            </S.ContentContainer>
           </>
         )}
       </S.MatchInformationContainer>
+      <Gap defaultHeight={16} />
+      {scoreExists && (
+        <Rounds
+          challengerTag={matchDetail.data?.challenger.team.tag}
+          opponentTag={matchDetail.data?.opponent.team.tag}
+          rounds={matchDetail.data?.rounds}
+        />
+      )}
+      <Gap defaultHeight={48} />
     </ContentLayout>
   );
 };

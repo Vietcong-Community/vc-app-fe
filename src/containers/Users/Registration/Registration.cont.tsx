@@ -36,7 +36,14 @@ export const RegistrationCont: React.FC = () => {
   };
 
   return (
-    <ContentLayout>
+    <ContentLayout
+      breadcrumbItems={[
+        {
+          key: 'bc-registration',
+          title: <FormattedMessage {...messages.title} />,
+        },
+      ]}
+    >
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={48} height={{ md: 32 }} />
       {!createUser.isSuccess && (

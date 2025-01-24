@@ -23,4 +23,16 @@ export const messages = defineMessages({
       'To koukáš, že tu nic neni, co? Neboj, pracujeme na tom, abychom v dalších ' +
       'updatech evidovali hráče, kteří hráli zápas.',
   },
+  leaguesBreadcrumb: {
+    id: 'app.containers.League.MatchDetail.leaguesBreadcrumb',
+    defaultMessage: 'Ligy a sezóny',
+  },
+  seasonDetailBreadcrumb: {
+    id: 'app.containers.League.MatchDetail.seasonDetailBreadcrumb',
+    defaultMessage: 'Sezóna',
+  },
+  matchBreadcrumb: {
+    id: 'app.containers.League.MatchDetail.matchBreadcrumb',
+    defaultMessage: 'Detail zápasu',
+  },
 });

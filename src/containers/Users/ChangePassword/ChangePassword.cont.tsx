@@ -37,7 +37,14 @@ export const ChangePasswordCont: React.FC = () => {
   return (
     <>
       <Helmet title={formatMessage(messages.title)} />
-      <ContentLayout>
+      <ContentLayout
+        breadcrumbItems={[
+          {
+            key: 'bc-password',
+            title: <FormattedMessage {...messages.title} />,
+          },
+        ]}
+      >
         <Gap defaultHeight={48} height={{ md: 32 }} />
         {!changePassword.isSuccess && (
           <ChangePasswordForm isSubmitting={changePassword.isPending} onSubmit={onSubmit} />

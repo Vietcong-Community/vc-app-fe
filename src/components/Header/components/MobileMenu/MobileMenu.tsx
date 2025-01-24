@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 
-import { LoginOutlined, RightOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginOutlined, RightOutlined, SecurityScanOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Divider, Space, Switch } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { Transition } from 'react-transition-group';
@@ -124,18 +124,38 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                       style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}
                     />
                     <S.MenuItem onClick={() => onMenuItemClick(Routes.USER_PROFILE.replace(':id', userId ?? ''))}>
-                      <FormattedMessage {...messages.goToProfilePage} />
+                      <div>
+                        <S.AvatarIcon size={28} icon={<UserOutlined />} />
+                        <FormattedMessage {...messages.goToProfilePage} />
+                      </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>
                     <S.MenuItem onClick={() => onMenuItemClick(Routes.PRIVATE_CHANGE_PASSWORD)}>
-                      <FormattedMessage {...messages.changePasswordLink} />
+                      <div>
+                        <S.AvatarIcon size={28} icon={<SecurityScanOutlined />} />
+                        <FormattedMessage {...messages.changePasswordLink} />
+                      </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>
-                    <S.MenuLink onClick={toggleTheme}>
-                      <FormattedMessage
-                        {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)}
-                      />
-                    </S.MenuLink>
+                    <Space size="large">
+                      <S.SwitchContainer>
+                        <FormattedMessage {...messages.themeTitle} />
+                        <Switch
+                          checkedChildren={<FormattedMessage {...messages.lightTheme} />}
+                          unCheckedChildren={<FormattedMessage {...messages.darkTheme} />}
+                          onChange={toggleTheme}
+                          defaultChecked={selectedTheme === ThemeType.LIGHT}
+                        />
+                      </S.SwitchContainer>
+                      <S.SwitchContainer>
+                        <FormattedMessage {...messages.languageTitle} />
+                        <Switch
+                          checkedChildren={<FormattedMessage {...messages.czech} />}
+                          unCheckedChildren={<FormattedMessage {...messages.english} />}
+                          defaultChecked
+                        />
+                      </S.SwitchContainer>
+                    </Space>
                     <S.LogoutLink onClick={handleLogout}>
                       <FormattedMessage {...messages.logout} />
                     </S.LogoutLink>

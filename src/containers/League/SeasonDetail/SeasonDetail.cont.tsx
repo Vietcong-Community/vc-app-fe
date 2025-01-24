@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail } from '../../../api/hooks/league/api';
 import { IMatchListItem } from '../../../api/hooks/league/interfaces';
+import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
@@ -85,7 +86,23 @@ export const SeasonDetailCont: React.FC = () => {
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE; // TODO AND USER HAVE AUTHORITY
 
   return (
-    <ContentLayout>
+    <ContentLayout
+      breadcrumbItems={[
+        {
+          key: 'bc-league',
+          onClick: () => navigate(Routes.LEAGUE),
+          title: (
+            <BreadcrumbItem>
+              <FormattedMessage {...messages.leaguesBreadcrumb} />
+            </BreadcrumbItem>
+          ),
+        },
+        {
+          key: 'bc-season',
+          title: <FormattedMessage {...messages.seasonDetailBreadcrumb} />,
+        },
+      ]}
+    >
       <Flex align="center" justify="space-between">
         <H1>{season.data?.name}</H1>
       </Flex>

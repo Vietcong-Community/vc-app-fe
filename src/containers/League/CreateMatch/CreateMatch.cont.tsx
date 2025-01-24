@@ -2,9 +2,10 @@ import React from 'react';
 
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useCreateMatchChallenge, useMapsInSeason, useSeasonTeams } from '../../../api/hooks/league/api';
+import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { useNotifications } from '../../../hooks/NotificationsHook';
@@ -42,7 +43,33 @@ export const CreateMatchCont: React.FC = () => {
   const showLoading = maps.isLoading;
 
   return (
-    <ContentLayout>
+    <ContentLayout
+      breadcrumbItems={[
+        {
+          key: 'bc-league',
+          onClick: () => navigate(Routes.LEAGUE),
+          title: (
+            <BreadcrumbItem>
+              <FormattedMessage {...messages.leaguesBreadcrumb} />
+            </BreadcrumbItem>
+          ),
+        },
+        {
+          key: 'bc-season',
+          onClick: () =>
+            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          title: (
+            <BreadcrumbItem>
+              <FormattedMessage {...messages.seasonDetailBreadcrumb} />
+            </BreadcrumbItem>
+          ),
+        },
+        {
+          key: 'bc-match',
+          title: <FormattedMessage {...messages.newMatchBreadcrumb} />,
+        },
+      ]}
+    >
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}

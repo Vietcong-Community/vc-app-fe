@@ -16,4 +16,8 @@ export const Container = styled.div`
       padding: 0 1rem;
     `}
   `};
+
+  .ant-breadcrumb-link {
+    color: ${(props: IThemeProps) => props.theme.mainColors.accent60};
+  }
 `;

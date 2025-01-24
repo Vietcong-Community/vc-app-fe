@@ -4,7 +4,6 @@ import { ProfileCont } from 'src/containers/Profile/Profile.cont';
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
-import { HomeCont } from '../containers/Home/Home.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
 import { CreateMatchCont } from '../containers/League/CreateMatch/CreateMatch.cont';
@@ -46,7 +45,7 @@ export const routesObject: RouteObject[] = [
       { element: <SetMatchScoreCont />, path: Routes.SET_MATCH_SCORE },
 
       // GENERAL ROUTES
-      { element: <HomeCont />, path: Routes.HOME },
+      { element: <OverviewCont />, path: Routes.HOME }, // TODO Create homepage
       { element: <LoginCont />, path: Routes.LOGIN },
       { element: <RegistrationCont />, path: Routes.REGISTRATION },
       { element: <ForgottenPasswordCont />, path: Routes.FORGOTTEN_PASSWORD },

@@ -7,15 +7,22 @@ import { useLeagueList } from '../../../api/hooks/league/api';
 import { Collapse } from '../../../components/Collapse/Collapse';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { useRouter } from '../../../hooks/RouterHook';
+import { Routes } from '../../../routes/enums';
 
 import { LeaguePreview } from './components/LeaguePreview/LeaguePreview';
 import { messages } from './messages';
 
 export const OverviewCont: React.FC = () => {
+  const { pathname } = useRouter();
   const leagues = useLeagueList();
 
   return (
-    <ContentLayout>
+    <ContentLayout
+      breadcrumbItems={
+        pathname === Routes.LEAGUE ? [{ key: 'bc-league', title: <FormattedMessage {...messages.title} /> }] : []
+      }
+    >
       <Flex justify="flex-start" align="center" vertical>
         <Typography.Title>
           <FormattedMessage {...messages.title} />

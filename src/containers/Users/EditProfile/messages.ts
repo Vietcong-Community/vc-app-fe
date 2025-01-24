@@ -73,4 +73,8 @@ export const messages = defineMessages({
     id: 'app.containers.Users.EditProfile.updateSuccess',
     defaultMessage: 'Profil byl úspěšně aktualizován.',
   },
+  profileBreadcrumb: {
+    id: 'app.containers.Users.EditProfile.profileBreadcrumb',
+    defaultMessage: 'Profil',
+  },
 });

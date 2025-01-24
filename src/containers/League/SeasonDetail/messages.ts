@@ -53,4 +53,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.statisticsDescription',
     defaultMessage: 'Makáme na tom, abychom statistiky zprovoznili co nejdříve, můžete se těšit v dalších verzích.',
   },
+  leaguesBreadcrumb: {
+    id: 'app.containers.League.SeasonDetail.leaguesBreadcrumb',
+    defaultMessage: 'Ligy a sezóny',
+  },
+  seasonDetailBreadcrumb: {
+    id: 'app.containers.League.SeasonDetail.seasonDetailBreadcrumb',
+    defaultMessage: 'Sezóna',
+  },
 });

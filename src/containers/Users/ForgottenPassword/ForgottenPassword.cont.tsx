@@ -38,7 +38,14 @@ export const ForgottenPasswordCont: React.FC = () => {
   return (
     <>
       <Helmet title={formatMessage(messages.title)} />
-      <ContentLayout>
+      <ContentLayout
+        breadcrumbItems={[
+          {
+            key: 'bc-password',
+            title: <FormattedMessage {...messages.title} />,
+          },
+        ]}
+      >
         <Gap defaultHeight={48} height={{ md: 32 }} />
         {!forgottenPassword.isSuccess && (
           <ForgottenPasswordForm

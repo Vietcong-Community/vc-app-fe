@@ -45,7 +45,14 @@ export const LoginCont: React.FC = () => {
 
   return (
     <>
-      <ContentLayout>
+      <ContentLayout
+        breadcrumbItems={[
+          {
+            key: 'bc-login',
+            title: <FormattedMessage {...messages.title} />,
+          },
+        ]}
+      >
         <Helmet title={formatMessage(messages.title)} />
         <LoginForm
           goToRegistration={() => navigate(Routes.REGISTRATION)}

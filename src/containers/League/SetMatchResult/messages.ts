@@ -41,4 +41,16 @@ export const messages = defineMessages({
     id: 'app.containers.League.SetMatchResult.cancelButton',
     defaultMessage: 'Zrušit',
   },
+  leaguesBreadcrumb: {
+    id: 'app.containers.League.SetMatchResult.leaguesBreadcrumb',
+    defaultMessage: 'Ligy a sezóny',
+  },
+  seasonDetailBreadcrumb: {
+    id: 'app.containers.League.SetMatchResult.seasonDetailBreadcrumb',
+    defaultMessage: 'Sezóna',
+  },
+  matchDetailBreadcrumb: {
+    id: 'app.containers.League.SetMatchResult.matchDetailBreadcrumb',
+    defaultMessage: 'Zápas',
+  },
 });

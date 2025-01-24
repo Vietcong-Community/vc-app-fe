@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUpdateMe, useUserMe } from '../../../api/hooks/auth/api';
+import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { useNotifications } from '../../../hooks/NotificationsHook';
@@ -56,7 +57,23 @@ export const EditProfileCont: React.FC = () => {
   const showLoading = !userMe.isFetchedAfterMount || userMe.isLoading;
 
   return (
-    <ContentLayout>
+    <ContentLayout
+      breadcrumbItems={[
+        {
+          key: 'bc-profile',
+          onClick: () => navigate(Routes.USER_PROFILE.replace(':id', userMe.data?.id ?? '')),
+          title: (
+            <BreadcrumbItem>
+              <FormattedMessage {...messages.profileBreadcrumb} />
+            </BreadcrumbItem>
+          ),
+        },
+        {
+          key: 'bc-edit',
+          title: <FormattedMessage {...messages.title} />,
+        },
+      ]}
+    >
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}

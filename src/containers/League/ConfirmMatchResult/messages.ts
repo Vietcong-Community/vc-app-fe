@@ -37,4 +37,16 @@ export const messages = defineMessages({
     id: 'app.containers.League.ConfirmMatchResult.scoreOpponent',
     defaultMessage: 'Skóre opponent',
   },
+  leaguesBreadcrumb: {
+    id: 'app.containers.League.ConfirmMatchResult.leaguesBreadcrumb',
+    defaultMessage: 'Ligy a sezóny',
+  },
+  seasonDetailBreadcrumb: {
+    id: 'app.containers.League.ConfirmMatchResult.seasonDetailBreadcrumb',
+    defaultMessage: 'Sezóna',
+  },
+  matchDetailBreadcrumb: {
+    id: 'app.containers.League.ConfirmMatchResult.matchDetailBreadcrumb',
+    defaultMessage: 'Zápas',
+  },
 });

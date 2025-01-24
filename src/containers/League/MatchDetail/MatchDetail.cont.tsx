@@ -4,12 +4,14 @@ import { Divider, Flex, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useMatchDetail } from '../../../api/hooks/league/api';
+import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Card } from '../../../components/Card/Card';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { MatchStatus } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
+import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 
@@ -21,7 +23,7 @@ import { messages } from './messages';
 import * as S from './MatchDetail.style';
 
 export const MatchDetail: React.FC = () => {
-  const { query } = useRouter<{ leagueId: string; seasonId: string; matchId: string }>();
+  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string; matchId: string }>();
 
   const matchDetail = useMatchDetail(query.leagueId, query.seasonId, query.matchId);
 
@@ -31,7 +33,33 @@ export const MatchDetail: React.FC = () => {
   const showLoading = matchDetail.isLoading;
 
   return (
-    <ContentLayout>
+    <ContentLayout
+      breadcrumbItems={[
+        {
+          key: 'bc-league',
+          onClick: () => navigate(Routes.LEAGUE),
+          title: (
+            <BreadcrumbItem>
+              <FormattedMessage {...messages.leaguesBreadcrumb} />
+            </BreadcrumbItem>
+          ),
+        },
+        {
+          key: 'bc-season',
+          onClick: () =>
+            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          title: (
+            <BreadcrumbItem>
+              <FormattedMessage {...messages.seasonDetailBreadcrumb} />
+            </BreadcrumbItem>
+          ),
+        },
+        {
+          key: 'bc-match',
+          title: <FormattedMessage {...messages.matchBreadcrumb} />,
+        },
+      ]}
+    >
       <Flex align="center" justify="space-between">
         <H1>
           <FormattedMessage {...messages.title} />

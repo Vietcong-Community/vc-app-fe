@@ -1,2 +1,2 @@
-yarn lint
-yarn prettier
+npm run lint
+npm run prettier

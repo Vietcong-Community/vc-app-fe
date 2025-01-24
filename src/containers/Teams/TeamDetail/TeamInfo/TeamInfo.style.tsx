@@ -20,7 +20,7 @@ export const InfoDiv = styled.div`
   gap: 16px;
   padding: 20px;
   background-color: #f9f9f9; /* Jemné světle šedé pozadí */
-  border-radius: 12px; /* Zaoblené rohy */
+  border-radius: 8px; /* Zaoblené rohy */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
   height: 280px;
 `;

@@ -19,6 +19,20 @@ export const Matches = styled.div`
   `};
 `;
 
+export const LastMatchesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      padding: 0;
+    `}
+  `};
+`;
+
 export const TableContainer = styled.div`
   width: 100%;
   .ant-table-thead .ant-table-cell {

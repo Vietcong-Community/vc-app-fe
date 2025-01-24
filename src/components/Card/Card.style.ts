@@ -9,6 +9,6 @@ interface ICardProps {
 
 export const CardContainer = styled(Card)<ICardProps>`
   background-color: ${(props: IThemeProps & ICardProps) =>
-    props.$transparentBackground ? 'transparent' : props.theme.mainColors.secondary30};
+    props.$transparentBackground ? 'transparent' : props.theme.mainColors.accent10};
   width: 100%;
 `;

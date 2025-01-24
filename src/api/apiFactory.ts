@@ -21,6 +21,7 @@ const axiosApi = axios.create({
 
 const requestConfig: AxiosRequestConfig = {
   responseType: 'json',
+  withCredentials: true,
 };
 
 const getFileSuffixByMimeType = (mimeType: string) => {

@@ -16,7 +16,7 @@ export const MatchInformationContainer = styled.div`
   `};
 `;
 
-export const TeamsContainer = styled.div`
+export const ContentContainer = styled.div`
   display: flex;
   flex: 2;
   width: 100%;
@@ -28,13 +28,19 @@ export const InformationLabel = styled.span`
 `;
 
 export const InformationValue = styled.span`
-  color: darkolivegreen;
+  color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   font-size: 18px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
 `;
 
-export const TeamsLabel = styled.div`
-  font-size: 26px;
-  font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
-  width: 100%;
+export const TeamsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
 `;

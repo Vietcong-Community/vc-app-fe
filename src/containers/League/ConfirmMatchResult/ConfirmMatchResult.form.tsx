@@ -18,7 +18,7 @@ import { fields as formFields, roundFields } from '../SetMatchResult/SetMatchRes
 import { IFormData } from './ConfirmMatchResult.fields';
 import { messages } from './messages';
 
-import * as S from '../SetMatchResult/SetMatchResult.style';
+import * as S from './ConfirmMatchResult.style';
 
 interface IProps {
   challengerTeam?: ITeam;

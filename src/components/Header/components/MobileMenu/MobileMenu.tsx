@@ -35,11 +35,12 @@ interface IProps {
   isOpen: boolean;
   onCloseButtonClick: () => void;
   isUserLoggedIn: boolean;
+  nickname?: string;
   userId?: string;
 }
 
 export const MobileMenu: React.FC<IProps> = (props) => {
-  const { handleLogout, isOpen, onCloseButtonClick, isUserLoggedIn, userId } = props;
+  const { handleLogout, isOpen, onCloseButtonClick, isUserLoggedIn, nickname, userId } = props;
   const nodeRef = useRef(null);
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
@@ -113,7 +114,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                   <>
                     <S.UserName>
                       <Avatar size={48} icon={<UserOutlined />} />
-                      <span style={{ fontSize: '20px' }}>Trapper</span>
+                      <span style={{ fontSize: '20px' }}>{nickname}</span>
                     </S.UserName>
                     <Divider
                       style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}

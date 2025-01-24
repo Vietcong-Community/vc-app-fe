@@ -156,6 +156,7 @@ export const Header: React.FC = () => {
         isOpen={isMobileMenuOpen}
         onCloseButtonClick={() => setIsMobileMenuOpen(false)}
         isUserLoggedIn={isUserLoggedIn}
+        nickname={userMe.data?.nickname}
         userId={userMe.data?.id}
       />
     </S.Container>

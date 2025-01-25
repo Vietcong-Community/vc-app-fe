@@ -23,9 +23,9 @@ import { messages } from './messages';
 import * as S from './MatchDetail.style';
 
 export const MatchDetail: React.FC = () => {
-  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string; matchId: string }>();
+  const { navigate, query } = useRouter<{ matchId: string }>();
 
-  const matchDetail = useMatchDetail(query.leagueId, query.seasonId, query.matchId);
+  const matchDetail = useMatchDetail(query.matchId);
 
   const scoreExists =
     matchDetail.data?.status === MatchStatus.FINISHED ||
@@ -46,8 +46,7 @@ export const MatchDetail: React.FC = () => {
         },
         {
           key: 'bc-season',
-          onClick: () =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          onClick: () => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season.id ?? '')),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.seasonDetailBreadcrumb} />
@@ -64,12 +63,7 @@ export const MatchDetail: React.FC = () => {
         <H1>
           <FormattedMessage {...messages.title} />
         </H1>
-        <ManageMenu
-          leagueId={query.leagueId}
-          matchId={query.matchId}
-          seasonId={query.seasonId}
-          status={matchDetail.data?.status}
-        />
+        <ManageMenu matchId={query.matchId} status={matchDetail.data?.status} />
       </Flex>
       <Divider style={{ marginTop: 0 }} />
       <S.MatchInformationContainer>

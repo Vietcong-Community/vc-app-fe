@@ -10,20 +10,16 @@ import { Routes } from '../../../../../routes/enums';
 import { messages } from './messages';
 
 interface IProps {
-  leagueId: string;
   matchId: string;
-  seasonId: string;
   status?: MatchStatus;
 }
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
-  const { matchId, leagueId, seasonId, status } = props;
+  const { matchId, status } = props;
   const { navigate } = useRouter<{ id: string }>();
 
   const onConfirmMatch = async () => {
-    navigate(
-      Routes.MATCH_CHALLENGE.replace(':leagueId', leagueId).replace(':seasonId', seasonId).replace(':matchId', matchId),
-    );
+    navigate(Routes.MATCH_CHALLENGE.replace(':matchId', matchId));
   };
 
   const items: MenuProps['items'] = [
@@ -36,24 +32,14 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '2',
-      onClick: () =>
-        navigate(
-          Routes.SET_MATCH_SCORE.replace(':leagueId', leagueId)
-            .replace(':seasonId', seasonId)
-            .replace(':matchId', matchId),
-        ),
+      onClick: () => navigate(Routes.SET_MATCH_SCORE.replace(':matchId', matchId)),
       disabled: status !== MatchStatus.ACCEPTED,
     },
 
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '3',
-      onClick: () =>
-        navigate(
-          Routes.CONFIRM_MATCH_SCORE.replace(':leagueId', leagueId)
-            .replace(':seasonId', seasonId)
-            .replace(':matchId', matchId),
-        ),
+      onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
       disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
     },
   ];

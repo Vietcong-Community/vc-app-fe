@@ -28,13 +28,13 @@ import { messages } from './messages';
 import * as S from './SeasonDetail.style';
 
 export const SeasonDetailCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string }>();
+  const { navigate, query } = useRouter<{ seasonId: string }>();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const season = useSeasonsDetail(query.leagueId, query.seasonId);
-  const ladder = useSeasonLadder(query.leagueId, query.seasonId);
-  const matches = useSeasonMatchList(query.leagueId, query.seasonId);
+  const season = useSeasonsDetail(query.seasonId);
+  const ladder = useSeasonLadder(query.seasonId);
+  const matches = useSeasonMatchList(query.seasonId);
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {
@@ -73,7 +73,7 @@ export const SeasonDetailCont: React.FC = () => {
     }) ?? [];
 
   const onMatchCreateClick = () => {
-    navigate(Routes.MATCH_CREATE.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId));
+    navigate(Routes.MATCH_CREATE.replace(':seasonId', query.seasonId));
   };
 
   const upcomingMatches = matches.data?.matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
@@ -156,7 +156,7 @@ export const SeasonDetailCont: React.FC = () => {
             <Space direction="vertical" style={{ width: '100%' }}>
               {!noUpcomingMatches &&
                 firstFiveUpcomingMatches.map((item: IMatchListItem) => {
-                  return <MatchRow leagueId={query.leagueId} seasonId={query.seasonId} match={item} />;
+                  return <MatchRow match={item} />;
                 })}
             </Space>
           </Card>
@@ -170,7 +170,7 @@ export const SeasonDetailCont: React.FC = () => {
             <>
               <Space direction="vertical" style={{ width: '100%' }}>
                 {firstFiveFinishedMatches.map((item: IMatchListItem) => {
-                  return <MatchRow leagueId={query.leagueId} seasonId={query.seasonId} match={item} />;
+                  return <MatchRow match={item} />;
                 })}
               </Space>
             </>
@@ -206,6 +206,7 @@ export const SeasonDetailCont: React.FC = () => {
                 },
               };
             }}
+            pagination={{ hideOnSinglePage: true, pageSize: 20 }}
             style={{ width: '100%' }}
           />
         </S.TableContainer>
@@ -220,12 +221,7 @@ export const SeasonDetailCont: React.FC = () => {
             columns={MATCH_COLUMNS(isSmallerThanMd)}
             dataSource={allMatchesTableData}
             onRow={(item) => {
-              const onClick = () =>
-                navigate(
-                  Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-                    .replace(':seasonId', query.seasonId)
-                    .replace(':matchId', item.id),
-                );
+              const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
 
               return {
                 onClick,

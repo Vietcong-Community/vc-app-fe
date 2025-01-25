@@ -18,10 +18,10 @@ export enum Routes {
   TEAM_DETAIL = '/tym/:id',
   // LEAGUE
   LEAGUE = '/liga',
-  SEASON_DETAIL = '/detail-sezony/:leagueId/:seasonId',
-  MATCH_CREATE = '/vytvoreni-zapasu/:leagueId/:seasonId',
-  MATCH_CHALLENGE = '/vyzva-k-zapasu/:leagueId/:seasonId/:matchId',
-  SET_MATCH_SCORE = '/zadani-vysledku-zapasu/:leagueId/:seasonId/:matchId',
-  CONFIRM_MATCH_SCORE = '/potvrzeni-vysledku-zapasu/:leagueId/:seasonId/:matchId',
-  MATCH_DETAIL = '/detail-zapasu/:leagueId/:seasonId/:matchId',
+  SEASON_DETAIL = '/detail-sezony/:seasonId',
+  MATCH_CREATE = '/vytvoreni-zapasu/:seasonId',
+  MATCH_CHALLENGE = '/vyzva-k-zapasu/:matchId',
+  SET_MATCH_SCORE = '/zadani-vysledku-zapasu/:matchId',
+  CONFIRM_MATCH_SCORE = '/potvrzeni-vysledku-zapasu/:matchId',
+  MATCH_DETAIL = '/detail-zapasu/:matchId',
 }

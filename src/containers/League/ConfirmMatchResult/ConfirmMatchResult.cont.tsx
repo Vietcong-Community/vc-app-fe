@@ -17,22 +17,18 @@ import { ConfirmMatchResultForm } from './ConfirmMatchResult.form';
 import { messages } from './messages';
 
 export const ConfirmMatchResultCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string; matchId: string }>();
+  const { navigate, query } = useRouter<{ matchId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
 
-  const matchDetail = useMatchDetail(query.leagueId, query.seasonId, query.matchId);
-  const confirmMatchResult = useConfirmMatchScore(query.leagueId, query.seasonId, query.matchId);
+  const matchDetail = useMatchDetail(query.matchId);
+  const confirmMatchResult = useConfirmMatchScore(query.matchId);
 
   const onSubmit = async () => {
     try {
       await confirmMatchResult.mutateAsync();
       showNotification(messages.confirmSuccess);
-      navigate(
-        Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-          .replace(':seasonId', query.seasonId)
-          .replace(':matchId', query.matchId),
-      );
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     } catch (e) {
       showNotification(messages.confirmFailed, undefined, NotificationType.ERROR);
     }
@@ -63,8 +59,8 @@ export const ConfirmMatchResultCont: React.FC = () => {
         },
         {
           key: 'bc-season',
-          onClick: () =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          onClick: () => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season.id ?? '')),
+
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.seasonDetailBreadcrumb} />
@@ -73,12 +69,7 @@ export const ConfirmMatchResultCont: React.FC = () => {
         },
         {
           key: 'bc-match',
-          onClick: () =>
-            navigate(
-              Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-                .replace(':seasonId', query.seasonId)
-                .replace(':matchId', query.matchId),
-            ),
+          onClick: () => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId)),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.matchDetailBreadcrumb} />
@@ -100,13 +91,7 @@ export const ConfirmMatchResultCont: React.FC = () => {
           challengerTeam={matchDetail.data?.challenger?.team}
           initialValues={initialValues}
           isSubmitting={confirmMatchResult.isPending}
-          onCancel={() =>
-            navigate(
-              Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-                .replace(':seasonId', query.seasonId)
-                .replace(':matchId', query.matchId),
-            )
-          }
+          onCancel={() => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId))}
           onSubmit={onSubmit}
           opponentMap={matchDetail.data?.opponentMap}
           opponentTeam={matchDetail.data?.opponent?.team}

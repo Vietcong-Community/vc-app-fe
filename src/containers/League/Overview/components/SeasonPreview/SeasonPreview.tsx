@@ -20,19 +20,21 @@ import { messages } from './messages';
 import * as S from './SeasonPreview.style';
 
 interface IProps {
-  leagueId: string;
   seasonDetail: ISeason;
 }
 
 export const SeasonPreview: React.FC<IProps> = (props) => {
-  const { leagueId, seasonDetail } = props;
+  const { seasonDetail } = props;
   const { navigate } = useRouter();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const ladder = useSeasonLadder(leagueId, seasonDetail.id);
-  const finishedMatches = useSeasonMatchList(leagueId, seasonDetail.id, { status: MatchStatus.FINISHED, limit: 5 });
-  const matches = useSeasonMatchList(leagueId, seasonDetail.id, {});
+  const ladder = useSeasonLadder(seasonDetail.id);
+  const finishedMatches = useSeasonMatchList(seasonDetail.id, {
+    status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+    limit: 5,
+  });
+  const matches = useSeasonMatchList(seasonDetail.id, {});
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {
@@ -67,7 +69,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
               {noUpcomingMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
               {!noUpcomingMatches &&
                 firstFiveUpcomingMatches.map((item: IMatchListItem) => {
-                  return <MatchRow leagueId={leagueId} seasonId={seasonDetail.id} match={item} />;
+                  return <MatchRow match={item} />;
                 })}
             </S.LastMatchesContainer>
           </Flex>
@@ -81,7 +83,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
             <>
               <S.LastMatchesContainer>
                 {finishedMatches.data?.matches?.map((item: IMatchListItem) => {
-                  return <MatchRow leagueId={leagueId} seasonId={seasonDetail.id} match={item} />;
+                  return <MatchRow match={item} />;
                 })}
               </S.LastMatchesContainer>
             </>
@@ -102,17 +104,14 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
                 },
               };
             }}
+            pagination={{ hideOnSinglePage: true, pageSize: 20 }}
             style={{ width: '100%' }}
           />
         </S.TableContainer>
       </Flex>
       <Gap defaultHeight={16} />
       <Flex justify="flex-end">
-        <Button
-          onClick={() =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', leagueId).replace(':seasonId', seasonDetail.id))
-          }
-        >
+        <Button onClick={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', seasonDetail.id))}>
           <FormattedMessage {...messages.goToDetail} />
         </Button>
       </Flex>

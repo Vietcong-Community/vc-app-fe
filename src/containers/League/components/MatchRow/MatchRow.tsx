@@ -9,22 +9,18 @@ import { formatDateForUser } from '../../../../utils/dateUtils';
 import * as S from './MatchRow.style';
 
 interface IProps {
-  leagueId: string;
-  seasonId: string;
   match: IMatchListItem;
 }
 
 export const MatchRow: React.FC<IProps> = (props: IProps) => {
-  const { leagueId, match, seasonId } = props;
+  const { match } = props;
   const { navigate } = useRouter();
 
   const scoreExists =
     match.status === MatchStatus.FINISHED || match.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
 
   const onMatchClick = () => {
-    navigate(
-      Routes.MATCH_DETAIL.replace(':leagueId', leagueId).replace(':seasonId', seasonId).replace(':matchId', match.id),
-    );
+    navigate(Routes.MATCH_DETAIL.replace(':matchId', match.id));
   };
 
   const challengerWon =

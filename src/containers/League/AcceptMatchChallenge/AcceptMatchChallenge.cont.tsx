@@ -4,7 +4,12 @@ import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useAcceptMatchChallenge, useMapsInSeason, useRejectMatchChallenge } from '../../../api/hooks/league/api';
+import {
+  useAcceptMatchChallenge,
+  useMapsInSeason,
+  useMatchDetail,
+  useRejectMatchChallenge,
+} from '../../../api/hooks/league/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -18,23 +23,20 @@ import { AcceptMatchChallengeForm } from './AcceptMatchChallenge.form';
 import { messages } from './messages';
 
 export const AcceptMatchChallengeCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string; matchId: string }>();
+  const { navigate, query } = useRouter<{ matchId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
 
-  const maps = useMapsInSeason(query.leagueId, query.seasonId);
-  const acceptMatchChallenge = useAcceptMatchChallenge(query.leagueId, query.seasonId, query.matchId);
-  const rejectMatchChallenge = useRejectMatchChallenge(query.leagueId, query.seasonId, query.matchId);
+  const matchDetail = useMatchDetail(query.matchId);
+  const maps = useMapsInSeason(matchDetail.data?.season.id);
+  const acceptMatchChallenge = useAcceptMatchChallenge(query.matchId);
+  const rejectMatchChallenge = useRejectMatchChallenge(query.matchId);
 
   const onAcceptChallenge = async (values: IFormData) => {
     try {
       await acceptMatchChallenge.mutateAsync(values);
       showNotification(messages.acceptSuccess);
-      navigate(
-        Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-          .replace(':seasonId', query.seasonId)
-          .replace(':matchId', query.matchId),
-      );
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     } catch (e) {
       showNotification(messages.failedNotification, undefined, NotificationType.ERROR);
     }
@@ -44,11 +46,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
     try {
       await rejectMatchChallenge.mutateAsync();
       showNotification(messages.rejectSuccess, undefined, NotificationType.INFO);
-      navigate(
-        Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-          .replace(':seasonId', query.seasonId)
-          .replace(':matchId', query.matchId),
-      );
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     } catch (e) {
       showNotification(messages.failedNotification, undefined, NotificationType.ERROR);
     }
@@ -70,8 +68,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
         },
         {
           key: 'bc-season',
-          onClick: () =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          onClick: () => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season?.id ?? '')),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.seasonDetailBreadcrumb} />
@@ -80,12 +77,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
         },
         {
           key: 'bc-match',
-          onClick: () =>
-            navigate(
-              Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-                .replace(':seasonId', query.seasonId)
-                .replace(':matchId', query.matchId),
-            ),
+          onClick: () => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId)),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.matchDetailBreadcrumb} />
@@ -103,13 +95,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
       {showLoading && <Spin size="large" />}
       {!showLoading && (
         <AcceptMatchChallengeForm
-          goBack={() =>
-            navigate(
-              Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-                .replace(':seasonId', query.seasonId)
-                .replace(':matchId', query.matchId),
-            )
-          }
+          goBack={() => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId))}
           isSubmitting={acceptMatchChallenge.isPending || rejectMatchChallenge.isPending}
           onReject={onRejectChallenge}
           maps={maps.data?.items ?? []}

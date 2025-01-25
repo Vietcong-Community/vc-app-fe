@@ -73,6 +73,7 @@ export interface IMatch {
   confirmedBy?: IUser;
   rejectedAt?: string;
   rejectedBy?: IUser;
+  season: ISeason;
   rounds: IMatchRound[];
 }
 
@@ -92,7 +93,7 @@ export interface IMatchListQuery {
   mapId?: string;
   startDateFrom?: string;
   startDateTo?: string;
-  status?: MatchStatus;
+  status?: string;
   page?: number;
   limit?: number;
 }

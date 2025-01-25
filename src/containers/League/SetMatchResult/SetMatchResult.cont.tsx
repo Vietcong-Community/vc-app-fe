@@ -18,22 +18,18 @@ import { SetMatchResultForm } from './SetMatchResult.form';
 import { messages } from './messages';
 
 export const SetMatchScoreCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string; matchId: string }>();
+  const { navigate, query } = useRouter<{ matchId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
 
-  const matchDetail = useMatchDetail(query.leagueId, query.seasonId, query.matchId);
-  const setMatchResult = useSetMatchScore(query.leagueId, query.seasonId, query.matchId);
+  const matchDetail = useMatchDetail(query.matchId);
+  const setMatchResult = useSetMatchScore(query.matchId);
 
   const onSubmit = async (values: IFormData) => {
     try {
       await setMatchResult.mutateAsync(values);
       showNotification(messages.saveSuccess);
-      navigate(
-        Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-          .replace(':seasonId', query.seasonId)
-          .replace(':matchId', query.matchId),
-      );
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     } catch (e) {
       showNotification(messages.saveFailed, undefined, NotificationType.ERROR);
     }
@@ -42,11 +38,7 @@ export const SetMatchScoreCont: React.FC = () => {
   useEffect(() => {
     if (matchDetail.isError) {
       showNotification(messages.matchFetchError, undefined, NotificationType.ERROR);
-      navigate(
-        Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-          .replace(':seasonId', query.seasonId)
-          .replace(':matchId', query.matchId),
-      );
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     }
   }, [matchDetail.isError]);
 
@@ -75,8 +67,7 @@ export const SetMatchScoreCont: React.FC = () => {
         },
         {
           key: 'bc-season',
-          onClick: () =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          onClick: () => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season.id ?? '')),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.seasonDetailBreadcrumb} />
@@ -85,12 +76,7 @@ export const SetMatchScoreCont: React.FC = () => {
         },
         {
           key: 'bc-match',
-          onClick: () =>
-            navigate(
-              Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-                .replace(':seasonId', query.seasonId)
-                .replace(':matchId', query.matchId),
-            ),
+          onClick: () => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId)),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.matchDetailBreadcrumb} />
@@ -114,9 +100,7 @@ export const SetMatchScoreCont: React.FC = () => {
           isSubmitting={setMatchResult.isPending}
           opponentMap={matchDetail.data?.opponentMap}
           opponentTeam={matchDetail.data?.opponent?.team}
-          onCancel={() =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId))
-          }
+          onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season.id ?? ''))}
           onSubmit={onSubmit}
         />
       )}

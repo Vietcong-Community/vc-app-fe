@@ -18,23 +18,19 @@ import { CreateMatchForm } from './CreateMatch.form';
 import { messages } from './messages';
 
 export const CreateMatchCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ leagueId: string; seasonId: string }>();
+  const { navigate, query } = useRouter<{ seasonId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
 
-  const maps = useMapsInSeason(query.leagueId, query.seasonId);
-  const ladder = useSeasonTeams(query.leagueId, query.seasonId);
-  const createMatch = useCreateMatchChallenge(query.leagueId, query.seasonId);
+  const maps = useMapsInSeason(query.seasonId);
+  const ladder = useSeasonTeams(query.seasonId);
+  const createMatch = useCreateMatchChallenge(query.seasonId);
 
   const onSubmit = async (values: IFormData) => {
     try {
       const response = await createMatch.mutateAsync({ ...values, endDate: values.startDate });
       showNotification(messages.createSuccess);
-      navigate(
-        Routes.MATCH_DETAIL.replace(':leagueId', query.leagueId)
-          .replace(':seasonId', query.seasonId)
-          .replace(':matchId', response.id),
-      );
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', response.id));
     } catch (e) {
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
     }
@@ -56,8 +52,7 @@ export const CreateMatchCont: React.FC = () => {
         },
         {
           key: 'bc-season',
-          onClick: () =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId)),
+          onClick: () => navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId)),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.seasonDetailBreadcrumb} />
@@ -76,9 +71,7 @@ export const CreateMatchCont: React.FC = () => {
       {!showLoading && (
         <CreateMatchForm
           isSubmitting={createMatch.isPending}
-          onCancel={() =>
-            navigate(Routes.SEASON_DETAIL.replace(':leagueId', query.leagueId).replace(':seasonId', query.seasonId))
-          }
+          onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId))}
           maps={maps.data?.items ?? []}
           onSubmit={onSubmit}
           teams={ladder.data?.items?.filter((item) => !item.userIsMemberOfTeam) ?? []}

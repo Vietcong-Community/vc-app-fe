@@ -39,7 +39,7 @@ export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
                 {season.name}
               </S.TabLabel>
             ),
-            children: <SeasonPreview leagueId={leagueDetail.id} seasonDetail={season} />,
+            children: <SeasonPreview seasonDetail={season} />,
           };
         })}
       />

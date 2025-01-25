@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { Spin } from 'antd';
+import { Spin, UploadFile } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useUpdateMe, useUserMe } from '../../../api/hooks/auth/api';
+import { useAvatarUploadUrl, useUpdateMe, useUserMe } from '../../../api/hooks/auth/api';
+import { useConfirmImageUploadUrl } from '../../../api/hooks/files/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -13,6 +14,7 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
+import { uploadFileWithPresignedUrl } from '../../../utils/fileUtils';
 
 import { IFormData } from './EditProfile.fields';
 import { EditProfileForm } from './EditProfile.form';
@@ -23,9 +25,12 @@ export const EditProfileCont: React.FC = () => {
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const userMe = useUserMe('always', undefined);
   const updateMe = useUpdateMe();
+  const avatarUrl = useAvatarUploadUrl();
+  const confirmUpload = useConfirmImageUploadUrl();
 
   useEffect(() => {
     if (userMe.isError) {
@@ -38,8 +43,24 @@ export const EditProfileCont: React.FC = () => {
       await updateMe.mutateAsync(values);
       queryClient.removeQueries({ queryKey: ['userDetail', userMe.data?.id] });
       showNotification(messages.updateSuccess);
+
+      try {
+        if (fileList.length > 0) {
+          const avatarName = fileList?.[0]?.name;
+          if (avatarName) {
+            const response = await avatarUrl.mutateAsync({ fileName: avatarName });
+
+            await uploadFileWithPresignedUrl(fileList?.[0], response.uploadUrl);
+
+            await confirmUpload.mutateAsync({ fileId: response.fileId });
+          }
+          showNotification(messages.avatarUploadSuccess);
+        }
+      } catch {
+        showNotification(messages.avatarUploadFailed);
+      }
       navigate(Routes.USER_PROFILE.replace(':id', userMe.data?.id ?? ''));
-    } catch (e) {
+    } catch {
       showNotification(messages.updateFailed, undefined, NotificationType.ERROR);
     }
   };
@@ -75,10 +96,15 @@ export const EditProfileCont: React.FC = () => {
       ]}
     >
       <Helmet title={formatMessage(messages.title)} />
-      <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
       {!showLoading && (
-        <EditProfileForm initialValues={initialValues} isSubmitting={updateMe.isPending} onSubmit={onSubmit} />
+        <EditProfileForm
+          fileList={fileList}
+          initialValues={initialValues}
+          isSubmitting={updateMe.isPending}
+          onSubmit={onSubmit}
+          setFileList={setFileList}
+        />
       )}
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>

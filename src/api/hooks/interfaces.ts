@@ -19,4 +19,8 @@ export interface IUser {
   twitchLink?: string;
   steamLink?: string;
   description?: string;
+  image: {
+    id: string;
+    url: string;
+  };
 }

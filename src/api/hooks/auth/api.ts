@@ -5,7 +5,15 @@ import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IUser } from '../interfaces';
 
 import { AuthEndpoints } from './endpoints';
-import { IChangePassword, ICreateUser, IForgottenPassword, ILoginSuccess, IUpdateUser, IUserLogin } from './interfaces';
+import {
+  IAvatarUpload,
+  IChangePassword,
+  ICreateUser,
+  IForgottenPassword,
+  ILoginSuccess,
+  IUpdateUser,
+  IUserLogin,
+} from './interfaces';
 
 export const useLogin = () => {
   return useMutation({
@@ -64,6 +72,18 @@ export const useUpdateMe = () => {
   return useMutation({
     mutationFn: async (payload: IUpdateUser) => {
       const { data } = await put<IUpdateUser, IIdentifiedEntity>(AuthEndpoints.USER_ME, payload);
+      return data;
+    },
+  });
+};
+
+export const useAvatarUploadUrl = () => {
+  return useMutation({
+    mutationFn: async (payload: IAvatarUpload) => {
+      const { data } = await post<IAvatarUpload, { fileId: string; uploadUrl: string }>(
+        AuthEndpoints.UPLOAD_AVATAR_URL,
+        payload,
+      );
       return data;
     },
   });

@@ -6,6 +6,7 @@ import { useTeamDetail } from '../../../../api/hooks/teams/api';
 import { Gap } from '../../../../components/Gap/Gap';
 import { ContentLayout } from '../../../../components/Layouts/ContentLayout/ContentLayout';
 import { useRouter } from '../../../../hooks/RouterHook';
+import { formatDateForUser } from '../../../../utils/dateUtils';
 
 import * as S from './TeamInfo.style';
 
@@ -22,20 +23,21 @@ export const TeamInfo: React.FC = () => {
           <S.InfoDiv id={'infoDiv'}>
             <S.InfoCard>
               <b>Název týmu:</b>
-              <i>Testing tym</i>
+              <i>{team.data?.name}</i>
               <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
             </S.InfoCard>
             <S.InfoCard>
               <b>Clantag:</b>
-              <i>-=!TT!=-</i>
+              <i>{team.data?.tag}</i>
               <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
             </S.InfoCard>
             <S.InfoCard>
               <b>Členem od:</b>
-              <i>31.07.24</i>
+              <i>{formatDateForUser(team.data?.createdAt)}</i>
               <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
             </S.InfoCard>
             <S.InfoCard>
+              <i>Tenhle tym neni vubec kreativni, aby si vytvorili popis toho, jaci jsou. Hanba.</i>
               {team.data?.description}
               <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
             </S.InfoCard>

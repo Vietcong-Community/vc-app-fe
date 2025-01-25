@@ -19,7 +19,7 @@ export const InfoDiv = styled.div`
   flex-direction: column;
   gap: 16px;
   padding: 20px;
-  background-color: #f9f9f9; /* Jemné světle šedé pozadí */
+  background-color: ${(props) => props.theme.mainColors.secondary10};
   border-radius: 8px; /* Zaoblené rohy */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
   height: 280px;
@@ -37,7 +37,6 @@ export const InfoCard = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background-color: #ffffff; /* Bílá karta */
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
@@ -46,14 +45,14 @@ export const InfoCard = styled.div`
     transform: translateY(-2px); /* Lehký efekt posunu */
     transition: all 0.2s ease-in-out;
     font-size: 17px;
-    background-color: ${(props: IThemeProps) => props.theme.mainColors.background};
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary10};
   }
 
   b {
-    color: #333; /* Barva nadpisu */
+    color: ${(props: IThemeProps) => props.theme.mainColors.text};
   }
 
   i {
-    color: #666; /* Barva textu */
+    color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   }
 `;

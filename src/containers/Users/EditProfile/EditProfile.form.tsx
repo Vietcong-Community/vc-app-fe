@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { UploadOutlined } from '@ant-design/icons';
-import { Tabs, Row, Col, Upload, Form } from 'antd';
+import { Tabs, Row, Col, Form, UploadFile } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import avatar from '../../../assets/avatars/avatar_us_web.webp';
 import { Button } from '../../../components/Button/Button';
 import { InputAreaField } from '../../../components/Fields/InputAreaField/InputAreaField';
 import { InputField } from '../../../components/Fields/InputField/InputField';
+import { UploadField } from '../../../components/Fields/UploadField/UploadField';
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
@@ -15,16 +14,16 @@ import { H2 } from '../../../components/Titles/H2/H2';
 import { fields, IFormData } from './EditProfile.fields';
 import { messages } from './messages';
 
-import * as S from './EditProfile.style';
-
 interface IProps {
+  fileList: UploadFile[];
   initialValues?: Partial<IFormData>;
   isSubmitting: boolean;
   onSubmit: (values: IFormData) => void;
+  setFileList: (files: UploadFile[]) => void;
 }
 
 export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
-  const { initialValues, isSubmitting, onSubmit } = props;
+  const { fileList, initialValues, isSubmitting, onSubmit, setFileList } = props;
   const { formatMessage } = useIntl();
   const [form] = Form.useForm<IFormData>();
 
@@ -40,15 +39,14 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
           lg={4}
           style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
-          <S.Image src={avatar} alt="Profile" style={{}} />
-          <Upload disabled onChange={() => {}} showUploadList={false}>
-            <Button disabled icon={<UploadOutlined />}>
-              <FormattedMessage {...messages.uploadPhotoButton} />
-            </Button>
-          </Upload>
+          <UploadField fileList={fileList} setFileList={setFileList} />
+          <Gap defaultHeight={16} />
+          <b>
+            <FormattedMessage {...messages.avatar} />
+          </b>
         </Col>
         <Col xs={2} md={2} lg={1}>
-          <Gap defaultHeight={32} />
+          <Gap defaultHeight={32} height={{ sm: 12 }} />
         </Col>
         {/* Right Side - Tabs and Form */}
         <Col xs={24} md={10} lg={8}>

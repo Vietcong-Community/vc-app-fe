@@ -30,11 +30,14 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const isSmallerThanMd = width < BreakPoints.md;
 
   const ladder = useSeasonLadder(seasonDetail.id);
+  const futureMatches = useSeasonMatchList(seasonDetail.id, {
+    status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
+    limit: 5,
+  });
   const finishedMatches = useSeasonMatchList(seasonDetail.id, {
     status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
     limit: 5,
   });
-  const matches = useSeasonMatchList(seasonDetail.id, {});
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {
@@ -49,11 +52,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       };
     }) ?? [];
 
-  // const upcomingMatches = matches.data?.matches.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
-  const upcomingMatches = matches.data?.matches ?? [];
-  const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
-
-  const noUpcomingMatches = upcomingMatches.length === 0;
+  const noUpcomingMatches = futureMatches.data?.total === 0;
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = seasonDetail.status === SeasonStatus.ACTIVE;
 
@@ -68,7 +67,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
             <S.LastMatchesContainer>
               {noUpcomingMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
               {!noUpcomingMatches &&
-                firstFiveUpcomingMatches.map((item: IMatchListItem) => {
+                futureMatches.data?.matches.map((item: IMatchListItem) => {
                   return <MatchRow match={item} />;
                 })}
             </S.LastMatchesContainer>

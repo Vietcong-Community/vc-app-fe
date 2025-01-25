@@ -1,6 +1,13 @@
 import React, { useContext, useRef } from 'react';
 
-import { LoginOutlined, RightOutlined, SecurityScanOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  LoginOutlined,
+  RightOutlined,
+  SecurityScanOutlined,
+  UserAddOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { Avatar, Divider, Space, Switch } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { Transition } from 'react-transition-group';
@@ -36,11 +43,12 @@ interface IProps {
   onCloseButtonClick: () => void;
   isUserLoggedIn: boolean;
   nickname?: string;
+  userAvatarUrl?: string;
   userId?: string;
 }
 
 export const MobileMenu: React.FC<IProps> = (props) => {
-  const { handleLogout, isOpen, onCloseButtonClick, isUserLoggedIn, nickname, userId } = props;
+  const { handleLogout, isOpen, onCloseButtonClick, isUserLoggedIn, nickname, userAvatarUrl, userId } = props;
   const nodeRef = useRef(null);
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
@@ -73,6 +81,14 @@ export const MobileMenu: React.FC<IProps> = (props) => {
         </S.MenuItem>
       </>
     );
+  };
+
+  const getUserIcon = () => {
+    if (userAvatarUrl) {
+      return <img alt="" src={userAvatarUrl} />;
+    }
+
+    return <UserOutlined />;
   };
 
   return (
@@ -113,7 +129,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                 {isUserLoggedIn && (
                   <>
                     <S.UserName>
-                      <Avatar size={48} icon={<UserOutlined />} />
+                      <Avatar size={48} icon={getUserIcon()} />
                       <span style={{ fontSize: '20px' }}>{nickname}</span>
                     </S.UserName>
                     <Divider
@@ -127,6 +143,13 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                       <div>
                         <S.AvatarIcon size={28} icon={<UserOutlined />} />
                         <FormattedMessage {...messages.goToProfilePage} />
+                      </div>
+                      <RightOutlined style={{ fontSize: 22 }} />
+                    </S.MenuItem>
+                    <S.MenuItem onClick={() => onMenuItemClick(Routes.EDIT_PROFILE.replace(':id', userId ?? ''))}>
+                      <div>
+                        <S.AvatarIcon size={28} icon={<EditOutlined />} />
+                        <FormattedMessage {...messages.goToProfileEditPage} />
                       </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>

@@ -1,106 +1,99 @@
 import React from 'react';
 
+import { FacebookFilled, TwitchFilled, UserOutlined } from '@ant-design/icons';
+import { faGamepad } from '@fortawesome/free-solid-svg-icons/faGamepad';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Avatar, Spin } from 'antd';
 import { compact } from 'lodash';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserDetail } from '../../api/hooks/users/api';
+import { Card } from '../../components/Card/Card';
+import { Gap } from '../../components/Gap/Gap';
+import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 import { useRouter } from '../../hooks/RouterHook';
+import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
+import { BreakPoints } from '../../theme/theme';
+import { formatDateForUser } from '../../utils/dateUtils';
 
-import { AchievementProgress } from './components/Achievements/Achievements';
-import { MatchHistory } from './components/MatchHistory/MatchHistory';
-import { IMatch } from './components/MatchHistory/MatchHistory';
-import { Statistics } from './components/Statistics/Statistics';
-import { UserInfo } from './components/UserInfo/UserInfo';
+import { messages } from './messages';
 
 import * as S from './Profile.style';
 
 export const ProfileCont: React.FC = () => {
   const { query } = useRouter<{ id: string }>();
+  const { formatMessage } = useIntl();
+  const { width } = useWindowDimensions();
+  const isSmallerThanMD = width < BreakPoints.md;
 
   const userDetail = useUserDetail(query.id);
 
-  const user = {
-    name: compact([userDetail.data?.firstName, userDetail.data?.lastName]).join(' '),
-    nickname: userDetail.data?.nickname ?? '',
-    inGameName: '#uNik0rn . basccino',
-    avatar:
-      'https://yt3.googleusercontent.com/ytc/AIdro_myqhcBlGAgfbLJGgA_llswXSkDKlvG0T-hA1siGmm_yC0=s900-c-k-c0x00ffffff-no-rj', // Odkaz na profilovou fotku
+  const showLoading = userDetail.isLoading;
+
+  const getUserIcon = () => {
+    if (userDetail.data?.image?.url) {
+      return <img alt="" src={userDetail.data?.image?.url} />;
+    }
+
+    return <UserOutlined />;
   };
 
-  const actualPlacement = 8;
-  const bestPlacement = 1;
-  const actualDivision = 'Gold';
-  const bestDivision = 'Legend';
-  const matchesPlayed = 10;
-  const wins = 6;
-  const draws = 2;
-  const losses = 2;
-  const totalFlags = 12;
-  const totalKills = 50;
-  const totalDeaths = 30;
-
-  const matchData: IMatch[] = [
-    {
-      key: '1',
-      date: '2024-11-01',
-      result: 'win',
-      flagsCaptured: 3,
-      kills: 20,
-      deaths: 15,
-      points: 30,
-    },
-    {
-      key: '2',
-      date: '2024-11-02',
-      result: 'draw',
-      flagsCaptured: 1,
-      kills: 20,
-      deaths: 18,
-      points: 12,
-    },
-    {
-      key: '3',
-      date: '2024-11-01',
-      result: 'loss',
-      flagsCaptured: 0,
-      kills: 13,
-      deaths: 18,
-      points: -19,
-    },
-    // Další zápasy...
-  ];
-
   return (
-    <>
-      {/* Předání objektu user jako prop */}
-      <UserInfo user={user} />
-      <AchievementProgress />
-      <S.ClipPath>
-        <br />
-        <br />
-        <h2>Statistiky</h2>
-        <br />
-        <div>
-          <Statistics
-            actualPlacement={actualPlacement}
-            bestPlacement={bestPlacement}
-            actualDivision={actualDivision}
-            bestDivision={bestDivision}
-            matchesPlayed={matchesPlayed}
-            wins={wins}
-            draws={draws}
-            losses={losses}
-            totalFlags={totalFlags}
-            totalKills={totalKills}
-            totalDeaths={totalDeaths}
-          />
-          <br />
-          <br />
-        </div>
-        <br />
-        <br />
-      </S.ClipPath>
-      <h3>Historie zápasů</h3>
-      <MatchHistory matches={matchData} />
-    </>
+    <ContentLayout breadcrumbItems={[{ key: 'bc-profile', title: <FormattedMessage {...messages.title} /> }]}>
+      <Helmet title={formatMessage(messages.title)} />
+      <Gap defaultHeight={32} height={{ md: 16 }} />
+      {showLoading && <Spin size="large" />}
+      {!showLoading && (
+        <S.Container>
+          <S.PlayerInfo>
+            <Avatar size={175} icon={getUserIcon()} />
+            <Card style={{ maxWidth: isSmallerThanMD ? 'initial' : 550, textAlign: 'start' }}>
+              <S.Nickname>{userDetail.data?.nickname}</S.Nickname>
+              <S.PersonName>{compact([userDetail.data?.firstName, userDetail.data?.lastName]).join(' ')}</S.PersonName>
+              <Gap defaultHeight={16} />
+              <S.PersonName>
+                <FormattedMessage {...messages.createdAt} />
+                {formatDateForUser(userDetail.data?.createdAt)}
+              </S.PersonName>
+              <Gap defaultHeight={8} />
+              <S.Socials>
+                <FormattedMessage {...messages.socials} />
+                {!userDetail.data?.facebookLink && !userDetail.data?.twitchLink && !userDetail.data?.steamLink && (
+                  <FormattedMessage {...messages.nothingHere} />
+                )}
+                {userDetail.data?.facebookLink && (
+                  <a href={userDetail.data?.facebookLink} target={'_blank'}>
+                    <S.IconWrapper>
+                      <FacebookFilled />
+                    </S.IconWrapper>
+                  </a>
+                )}
+                {userDetail.data?.twitchLink && (
+                  <a href={userDetail.data?.twitchLink} target={'_blank'}>
+                    <S.IconWrapper>
+                      <TwitchFilled />
+                    </S.IconWrapper>
+                  </a>
+                )}
+                {userDetail.data?.steamLink && (
+                  <a href={userDetail.data?.steamLink} target={'_blank'}>
+                    <S.IconWrapper>
+                      <FontAwesomeIcon icon={faGamepad} />
+                    </S.IconWrapper>
+                  </a>
+                )}
+              </S.Socials>
+            </Card>
+          </S.PlayerInfo>
+          <Gap defaultHeight={32} height={{ md: 16 }} />
+          <S.Description>
+            {userDetail.data?.description ?? <FormattedMessage {...messages.description} />}
+          </S.Description>
+          <Gap defaultHeight={32} height={{ md: 16 }} />
+        </S.Container>
+      )}
+      <Gap defaultHeight={48} height={{ md: 32 }} />
+    </ContentLayout>
   );
 };

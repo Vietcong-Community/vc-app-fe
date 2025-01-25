@@ -40,8 +40,9 @@ export const Header: React.FC = () => {
   const loggedUserMenu = [
     {
       key: 'profile',
+      onClick: () => navigate(Routes.USER_PROFILE.replace(':id', userMe.data?.id ?? '')),
       label: (
-        <S.DropdownLabel onClick={() => navigate(Routes.USER_PROFILE.replace(':id', userMe.data?.id ?? ''))}>
+        <S.DropdownLabel>
           <FormattedMessage {...messages.goToProfilePage} />
         </S.DropdownLabel>
       ),
@@ -49,26 +50,29 @@ export const Header: React.FC = () => {
     {
       key: 'edit-profile',
       label: (
-        <S.DropdownLabel onClick={() => navigate(Routes.EDIT_PROFILE.replace(':id', userMe.data?.id ?? ''))}>
+        <S.DropdownLabel>
           <FormattedMessage {...messages.goToProfileEditPage} />
         </S.DropdownLabel>
       ),
+      onClick: () => navigate(Routes.EDIT_PROFILE.replace(':id', userMe.data?.id ?? '')),
     },
     {
       key: 'theme',
       label: (
-        <S.DropdownLabel onClick={toggleTheme}>
+        <S.DropdownLabel>
           <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
         </S.DropdownLabel>
       ),
+      onClick: toggleTheme,
     },
     {
       key: 'logout',
       label: (
-        <S.DropdownLabel onClick={handleLogout}>
+        <S.DropdownLabel>
           <FormattedMessage {...messages.logout} />
         </S.DropdownLabel>
       ),
+      onClick: handleLogout,
     },
   ];
 
@@ -76,28 +80,39 @@ export const Header: React.FC = () => {
     {
       key: 'login',
       label: (
-        <S.DropdownLabel onClick={() => navigate(Routes.LOGIN)}>
+        <S.DropdownLabel>
           <FormattedMessage {...messages.goToLogin} />
         </S.DropdownLabel>
       ),
+      onClick: () => navigate(Routes.LOGIN),
     },
     {
       key: 'registration',
       label: (
-        <S.DropdownLabel onClick={() => navigate(Routes.REGISTRATION)}>
+        <S.DropdownLabel>
           <FormattedMessage {...messages.goToRegistration} />
         </S.DropdownLabel>
       ),
+      onClick: () => navigate(Routes.REGISTRATION),
     },
     {
       key: 'theme',
       label: (
-        <S.DropdownLabel onClick={toggleTheme}>
+        <S.DropdownLabel>
           <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
         </S.DropdownLabel>
       ),
+      onClick: toggleTheme,
     },
   ];
+
+  const getUserIcon = () => {
+    if (isUserLoggedIn && userMe.data?.image?.url) {
+      return <img alt="" src={userMe.data?.image?.url} />;
+    }
+
+    return <UserOutlined />;
+  };
 
   return (
     <S.Container>
@@ -142,7 +157,7 @@ export const Header: React.FC = () => {
               trigger={['click', 'hover']}
             >
               <S.UserMenu>
-                <Avatar size={32} icon={<UserOutlined />} />
+                <Avatar size={32} icon={getUserIcon()} />
                 <span style={{ fontSize: '14px' }}>
                   {isUserLoggedIn ? userMe.data?.nickname : <FormattedMessage {...messages.userNotLoggedIn} />}
                 </span>
@@ -157,6 +172,7 @@ export const Header: React.FC = () => {
         onCloseButtonClick={() => setIsMobileMenuOpen(false)}
         isUserLoggedIn={isUserLoggedIn}
         nickname={userMe.data?.nickname}
+        userAvatarUrl={userMe.data?.image?.url}
         userId={userMe.data?.id}
       />
     </S.Container>

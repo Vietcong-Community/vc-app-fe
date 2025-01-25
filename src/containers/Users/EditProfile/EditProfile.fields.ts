@@ -2,6 +2,7 @@ import { IFormFields } from '../../../@types/forms';
 import { isEmailValid, isRequired, maxLength, minLength } from '../../../utils/validations/validations';
 
 export interface IFormData {
+  avatar?: File | null;
   firstName?: string;
   lastName?: string;
   nickname: string;
@@ -13,6 +14,9 @@ export interface IFormData {
 }
 
 export const fields: IFormFields<IFormData> = {
+  avatar: {
+    name: 'avatar',
+  },
   firstName: {
     name: 'firstName',
     required: false,

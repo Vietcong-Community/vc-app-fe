@@ -32,3 +32,7 @@ export interface IUpdateUser {
   steamLink?: string;
   description?: string;
 }
+
+export interface IAvatarUpload {
+  fileName: string;
+}

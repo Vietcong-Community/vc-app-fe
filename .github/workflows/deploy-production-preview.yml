@@ -17,7 +17,7 @@ jobs:
   deploy-production-preview:
     uses: ./.github/workflows/update-app-template.yml
     name: Deploy production preview to cluster
-    needs: [ build-image ]
+    needs: [build-image]
     with:
       namespace: vietcong-hub
       release_name: vietcong-hub-app

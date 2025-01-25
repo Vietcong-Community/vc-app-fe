@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  TwitchFilled,
-  FacebookFilled,
-  InstagramFilled,
-  TikTokFilled,
-  YoutubeFilled,
-  DiscordFilled,
-} from '@ant-design/icons';
+import { FacebookFilled, InstagramFilled, YoutubeFilled, DiscordFilled } from '@ant-design/icons';
 import { Divider } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -78,11 +71,6 @@ export const Footer: React.FC = () => {
                 <FacebookFilled />
               </S.IconWrapper>
             </a>
-            <a href={EXTERNAL_LINKS.TWITCH} target={'_blank'}>
-              <S.IconWrapper>
-                <TwitchFilled />
-              </S.IconWrapper>
-            </a>
             <a href={EXTERNAL_LINKS.DISCORD} target={'_blank'}>
               <S.IconWrapper>
                 <DiscordFilled />
@@ -96,11 +84,6 @@ export const Footer: React.FC = () => {
             <a href={EXTERNAL_LINKS.YOUTUBE} target={'_blank'}>
               <S.IconWrapper>
                 <YoutubeFilled />
-              </S.IconWrapper>
-            </a>
-            <a href={EXTERNAL_LINKS.TIK_TOK} target={'_blank'}>
-              <S.IconWrapper>
-                <TikTokFilled />
               </S.IconWrapper>
             </a>
           </S.Socials>

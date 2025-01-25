@@ -35,6 +35,14 @@ export const SeasonDetailCont: React.FC = () => {
   const season = useSeasonsDetail(query.seasonId);
   const ladder = useSeasonLadder(query.seasonId);
   const matches = useSeasonMatchList(query.seasonId);
+  const futureMatches = useSeasonMatchList(query.seasonId, {
+    status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
+    limit: 5,
+  });
+  const finishedMatches = useSeasonMatchList(query.seasonId, {
+    status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+    limit: 5,
+  });
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {
@@ -76,13 +84,8 @@ export const SeasonDetailCont: React.FC = () => {
     navigate(Routes.MATCH_CREATE.replace(':seasonId', query.seasonId));
   };
 
-  const upcomingMatches = matches.data?.matches?.filter((item) => item.status !== MatchStatus.FINISHED) ?? [];
-  const finishedMatches = matches.data?.matches?.filter((item) => item.status === MatchStatus.FINISHED) ?? [];
-  const firstFiveUpcomingMatches = upcomingMatches.slice(0, 5);
-  const firstFiveFinishedMatches = finishedMatches.slice(0, 5);
-
-  const noUpcomingMatches = upcomingMatches.length === 0;
-  const noFinishedMatches = finishedMatches.length === 0;
+  const noUpcomingMatches = futureMatches.data?.total === 0;
+  const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE; // TODO AND USER HAVE AUTHORITY
 
   return (
@@ -155,7 +158,7 @@ export const SeasonDetailCont: React.FC = () => {
             )}
             <Space direction="vertical" style={{ width: '100%' }}>
               {!noUpcomingMatches &&
-                firstFiveUpcomingMatches.map((item: IMatchListItem) => {
+                futureMatches.data?.matches.map((item: IMatchListItem) => {
                   return <MatchRow match={item} />;
                 })}
             </Space>
@@ -169,7 +172,7 @@ export const SeasonDetailCont: React.FC = () => {
           {!noFinishedMatches && (
             <>
               <Space direction="vertical" style={{ width: '100%' }}>
-                {firstFiveFinishedMatches.map((item: IMatchListItem) => {
+                {finishedMatches.data?.matches.map((item: IMatchListItem) => {
                   return <MatchRow match={item} />;
                 })}
               </Space>

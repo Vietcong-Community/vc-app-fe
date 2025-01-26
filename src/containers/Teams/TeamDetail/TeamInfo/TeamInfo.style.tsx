@@ -1,17 +1,39 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { IThemeProps } from '../../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../../theme/theme';
+import { makeMediaQuery } from '../../../../utils/mediaQuery';
 
 export const Content = styled.div`
   display: flex;
   justify-content: space-between; /* Rozdělí podřazené divy na levou a pravou stranu */
   align-items: flex-start; /* Zarovná podřazené divy nahoru */
   gap: 20px; /* Mezera mezi podřazenými divy */
+
+  ${() => makeMediaQuery(BreakPoints.lg)`
+    ${css`
+      display: block;
+      justify-content: center;
+      align-items: center;
+    `}
+  `};
 `;
 
 export const PictureDiv = styled.div`
   flex: 1;
   border-radius: 8px;
+  width: 280px;
+
+  ${() => makeMediaQuery(BreakPoints.lg)`
+    ${css`
+      justify-content: center;
+    `}
+  `};
+
+  ${() => makeMediaQuery(BreakPoints.sm)`
+    ${css`
+      display: none;
+    `}
+  `};
 `;
 
 export const InfoDiv = styled.div`
@@ -22,14 +44,22 @@ export const InfoDiv = styled.div`
   background-color: ${(props) => props.theme.mainColors.secondary10};
   border-radius: 8px; /* Zaoblené rohy */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
-  height: 280px;
+  min-height: 200px; /* Minimální výška */
+  height: auto;
+  overflow: visible;
 `;
 
 export const TeamImage = styled.img`
-  width: 280px; /* Šířka obrázku */
-  height: 280px; /* Výška obrázku */
+  width: 100%;
+  height: 100%; /* Výška obrázku */
   border-radius: 2%;
   object-fit: cover; /* Přizpůsobení obsahu */
+
+  ${() => makeMediaQuery(BreakPoints.lg)`
+    ${css`
+      justify-content: center; /* NEFUNGUJE */
+    `}
+  `};
 `;
 
 export const InfoCard = styled.div`

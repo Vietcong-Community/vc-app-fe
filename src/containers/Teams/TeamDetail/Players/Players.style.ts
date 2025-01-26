@@ -1,10 +1,22 @@
 import bgCard from 'src/assets/heli-footer1.webp';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { IThemeProps } from '../../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../../theme/theme';
+import { makeMediaQuery } from '../../../../utils/mediaQuery';
+
+export const PlayerContainer = styled.div`
+  flex-direction: column;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: none;
+    `}
+  `};
+`;
 
 export const PlayerCard = styled.div`
-  width: 400px;
+  width: 100%;
   height: 120px;
   background-image: url(${bgCard});
   background-size: 200%;
@@ -41,7 +53,7 @@ export const PlayerName = styled.h3`
   margin: 5px 0;
   font-size: 18px;
   font-weight: bold;
-  color: ${(props: IThemeProps) => props.theme.mainColors.background};
+  color: ${(props: IThemeProps) => props.theme.mainColors.accent};
 `;
 
 export const PlayerRealName = styled.p`
@@ -55,4 +67,23 @@ export const PlayerRole = styled.p`
   font-weight: bold;
   font-size: 14px;
   color: #8b8c89;
+`;
+
+export const PlayerInvite = styled.p`
+  padding: 10px;
+`;
+
+export const CarouselDiv = styled.div`
+  width: 100%;
+  max-width: 600px; /* Maximální šířka carouselu */
+  margin: 0 auto; /* Horizontální centrování */
+  overflow: hidden; /* Skryje obsah mimo hranice carouselu */
+  position: relative; /* Pro umístění ovládacích prvků */
+  display: none;
+
+  ${() => makeMediaQuery(BreakPoints.md)` 
+    ${css`
+      display: block;
+    `}
+  `};
 `;

@@ -17,4 +17,8 @@ export const messages = defineMessages({
     id: 'app.containers.Teams.TeamDetail.member',
     defaultMessage: 'Člen',
   },
+  joinBtn: {
+    id: 'app.containers.Teams.TeamDetail.joinBtn',
+    defaultMessage: 'Vstoupit',
+  },
 });

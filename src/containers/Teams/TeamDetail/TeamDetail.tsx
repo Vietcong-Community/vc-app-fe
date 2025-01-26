@@ -1,14 +1,18 @@
 import React from 'react';
 
+import { PlusOutlined } from '@ant-design/icons';
 import { Divider, Flex } from 'antd';
+import { FormattedMessage } from 'react-intl';
 
 import { useTeamDetail, useTeamPlayers } from '../../../api/hooks/teams/api';
+import { Button } from '../../../components/Button/Button';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { useRouter } from '../../../hooks/RouterHook';
 
 import { Players } from './Players/Players';
 import { TeamInfo } from './TeamInfo/TeamInfo';
+import { messages } from './messages';
 
 import * as S from '../TeamDetail/TeamDetail.style';
 
@@ -31,12 +35,15 @@ export const TeamDetailCont: React.FC = () => {
     <ContentLayout>
       <Flex align="center" justify="space-between">
         <H1>{team.data?.name}</H1>
+        <Button>
+          <PlusOutlined />
+          <FormattedMessage {...messages.joinBtn} />
+        </Button>
       </Flex>
       <Divider style={{ marginTop: 0 }} />
       <S.Content>
         <S.TeamInfo>
-          {/* {team.data?.description}
-          // TODO NAMAPOVAT HRACE A PROKLIKY NA NE */}
+          {/* {team.data?.description} */}
           <TeamInfo />
         </S.TeamInfo>
         <S.Members>

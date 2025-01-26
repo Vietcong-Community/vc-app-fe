@@ -1,4 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import { BreakPoints } from '../../../theme/theme';
+import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const Content = styled.div`
   display: flex;
@@ -6,6 +9,12 @@ export const Content = styled.div`
   align-items: flex-start; /* Zarovná podřazené divy nahoru */
   padding: 20px;
   gap: 20px; /* Mezera mezi podřazenými divy */
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: block;
+    `}
+  `};
 `;
 
 export const TeamInfo = styled.div`

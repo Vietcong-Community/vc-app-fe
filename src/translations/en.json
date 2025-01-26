@@ -152,10 +152,14 @@
   "app.containers.Profile.title": "",
   "app.containers.Statistics.tba": "",
   "app.containers.Statistics.title": "",
+  "app.containers.Teams.TeamDetail.joinBtn": "",
   "app.containers.Teams.TeamDetail.matchOrganizer": "",
   "app.containers.Teams.TeamDetail.member": "",
   "app.containers.Teams.TeamDetail.membersTitle": "",
   "app.containers.Teams.TeamDetail.owner": "",
+  "app.containers.Teams.TeamInfo.ClantagLbl": "",
+  "app.containers.Teams.TeamInfo.MemberFromLbl": "",
+  "app.containers.Teams.TeamInfo.TeamNameLbl": "",
   "app.containers.Users.ChangePassword.description": "",
   "app.containers.Users.ChangePassword.passwordResetRequestFailed": "",
   "app.containers.Users.ChangePassword.submitButton": "",
@@ -240,5 +244,6 @@
   "app.utils.validations.passwordConfirm": "",
   "app.utils.validations.passwordValidation": "",
   "app.utils.validations.required": "",
-  "app.utils.vcNation": ""
+  "app.utils.vcNation": "",
+  "title": ""
 }

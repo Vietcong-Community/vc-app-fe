@@ -48,6 +48,11 @@ export const Footer: React.FC = () => {
                 <FormattedMessage {...messages.xsStore} />
               </a>
             </S.Link>
+            <S.Link>
+              <a href={EXTERNAL_LINKS.ELECTRA_DRIVE} target={'_blank'}>
+                <FormattedMessage {...messages.electraDrive} />
+              </a>
+            </S.Link>
           </S.Column>
           <S.Column>
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>

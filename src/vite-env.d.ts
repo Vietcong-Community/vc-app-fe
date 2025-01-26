@@ -5,6 +5,7 @@ declare module '*.png';
 
 interface Window {
   vcAppConfig: {
+    APP_URL: string;
     API_URL: string;
   };
 }

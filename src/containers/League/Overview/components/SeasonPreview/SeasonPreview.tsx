@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { FrownOutlined } from '@ant-design/icons';
 import { Flex, Table, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -39,8 +40,16 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
     limit: 5,
   });
 
+  const sortedMatches =
+    ladder.data?.items.sort((a, b) => {
+      const aWinRate = a.countOfMatches ? (100 / a.countOfMatches) * a.wins : 0;
+      const bWinRate = b.countOfMatches ? (100 / b.countOfMatches) * b.wins : 0;
+
+      return bWinRate - aWinRate;
+    }) ?? [];
+
   const ladderTableData: ILadderTableRow[] =
-    ladder.data?.items.map((item, index) => {
+    sortedMatches.map((item, index) => {
       return {
         id: item.team.id,
         position: index + 1,
@@ -49,6 +58,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
         wins: item.wins,
         draws: item.draws,
         loses: item.loses,
+        winRate: item.countOfMatches ? `${((100 / item.countOfMatches) * item.wins).toFixed(2)} %` : '0 %',
       };
     }) ?? [];
 
@@ -60,24 +70,44 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
     <Flex vertical>
       <S.Matches>
         {isSeasonActive && (
-          <Flex justify="center" vertical>
-            <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
-              <FormattedMessage {...messages.openMatches} />
-            </Typography.Title>
-            <S.LastMatchesContainer>
-              {noUpcomingMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
-              {!noUpcomingMatches &&
-                futureMatches.data?.matches.map((item: IMatchListItem) => {
-                  return <MatchRow match={item} />;
-                })}
-            </S.LastMatchesContainer>
-          </Flex>
+          <>
+            <Flex justify="center" vertical>
+              <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
+                <FormattedMessage {...messages.openMatches} />
+              </Typography.Title>
+              <S.LastMatchesContainer>
+                {noUpcomingMatches && (
+                  <S.NoMatches>
+                    <FormattedMessage {...messages.noUpcomingMatches} />
+                  </S.NoMatches>
+                )}
+                {!noUpcomingMatches &&
+                  futureMatches.data?.matches.map((item: IMatchListItem) => {
+                    return <MatchRow match={item} />;
+                  })}
+              </S.LastMatchesContainer>
+            </Flex>
+            {isSmallerThanMd && (
+              <>
+                <Gap defaultHeight={16} />
+                <S.Divider />
+                <Gap defaultHeight={16} />
+              </>
+            )}
+          </>
         )}
         <Flex justify="center" vertical>
           <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
             <FormattedMessage {...messages.playedMatches} />
           </Typography.Title>
-          {noFinishedMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
+          {noFinishedMatches && (
+            <S.NoMatches>
+              <Gap defaultHeight={16} />
+              <FrownOutlined />
+              <Gap defaultHeight={16} />
+              <FormattedMessage {...messages.noFinishedMatches} />
+            </S.NoMatches>
+          )}
           {!noFinishedMatches && (
             <>
               <S.LastMatchesContainer>

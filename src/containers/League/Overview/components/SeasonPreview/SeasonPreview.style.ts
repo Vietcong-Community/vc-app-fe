@@ -1,3 +1,4 @@
+import { Divider as AntDDivider } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
@@ -38,4 +39,26 @@ export const TableContainer = styled.div`
   .ant-table-thead .ant-table-cell {
     background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30};
   }
+  th.ant-table-column-sort {
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30} !important;
+  }
+`;
+
+export const NoMatches = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: auto;
+
+  span {
+    color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+    font-size: 24px;
+  }
+`;
+
+export const Divider = styled(AntDDivider)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  margin: 0;
 `;

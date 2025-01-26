@@ -4,7 +4,7 @@ import { get, post } from '../../apiFactory';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { TeamEndpoints } from './endpoints';
-import { ITeamPlayers, ITeam } from './interfaces';
+import { ITeamPlayers, ITeam, IMeTeams } from './interfaces';
 
 export const useTeamDetail = (id: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
@@ -62,5 +62,17 @@ export const useRejectJoinRequest = (teamId: string) => {
       });
       return data;
     },
+  });
+};
+
+export const useMeTeams = (refetchOnMount?: boolean | 'always') => {
+  return useQuery({
+    queryKey: ['loggedUserTeams'],
+    queryFn: async () => {
+      const { data } = await get<{ items: IMeTeams[] }>(TeamEndpoints.ME_TEAMS, {}, undefined, [401]);
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
   });
 };

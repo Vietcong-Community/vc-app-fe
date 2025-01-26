@@ -78,7 +78,7 @@ export const messages = defineMessages({
     defaultMessage: 'Avatar byl úspěšně aktualizován.',
   },
   avatarUploadFailed: {
-    id: 'app.containers.Users.EditProfile.avatarUploadSuccess',
+    id: 'app.containers.Users.EditProfile.avatarUploadFailed',
     defaultMessage: 'Avatar se nepodařilo nahrát, zkuste to prosím později nebo kontaktujte adminský tým.',
   },
   profileBreadcrumb: {

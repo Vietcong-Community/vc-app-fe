@@ -47,6 +47,10 @@ export const messages = defineMessages({
     id: 'app.components.Footer.xsStore',
     defaultMessage: 'XS Store CZ',
   },
+  electraDrive: {
+    id: 'app.components.Footer.electraDrive',
+    defaultMessage: 'ElectraDrive',
+  },
   copyright: {
     id: 'app.components.Footer.copyright',
     defaultMessage: '© 2025 VietcongHUB',

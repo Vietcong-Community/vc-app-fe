@@ -4,4 +4,6 @@ export const EXTERNAL_LINKS = {
   DISCORD: 'https://discord.gg/XB9YdaQP',
   INSTAGRAM: 'https://www.instagram.com/vietcong_league',
   XS_STORE: 'https://www.xs.cz/',
+  ELECTRA_DRIVE: 'https://www.electradrive.cz/',
+  MCRVC_FACEBOOK: 'https://www.facebook.com/mcrvietcong',
 };

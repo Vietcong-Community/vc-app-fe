@@ -4,7 +4,7 @@ import { get, post } from '../../apiFactory';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { TeamEndpoints } from './endpoints';
-import { ITeamPlayers, ITeam, IMeTeams } from './interfaces';
+import { ITeamPlayers, ITeam, IMeTeams, IAvatarUpload } from './interfaces';
 
 export const useTeamDetail = (id: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
@@ -74,5 +74,18 @@ export const useMeTeams = (refetchOnMount?: boolean | 'always') => {
     },
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useTeamAvatarUploadUrl = (teamId: string) => {
+  return useMutation({
+    mutationFn: async (payload: IAvatarUpload) => {
+      const { data } = await post<IAvatarUpload, { fileId: string; uploadUrl: string }>(
+        TeamEndpoints.UPLOAD_TEAM_AVATAR,
+        payload,
+        { teamId },
+      );
+      return data;
+    },
   });
 };

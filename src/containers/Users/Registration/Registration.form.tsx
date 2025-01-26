@@ -3,9 +3,8 @@ import React from 'react';
 import { Col, Form, Row } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import vojakReg from '../../../assets/vojak_reg.png';
+import vojakReg from '../../../assets/registration/soldier.png';
 import { Button } from '../../../components/Button/Button';
-import { CheckboxField } from '../../../components/Checkbox/Checkbox';
 import { InputField } from '../../../components/Fields/InputField/InputField';
 import { PasswordField } from '../../../components/Fields/PasswordField/PasswordField';
 import { Gap } from '../../../components/Gap/Gap';
@@ -66,21 +65,6 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
               {...fields.passwordConfirm}
               label={<FormattedMessage {...messages.confirmPasswordLabel} />}
               placeholder={formatMessage(messages.confirmPasswordLabel)}
-            />
-            <CheckboxField
-              {...fields.agree}
-              label={
-                <FormattedMessage
-                  {...messages.agreementCBLabel}
-                  values={{
-                    a: (chunks: React.ReactNode) => (
-                      <a href="http://www.basccijebuh.cz" target="_blank" rel="noopener noreferrer">
-                        {chunks}
-                      </a>
-                    ),
-                  }}
-                />
-              }
             />
             <Button loading={isSubmitting} type="submit">
               <FormattedMessage {...messages.registerButtonLabel} />

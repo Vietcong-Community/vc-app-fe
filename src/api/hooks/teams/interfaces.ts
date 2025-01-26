@@ -1,16 +1,12 @@
+import { TeamMemberStatus, TeamRole } from '../../../constants/enums';
 import { IUser } from '../interfaces';
 
-export enum TeamRole {
-  OWNER = 'OWNER',
-  MATCH_ORGANIZER = 'MATCH_ORGANIZER',
-  MEMBER = 'MEMBER',
-}
-
 export interface ITeamPlayers {
-  id: number;
+  id: string;
   user: IUser;
   role: TeamRole;
   createdAt: string;
+  status: TeamMemberStatus;
 }
 
 export interface ITeam {
@@ -19,9 +15,17 @@ export interface ITeam {
   tag: string;
   description?: string;
   createdAt: string;
+  image?: {
+    id: string;
+    url: string;
+  };
 }
 
 export interface IMeTeams {
   team: ITeam;
   userInTeam: ITeamPlayers;
+}
+
+export interface IAvatarUpload {
+  fileName: string;
 }

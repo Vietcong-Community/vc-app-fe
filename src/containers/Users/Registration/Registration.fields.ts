@@ -13,7 +13,6 @@ export interface IFormData {
   email: string;
   password: string;
   passwordConfirm: string;
-  agree: boolean;
 }
 
 export const fields: IFormFields<IFormData> = {
@@ -36,10 +35,5 @@ export const fields: IFormFields<IFormData> = {
     name: 'passwordConfirm',
     required: true,
     rules: [isRequired, isPasswordSame],
-  },
-  agree: {
-    name: 'agree',
-    required: true,
-    rules: [isRequired],
   },
 };

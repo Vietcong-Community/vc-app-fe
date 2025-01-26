@@ -81,4 +81,16 @@ export const messages = defineMessages({
     id: 'app.utils.teamplay',
     defaultMessage: 'Teamplay',
   },
+  teamRoleOwner: {
+    id: 'app.utils.teamRoleOwner',
+    defaultMessage: 'Kapitán',
+  },
+  teamRoleMatchManager: {
+    id: 'app.utils.teamRoleMatchManager',
+    defaultMessage: 'Manager zápasů',
+  },
+  teamRoleMember: {
+    id: 'app.utils.teamRoleMember',
+    defaultMessage: 'Člen',
+  },
 });

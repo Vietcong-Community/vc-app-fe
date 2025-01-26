@@ -71,3 +71,12 @@ export const IconWrapper = styled.div`
     transition: font-size 0.3s ease;
   }
 `;
+
+export const EditProfileIcon = styled.div`
+  color: ${(props: IThemeProps) => props.theme.mainColors.accent};
+  cursor: pointer;
+  font-size: 20px;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+`;

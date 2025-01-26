@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FacebookFilled, TwitchFilled, UserOutlined } from '@ant-design/icons';
+import { EditOutlined, FacebookFilled, TwitchFilled, UserOutlined } from '@ant-design/icons';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons/faGamepad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Spin } from 'antd';
@@ -14,6 +14,7 @@ import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 import { useRouter } from '../../hooks/RouterHook';
 import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
+import { Routes } from '../../routes/enums';
 import { BreakPoints } from '../../theme/theme';
 import { formatDateForUser } from '../../utils/dateUtils';
 
@@ -22,7 +23,7 @@ import { messages } from './messages';
 import * as S from './Profile.style';
 
 export const ProfileCont: React.FC = () => {
-  const { query } = useRouter<{ id: string }>();
+  const { navigate, query } = useRouter<{ id: string }>();
   const { formatMessage } = useIntl();
   const { width } = useWindowDimensions();
   const isSmallerThanMD = width < BreakPoints.md;
@@ -48,15 +49,17 @@ export const ProfileCont: React.FC = () => {
         <S.Container>
           <S.PlayerInfo>
             <Avatar size={175} icon={getUserIcon()} />
-            <Card style={{ maxWidth: isSmallerThanMD ? 'initial' : 550, textAlign: 'start' }}>
+            <Card style={{ maxWidth: isSmallerThanMD ? 'initial' : 550, position: 'relative', textAlign: 'start' }}>
+              <S.EditProfileIcon onClick={() => navigate(Routes.EDIT_PROFILE.replace(':id', query.id))}>
+                <EditOutlined />
+              </S.EditProfileIcon>
               <S.Nickname>{userDetail.data?.nickname}</S.Nickname>
               <S.PersonName>{compact([userDetail.data?.firstName, userDetail.data?.lastName]).join(' ')}</S.PersonName>
-              <Gap defaultHeight={16} />
               <S.PersonName>
                 <FormattedMessage {...messages.createdAt} />
                 {formatDateForUser(userDetail.data?.createdAt)}
               </S.PersonName>
-              <Gap defaultHeight={8} />
+              <Gap defaultHeight={16} />
               <S.Socials>
                 <FormattedMessage {...messages.socials} />
                 {!userDetail.data?.facebookLink && !userDetail.data?.twitchLink && !userDetail.data?.steamLink && (

@@ -41,4 +41,21 @@ export const TableContainer = styled.div`
   .ant-table-thead .ant-table-cell {
     background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30};
   }
+  th.ant-table-column-sort {
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30} !important;
+  }
+`;
+
+export const NoFinishedMatches = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: auto;
+
+  span {
+    color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+    font-size: 24px;
+  }
 `;

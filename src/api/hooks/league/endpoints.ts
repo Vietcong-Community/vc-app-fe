@@ -5,6 +5,7 @@ export enum LeagueEndpoints {
   SEASON_DETAIL = '/seasons/{seasonId}',
   MAPS_IN_SEASON = '/seasons/{seasonId}/maps',
   LADDER_LIST = '/seasons/{seasonId}/ladder',
+  MY_TEAM_IN_SEASON = '/seasons/{seasonId}/my-team',
   SEASON_TEAM_LIST = '/seasons/{seasonId}/teams',
   MATCH_LIST = '/seasons/{seasonId}/matches',
   CREATE_MATCH_CHALLENGE = '/seasons/{seasonId}/create-match-challenge',

@@ -20,3 +20,8 @@ export interface ITeam {
   description?: string;
   createdAt: string;
 }
+
+export interface IMeTeams {
+  team: ITeam;
+  userInTeam: ITeamPlayers;
+}

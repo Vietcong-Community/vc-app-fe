@@ -25,9 +25,17 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.noUpcomingMatches',
     defaultMessage: 'Žádný zápas není naplánován.',
   },
+  createMatchLink: {
+    id: 'app.containers.League.SeasonDetail.createMatchLink',
+    defaultMessage: 'Nový zápas můžete vytvořit <b>zde</b>.',
+  },
   finishedMatches: {
     id: 'app.containers.League.SeasonDetail.finishedMatches',
     defaultMessage: 'Odehrané zápasy',
+  },
+  noFinishedMatches: {
+    id: 'app.containers.League.SeasonDetail.noFinishedMatches',
+    defaultMessage: 'Nic tu není, koukejte něco odehrát!',
   },
   createMatch: {
     id: 'app.containers.League.SeasonDetail.createMatch',

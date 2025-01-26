@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 
+import { CompassOutlined } from '@ant-design/icons';
 import { FormattedMessage } from 'react-intl';
 
+import { Button } from '../../components/Button/Button';
+import { Gap } from '../../components/Gap/Gap';
+import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../components/Titles/H1/H1';
 import { useRouter } from '../../hooks/RouterHook';
 import { Routes } from '../../routes/enums';
@@ -21,13 +25,23 @@ export const NotFoundPage: React.FC = () => {
   }, []);
 
   return (
-    <S.Container>
-      <H1>
-        <FormattedMessage {...messages.title} />
-      </H1>
-      STRANKA NEEXISTUJE
-      <br />
-      // TODO NEJAKY OBRAZEK ASI JE NA HRADBACH
-    </S.Container>
+    <ContentLayout>
+      <S.Container>
+        <Gap defaultHeight={16} />
+        <S.IconContainer>
+          <CompassOutlined />
+        </S.IconContainer>
+        <H1>
+          <FormattedMessage {...messages.title} />
+        </H1>
+        <Gap defaultHeight={16} />
+        <FormattedMessage {...messages.description} />
+        <Gap defaultHeight={32} />
+        <Button onClick={() => navigate(Routes.HOME, { replace: true })}>
+          <FormattedMessage {...messages.backToHomePage} />
+        </Button>
+        <Gap defaultHeight={32} />
+      </S.Container>
+    </ContentLayout>
   );
 };

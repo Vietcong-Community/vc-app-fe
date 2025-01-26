@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
+import { FrownOutlined } from '@ant-design/icons';
 import { Flex, Space, Table } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail } from '../../../api/hooks/league/api';
+import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail, useSeasonTeams } from '../../../api/hooks/league/api';
 import { IMatchListItem } from '../../../api/hooks/league/interfaces';
+import { useMeTeams } from '../../../api/hooks/teams/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
@@ -24,6 +26,7 @@ import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from '../types';
 
 import { messages } from './messages';
+import { canUserCreateMatch } from './utils';
 
 import * as S from './SeasonDetail.style';
 
@@ -31,8 +34,10 @@ export const SeasonDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ seasonId: string }>();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
+  const myTeams = useMeTeams();
 
   const season = useSeasonsDetail(query.seasonId);
+  const seasonTeams = useSeasonTeams(query.seasonId);
   const ladder = useSeasonLadder(query.seasonId);
   const matches = useSeasonMatchList(query.seasonId);
   const futureMatches = useSeasonMatchList(query.seasonId, {
@@ -44,8 +49,16 @@ export const SeasonDetailCont: React.FC = () => {
     limit: 5,
   });
 
+  const sortedMatches =
+    ladder.data?.items.sort((a, b) => {
+      const aWinRate = a.countOfMatches ? (100 / a.countOfMatches) * a.wins : 0;
+      const bWinRate = b.countOfMatches ? (100 / b.countOfMatches) * b.wins : 0;
+
+      return bWinRate - aWinRate;
+    }) ?? [];
+
   const ladderTableData: ILadderTableRow[] =
-    ladder.data?.items.map((item, index) => {
+    sortedMatches.map((item, index) => {
       return {
         id: item.team.id,
         position: index + 1,
@@ -54,6 +67,7 @@ export const SeasonDetailCont: React.FC = () => {
         wins: item.wins,
         draws: item.draws,
         loses: item.loses,
+        winRate: item.countOfMatches ? `${((100 / item.countOfMatches) * item.wins).toFixed(2)} %` : '0 %',
       };
     }) ?? [];
 
@@ -86,7 +100,8 @@ export const SeasonDetailCont: React.FC = () => {
 
   const noUpcomingMatches = futureMatches.data?.total === 0;
   const noFinishedMatches = finishedMatches.data?.total === 0;
-  const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE; // TODO AND USER HAVE AUTHORITY
+  const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
+  const isPossibleToCreateMatch = canUserCreateMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
   return (
     <ContentLayout
@@ -150,10 +165,19 @@ export const SeasonDetailCont: React.FC = () => {
               <FormattedMessage {...messages.upcomingMatches} />
             </S.CardTitle>
             {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
-            {noUpcomingMatches && (
+            {noUpcomingMatches && isPossibleToCreateMatch && (
               <>
                 <br />
-                TODO MATCH ORGA LINK NA MATCH
+                <FormattedMessage
+                  {...messages.createMatchLink}
+                  values={{
+                    b: (msg: ReactNode) => (
+                      <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                        {msg}
+                      </b>
+                    ),
+                  }}
+                />
               </>
             )}
             <Space direction="vertical" style={{ width: '100%' }}>
@@ -168,7 +192,27 @@ export const SeasonDetailCont: React.FC = () => {
           <S.CardTitle>
             <FormattedMessage {...messages.finishedMatches} />
           </S.CardTitle>
-          {noFinishedMatches && <>TODO OBRAZEK SMUTNY PRAZDNY</>}
+          {noFinishedMatches && (
+            <S.NoFinishedMatches>
+              <Gap defaultHeight={16} />
+              <FrownOutlined />
+              <Gap defaultHeight={16} />
+              <FormattedMessage {...messages.noFinishedMatches} />
+              <Gap defaultHeight={8} />
+              <div>
+                <FormattedMessage
+                  {...messages.createMatchLink}
+                  values={{
+                    b: (msg: ReactNode) => (
+                      <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                        {msg}
+                      </b>
+                    ),
+                  }}
+                />
+              </div>
+            </S.NoFinishedMatches>
+          )}
           {!noFinishedMatches && (
             <>
               <Space direction="vertical" style={{ width: '100%' }}>
@@ -181,7 +225,7 @@ export const SeasonDetailCont: React.FC = () => {
         </Card>
       </S.Matches>
       <Gap defaultHeight={16} />
-      {isSeasonActive && (
+      {isSeasonActive && isPossibleToCreateMatch && (
         <Flex justify="flex-end">
           <Button
             onClick={onMatchCreateClick}

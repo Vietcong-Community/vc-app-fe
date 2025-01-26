@@ -110,6 +110,7 @@ export interface ILadderTableRow {
   wins: number;
   draws: number;
   loses: number;
+  winRate: string;
 }
 
 export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadderTableRow> => {
@@ -130,24 +131,38 @@ export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadd
       dataIndex: 'countOfMatches',
       key: '2',
       hidden: showShortLabels,
+      sorter: (a, b) => b.countOfMatches - a.countOfMatches,
     },
     {
       title: <FormattedMessage {...messages.wins} />,
       dataIndex: 'wins',
       key: '3',
       hidden: showShortLabels,
+      sorter: (a, b) => b.wins - a.wins,
     },
     {
       title: <FormattedMessage {...messages.draws} />,
       dataIndex: 'draws',
       key: '4',
       hidden: showShortLabels,
+      sorter: (a, b) => b.draws - a.draws,
     },
     {
       title: <FormattedMessage {...messages.loses} />,
       dataIndex: 'loses',
       key: '5',
       hidden: showShortLabels,
+      sorter: (a, b) => b.loses - a.loses,
+    },
+    {
+      title: <FormattedMessage {...messages.winRate} />,
+      dataIndex: 'winRate',
+      key: '6',
+      hidden: showShortLabels,
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => {
+        return Number(b.winRate.replace(' %', '')) - Number(a.winRate.replace(' %', ''));
+      },
     },
   ];
 };

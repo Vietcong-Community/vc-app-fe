@@ -99,7 +99,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
                 const realName = compact([player.firstName, player.lastName]).join(' ');
                 return (
                   <>
-                    <S.PlayerCard key={index}>
+                    <S.PlayerCard key={index} onClick={() => goToPlayerDetail(player.key)}>
                       <S.PlayerImage src={soldier} alt={`${player.nickname}`} />
                       <S.PlayerInfo>
                         <S.PlayerRole>{mapTeamRoleToTranslation(player.role)}</S.PlayerRole>
@@ -129,7 +129,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
               {removedPlayers.map((player, index) => {
                 const realName = compact([player.firstName, player.lastName]).join(' ');
                 return (
-                  <S.PlayerCard key={index}>
+                  <S.PlayerCard key={index} onClick={() => goToPlayerDetail(player.key)}>
                     <S.PlayerImage src={soldier} alt={`${player.nickname}`} />
                     <S.PlayerInfo>
                       <S.PlayerRole>{mapTeamRoleToTranslation(player.role)}</S.PlayerRole>
@@ -158,7 +158,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
             {activePlayers.map((player, index) => {
               const realName = compact([player.firstName, player.lastName]).join(' ');
               return (
-                <S.PlayerCard key={index}>
+                <S.PlayerCard key={index} onClick={() => goToPlayerDetail(player.key)}>
                   <S.PlayerImage src={soldier} alt={player.nickname} />
                   <S.PlayerInfo>
                     <S.PlayerRole>{mapTeamRoleToTranslation(player.role)}</S.PlayerRole>
@@ -187,7 +187,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
                 {awaitingPlayers.map((player, index) => {
                   const realName = compact([player.firstName, player.lastName]).join(' ');
                   return (
-                    <S.PlayerCard key={index}>
+                    <S.PlayerCard key={index} onClick={() => goToPlayerDetail(player.key)}>
                       <S.PlayerImage src={soldier} alt={player.nickname} />
                       <S.PlayerInfo>
                         <S.PlayerRole>{mapTeamRoleToTranslation(player.role)}</S.PlayerRole>
@@ -218,7 +218,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
                 {removedPlayers.map((player, index) => {
                   const realName = compact([player.firstName, player.lastName]).join(' ');
                   return (
-                    <S.PlayerCard key={index}>
+                    <S.PlayerCard key={index} onClick={() => goToPlayerDetail(player.key)}>
                       <S.PlayerImage src={soldier} alt={player.nickname} />
                       <S.PlayerInfo>
                         <S.PlayerRole>{mapTeamRoleToTranslation(player.role)}</S.PlayerRole>

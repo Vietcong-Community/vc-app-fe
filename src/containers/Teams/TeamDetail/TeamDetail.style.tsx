@@ -1,6 +1,7 @@
+import { Divider as AntDDivider } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../theme/theme';
 import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const Content = styled.div`
@@ -12,7 +13,7 @@ export const Content = styled.div`
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      display: block;
+      flex-direction: column;
     `}
   `};
 `;
@@ -20,9 +21,21 @@ export const Content = styled.div`
 export const TeamInfo = styled.div`
   flex: 2;
   border-radius: 8px;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.lg)`
+    ${css`
+      flex: 1;
+    `}
+  `};
 `;
 
 export const Members = styled.div`
   flex: 1;
-  border-left: 1px solid #d9d9d9;
+  width: 100%;
+`;
+
+export const Divider = styled(AntDDivider)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  margin: 0;
 `;

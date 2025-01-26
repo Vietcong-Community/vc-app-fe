@@ -1,11 +1,17 @@
 import bgCard from 'src/assets/heli-footer1.webp';
 import styled, { css } from 'styled-components';
 
-import { BreakPoints, IThemeProps } from '../../../../theme/theme';
-import { makeMediaQuery } from '../../../../utils/mediaQuery';
+import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
+import { makeMediaQuery } from '../../../../../utils/mediaQuery';
 
-export const PlayerContainer = styled.div`
+export const Container = styled.div`
+  width: 100%;
+`;
+
+export const DesktopContainer = styled.div`
+  display: flex;
   flex-direction: column;
+  gap: 16px;
   width: 100%;
 
   ${() => makeMediaQuery(BreakPoints.md)`
@@ -16,25 +22,31 @@ export const PlayerContainer = styled.div`
 `;
 
 export const PlayerCard = styled.div`
-  width: 100%;
-  height: 120px;
+  align-items: center; /* Vertikální zarovnání na střed */
   background-image: url(${bgCard});
   background-size: 200%;
   background-position: top right;
-  align-items: center; /* Vertikální zarovnání na střed */
-  margin: 5px 0;
-  margin-left: 30px;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
+  position: relative;
   filter: grayscale(80%); /* Obrázek bude šedý */
+  height: 120px;
   transition: filter 0.3s ease; /* Plynulý přechod mezi stavy */
+  width: 100%;
 
   &:hover {
+    cursor: pointer;
     filter: grayscale(0%); /* Obrázek bude barevný při hoveru */
     transform: scale(1.03);
-    cursor: pointer;
   }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      cursor: pointer;
+      filter: grayscale(0%); /* Obrázek bude barevný při hoveru */
+    `}
+  `};
 `;
 
 export const PlayerImage = styled.img`
@@ -42,11 +54,23 @@ export const PlayerImage = styled.img`
   height: 120px; /* Výška obrázku */
   border-radius: 2%;
   object-fit: cover; /* Přizpůsobení obsahu */
-  margin-right: 40px;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      bottom: 0;
+      height: 100px; /* Výška obrázku */
+      position: absolute;
+
+      width: 100px; /* Šířka obrázku */
+    `}
+  `};
 `;
 
 export const PlayerInfo = styled.div`
+  position: absolute;
+  right: 1rem;
   padding: 15px;
+  top: 0;
 `;
 
 export const PlayerName = styled.h3`
@@ -69,10 +93,6 @@ export const PlayerRole = styled.p`
   color: #8b8c89;
 `;
 
-export const PlayerInvite = styled.p`
-  padding: 10px;
-`;
-
 export const CarouselDiv = styled.div`
   width: 100%;
   max-width: 600px; /* Maximální šířka carouselu */
@@ -86,4 +106,13 @@ export const CarouselDiv = styled.div`
       display: block;
     `}
   `};
+`;
+export const Buttons = styled.div`
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+
+  button {
+    padding: 0.5rem 1rem;
+  }
 `;

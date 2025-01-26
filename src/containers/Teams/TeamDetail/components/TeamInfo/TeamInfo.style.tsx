@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints, IThemeProps } from '../../../../theme/theme';
-import { makeMediaQuery } from '../../../../utils/mediaQuery';
+import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
+import { makeMediaQuery } from '../../../../../utils/mediaQuery';
 
 export const Content = styled.div`
   display: flex;
@@ -11,16 +11,21 @@ export const Content = styled.div`
 
   ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
-      display: block;
-      justify-content: center;
       align-items: center;
+      flex-direction: column;
+      justify-content: center;
     `}
   `};
 `;
 
 export const PictureDiv = styled.div`
-  flex: 1;
+  align-items: center;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
   width: 280px;
 
   ${() => makeMediaQuery(BreakPoints.lg)`
@@ -46,7 +51,7 @@ export const InfoDiv = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
   min-height: 200px; /* Minimální výška */
   height: auto;
-  overflow: visible;
+  width: 100%;
 `;
 
 export const TeamImage = styled.img`
@@ -54,12 +59,6 @@ export const TeamImage = styled.img`
   height: 100%; /* Výška obrázku */
   border-radius: 2%;
   object-fit: cover; /* Přizpůsobení obsahu */
-
-  ${() => makeMediaQuery(BreakPoints.lg)`
-    ${css`
-      justify-content: center; /* NEFUNGUJE */
-    `}
-  `};
 `;
 
 export const InfoCard = styled.div`
@@ -80,6 +79,8 @@ export const InfoCard = styled.div`
 
   b {
     color: ${(props: IThemeProps) => props.theme.mainColors.text};
+    text-align: start;
+    width: 125px;
   }
 
   i {

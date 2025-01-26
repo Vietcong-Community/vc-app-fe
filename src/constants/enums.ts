@@ -34,3 +34,15 @@ export enum MatchStatus {
   COMPLAINT = 'COMPLAINT',
   FINISHED = 'FINISHED',
 }
+
+export enum TeamRole {
+  OWNER = 'OWNER',
+  MATCH_ORGANIZER = 'MATCH_ORGANIZER',
+  MEMBER = 'MEMBER',
+}
+
+export enum TeamMemberStatus {
+  AWAITING = 'AWAITING',
+  ACTIVE = 'ACTIVE',
+  REMOVED = 'REMOVED',
+}

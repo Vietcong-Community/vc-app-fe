@@ -5,4 +5,5 @@ export enum TeamEndpoints {
   APPROVE_JOIN_REQUEST = '/teams/{teamId}/user/{userId}/approve',
   REJECT_JOIN_REQUEST = '/teams/{teamId}/user/{userId}/reject',
   ME_TEAMS = '/me/teams',
+  UPLOAD_TEAM_AVATAR = '/teams/{teamId}/avatar-upload-url',
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import { Col, Form, Row } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import vojakReg from '../../../assets/vojak_reg.png';
+import vojakReg from '../../../assets/registration/soldier.png';
 import { Button } from '../../../components/Button/Button';
 import { InputField } from '../../../components/Fields/InputField/InputField';
 import { FormComponent } from '../../../components/Form/FormComponent';

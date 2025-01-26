@@ -35,7 +35,7 @@ export const fields: IFormFields<IFormData> = {
   email: {
     name: 'email',
     required: true,
-    rules: [isRequired, isEmailValid, maxLength(30)],
+    rules: [isRequired, isEmailValid, maxLength(70)],
   },
   facebookLink: {
     name: 'facebookLink',

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { LeagueType, MatchStatus, Nation, PlayersCount, SeasonStatus } from '../constants/enums';
+import { LeagueType, MatchStatus, Nation, PlayersCount, SeasonStatus, TeamRole } from '../constants/enums';
 
 import { messages } from './messages';
 
@@ -78,6 +78,19 @@ export const mapNationToTranslation = (nation?: Nation): ReactNode | undefined =
       return <FormattedMessage {...messages.vcNation} />;
     case Nation.US:
       return <FormattedMessage {...messages.usNation} />;
+    default:
+      return undefined;
+  }
+};
+
+export const mapTeamRoleToTranslation = (teamRole?: TeamRole): ReactNode | undefined => {
+  switch (teamRole) {
+    case TeamRole.OWNER:
+      return <FormattedMessage {...messages.teamRoleOwner} />;
+    case TeamRole.MATCH_ORGANIZER:
+      return <FormattedMessage {...messages.teamRoleMatchManager} />;
+    case TeamRole.MEMBER:
+      return <FormattedMessage {...messages.teamRoleMember} />;
     default:
       return undefined;
   }

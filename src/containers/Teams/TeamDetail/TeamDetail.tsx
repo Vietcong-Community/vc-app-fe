@@ -1,53 +1,113 @@
 import React from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { Divider, Flex } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import { Flex } from 'antd';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useTeamDetail, useTeamPlayers } from '../../../api/hooks/teams/api';
+import { useUserMe } from '../../../api/hooks/auth/api';
+import {
+  useApproveJoinRequest,
+  useJoinTeam,
+  useRejectJoinRequest,
+  useTeamDetail,
+  useTeamPlayers,
+} from '../../../api/hooks/teams/api';
 import { Button } from '../../../components/Button/Button';
+import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
+import { TeamRole } from '../../../constants/enums';
+import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
+import { NotificationType } from '../../../providers/NotificationsProvider/enums';
+import { Routes } from '../../../routes/enums';
 
-import { Players } from './Players/Players';
-import { TeamInfo } from './TeamInfo/TeamInfo';
+import { Players } from './components/Players/Players';
+import { TeamInfo } from './components/TeamInfo/TeamInfo';
 import { messages } from './messages';
 
 import * as S from '../TeamDetail/TeamDetail.style';
 
 export const TeamDetailCont: React.FC = () => {
-  const { query } = useRouter<{ id: string }>();
+  const { navigate, query } = useRouter<{ id: string }>();
+  const { formatMessage } = useIntl();
   const team = useTeamDetail(query.id);
+  const userMe = useUserMe(false, [401]);
+  const { showNotification } = useNotifications();
+
+  const joinTeam = useJoinTeam(query.id);
+  const approveTeamJoin = useApproveJoinRequest(query.id);
+  const rejectTeamJoin = useRejectJoinRequest(query.id);
 
   const teamPlayers = useTeamPlayers(query.id);
 
-  const players =
-    teamPlayers.data?.items?.map((player: { id: any; role: any; user: any }) => ({
-      key: player.id,
-      role: player.role,
-      userName: player.user.nickname,
-      firstName: player.user.firstName,
-      surName: player.user.lastName,
-    })) || [];
+  const userCanJoinTeam =
+    !teamPlayers.isLoading &&
+    !!userMe.data?.id &&
+    !teamPlayers.data?.items.find((item) => item.user.id === userMe.data?.id);
+  const userIsOwner =
+    !!userMe.data?.id &&
+    teamPlayers.data?.items.find((item) => item.user.id === userMe.data?.id)?.role === TeamRole.OWNER;
+
+  const handleJoinTeam = async () => {
+    try {
+      await joinTeam.mutateAsync();
+      await teamPlayers.refetch();
+      showNotification(messages.joinSuccess, messages.joinSuccessDescription, NotificationType.INFO);
+    } catch {
+      showNotification(messages.joinFailed, undefined, NotificationType.ERROR);
+    }
+  };
+
+  const handleApproveJoinRequest = async (userId: string) => {
+    try {
+      await approveTeamJoin.mutateAsync({ userId });
+      await teamPlayers.refetch();
+      showNotification(messages.approveSuccess, undefined, NotificationType.INFO);
+    } catch {
+      showNotification(messages.approveFailed, undefined, NotificationType.ERROR);
+    }
+  };
+
+  const handleRejectJoinRequest = async (userId: string) => {
+    try {
+      await rejectTeamJoin.mutateAsync({ userId });
+      await teamPlayers.refetch();
+      showNotification(messages.rejectSuccess, undefined, NotificationType.INFO);
+    } catch {
+      showNotification(messages.rejectFailed, undefined, NotificationType.ERROR);
+    }
+  };
+
+  const goToPlayerDetail = (id: string) => navigate(Routes.USER_PROFILE.replace(':id', id));
 
   return (
-    <ContentLayout>
-      <Flex align="center" justify="space-between">
+    <ContentLayout breadcrumbItems={[{ key: 'bc-team', title: <FormattedMessage {...messages.title} /> }]}>
+      <Helmet title={`${formatMessage(messages.title)} - ${team.data?.name}`} />
+      <Flex align="center" justify="space-between" style={{ gap: 16, textAlign: 'start' }}>
         <H1>{team.data?.name}</H1>
-        <Button>
-          <PlusOutlined />
-          <FormattedMessage {...messages.joinBtn} />
-        </Button>
+        {userCanJoinTeam && (
+          <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
+            <PlusOutlined />
+            <FormattedMessage {...messages.joinBtn} />
+          </Button>
+        )}
       </Flex>
-      <Divider style={{ marginTop: 0 }} />
+      <S.Divider />
+      <Gap defaultHeight={16} />
       <S.Content>
         <S.TeamInfo>
-          {/* {team.data?.description} */}
-          <TeamInfo />
+          <TeamInfo teamDetail={team.data} showAvatarUploadOption={userIsOwner} />
         </S.TeamInfo>
         <S.Members>
-          <Players players={players} />
+          <Players
+            goToPlayerDetail={goToPlayerDetail}
+            handleApproveRequest={handleApproveJoinRequest}
+            handleRejectRequest={handleRejectJoinRequest}
+            players={teamPlayers.data?.items ?? []}
+            userIsOwner={userIsOwner}
+          />
         </S.Members>
       </S.Content>
     </ContentLayout>

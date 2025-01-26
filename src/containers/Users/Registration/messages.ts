@@ -33,10 +33,6 @@ export const messages = defineMessages({
     id: 'app.containers.Users.Registration.registerFailed',
     defaultMessage: 'Nastala chyba při registraci',
   },
-  agreementCBLabel: {
-    id: 'app.containers.Users.Registration.agreementCBLabel',
-    defaultMessage: 'Souhlasím s <a>podmínkami používání</a>',
-  },
   registrationSuccessTitle: {
     id: 'app.containers.Users.Registration.registrationSuccessTitle',
     defaultMessage: 'Registrace byla úspěšná',

@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post } from '../../apiFactory';
+import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IMap } from '../interfaces';
 
 import { LeagueEndpoints } from './endpoints';
@@ -88,13 +89,18 @@ export const useSeasonLadder = (seasonId: string, refetchOnMount?: boolean | 'al
   });
 };
 
-export const useSeasonTeams = (seasonId: string) => {
+export const useSeasonTeams = (seasonId: string, ignoredErrorCodes?: IgnoredErrorCodes) => {
   return useQuery({
     queryKey: ['seasonTeams', seasonId],
     queryFn: async () => {
-      const { data } = await get<{ items: ISeasonTeamItem[] }>(LeagueEndpoints.SEASON_TEAM_LIST, {
-        seasonId,
-      });
+      const { data } = await get<{ items: ISeasonTeamItem[] }>(
+        LeagueEndpoints.SEASON_TEAM_LIST,
+        {
+          seasonId,
+        },
+        undefined,
+        ignoredErrorCodes,
+      );
       return data;
     },
     staleTime: Infinity,

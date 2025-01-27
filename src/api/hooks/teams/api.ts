@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post } from '../../apiFactory';
+import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { TeamEndpoints } from './endpoints';
@@ -65,11 +66,11 @@ export const useRejectJoinRequest = (teamId: string) => {
   });
 };
 
-export const useMeTeams = (refetchOnMount?: boolean | 'always') => {
+export const useMeTeams = (refetchOnMount?: boolean | 'always', ignoredErrorCodes?: IgnoredErrorCodes) => {
   return useQuery({
     queryKey: ['loggedUserTeams'],
     queryFn: async () => {
-      const { data } = await get<{ items: IMeTeams[] }>(TeamEndpoints.ME_TEAMS, {}, undefined, [401]);
+      const { data } = await get<{ items: IMeTeams[] }>(TeamEndpoints.ME_TEAMS, {}, undefined, ignoredErrorCodes);
       return data;
     },
     staleTime: Infinity,

@@ -34,10 +34,10 @@ export const SeasonDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ seasonId: string }>();
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
-  const myTeams = useMeTeams();
+  const myTeams = useMeTeams(undefined, [401]);
 
   const season = useSeasonsDetail(query.seasonId);
-  const seasonTeams = useSeasonTeams(query.seasonId);
+  const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
   const matches = useSeasonMatchList(query.seasonId);
   const futureMatches = useSeasonMatchList(query.seasonId, {

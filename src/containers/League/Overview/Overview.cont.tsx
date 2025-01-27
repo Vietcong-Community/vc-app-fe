@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Flex, Spin, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
+import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
 import { useLeagueList } from '../../../api/hooks/league/api';
 import { Collapse } from '../../../components/Collapse/Collapse';
@@ -30,13 +31,14 @@ export const OverviewCont: React.FC = () => {
         <Typography.Text>
           <FormattedMessage {...messages.description} />
         </Typography.Text>
+
         {leagues.isLoading && (
           <>
             <Gap defaultHeight={36} />
             <Spin size="large" />
           </>
         )}
-        {!leagues.isLoading && (
+        <EaseInOutContainer isOpen={!leagues.isLoading}>
           <>
             <Typography.Title level={2}>
               <FormattedMessage {...messages.leaguesTitle} />
@@ -55,7 +57,7 @@ export const OverviewCont: React.FC = () => {
               }
             />
           </>
-        )}
+        </EaseInOutContainer>
         <Gap defaultHeight={36} />
       </Flex>
     </ContentLayout>

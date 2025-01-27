@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useAvatarUploadUrl, useUpdateMe, useUserMe } from '../../../api/hooks/auth/api';
 import { useConfirmImageUploadUrl } from '../../../api/hooks/files/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -97,7 +98,7 @@ export const EditProfileCont: React.FC = () => {
     >
       <Helmet title={formatMessage(messages.title)} />
       {showLoading && <Spin size="large" />}
-      {!showLoading && (
+      <EaseInOutContainer isOpen={!showLoading}>
         <EditProfileForm
           fileList={fileList}
           initialValues={initialValues}
@@ -105,7 +106,7 @@ export const EditProfileCont: React.FC = () => {
           onSubmit={onSubmit}
           setFileList={setFileList}
         />
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>
   );

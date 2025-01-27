@@ -10,6 +10,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../api/hooks/auth/api';
 import { useUserDetail } from '../../api/hooks/users/api';
+import { EaseInOutContainer } from '../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Card } from '../../components/Card/Card';
 import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
@@ -50,7 +51,7 @@ export const ProfileCont: React.FC = () => {
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
-      {!showLoading && (
+      <EaseInOutContainer isOpen={!showLoading}>
         <S.Container>
           <S.PlayerInfo>
             <Avatar size={175} icon={getUserIcon()} />
@@ -103,7 +104,7 @@ export const ProfileCont: React.FC = () => {
           </S.Description>
           <Gap defaultHeight={32} height={{ md: 16 }} />
         </S.Container>
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>
   );

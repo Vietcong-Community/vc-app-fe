@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { Flex } from 'antd';
+import { Flex, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -13,6 +13,7 @@ import {
   useTeamDetail,
   useTeamPlayers,
 } from '../../../api/hooks/teams/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../components/Button/Button';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -82,34 +83,44 @@ export const TeamDetailCont: React.FC = () => {
 
   const goToPlayerDetail = (id: string) => navigate(Routes.USER_PROFILE.replace(':id', id));
 
+  const showLoading = team.isLoading || userMe.isLoading || teamPlayers.isLoading;
+
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-team', title: <FormattedMessage {...messages.title} /> }]}>
       <Helmet title={`${formatMessage(messages.title)} - ${team.data?.name}`} />
-      <Flex align="center" justify="space-between" style={{ gap: 16, textAlign: 'start' }}>
-        <H1>{team.data?.name}</H1>
-        {userCanJoinTeam && (
-          <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
-            <PlusOutlined />
-            <FormattedMessage {...messages.joinBtn} />
-          </Button>
-        )}
-      </Flex>
-      <S.Divider />
-      <Gap defaultHeight={16} />
-      <S.Content>
-        <S.TeamInfo>
-          <TeamInfo teamDetail={team.data} showAvatarUploadOption={userIsOwner} />
-        </S.TeamInfo>
-        <S.Members>
-          <Players
-            goToPlayerDetail={goToPlayerDetail}
-            handleApproveRequest={handleApproveJoinRequest}
-            handleRejectRequest={handleRejectJoinRequest}
-            players={teamPlayers.data?.items ?? []}
-            userIsOwner={userIsOwner}
-          />
-        </S.Members>
-      </S.Content>
+      {showLoading && (
+        <>
+          <Gap defaultHeight={32} height={{ md: 16 }} />
+          <Spin size="large" />
+        </>
+      )}
+      <EaseInOutContainer isOpen={!showLoading}>
+        <Flex align="center" justify="space-between" style={{ gap: 16, textAlign: 'start' }}>
+          <H1>{team.data?.name}</H1>
+          {userCanJoinTeam && (
+            <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
+              <PlusOutlined />
+              <FormattedMessage {...messages.joinBtn} />
+            </Button>
+          )}
+        </Flex>
+        <S.Divider />
+        <Gap defaultHeight={16} />
+        <S.Content>
+          <S.TeamInfo>
+            <TeamInfo teamDetail={team.data} showAvatarUploadOption={userIsOwner} />
+          </S.TeamInfo>
+          <S.Members>
+            <Players
+              goToPlayerDetail={goToPlayerDetail}
+              handleApproveRequest={handleApproveJoinRequest}
+              handleRejectRequest={handleRejectJoinRequest}
+              players={teamPlayers.data?.items ?? []}
+              userIsOwner={userIsOwner}
+            />
+          </S.Members>
+        </S.Content>
+      </EaseInOutContainer>
     </ContentLayout>
   );
 };

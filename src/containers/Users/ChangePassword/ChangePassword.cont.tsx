@@ -24,7 +24,6 @@ export const ChangePasswordCont: React.FC = () => {
   const { showNotification } = useNotifications();
 
   const changePassword = useChangePasswordWithToken();
-  console.log(query.token);
 
   const onSubmit = async (values: IFormData) => {
     try {

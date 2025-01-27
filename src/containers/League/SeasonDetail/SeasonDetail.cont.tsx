@@ -2,11 +2,13 @@ import React, { ReactNode } from 'react';
 
 import { FrownOutlined } from '@ant-design/icons';
 import { Flex, Space, Table } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail, useSeasonTeams } from '../../../api/hooks/league/api';
 import { IMatchListItem } from '../../../api/hooks/league/interfaces';
 import { useMeTeams } from '../../../api/hooks/teams/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
@@ -24,9 +26,9 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation, mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from '../types';
+import { canUserCreateMatch } from '../utils';
 
 import { messages } from './messages';
-import { canUserCreateMatch } from './utils';
 
 import * as S from './SeasonDetail.style';
 
@@ -35,6 +37,7 @@ export const SeasonDetailCont: React.FC = () => {
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
   const myTeams = useMeTeams(undefined, [401]);
+  const { formatMessage } = useIntl();
 
   const season = useSeasonsDetail(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
@@ -103,6 +106,15 @@ export const SeasonDetailCont: React.FC = () => {
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
   const isPossibleToCreateMatch = canUserCreateMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
+  const showLoading =
+    season.isLoading ||
+    myTeams.isLoading ||
+    seasonTeams.isLoading ||
+    ladder.isLoading ||
+    matches.isLoading ||
+    futureMatches.isLoading ||
+    finishedMatches.isLoading;
+
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -121,173 +133,178 @@ export const SeasonDetailCont: React.FC = () => {
         },
       ]}
     >
-      <Flex align="center" justify="space-between">
-        <H1>{season.data?.name}</H1>
-      </Flex>
-      <S.Divider style={{ marginTop: 0 }} />
-      <S.Matches>
-        <Card style={{ flex: 0.5 }}>
-          <S.CardTitle>
-            <FormattedMessage {...messages.seasonInformationTitle} />
-          </S.CardTitle>
-          <Flex vertical align="flex-start" style={{ textAlign: 'start' }}>
-            <S.InformationLabel>
-              <FormattedMessage {...messages.seasonStatus} />
-            </S.InformationLabel>
-            <S.InformationValue>{mapSeasonStatusToTranslation(season.data?.status)}</S.InformationValue>
-            <br />
-            <S.InformationLabel>
-              <FormattedMessage {...messages.seasonBeginDate} />
-            </S.InformationLabel>
-            <S.InformationValue>
-              {season.data?.startDate ? (
-                formatDateForUser(season.data.startDate)
-              ) : (
-                <FormattedMessage {...messages.dateNotSpecified} />
+      <Helmet title={`${formatMessage(messages.seasonDetailBreadcrumb)} - ${season.data?.name}`} />
+      <EaseInOutContainer isOpen={!showLoading}>
+        <Flex align="center" justify="space-between">
+          <H1>{season.data?.name}</H1>
+        </Flex>
+        <S.Divider style={{ marginTop: 0 }} />
+        <S.Matches>
+          <Card style={{ flex: 0.5 }}>
+            <S.CardTitle>
+              <FormattedMessage {...messages.seasonInformationTitle} />
+            </S.CardTitle>
+            <Flex vertical align="flex-start" style={{ textAlign: 'start' }}>
+              <S.InformationLabel>
+                <FormattedMessage {...messages.seasonStatus} />
+              </S.InformationLabel>
+              <S.InformationValue>{mapSeasonStatusToTranslation(season.data?.status)}</S.InformationValue>
+              <br />
+              <S.InformationLabel>
+                <FormattedMessage {...messages.seasonBeginDate} />
+              </S.InformationLabel>
+              <S.InformationValue>
+                {season.data?.startDate ? (
+                  formatDateForUser(season.data.startDate)
+                ) : (
+                  <FormattedMessage {...messages.dateNotSpecified} />
+                )}
+              </S.InformationValue>
+              <br />
+              <S.InformationLabel>
+                <FormattedMessage {...messages.seasonEndDate} />
+              </S.InformationLabel>
+              <S.InformationValue>
+                {season.data?.endDate ? (
+                  formatDateForUser(season.data.endDate)
+                ) : (
+                  <FormattedMessage {...messages.dateNotSpecified} />
+                )}
+              </S.InformationValue>
+            </Flex>
+          </Card>
+          {isSeasonActive && (
+            <Card style={{ flex: 1 }}>
+              <S.CardTitle>
+                <FormattedMessage {...messages.upcomingMatches} />
+              </S.CardTitle>
+              {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
+              {noUpcomingMatches && isPossibleToCreateMatch && (
+                <>
+                  <br />
+                  <FormattedMessage
+                    {...messages.createMatchLink}
+                    values={{
+                      b: (msg: ReactNode) => (
+                        <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                          {msg}
+                        </b>
+                      ),
+                    }}
+                  />
+                </>
               )}
-            </S.InformationValue>
-            <br />
-            <S.InformationLabel>
-              <FormattedMessage {...messages.seasonEndDate} />
-            </S.InformationLabel>
-            <S.InformationValue>
-              {season.data?.endDate ? (
-                formatDateForUser(season.data.endDate)
-              ) : (
-                <FormattedMessage {...messages.dateNotSpecified} />
-              )}
-            </S.InformationValue>
-          </Flex>
-        </Card>
-        {isSeasonActive && (
+              <Space direction="vertical" style={{ width: '100%' }}>
+                {!noUpcomingMatches &&
+                  futureMatches.data?.matches.map((item: IMatchListItem) => {
+                    return <MatchRow match={item} />;
+                  })}
+              </Space>
+            </Card>
+          )}
           <Card style={{ flex: 1 }}>
             <S.CardTitle>
-              <FormattedMessage {...messages.upcomingMatches} />
+              <FormattedMessage {...messages.finishedMatches} />
             </S.CardTitle>
-            {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
-            {noUpcomingMatches && isPossibleToCreateMatch && (
+            {noFinishedMatches && (
+              <S.NoFinishedMatches>
+                <Gap defaultHeight={16} />
+                <FrownOutlined />
+                <Gap defaultHeight={16} />
+                <FormattedMessage {...messages.noFinishedMatches} />
+                <Gap defaultHeight={8} />
+                {isPossibleToCreateMatch && (
+                  <div>
+                    <FormattedMessage
+                      {...messages.createMatchLink}
+                      values={{
+                        b: (msg: ReactNode) => (
+                          <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                            {msg}
+                          </b>
+                        ),
+                      }}
+                    />
+                  </div>
+                )}
+              </S.NoFinishedMatches>
+            )}
+            {!noFinishedMatches && (
               <>
-                <br />
-                <FormattedMessage
-                  {...messages.createMatchLink}
-                  values={{
-                    b: (msg: ReactNode) => (
-                      <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                        {msg}
-                      </b>
-                    ),
-                  }}
-                />
+                <Space direction="vertical" style={{ width: '100%' }}>
+                  {finishedMatches.data?.matches.map((item: IMatchListItem) => {
+                    return <MatchRow match={item} />;
+                  })}
+                </Space>
               </>
             )}
-            <Space direction="vertical" style={{ width: '100%' }}>
-              {!noUpcomingMatches &&
-                futureMatches.data?.matches.map((item: IMatchListItem) => {
-                  return <MatchRow match={item} />;
-                })}
-            </Space>
           </Card>
+        </S.Matches>
+        <Gap defaultHeight={16} />
+        {isSeasonActive && isPossibleToCreateMatch && (
+          <Flex justify="flex-end">
+            <Button
+              onClick={onMatchCreateClick}
+              variant={MainButtonVariant.PRIMARY}
+              style={{ color: 'white', fontWeight: 'bold' }}
+            >
+              <FormattedMessage {...messages.createMatch} />
+            </Button>
+          </Flex>
         )}
-        <Card style={{ flex: 1 }}>
-          <S.CardTitle>
-            <FormattedMessage {...messages.finishedMatches} />
-          </S.CardTitle>
-          {noFinishedMatches && (
-            <S.NoFinishedMatches>
-              <Gap defaultHeight={16} />
-              <FrownOutlined />
-              <Gap defaultHeight={16} />
-              <FormattedMessage {...messages.noFinishedMatches} />
-              <Gap defaultHeight={8} />
-              <div>
-                <FormattedMessage
-                  {...messages.createMatchLink}
-                  values={{
-                    b: (msg: ReactNode) => (
-                      <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                        {msg}
-                      </b>
-                    ),
-                  }}
-                />
-              </div>
-            </S.NoFinishedMatches>
-          )}
-          {!noFinishedMatches && (
-            <>
-              <Space direction="vertical" style={{ width: '100%' }}>
-                {finishedMatches.data?.matches.map((item: IMatchListItem) => {
-                  return <MatchRow match={item} />;
-                })}
-              </Space>
-            </>
-          )}
-        </Card>
-      </S.Matches>
-      <Gap defaultHeight={16} />
-      {isSeasonActive && isPossibleToCreateMatch && (
-        <Flex justify="flex-end">
-          <Button
-            onClick={onMatchCreateClick}
-            variant={MainButtonVariant.PRIMARY}
-            style={{ color: 'white', fontWeight: 'bold' }}
-          >
-            <FormattedMessage {...messages.createMatch} />
-          </Button>
-        </Flex>
-      )}
-      <S.Divider />
-      <Flex vertical align="flex-start">
-        <H2>
-          <FormattedMessage {...messages.ladderTitle} />
-        </H2>
-        <S.TableContainer>
-          <Table<ILadderTableRow>
-            columns={LADDER_COLUMNS(isSmallerThanMd)}
-            dataSource={ladderTableData}
-            onRow={(item) => {
-              return {
-                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-                style: {
-                  cursor: 'pointer',
-                },
-              };
-            }}
-            pagination={{ hideOnSinglePage: true, pageSize: 20 }}
-            style={{ width: '100%' }}
-          />
-        </S.TableContainer>
-      </Flex>
-      <S.Divider />
-      <Flex vertical align="flex-start">
-        <H2>
-          <FormattedMessage {...messages.allMatchesTitle} />
-        </H2>
-        <S.TableContainer>
-          <Table<IMatchesTableRow>
-            columns={MATCH_COLUMNS(isSmallerThanMd)}
-            dataSource={allMatchesTableData}
-            onRow={(item) => {
-              const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
-
-              return {
-                onClick,
-                style: {
-                  cursor: 'pointer',
-                },
-              };
-            }}
-            style={{ width: '100%' }}
-          />
-        </S.TableContainer>
         <S.Divider />
         <Flex vertical align="flex-start">
           <H2>
-            <FormattedMessage {...messages.statisticsTitle} />
+            <FormattedMessage {...messages.ladderTitle} />
           </H2>
-          <FormattedMessage {...messages.statisticsDescription} />
+          <S.TableContainer>
+            <Table<ILadderTableRow>
+              columns={LADDER_COLUMNS(isSmallerThanMd)}
+              dataSource={ladderTableData}
+              onRow={(item) => {
+                return {
+                  onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
+                  style: {
+                    cursor: 'pointer',
+                  },
+                };
+              }}
+              pagination={{ hideOnSinglePage: true, pageSize: 20 }}
+              style={{ width: '100%' }}
+            />
+          </S.TableContainer>
         </Flex>
-      </Flex>
+        <S.Divider />
+        <Flex vertical align="flex-start">
+          <H2>
+            <FormattedMessage {...messages.allMatchesTitle} />
+          </H2>
+          <S.TableContainer>
+            <Table<IMatchesTableRow>
+              columns={MATCH_COLUMNS(isSmallerThanMd)}
+              dataSource={allMatchesTableData}
+              onRow={(item) => {
+                const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
+
+                return {
+                  onClick,
+                  style: {
+                    cursor: 'pointer',
+                  },
+                };
+              }}
+              style={{ width: '100%' }}
+            />
+          </S.TableContainer>
+          <S.Divider />
+          <Flex vertical align="flex-start">
+            <H2>
+              <FormattedMessage {...messages.statisticsTitle} />
+            </H2>
+            <FormattedMessage {...messages.statisticsDescription} />
+          </Flex>
+        </Flex>
+      </EaseInOutContainer>
       <Gap defaultHeight={48} />
     </ContentLayout>
   );

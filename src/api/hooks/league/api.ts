@@ -89,7 +89,11 @@ export const useSeasonLadder = (seasonId: string, refetchOnMount?: boolean | 'al
   });
 };
 
-export const useSeasonTeams = (seasonId: string, ignoredErrorCodes?: IgnoredErrorCodes) => {
+export const useSeasonTeams = (
+  seasonId: string,
+  ignoredErrorCodes?: IgnoredErrorCodes,
+  refetchOnMount?: boolean | 'always',
+) => {
   return useQuery({
     queryKey: ['seasonTeams', seasonId],
     queryFn: async () => {
@@ -104,6 +108,7 @@ export const useSeasonTeams = (seasonId: string, ignoredErrorCodes?: IgnoredErro
       return data;
     },
     staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
   });
 };
 

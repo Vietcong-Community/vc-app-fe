@@ -15,7 +15,13 @@ export const EaseInOutContainer: React.FC<IProps> = (props) => {
   return (
     <AnimatePresence initial={false} onExitComplete={onExitComplete}>
       {isOpen && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={transition}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={transition}
+          style={{ width: '100%' }}
+        >
           {children}
         </motion.div>
       )}

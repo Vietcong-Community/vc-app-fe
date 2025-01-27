@@ -3,6 +3,7 @@ import React from 'react';
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
 import { useConfirmMatchScore, useMatchDetail } from '../../../api/hooks/league/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
@@ -85,7 +86,7 @@ export const ConfirmMatchResultCont: React.FC = () => {
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
-      {!showLoading && (
+      <EaseInOutContainer isOpen={!showLoading}>
         <ConfirmMatchResultForm
           challengerMap={matchDetail.data?.challengerMap}
           challengerTeam={matchDetail.data?.challenger?.team}
@@ -96,7 +97,7 @@ export const ConfirmMatchResultCont: React.FC = () => {
           opponentMap={matchDetail.data?.opponentMap}
           opponentTeam={matchDetail.data?.opponent?.team}
         />
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>
   );

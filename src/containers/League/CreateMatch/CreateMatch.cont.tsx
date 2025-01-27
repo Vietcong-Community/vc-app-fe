@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
 import { useCreateMatchChallenge, useMapsInSeason, useSeasonTeams } from '../../../api/hooks/league/api';
+import { useMeTeams } from '../../../api/hooks/teams/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -12,6 +14,7 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
+import { canUserCreateMatch } from '../utils';
 
 import { IFormData } from './CreateMatch.fields';
 import { CreateMatchForm } from './CreateMatch.form';
@@ -23,8 +26,18 @@ export const CreateMatchCont: React.FC = () => {
   const { showNotification } = useNotifications();
 
   const maps = useMapsInSeason(query.seasonId);
-  const ladder = useSeasonTeams(query.seasonId);
+  const seasonTeams = useSeasonTeams(query.seasonId, undefined, 'always');
   const createMatch = useCreateMatchChallenge(query.seasonId);
+
+  const myTeams = useMeTeams('always');
+
+  const isPossibleToCreateMatch = canUserCreateMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
+
+  useEffect(() => {
+    if (seasonTeams.isFetchedAfterMount && myTeams.isFetchedAfterMount && !isPossibleToCreateMatch) {
+      navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId));
+    }
+  }, [seasonTeams.isFetchedAfterMount, myTeams.isFetchedAfterMount, isPossibleToCreateMatch]);
 
   const onSubmit = async (values: IFormData) => {
     try {
@@ -68,15 +81,15 @@ export const CreateMatchCont: React.FC = () => {
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
-      {!showLoading && (
+      <EaseInOutContainer isOpen={!showLoading}>
         <CreateMatchForm
           isSubmitting={createMatch.isPending}
           onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId))}
           maps={maps.data?.items ?? []}
           onSubmit={onSubmit}
-          teams={ladder.data?.items?.filter((item) => !item.userIsMemberOfTeam) ?? []}
+          teams={seasonTeams.data?.items?.filter((item) => !item.userIsMemberOfTeam) ?? []}
         />
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>
   );

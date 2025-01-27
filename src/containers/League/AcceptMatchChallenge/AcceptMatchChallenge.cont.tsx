@@ -3,6 +3,7 @@ import React from 'react';
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
 import {
   useAcceptMatchChallenge,
@@ -93,7 +94,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
-      {!showLoading && (
+      <EaseInOutContainer isOpen={!showLoading}>
         <AcceptMatchChallengeForm
           goBack={() => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId))}
           isSubmitting={acceptMatchChallenge.isPending || rejectMatchChallenge.isPending}
@@ -101,7 +102,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
           maps={maps.data?.items ?? []}
           onSubmit={onAcceptChallenge}
         />
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>
   );

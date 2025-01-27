@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useMatchDetail, useSetMatchScore } from '../../../api/hooks/league/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -92,7 +93,7 @@ export const SetMatchScoreCont: React.FC = () => {
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
-      {!showLoading && (
+      <EaseInOutContainer isOpen={!showLoading}>
         <SetMatchResultForm
           challengerTeam={matchDetail.data?.challenger?.team}
           challengerMap={matchDetail.data?.challengerMap}
@@ -103,7 +104,7 @@ export const SetMatchScoreCont: React.FC = () => {
           onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season.id ?? ''))}
           onSubmit={onSubmit}
         />
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>
   );

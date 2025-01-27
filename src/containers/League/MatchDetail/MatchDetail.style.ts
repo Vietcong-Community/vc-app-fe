@@ -33,6 +33,18 @@ export const InformationValue = styled.span`
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
 `;
 
+export const Score = styled.div`
+  flex: 1;
+  font-size: 26px;
+  font-weight: 600;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: none;
+    `}
+  `};
+`;
+
 export const TeamsContainer = styled.div`
   display: flex;
   flex-direction: row;

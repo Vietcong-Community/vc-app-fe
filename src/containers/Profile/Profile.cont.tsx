@@ -8,6 +8,7 @@ import { compact } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useUserMe } from '../../api/hooks/auth/api';
 import { useUserDetail } from '../../api/hooks/users/api';
 import { Card } from '../../components/Card/Card';
 import { Gap } from '../../components/Gap/Gap';
@@ -28,9 +29,11 @@ export const ProfileCont: React.FC = () => {
   const { width } = useWindowDimensions();
   const isSmallerThanMD = width < BreakPoints.md;
 
+  const userMe = useUserMe('always', [401]);
   const userDetail = useUserDetail(query.id);
 
   const showLoading = userDetail.isLoading;
+  const showEditIcon = userMe.data?.id === query.id;
 
   const getUserIcon = () => {
     if (userDetail.data?.image?.url) {
@@ -39,6 +42,8 @@ export const ProfileCont: React.FC = () => {
 
     return <UserOutlined />;
   };
+
+  const showRealName = userDetail.data?.firstName || userDetail.data?.lastName;
 
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-profile', title: <FormattedMessage {...messages.title} /> }]}>
@@ -50,18 +55,21 @@ export const ProfileCont: React.FC = () => {
           <S.PlayerInfo>
             <Avatar size={175} icon={getUserIcon()} />
             <Card style={{ maxWidth: isSmallerThanMD ? 'initial' : 550, position: 'relative', textAlign: 'start' }}>
-              <S.EditProfileIcon onClick={() => navigate(Routes.EDIT_PROFILE.replace(':id', query.id))}>
-                <EditOutlined />
-              </S.EditProfileIcon>
+              {showEditIcon && (
+                <S.EditProfileIcon onClick={() => navigate(Routes.EDIT_PROFILE.replace(':id', query.id))}>
+                  <EditOutlined />
+                </S.EditProfileIcon>
+              )}
               <S.Nickname>{userDetail.data?.nickname}</S.Nickname>
-              <S.PersonName>{compact([userDetail.data?.firstName, userDetail.data?.lastName]).join(' ')}</S.PersonName>
+              <S.PersonName>
+                {showRealName && compact([userDetail.data?.firstName, userDetail.data?.lastName]).join(' ')}
+              </S.PersonName>
               <S.PersonName>
                 <FormattedMessage {...messages.createdAt} />
                 {formatDateForUser(userDetail.data?.createdAt)}
               </S.PersonName>
               <Gap defaultHeight={16} />
               <S.Socials>
-                <FormattedMessage {...messages.socials} />
                 {!userDetail.data?.facebookLink && !userDetail.data?.twitchLink && !userDetail.data?.steamLink && (
                   <FormattedMessage {...messages.nothingHere} />
                 )}

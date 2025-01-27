@@ -9,10 +9,6 @@ export const messages = defineMessages({
     id: 'app.containers.Profile.createdAt',
     defaultMessage: 'Členem od: ',
   },
-  socials: {
-    id: 'app.containers.Profile.socials',
-    defaultMessage: 'Odkazy na profily: ',
-  },
   nothingHere: {
     id: 'app.containers.Profile.nothingHere',
     defaultMessage: 'nic tu není :(',

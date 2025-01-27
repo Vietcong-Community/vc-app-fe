@@ -7,6 +7,11 @@ export const TeamLabel = styled.div`
   font-size: 20px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
 
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       font-size: 16px;
@@ -14,17 +19,18 @@ export const TeamLabel = styled.div`
   `};
 `;
 
-export const TeamTag = styled.div`
+export const TeamTag = styled.span`
   border-radius: 8px;
   background-color: ${(props: IThemeProps) => props.theme.mainColors.accent40};
 
   font-size: 16px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
   padding: 0.25rem 0.5rem;
+  width: fit-content;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      font-size: 16px;
+      font-size: 12px;
     `}
   `};
 `;
@@ -33,7 +39,15 @@ export const TeamInfo = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
+  gap: 8px;
   width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      align-items: flex-start;
+      flex-direction: column;
+    `}
+  `};
 `;
 
 export const LineUpTitle = styled.div`
@@ -62,4 +76,15 @@ export const Icon = styled.div`
   color: ${(props: IThemeProps) => props.theme.mainColors.secondary};
   font-size: 20px;
   font-weight: bold;
+`;
+
+export const LinkButton = styled.div`
+  bottom: 1rem;
+  cursor: pointer;
+  font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
+  font-size: 12px;
+  position: absolute;
+  right: 1rem;
+  text-decoration: underline;
+  text-align: end;
 `;

@@ -12,17 +12,24 @@ import { messages } from '../../messages';
 import * as S from './Team.style';
 
 interface IProps {
+  goToTeamDetail: (id: string) => void;
   team?: ITeam;
 }
 
 export const Team: React.FC<IProps> = (props: IProps) => {
-  const { team } = props;
+  const { goToTeamDetail, team } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const navigateToTeam = () => {
+    if (team?.id) {
+      goToTeamDetail(team.id);
+    }
+  };
 
   return (
     <Card style={{ textAlign: 'start' }}>
       <S.TeamInfo>
-        <S.TeamLabel>{team?.name ?? ''}</S.TeamLabel>
+        <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
         <S.TeamTag>{team?.tag ?? ''}</S.TeamTag>
       </S.TeamInfo>
       <Gap defaultHeight={8} />
@@ -36,6 +43,10 @@ export const Team: React.FC<IProps> = (props: IProps) => {
         <Gap defaultHeight={16} />
         <FormattedMessage {...messages.lineupTBA} />
       </AnimatedHeightContainer>
+      <Gap defaultHeight={32} />
+      <S.LinkButton onClick={navigateToTeam}>
+        <FormattedMessage {...messages.goToTeamDetail} />
+      </S.LinkButton>
     </Card>
   );
 };

@@ -31,6 +31,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.seasonDetailBreadcrumb',
     defaultMessage: 'Sezóna',
   },
+  goToTeamDetail: {
+    id: 'app.containers.League.MatchDetail.goToTeamDetail',
+    defaultMessage: 'Detail týmu',
+  },
   matchBreadcrumb: {
     id: 'app.containers.League.MatchDetail.matchBreadcrumb',
     defaultMessage: 'Detail zápasu',

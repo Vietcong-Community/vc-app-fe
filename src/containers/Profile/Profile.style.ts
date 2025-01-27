@@ -16,6 +16,12 @@ export const PlayerInfo = styled.div`
   justify-content: center;
   width: 100%;
 
+  .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       align-items: center;
@@ -56,6 +62,14 @@ export const Socials = styled.div`
   height: 2rem;
   gap: 0.5rem;
   justify-content: flex-start;
+  position: absolute;
+  bottom: 24px;
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      bottom: initial;
+      position: relative;
+    `}
+  `};
 `;
 
 export const IconWrapper = styled.div`

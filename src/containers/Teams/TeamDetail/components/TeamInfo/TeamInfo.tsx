@@ -66,7 +66,7 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
     <S.Content>
       <S.PictureDiv>
         {usePlaceholderLogo && !showAvatarUpload && <S.TeamImage src={teamImg} />}
-        {!usePlaceholderLogo && !showAvatarUpload && <img src={teamDetail?.image?.url} alt="" />}
+        {!usePlaceholderLogo && !showAvatarUpload && <S.TeamImage src={teamDetail?.image?.url} alt="" />}
         {showAvatarUpload && <UploadField fileList={fileList} setFileList={setFileList} />}
         {showAvatarUploadOption && (
           <Button onClick={() => setShowAvatarUpload(true)}>

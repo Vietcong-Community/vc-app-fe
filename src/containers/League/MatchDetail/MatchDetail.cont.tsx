@@ -4,6 +4,7 @@ import { Divider, Flex, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useMatchDetail } from '../../../api/hooks/league/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Card } from '../../../components/Card/Card';
 import { Gap } from '../../../components/Gap/Gap';
@@ -31,6 +32,10 @@ export const MatchDetail: React.FC = () => {
     matchDetail.data?.status === MatchStatus.FINISHED ||
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
   const showLoading = matchDetail.isLoading;
+
+  const goToTeamDetail = (id: string) => {
+    navigate(Routes.TEAM_DETAIL.replace(':id', id));
+  };
 
   return (
     <ContentLayout
@@ -66,9 +71,9 @@ export const MatchDetail: React.FC = () => {
         <ManageMenu matchId={query.matchId} status={matchDetail.data?.status} />
       </Flex>
       <Divider style={{ marginTop: 0 }} />
-      <S.MatchInformationContainer>
-        {showLoading && <Spin size="large" />}
-        {!showLoading && (
+      {showLoading && <Spin size="large" />}
+      <EaseInOutContainer isOpen={!showLoading}>
+        <S.MatchInformationContainer>
           <>
             <S.ContentContainer>
               <Card>
@@ -80,11 +85,11 @@ export const MatchDetail: React.FC = () => {
                     <br />
                     <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
                   </div>
-                  <div style={{ flex: 1, fontSize: 26, fontWeight: 600 }}>
+                  <S.Score>
                     {scoreExists
                       ? `${matchDetail.data?.challengerScore} - ${matchDetail.data?.opponentScore}`
                       : ' ? - ?'}
-                  </div>
+                  </S.Score>
                   <div style={{ flex: 1, textAlign: 'end' }}>
                     <S.InformationLabel>
                       <FormattedMessage {...messages.status} />
@@ -95,22 +100,22 @@ export const MatchDetail: React.FC = () => {
                 </Flex>
                 <br />
                 <S.TeamsContainer>
-                  <Team team={matchDetail.data?.challenger?.team} />
-                  <Team team={matchDetail.data?.opponent?.team} />
+                  <Team goToTeamDetail={goToTeamDetail} team={matchDetail.data?.challenger?.team} />
+                  <Team goToTeamDetail={goToTeamDetail} team={matchDetail.data?.opponent?.team} />
                 </S.TeamsContainer>
               </Card>
             </S.ContentContainer>
           </>
+        </S.MatchInformationContainer>
+        <Gap defaultHeight={16} />
+        {scoreExists && (
+          <Rounds
+            challengerTag={matchDetail.data?.challenger.team.tag}
+            opponentTag={matchDetail.data?.opponent.team.tag}
+            rounds={matchDetail.data?.rounds}
+          />
         )}
-      </S.MatchInformationContainer>
-      <Gap defaultHeight={16} />
-      {scoreExists && (
-        <Rounds
-          challengerTag={matchDetail.data?.challenger.team.tag}
-          opponentTag={matchDetail.data?.opponent.team.tag}
-          rounds={matchDetail.data?.rounds}
-        />
-      )}
+      </EaseInOutContainer>
       <Gap defaultHeight={48} />
     </ContentLayout>
   );

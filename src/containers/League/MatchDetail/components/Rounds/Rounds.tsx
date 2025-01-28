@@ -35,7 +35,6 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
 
           const isDraw = item.scoreChallenger === item.scoreOpponent;
 
-          console.log(getWinnerMessage());
           return (
             <S.RoundContainer>
               <S.WinnerTag $isDraw={isDraw}>{getWinnerMessage()}</S.WinnerTag>

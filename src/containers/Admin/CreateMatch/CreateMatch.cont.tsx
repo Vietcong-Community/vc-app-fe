@@ -3,18 +3,19 @@ import React, { useEffect } from 'react';
 import { Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
-import { useCreateMatchChallenge, useMapsInSeason, useSeasonTeams } from '../../../api/hooks/league/api';
-import { useMeTeams } from '../../../api/hooks/teams/api';
+import { useAdminCreateMatch } from '../../../api/hooks/admin/api';
+import { useUserMe } from '../../../api/hooks/auth/api';
+import { useMapsInSeason, useSeasonTeams } from '../../../api/hooks/league/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { Role } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
-import { canUserManageMatch } from '../utils';
 
 import { IFormData } from './CreateMatch.fields';
 import { CreateMatchForm } from './CreateMatch.form';
@@ -25,19 +26,16 @@ export const CreateMatchCont: React.FC = () => {
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
 
+  const userMe = useUserMe('always');
   const maps = useMapsInSeason(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, undefined, 'always');
-  const createMatch = useCreateMatchChallenge(query.seasonId);
-
-  const myTeams = useMeTeams('always');
-
-  const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
+  const createMatch = useAdminCreateMatch(query.seasonId);
 
   useEffect(() => {
-    if (seasonTeams.isFetchedAfterMount && myTeams.isFetchedAfterMount && !isPossibleToCreateMatch) {
-      navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId));
+    if (!userMe.isLoading && !userMe.data?.roles.includes(Role.ADMIN)) {
+      showNotification(messages.insufficientRights);
     }
-  }, [seasonTeams.isFetchedAfterMount, myTeams.isFetchedAfterMount, isPossibleToCreateMatch]);
+  }, [userMe.isLoading, userMe.data?.roles]);
 
   const onSubmit = async (values: IFormData) => {
     try {
@@ -49,7 +47,7 @@ export const CreateMatchCont: React.FC = () => {
     }
   };
 
-  const showLoading = maps.isLoading || myTeams.isLoading || seasonTeams.isLoading;
+  const showLoading = maps.isLoading || seasonTeams.isLoading;
 
   return (
     <ContentLayout
@@ -87,7 +85,7 @@ export const CreateMatchCont: React.FC = () => {
           onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId))}
           maps={maps.data?.items ?? []}
           onSubmit={onSubmit}
-          teams={seasonTeams.data?.items?.filter((item) => !item.userIsMemberOfTeam) ?? []}
+          teams={seasonTeams.data?.items ?? []}
         />
       </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />

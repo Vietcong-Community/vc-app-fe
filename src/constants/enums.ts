@@ -1,3 +1,7 @@
+export enum Role {
+  ADMIN = 'ADMIN',
+}
+
 export enum Nation {
   US = 'US',
   VC = 'VC',

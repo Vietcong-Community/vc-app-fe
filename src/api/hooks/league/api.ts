@@ -90,7 +90,7 @@ export const useSeasonLadder = (seasonId: string, refetchOnMount?: boolean | 'al
 };
 
 export const useSeasonTeams = (
-  seasonId: string,
+  seasonId?: string,
   ignoredErrorCodes?: IgnoredErrorCodes,
   refetchOnMount?: boolean | 'always',
 ) => {
@@ -107,7 +107,8 @@ export const useSeasonTeams = (
       );
       return data;
     },
-    staleTime: Infinity,
+    enabled: !!seasonId,
+    staleTime: 0,
     refetchOnMount: refetchOnMount ?? 'always',
   });
 };
@@ -126,7 +127,7 @@ export const useSeasonMatchList = (seasonId: string, query?: IMatchListQuery) =>
       );
       return data;
     },
-    staleTime: Infinity,
+    staleTime: 0,
   });
 };
 

@@ -141,8 +141,8 @@ export const SeasonDetailCont: React.FC = () => {
       <EaseInOutContainer isOpen={!showLoading}>
         <Flex align="center" justify="space-between">
           <H1>{season.data?.name}</H1>
+          {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
         </Flex>
-        {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
         <S.Divider style={{ marginTop: 0 }} />
         <S.Matches>
           <Card style={{ flex: 0.5 }}>

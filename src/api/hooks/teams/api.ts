@@ -73,7 +73,7 @@ export const useMeTeams = (refetchOnMount?: boolean | 'always', ignoredErrorCode
       const { data } = await get<{ items: IMeTeams[] }>(TeamEndpoints.ME_TEAMS, {}, undefined, ignoredErrorCodes);
       return data;
     },
-    staleTime: Infinity,
+    staleTime: 0,
     refetchOnMount: refetchOnMount ?? 'always',
   });
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -22,6 +23,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const { matchId, seasonId, status, userIsAdmin } = props;
   const { navigate } = useRouter<{ id: string }>();
   const { showNotification } = useNotifications();
+  const queryClient = useQueryClient();
 
   const deleteMatch = useDeleteMatch();
 
@@ -33,6 +35,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     try {
       await deleteMatch.mutateAsync(matchId);
       showNotification(messages.deleteSuccess);
+      queryClient.refetchQueries({ queryKey: ['', seasonId] });
       navigate(Routes.SEASON_DETAIL.replace(':seasonId', seasonId ?? ''));
     } catch {
       showNotification(messages.deleteFailed);
@@ -45,7 +48,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
           label: <FormattedMessage {...messages.deleteMatch} />,
           key: '4',
           onClick: onDeleteMatch,
-          disabled: status !== MatchStatus.FINISHED,
+          disabled: status === MatchStatus.FINISHED,
         },
       ]
     : [];

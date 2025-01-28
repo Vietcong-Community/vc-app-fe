@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
+import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, Dropdown, Menu } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -23,6 +24,7 @@ export const Header: React.FC = () => {
   const { navigate } = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const { width } = useWindowDimensions();
+  const queryClient = useQueryClient();
   const isSmallerThanMd = width <= BreakPoints.md;
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
@@ -33,6 +35,8 @@ export const Header: React.FC = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
+    queryClient.removeQueries({ queryKey: ['userMe'] });
+    queryClient.removeQueries({ queryKey: ['loggedUserTeams'] });
     await userMe.refetch();
     navigate(Routes.HOME, { replace: true });
   };

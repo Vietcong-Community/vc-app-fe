@@ -108,7 +108,7 @@ export const useSeasonTeams = (
       return data;
     },
     enabled: !!seasonId,
-    staleTime: Infinity,
+    staleTime: 0,
     refetchOnMount: refetchOnMount ?? 'always',
   });
 };
@@ -127,7 +127,7 @@ export const useSeasonMatchList = (seasonId: string, query?: IMatchListQuery) =>
       );
       return data;
     },
-    staleTime: Infinity,
+    staleTime: 0,
   });
 };
 

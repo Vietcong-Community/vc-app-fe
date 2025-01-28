@@ -41,7 +41,12 @@ export const MatchDetail: React.FC = () => {
   const isPossibleToManageMatch =
     myTeams.isFetchedAfterMount &&
     seasonTeams.isFetchedAfterMount &&
-    canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
+    canUserManageMatch(
+      myTeams.data?.items ?? [],
+      seasonTeams.data?.items ?? [],
+      matchDetail.data?.challenger.team?.id,
+      matchDetail.data?.opponent?.team?.id,
+    );
   const showLoading = matchDetail.isLoading;
 
   const goToTeamDetail = (id: string) => {

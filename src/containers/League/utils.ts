@@ -2,10 +2,24 @@ import { ISeasonTeamItem } from '../../api/hooks/league/interfaces';
 import { IMeTeams } from '../../api/hooks/teams/interfaces';
 import { TeamRole } from '../../constants/enums';
 
-export const canUserManageMatch = (userTeams: IMeTeams[], seasonTeams: ISeasonTeamItem[]) => {
+export const canUserManageMatch = (
+  userTeams: IMeTeams[],
+  seasonTeams: ISeasonTeamItem[],
+  challengerId?: string,
+  opponentId?: string,
+) => {
   const myTeamInSeason = seasonTeams.find((item) => item.userIsMemberOfTeam);
 
   if (!myTeamInSeason) {
+    return false;
+  }
+
+  if (
+    !!challengerId &&
+    myTeamInSeason.team?.team?.id !== challengerId &&
+    !!opponentId &&
+    myTeamInSeason.team?.team?.id !== opponentId
+  ) {
     return false;
   }
 

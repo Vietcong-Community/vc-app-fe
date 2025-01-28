@@ -3,6 +3,7 @@ import { ProfileCont } from 'src/containers/Profile/Profile.cont';
 
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
+import { CreateMatchCont as AdminCreateMatchCont } from '../containers/Admin/CreateMatch/CreateMatch.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
@@ -43,6 +44,9 @@ export const routesObject: RouteObject[] = [
       { element: <AcceptMatchChallengeCont />, path: Routes.MATCH_CHALLENGE },
       { element: <ConfirmMatchResultCont />, path: Routes.CONFIRM_MATCH_SCORE },
       { element: <SetMatchScoreCont />, path: Routes.SET_MATCH_SCORE },
+
+      // ADMIN ROUTES
+      { element: <AdminCreateMatchCont />, path: Routes.ADMIN_CREATE_MATCH },
 
       // GENERAL ROUTES
       { element: <OverviewCont />, path: Routes.HOME }, // TODO Create homepage

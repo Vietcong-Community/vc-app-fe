@@ -5,6 +5,7 @@ import { Flex, Space, Table } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useUserMe } from '../../../api/hooks/auth/api';
 import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail, useSeasonTeams } from '../../../api/hooks/league/api';
 import { IMatchListItem } from '../../../api/hooks/league/interfaces';
 import { useMeTeams } from '../../../api/hooks/teams/api';
@@ -17,7 +18,7 @@ import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
-import { MatchStatus, SeasonStatus } from '../../../constants/enums';
+import { MatchStatus, Role, SeasonStatus } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
@@ -26,8 +27,9 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation, mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from '../types';
-import { canUserCreateMatch } from '../utils';
+import { canUserManageMatch } from '../utils';
 
+import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { messages } from './messages';
 
 import * as S from './SeasonDetail.style';
@@ -35,10 +37,11 @@ import * as S from './SeasonDetail.style';
 export const SeasonDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ seasonId: string }>();
   const { width } = useWindowDimensions();
-  const isSmallerThanMd = width < BreakPoints.md;
-  const myTeams = useMeTeams(undefined, [401]);
   const { formatMessage } = useIntl();
+  const isSmallerThanMd = width < BreakPoints.md;
 
+  const userMe = useUserMe('always', [401]);
+  const myTeams = useMeTeams(undefined, [401]);
   const season = useSeasonsDetail(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
@@ -101,10 +104,11 @@ export const SeasonDetailCont: React.FC = () => {
     navigate(Routes.MATCH_CREATE.replace(':seasonId', query.seasonId));
   };
 
+  const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
   const noUpcomingMatches = futureMatches.data?.total === 0;
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
-  const isPossibleToCreateMatch = canUserCreateMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
+  const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
   const showLoading =
     season.isLoading ||
@@ -138,6 +142,7 @@ export const SeasonDetailCont: React.FC = () => {
         <Flex align="center" justify="space-between">
           <H1>{season.data?.name}</H1>
         </Flex>
+        {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
         <S.Divider style={{ marginTop: 0 }} />
         <S.Matches>
           <Card style={{ flex: 0.5 }}>

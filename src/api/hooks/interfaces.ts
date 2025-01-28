@@ -1,3 +1,5 @@
+import { Role } from '../../constants/enums';
+
 export interface IIdentifiedEntity {
   id: string;
 }
@@ -23,4 +25,5 @@ export interface IUser {
     id: string;
     url: string;
   };
+  roles: Role[];
 }

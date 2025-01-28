@@ -3,18 +3,21 @@ import React from 'react';
 import { Divider, Flex, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useMatchDetail } from '../../../api/hooks/league/api';
+import { useUserMe } from '../../../api/hooks/auth/api';
+import { useMatchDetail, useSeasonTeams } from '../../../api/hooks/league/api';
+import { useMeTeams } from '../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Card } from '../../../components/Card/Card';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { MatchStatus } from '../../../constants/enums';
+import { MatchStatus, Role } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { canUserManageMatch } from '../utils';
 
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
@@ -26,11 +29,19 @@ import * as S from './MatchDetail.style';
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
 
+  const userMe = useUserMe('always', [401]);
   const matchDetail = useMatchDetail(query.matchId);
+  const myTeams = useMeTeams(undefined, [401]);
+  const seasonTeams = useSeasonTeams(matchDetail.data?.season?.id ?? '', [401], 'always');
 
+  const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
   const scoreExists =
     matchDetail.data?.status === MatchStatus.FINISHED ||
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
+  const isPossibleToManageMatch =
+    myTeams.isFetchedAfterMount &&
+    seasonTeams.isFetchedAfterMount &&
+    canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
   const showLoading = matchDetail.isLoading;
 
   const goToTeamDetail = (id: string) => {
@@ -68,7 +79,14 @@ export const MatchDetail: React.FC = () => {
         <H1>
           <FormattedMessage {...messages.title} />
         </H1>
-        <ManageMenu matchId={query.matchId} status={matchDetail.data?.status} />
+        {(isPossibleToManageMatch || userIsAdmin) && (
+          <ManageMenu
+            matchId={query.matchId}
+            seasonId={matchDetail.data?.season?.id}
+            status={matchDetail.data?.status}
+            userIsAdmin={userIsAdmin}
+          />
+        )}
       </Flex>
       <Divider style={{ marginTop: 0 }} />
       {showLoading && <Spin size="large" />}

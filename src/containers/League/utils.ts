@@ -2,7 +2,7 @@ import { ISeasonTeamItem } from '../../api/hooks/league/interfaces';
 import { IMeTeams } from '../../api/hooks/teams/interfaces';
 import { TeamRole } from '../../constants/enums';
 
-export const canUserCreateMatch = (userTeams: IMeTeams[], seasonTeams: ISeasonTeamItem[]) => {
+export const canUserManageMatch = (userTeams: IMeTeams[], seasonTeams: ISeasonTeamItem[]) => {
   const myTeamInSeason = seasonTeams.find((item) => item.userIsMemberOfTeam);
 
   if (!myTeamInSeason) {

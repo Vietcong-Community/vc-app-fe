@@ -90,7 +90,7 @@ export const useSeasonLadder = (seasonId: string, refetchOnMount?: boolean | 'al
 };
 
 export const useSeasonTeams = (
-  seasonId: string,
+  seasonId?: string,
   ignoredErrorCodes?: IgnoredErrorCodes,
   refetchOnMount?: boolean | 'always',
 ) => {
@@ -107,6 +107,7 @@ export const useSeasonTeams = (
       );
       return data;
     },
+    enabled: !!seasonId,
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? 'always',
   });

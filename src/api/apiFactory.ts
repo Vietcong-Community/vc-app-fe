@@ -39,6 +39,7 @@ const getFileSuffixByMimeType = (mimeType: string) => {
 
 export const handleUnauthorized = () => {
   const { pathname, search } = window.location;
+  localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
 
   if (pathname && pathname !== '/') {
     window.location.replace(`${Routes.LOGIN}/?redirect=${encodeURIComponent(pathname + (search || ''))}`);

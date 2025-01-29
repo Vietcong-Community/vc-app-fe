@@ -45,7 +45,7 @@ export const SeasonDetailCont: React.FC = () => {
   const season = useSeasonsDetail(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
-  const matches = useSeasonMatchList(query.seasonId, { limit: 200 }); // TODO PAGINATION
+  const matches = useSeasonMatchList(query.seasonId, { limit: 10 }); // TODO PAGINATION
   const futureMatches = useSeasonMatchList(query.seasonId, {
     status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
     limit: 5,

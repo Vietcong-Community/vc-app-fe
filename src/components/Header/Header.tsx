@@ -37,7 +37,6 @@ export const Header: React.FC = () => {
     localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
     queryClient.removeQueries({ queryKey: ['userMe'] });
     queryClient.removeQueries({ queryKey: ['loggedUserTeams'] });
-    await userMe.refetch();
     navigate(Routes.HOME, { replace: true });
   };
 

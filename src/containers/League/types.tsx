@@ -159,7 +159,6 @@ export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadd
       dataIndex: 'winRate',
       key: '6',
       hidden: showShortLabels,
-      defaultSortOrder: 'descend',
       sorter: (a, b) => {
         return Number(b.winRate.replace(' %', '')) - Number(a.winRate.replace(' %', ''));
       },

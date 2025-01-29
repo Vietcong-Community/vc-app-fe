@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Form, Space } from 'antd';
+import dayjs from 'dayjs';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { IMap } from '../../../api/hooks/interfaces';
@@ -54,6 +55,7 @@ export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
           label={<FormattedMessage {...messages.startDate} />}
           placeholder={formatMessage(messages.startDate)}
           showTime
+          minimalDate={dayjs()}
         />
         <Gap defaultHeight={16} />
         <Space>

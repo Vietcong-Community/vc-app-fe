@@ -13,10 +13,10 @@ export const formatDateForSystem = (value?: Dayjs): string | undefined => {
   return value.format(DEFAULT_SYSTEM_DATE_FORMAT);
 };
 
-export const formatDateForUser = (value?: string): string | undefined => {
+export const formatDateForUser = (value?: string, format = DEFAULT_USER_DATE_FORMAT): string | undefined => {
   if (!value) {
     return undefined;
   }
 
-  return dayjs(value).format(DEFAULT_USER_DATE_FORMAT);
+  return dayjs(value).format(format);
 };

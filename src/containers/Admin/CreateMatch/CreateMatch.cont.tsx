@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Spin } from 'antd';
+import dayjs from 'dayjs';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -9,6 +10,7 @@ import { useUserMe } from '../../../api/hooks/auth/api';
 import { useMapsInSeason, useSeasonTeams } from '../../../api/hooks/league/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
+import { DEFAULT_SYSTEM_DATE_TIME_FORMAT } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { Role } from '../../../constants/enums';
@@ -38,8 +40,9 @@ export const CreateMatchCont: React.FC = () => {
   }, [userMe.isLoading, userMe.data?.roles]);
 
   const onSubmit = async (values: IFormData) => {
+    const endDate = dayjs(values.startDate).add(1, 'hour').add(15, 'minute').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
     try {
-      const response = await createMatch.mutateAsync({ ...values, endDate: values.startDate });
+      const response = await createMatch.mutateAsync({ ...values, endDate });
       showNotification(messages.createSuccess);
       navigate(Routes.MATCH_DETAIL.replace(':matchId', response.id));
     } catch (e) {

@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post } from '../../apiFactory';
+import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IMap } from '../interfaces';
 
@@ -127,7 +128,7 @@ export const useSeasonMatchList = (seasonId: string, query?: IMatchListQuery) =>
       );
       return data;
     },
-    staleTime: 0,
+    staleTime: STALE_TIME,
   });
 };
 

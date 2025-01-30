@@ -1,13 +1,15 @@
 import React from 'react';
 
 import { FrownOutlined } from '@ant-design/icons';
-import { Flex, Table, Typography } from 'antd';
+import { Flex, Spin, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useSeasonLadder, useSeasonMatchList } from '../../../../../api/hooks/league/api';
 import { IMatchListItem, ISeason } from '../../../../../api/hooks/league/interfaces';
+import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { Table } from '../../../../../components/Table/Table';
 import { MatchStatus, SeasonStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
@@ -75,17 +77,20 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
               <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
                 <FormattedMessage {...messages.openMatches} />
               </Typography.Title>
-              <S.LastMatchesContainer>
-                {noUpcomingMatches && (
-                  <S.NoMatches>
-                    <FormattedMessage {...messages.noUpcomingMatches} />
-                  </S.NoMatches>
-                )}
-                {!noUpcomingMatches &&
-                  futureMatches.data?.matches.map((item: IMatchListItem) => {
-                    return <MatchRow match={item} />;
-                  })}
-              </S.LastMatchesContainer>
+              {futureMatches.isLoading && <Spin size="large" />}
+              <EaseInOutContainer isOpen={!futureMatches.isLoading}>
+                <S.LastMatchesContainer>
+                  {noUpcomingMatches && (
+                    <S.NoMatches>
+                      <FormattedMessage {...messages.noUpcomingMatches} />
+                    </S.NoMatches>
+                  )}
+                  {!noUpcomingMatches &&
+                    futureMatches.data?.matches.map((item: IMatchListItem) => {
+                      return <MatchRow match={item} />;
+                    })}
+                </S.LastMatchesContainer>
+              </EaseInOutContainer>
             </Flex>
             {isSmallerThanMd && (
               <>
@@ -100,43 +105,45 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
           <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
             <FormattedMessage {...messages.playedMatches} />
           </Typography.Title>
-          {noFinishedMatches && (
-            <S.NoMatches>
-              <Gap defaultHeight={16} />
-              <FrownOutlined />
-              <Gap defaultHeight={16} />
-              <FormattedMessage {...messages.noFinishedMatches} />
-            </S.NoMatches>
-          )}
-          {!noFinishedMatches && (
-            <>
-              <S.LastMatchesContainer>
-                {finishedMatches.data?.matches?.map((item: IMatchListItem) => {
-                  return <MatchRow match={item} />;
-                })}
-              </S.LastMatchesContainer>
-            </>
-          )}
+          {finishedMatches.isLoading && <Spin size="large" />}
+          <EaseInOutContainer isOpen={!finishedMatches.isLoading}>
+            {noFinishedMatches && (
+              <S.NoMatches>
+                <Gap defaultHeight={16} />
+                <FrownOutlined />
+                <Gap defaultHeight={16} />
+                <FormattedMessage {...messages.noFinishedMatches} />
+              </S.NoMatches>
+            )}
+            {!noFinishedMatches && (
+              <>
+                <S.LastMatchesContainer>
+                  {finishedMatches.data?.matches?.map((item: IMatchListItem) => {
+                    return <MatchRow match={item} />;
+                  })}
+                </S.LastMatchesContainer>
+              </>
+            )}
+          </EaseInOutContainer>
         </Flex>
       </S.Matches>
       <Gap defaultHeight={32} />
       <Flex vertical align="flex-start">
-        <S.TableContainer>
-          <Table<ILadderTableRow>
-            columns={LADDER_COLUMNS(isSmallerThanMd)}
-            dataSource={ladderTableData}
-            onRow={(item) => {
-              return {
-                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-                style: {
-                  cursor: 'pointer',
-                },
-              };
-            }}
-            pagination={{ hideOnSinglePage: true, pageSize: 20 }}
-            style={{ width: '100%' }}
-          />
-        </S.TableContainer>
+        <Table
+          columns={LADDER_COLUMNS(isSmallerThanMd)}
+          data={ladderTableData}
+          loading={ladder.isLoading}
+          onRow={(item) => {
+            return {
+              onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
+              style: {
+                cursor: 'pointer',
+              },
+            };
+          }}
+          pagination={{ hideOnSinglePage: true, pageSize: 20 }}
+          style={{ width: '100%' }}
+        />
       </Flex>
       <Gap defaultHeight={16} />
       <Flex justify="flex-end">

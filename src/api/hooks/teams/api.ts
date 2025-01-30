@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post } from '../../apiFactory';
+import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
 
@@ -73,7 +74,7 @@ export const useMeTeams = (refetchOnMount?: boolean | 'always', ignoredErrorCode
       const { data } = await get<{ items: IMeTeams[] }>(TeamEndpoints.ME_TEAMS, {}, undefined, ignoredErrorCodes);
       return data;
     },
-    staleTime: 0,
+    staleTime: STALE_TIME,
     refetchOnMount: refetchOnMount ?? 'always',
   });
 };

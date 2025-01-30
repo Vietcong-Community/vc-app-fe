@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post, put } from '../../apiFactory';
+import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IUser } from '../interfaces';
 
@@ -63,7 +64,7 @@ export const useUserMe = (
       return data;
     },
     enabled,
-    staleTime: 0,
+    staleTime: STALE_TIME,
     refetchOnMount: refetchOnMount ?? false,
   });
 };

@@ -107,11 +107,28 @@ export const CopyrightAndSocialsLevel = styled.div`
   `};
 `;
 
+export const CopyRight = styled.div`
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  justify-content: center;
+`;
+
+export const Hosting = styled.div`
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 0.2rem;
+  justify-content: left;
+`;
+
 export const Socials = styled.div`
   align-items: center;
   display: flex;
+  flex: 1;
   gap: 1rem;
-  justify-content: center;
+  justify-content: right;
 `;
 
 export const IconWrapper = styled.div`

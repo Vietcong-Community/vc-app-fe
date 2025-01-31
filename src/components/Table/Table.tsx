@@ -8,7 +8,7 @@ interface IProps<T> {
   columns: TableColumnsType<T>;
   data: T[];
   loading?: boolean;
-  onRow: (row: T) => HTMLAttributes<T>;
+  onRow?: (row: T) => HTMLAttributes<T>;
   pagination?: TablePaginationConfig;
   style?: CSSProperties;
 }

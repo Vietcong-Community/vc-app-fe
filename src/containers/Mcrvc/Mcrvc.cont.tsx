@@ -27,13 +27,13 @@ export const McrvcCont: React.FC = () => {
               <b>
                 <FormattedMessage {...messages.spring} />
               </b>
-              <span>25. 4. 2025 - 27. 4. 2025</span>
+              <span>25.&ndash;27. 4. 2025</span>
             </S.DateBox>
             <S.DateBox>
               <b>
                 <FormattedMessage {...messages.autumn} />
               </b>
-              <span>26. 9. 2025 - 28. 9. 2025</span>
+              <span>26.&ndash;28. 9. 2025</span>
             </S.DateBox>
           </S.Dates>
           <Gap defaultHeight={32} />

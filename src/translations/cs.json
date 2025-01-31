@@ -156,6 +156,7 @@
   "app.containers.League.SetMatchResult.seasonDetailBreadcrumb": "Sezóna",
   "app.containers.League.SetMatchResult.submitButton": "Odeslat",
   "app.containers.League.SetMatchResult.title": "Zadání výsledku",
+  "app.containers.League.actions": "Akce",
   "app.containers.League.challenger": "Vyzyvatel",
   "app.containers.League.countOfMatches": "Počet zápasů",
   "app.containers.League.draws": "Remízy",

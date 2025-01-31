@@ -131,7 +131,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       <Gap defaultHeight={32} />
       <Flex vertical align="flex-start">
         <Table
-          columns={LADDER_COLUMNS(isSmallerThanMd)}
+          columns={LADDER_COLUMNS(isSmallerThanMd, false)}
           data={ladderTableData}
           loading={ladder.isLoading}
           onRow={(item) => {

@@ -1,9 +1,14 @@
 import { ReactNode } from 'react';
 
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo';
+import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableColumnsType } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { messages } from './messages';
+
+import * as S from './League.style';
 
 export interface IPlayersTable {
   id: string;
@@ -114,7 +119,12 @@ export interface ILadderTableRow {
   eloPoints: number;
 }
 
-export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadderTableRow> => {
+export const LADDER_COLUMNS = (
+  showShortLabels: boolean,
+  canUserManageMatch: boolean,
+  goToCreateMatch?: (id: string) => void,
+  goToTeamDetail?: (id: string) => void,
+): TableColumnsType<ILadderTableRow> => {
   return [
     {
       title: showShortLabels ? (
@@ -169,6 +179,21 @@ export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadd
       dataIndex: 'eloPoints',
       key: '7',
       sorter: (a, b) => b.eloPoints - a.eloPoints,
+    },
+    {
+      title: <FormattedMessage {...messages.actions} />,
+      dataIndex: '',
+      key: '8',
+      hidden: !canUserManageMatch,
+      align: 'center',
+      render: (_, record) => {
+        return (
+          <S.Icons>
+            <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.id)} />
+            <FontAwesomeIcon icon={faCircleInfo} onClick={() => goToTeamDetail?.(record.id)} />
+          </S.Icons>
+        );
+      },
     },
   ];
 };

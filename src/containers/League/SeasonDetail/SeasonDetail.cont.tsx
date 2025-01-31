@@ -51,11 +51,11 @@ export const SeasonDetailCont: React.FC = () => {
   const ladder = useSeasonLadder(query.seasonId);
   const matches = useSeasonMatchList(query.seasonId, { page: selectedMatchPage, limit: 10 });
   const futureMatches = useSeasonMatchList(query.seasonId, {
-    status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
+    status: [MatchStatus.NEW, MatchStatus.ACCEPTED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
     limit: 5,
   });
   const finishedMatches = useSeasonMatchList(query.seasonId, {
-    status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+    status: [MatchStatus.FINISHED].join(','),
     limit: 5,
   });
 
@@ -267,17 +267,14 @@ export const SeasonDetailCont: React.FC = () => {
             <FormattedMessage {...messages.ladderTitle} />
           </H2>
           <Table
-            columns={LADDER_COLUMNS(isSmallerThanMd)}
+            columns={LADDER_COLUMNS(
+              isSmallerThanMd,
+              isPossibleToCreateMatch,
+              (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', query.seasonId)}?opponentId=${id}`),
+              (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),
+            )}
             data={ladderTableData}
             loading={ladder.isLoading}
-            onRow={(item) => {
-              return {
-                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-                style: {
-                  cursor: 'pointer',
-                },
-              };
-            }}
             pagination={{ hideOnSinglePage: true, pageSize: 20 }}
             style={{ width: '100%' }}
           />

@@ -147,7 +147,7 @@ export const Header: React.FC = () => {
             <Menu.Item key="statistics" onClick={() => navigate(Routes.STATISTICS)} style={{ fontSize: 16 }}>
               <FormattedMessage {...messages.statisticsLink} />
             </Menu.Item>
-            <Menu.Item key="contact" onClick={() => navigate(Routes.ABOUT_US)} style={{ fontSize: 16 }}>
+            <Menu.Item key="about" onClick={() => navigate(Routes.ABOUT_US)} style={{ fontSize: 16 }}>
               <FormattedMessage {...messages.aboutUsLink} />
             </Menu.Item>
           </Menu>

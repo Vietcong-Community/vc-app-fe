@@ -19,6 +19,7 @@ import { fields, IFormData } from './CreateMatch.fields';
 import { messages } from './messages';
 
 interface IProps {
+  initialValues?: Partial<IFormData>;
   isSubmitting: boolean;
   maps: IMap[];
   onCancel: () => void;
@@ -27,7 +28,7 @@ interface IProps {
 }
 
 export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
-  const { isSubmitting, maps, onCancel, onSubmit, teams } = props;
+  const { initialValues, isSubmitting, maps, onCancel, onSubmit, teams } = props;
   const { formatMessage } = useIntl();
   const [form] = Form.useForm<IFormData>();
 
@@ -37,7 +38,7 @@ export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
 
   return (
     <Card style={{ margin: '1rem auto', maxWidth: BreakPoints.sm }} title={<FormattedMessage {...messages.title} />}>
-      <FormComponent form={form} onSubmit={onSubmit}>
+      <FormComponent form={form} initialValues={initialValues} onSubmit={onSubmit}>
         <SelectField
           {...fields.opponentId}
           label={<FormattedMessage {...messages.opponentId} />}

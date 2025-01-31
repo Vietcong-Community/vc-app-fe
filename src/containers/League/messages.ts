@@ -33,6 +33,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.points',
     defaultMessage: 'Body',
   },
+  actions: {
+    id: 'app.containers.League.actions',
+    defaultMessage: 'Akce',
+  },
   teamPositionShortcut: {
     id: 'app.containers.League.teamPositionShortcut',
     defaultMessage: '#',

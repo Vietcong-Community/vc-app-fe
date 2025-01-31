@@ -156,6 +156,7 @@
   "app.containers.League.SetMatchResult.seasonDetailBreadcrumb": "Season",
   "app.containers.League.SetMatchResult.submitButton": "Submit",
   "app.containers.League.SetMatchResult.title": "Setting the result",
+  "app.containers.League.actions": "",
   "app.containers.League.challenger": "Challenger",
   "app.containers.League.countOfMatches": "Number of Matches",
   "app.containers.League.draws": "Draws",

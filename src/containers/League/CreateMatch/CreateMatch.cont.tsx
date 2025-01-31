@@ -23,7 +23,7 @@ import { CreateMatchForm } from './CreateMatch.form';
 import { messages } from './messages';
 
 export const CreateMatchCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ seasonId: string }>();
+  const { navigate, query } = useRouter<{ seasonId: string; opponentId?: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
 
@@ -86,6 +86,7 @@ export const CreateMatchCont: React.FC = () => {
       {showLoading && <Spin size="large" />}
       <EaseInOutContainer isOpen={!showLoading}>
         <CreateMatchForm
+          // initialValues={{ opponentId: query?.opponentId }}
           isSubmitting={createMatch.isPending}
           onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId))}
           maps={maps.data?.items ?? []}

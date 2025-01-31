@@ -25,7 +25,7 @@ export const Matches = styled.div`
   gap: 16px;
   width: 100%;
 
-  ${() => makeMediaQuery(BreakPoints.md)`
+  ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
       flex-direction: column;
     `}

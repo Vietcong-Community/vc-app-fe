@@ -8,6 +8,19 @@ export const Container = styled.div`
   gap: 1rem;
   width: 100%;
 
+  ${() => makeMediaQuery(BreakPoints.xl)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
+`;
+
+export const MapContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       flex-direction: column;
@@ -47,4 +60,23 @@ export const WinnerTag = styled.div<{ $isDraw: boolean }>`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+`;
+
+export const ResultContainer = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  font-size: 18px;
+  justify-content: center;
+`;
+
+export const TeamTag = styled.div`
+  align-items: center;
+  border-radius: 4px;
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent60};
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  padding: 0.25rem 0.5rem;
+  width: fit-content;
 `;

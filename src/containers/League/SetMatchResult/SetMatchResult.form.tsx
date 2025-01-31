@@ -11,10 +11,12 @@ import { Card } from '../../../components/Card/Card';
 import { InputNumberField } from '../../../components/Fields/InputNumberField/InputNumberField';
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
+import { Nation } from '../../../constants/enums';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { BreakPoints } from '../../../theme/theme';
+import { mapNationToTranslation } from '../../../utils/mappingLabelUtils';
 
-import { fields as formFields, roundFields, IFormData } from './SetMatchResult.fields';
+import { fields as formFields, IFormData, roundFields } from './SetMatchResult.fields';
 import { messages } from './messages';
 
 import * as S from './SetMatchResult.style';
@@ -82,7 +84,10 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
               <S.FieldsContainer>
                 {fields.map((field, index) => {
                   const mapId = form.getFieldValue(['rounds', field.name, 'mapId']);
+                  const challengerNation = form.getFieldValue(['rounds', field.name, 'challengerNation']);
                   const map = challengerMap?.id === mapId ? challengerMap : opponentMap;
+
+                  const opponentNation = challengerNation === Nation.US ? Nation.VC : Nation.US;
 
                   return (
                     <S.RoundContainer>
@@ -91,6 +96,13 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
                       </S.MapTitle>
                       <S.TeamsContainer>
                         <S.TeamContainer>
+                          <span>
+                            <FormattedMessage
+                              {...messages.nation}
+                              values={{ nation: mapNationToTranslation(challengerNation) }}
+                            />{' '}
+                            {challengerNation === Nation.US ? <>🇺🇸</> : <>🇻🇳</>}
+                          </span>
                           <InputNumberField
                             label={<FormattedMessage {...messages.scoreChallenger} />}
                             name={[field.name, roundFields.scoreChallenger.name]}
@@ -98,6 +110,13 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
                           />
                         </S.TeamContainer>
                         <S.TeamContainer>
+                          <span>
+                            <FormattedMessage
+                              {...messages.nation}
+                              values={{ nation: mapNationToTranslation(opponentNation) }}
+                            />{' '}
+                            {opponentNation === Nation.US ? <>🇺🇸</> : <>🇻🇳</>}
+                          </span>
                           <InputNumberField
                             label={<FormattedMessage {...messages.scoreOpponent} />}
                             name={[field.name, roundFields.scoreOpponent.name]}

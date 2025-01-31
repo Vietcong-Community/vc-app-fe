@@ -1,10 +1,12 @@
 import React from 'react';
 
+import { chunk } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { Nation } from '../../../../../constants/enums';
 
 import { messages } from './messages';
 
@@ -19,32 +21,45 @@ interface IProps {
 export const Rounds: React.FC<IProps> = (props: IProps) => {
   const { challengerTag, opponentTag, rounds } = props;
 
+  const splitRoundsByMap = chunk(rounds, 2);
+
   return (
     <Card>
       <S.Container>
-        {rounds?.map((item) => {
-          const getWinnerMessage = () => {
-            if (item.scoreChallenger > item.scoreOpponent) {
-              return challengerTag;
-            } else if (item.scoreChallenger < item.scoreOpponent) {
-              return opponentTag;
-            }
-
-            return <FormattedMessage {...messages.draw} />;
-          };
-
-          const isDraw = item.scoreChallenger === item.scoreOpponent;
-
+        {splitRoundsByMap?.map((item) => {
           return (
-            <S.RoundContainer>
-              <S.WinnerTag $isDraw={isDraw}>{getWinnerMessage()}</S.WinnerTag>
-              <S.MapTitle>{item.map.name}</S.MapTitle>
-              <Gap defaultHeight={12} />
-              <span>
-                <FormattedMessage {...messages.result} />
-                {item.scoreChallenger} - {item.scoreOpponent}
-              </span>
-            </S.RoundContainer>
+            <S.MapContainer>
+              {item.map((round) => {
+                const getWinnerMessage = () => {
+                  if (round.scoreChallenger > round.scoreOpponent) {
+                    return challengerTag;
+                  } else if (round.scoreChallenger < round.scoreOpponent) {
+                    return opponentTag;
+                  }
+
+                  return <FormattedMessage {...messages.draw} />;
+                };
+
+                const isDraw = round.scoreChallenger === round.scoreOpponent;
+
+                return (
+                  <S.RoundContainer>
+                    <S.WinnerTag $isDraw={isDraw}>{getWinnerMessage()}</S.WinnerTag>
+                    <S.MapTitle>{round.map.name}</S.MapTitle>
+                    <Gap defaultHeight={12} />
+                    <S.ResultContainer>
+                      <S.TeamTag>
+                        {challengerTag} {round.challengerNation === Nation.US ? <>🇺🇸</> : <>🇻🇳</>}
+                      </S.TeamTag>
+                      {round.scoreChallenger} - {round.scoreOpponent}
+                      <S.TeamTag>
+                        {round.challengerNation === Nation.US ? <>🇻🇳</> : <>🇺🇸</>} {opponentTag}
+                      </S.TeamTag>
+                    </S.ResultContainer>
+                  </S.RoundContainer>
+                );
+              })}
+            </S.MapContainer>
           );
         })}
       </S.Container>

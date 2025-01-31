@@ -14,6 +14,7 @@ import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbIte
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
+import { DEFAULT_USER_DATE_FORMAT } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { Table } from '../../../components/Table/Table';
@@ -156,7 +157,7 @@ export const SeasonDetailCont: React.FC = () => {
               </S.InformationLabel>
               <S.InformationValue>
                 {season.data?.startDate ? (
-                  formatDateForUser(season.data.startDate)
+                  formatDateForUser(season.data.startDate, DEFAULT_USER_DATE_FORMAT)
                 ) : (
                   <FormattedMessage {...messages.dateNotSpecified} />
                 )}
@@ -167,7 +168,7 @@ export const SeasonDetailCont: React.FC = () => {
               </S.InformationLabel>
               <S.InformationValue>
                 {season.data?.endDate ? (
-                  formatDateForUser(season.data.endDate)
+                  formatDateForUser(season.data.endDate, DEFAULT_USER_DATE_FORMAT)
                 ) : (
                   <FormattedMessage {...messages.dateNotSpecified} />
                 )}

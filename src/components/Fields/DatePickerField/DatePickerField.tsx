@@ -3,7 +3,8 @@ import React, { ReactNode } from 'react';
 import { DatePicker, Form, FormRule } from 'antd';
 import { Dayjs } from 'dayjs';
 
-export const DEFAULT_USER_DATE_FORMAT = 'DD. MM. YYYY, HH:mm';
+export const DEFAULT_USER_DATE_FORMAT = 'DD. MM. YYYY';
+export const DEFAULT_USER_DATE_FORMAT_WITH_TIME = 'DD. MM. YYYY, HH:mm';
 export const DEFAULT_SYSTEM_DATE_FORMAT = 'YYYY-MM-DD';
 export const DEFAULT_SYSTEM_DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm';
 
@@ -23,7 +24,7 @@ interface IProps {
 export const DatePickerField: React.FC<IProps> = (props: IProps) => {
   const {
     disabled = false,
-    format = DEFAULT_USER_DATE_FORMAT,
+    format = DEFAULT_USER_DATE_FORMAT_WITH_TIME,
     label,
     minimalDate,
     maximalDate,

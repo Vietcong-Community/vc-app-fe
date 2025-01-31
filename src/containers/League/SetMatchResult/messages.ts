@@ -17,6 +17,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.SetMatchResult.mapRound',
     defaultMessage: '<b>{map}</b> - {round}. kolo',
   },
+  nation: {
+    id: 'app.containers.League.SetMatchResult.nation',
+    defaultMessage: 'Národ: <b>{nation}</b>',
+  },
   scoreChallenger: {
     id: 'app.containers.League.SetMatchResult.scoreChallenger',
     defaultMessage: 'Skóre vyzyvatel',

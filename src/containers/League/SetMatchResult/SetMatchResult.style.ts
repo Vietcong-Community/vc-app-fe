@@ -32,6 +32,7 @@ export const TeamsContainer = styled.div`
 export const TeamContainer = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: start;
   width: 100%;
 `;
 

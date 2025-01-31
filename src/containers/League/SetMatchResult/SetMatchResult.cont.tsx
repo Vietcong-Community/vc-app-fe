@@ -9,6 +9,7 @@ import { EaseInOutContainer } from '../../../components/Animations/EaseInOutCont
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { Nation } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
@@ -45,10 +46,10 @@ export const SetMatchScoreCont: React.FC = () => {
 
   const initialValues = {
     rounds: [
-      { mapId: matchDetail.data?.challengerMap.id, scoreChallenger: 0, scoreOpponent: 0 },
-      { mapId: matchDetail.data?.challengerMap.id, scoreChallenger: 0, scoreOpponent: 0 },
-      { mapId: matchDetail.data?.opponentMap?.id, scoreChallenger: 0, scoreOpponent: 0 },
-      { mapId: matchDetail.data?.opponentMap?.id, scoreChallenger: 0, scoreOpponent: 0 },
+      { mapId: matchDetail.data?.challengerMap.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.US },
+      { mapId: matchDetail.data?.challengerMap.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.VC },
+      { mapId: matchDetail.data?.opponentMap?.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.US },
+      { mapId: matchDetail.data?.opponentMap?.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.VC },
     ],
   };
 

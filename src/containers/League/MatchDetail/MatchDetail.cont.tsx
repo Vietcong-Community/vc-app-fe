@@ -131,7 +131,7 @@ export const MatchDetail: React.FC = () => {
           </>
         </S.MatchInformationContainer>
         <Gap defaultHeight={16} />
-        {scoreExists && (
+        {scoreExists && !!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
           <Rounds
             challengerTag={matchDetail.data?.challenger.team.tag}
             opponentTag={matchDetail.data?.opponent.team.tag}

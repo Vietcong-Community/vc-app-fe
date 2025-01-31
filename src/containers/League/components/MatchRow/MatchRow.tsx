@@ -1,9 +1,15 @@
 import React from 'react';
 
 import { IMatchListItem } from '../../../../api/hooks/league/interfaces';
+import {
+  DEFAULT_USER_DATE_FORMAT,
+  DEFAULT_USER_DATE_FORMAT_WITH_TIME,
+} from '../../../../components/Fields/DatePickerField/DatePickerField';
 import { MatchStatus } from '../../../../constants/enums';
 import { useRouter } from '../../../../hooks/RouterHook';
+import { useWindowDimensions } from '../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../routes/enums';
+import { BreakPoints } from '../../../../theme/theme';
 import { formatDateForUser } from '../../../../utils/dateUtils';
 
 import * as S from './MatchRow.style';
@@ -15,6 +21,8 @@ interface IProps {
 export const MatchRow: React.FC<IProps> = (props: IProps) => {
   const { match } = props;
   const { navigate } = useRouter();
+  const { width } = useWindowDimensions();
+  const isSmallerThanMd = width < BreakPoints.md;
 
   const scoreExists =
     match.status === MatchStatus.FINISHED || match.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
@@ -36,7 +44,10 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
 
   return (
     <S.Container onClick={onMatchClick}>
-      {formatDateForUser(match.startDate) ?? ''}
+      {formatDateForUser(
+        match.startDate,
+        isSmallerThanMd ? DEFAULT_USER_DATE_FORMAT : DEFAULT_USER_DATE_FORMAT_WITH_TIME,
+      ) ?? ''}
       <div>
         <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
           {match.challenger?.team.tag}

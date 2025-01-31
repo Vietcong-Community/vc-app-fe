@@ -1,4 +1,4 @@
-import { LeagueType, MatchStatus, SeasonStatus } from '../../../constants/enums';
+import { LeagueType, MatchStatus, Nation, SeasonStatus } from '../../../constants/enums';
 import { IMap, IUser } from '../interfaces';
 import { ITeam } from '../teams/interfaces';
 
@@ -54,6 +54,7 @@ export interface IMatchRound {
   createdBy: IUser;
   confirmationDate?: string;
   confirmedBy?: IUser;
+  challengerNation: Nation;
 }
 
 export interface IMatch {
@@ -103,5 +104,6 @@ export interface ISetMatchScore {
     mapId: string;
     scoreChallenger: number;
     scoreOpponent: number;
+    challengerNation: Nation;
   }[];
 }

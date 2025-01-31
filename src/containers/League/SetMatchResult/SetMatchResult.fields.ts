@@ -1,10 +1,12 @@
 import { IFormFields } from '../../../@types/forms';
+import { Nation } from '../../../constants/enums';
 import { isRequired, maxValue, minValue } from '../../../utils/validations/validations';
 
 export interface IRoundFormPart {
   mapId: string;
   scoreChallenger: number;
   scoreOpponent: number;
+  challengerNation: Nation;
 }
 
 export interface IFormData {
@@ -30,5 +32,8 @@ export const roundFields: IFormFields<IRoundFormPart> = {
     name: 'scoreOpponent',
     required: true,
     rules: [isRequired, minValue(0), maxValue(100)],
+  },
+  challengerNation: {
+    name: 'challengerNation',
   },
 };

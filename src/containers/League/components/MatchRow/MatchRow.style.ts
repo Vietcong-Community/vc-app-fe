@@ -23,9 +23,9 @@ export const Container = styled.div`
     transform: scale(1.025);
   }
 
-  ${() => makeMediaQuery(BreakPoints.sm)`
+  ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      font-size: 14px;
+      flex-direction: column;
     `}
   `};
 `;

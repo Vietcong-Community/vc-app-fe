@@ -4,8 +4,9 @@ import { FrownOutlined } from '@ant-design/icons';
 import { Flex, Spin, Typography } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasonLadder, useSeasonMatchList } from '../../../../../api/hooks/league/api';
+import { useSeasonLadder, useSeasonMatchList, useSeasonTeams } from '../../../../../api/hooks/league/api';
 import { IMatchListItem, ISeason } from '../../../../../api/hooks/league/interfaces';
+import { useMeTeams } from '../../../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
 import { Gap } from '../../../../../components/Gap/Gap';
@@ -17,6 +18,7 @@ import { Routes } from '../../../../../routes/enums';
 import { BreakPoints } from '../../../../../theme/theme';
 import { MatchRow } from '../../../components/MatchRow/MatchRow';
 import { ILadderTableRow, LADDER_COLUMNS } from '../../../types';
+import { canUserManageMatch } from '../../../utils';
 
 import { messages } from './messages';
 
@@ -32,6 +34,8 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
+  const myTeams = useMeTeams(undefined, [401]);
+  const seasonTeams = useSeasonTeams(seasonDetail.id, [401]);
   const ladder = useSeasonLadder(seasonDetail.id);
   const futureMatches = useSeasonMatchList(seasonDetail.id, {
     status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
@@ -65,6 +69,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       };
     }) ?? [];
 
+  const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
   const noUpcomingMatches = futureMatches.data?.total === 0;
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = seasonDetail.status === SeasonStatus.ACTIVE;
@@ -131,17 +136,15 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       <Gap defaultHeight={32} />
       <Flex vertical align="flex-start">
         <Table
-          columns={LADDER_COLUMNS(isSmallerThanMd, false)}
+          columns={LADDER_COLUMNS(
+            isSmallerThanMd,
+            isPossibleToCreateMatch?.allowed,
+            (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', seasonDetail?.id)}?opponentId=${id}`),
+            (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),
+            isPossibleToCreateMatch?.myTeamId,
+          )}
           data={ladderTableData}
           loading={ladder.isLoading}
-          onRow={(item) => {
-            return {
-              onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-              style: {
-                cursor: 'pointer',
-              },
-            };
-          }}
           pagination={{ hideOnSinglePage: true, pageSize: 20 }}
           style={{ width: '100%' }}
         />

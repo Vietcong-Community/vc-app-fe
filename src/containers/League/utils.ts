@@ -7,11 +7,11 @@ export const canUserManageMatch = (
   seasonTeams: ISeasonTeamItem[],
   challengerId?: string,
   opponentId?: string,
-) => {
+): { allowed: boolean; myTeamId?: string } => {
   const myTeamInSeason = seasonTeams.find((item) => item.userIsMemberOfTeam);
 
   if (!myTeamInSeason) {
-    return false;
+    return { allowed: false };
   }
 
   if (
@@ -20,7 +20,7 @@ export const canUserManageMatch = (
     !!opponentId &&
     myTeamInSeason.team?.team?.id !== opponentId
   ) {
-    return false;
+    return { allowed: false, myTeamId: myTeamInSeason?.team?.team?.id };
   }
 
   const userTeamInSeason = userTeams.find((item) => {
@@ -28,10 +28,13 @@ export const canUserManageMatch = (
   });
 
   if (!userTeamInSeason) {
-    return false;
+    return { allowed: false, myTeamId: myTeamInSeason?.team?.team?.id };
   }
 
-  return (
-    userTeamInSeason.userInTeam.role === TeamRole.MATCH_ORGANIZER || userTeamInSeason.userInTeam.role === TeamRole.OWNER
-  );
+  return {
+    allowed:
+      userTeamInSeason.userInTeam.role === TeamRole.MATCH_ORGANIZER ||
+      userTeamInSeason.userInTeam.role === TeamRole.OWNER,
+    myTeamId: myTeamInSeason?.team?.team?.id,
+  };
 };

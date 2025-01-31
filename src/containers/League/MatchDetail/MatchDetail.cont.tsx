@@ -46,7 +46,7 @@ export const MatchDetail: React.FC = () => {
       seasonTeams.data?.items ?? [],
       matchDetail.data?.challenger.team?.id,
       matchDetail.data?.opponent?.team?.id,
-    );
+    )?.allowed;
   const showLoading = matchDetail.isLoading;
 
   const goToTeamDetail = (id: string) => {

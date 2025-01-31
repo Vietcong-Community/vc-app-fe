@@ -36,10 +36,10 @@ export const CreateMatchCont: React.FC = () => {
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
   useEffect(() => {
-    if (seasonTeams.isFetchedAfterMount && myTeams.isFetchedAfterMount && !isPossibleToCreateMatch) {
+    if (seasonTeams.isFetchedAfterMount && myTeams.isFetchedAfterMount && !isPossibleToCreateMatch.allowed) {
       navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId));
     }
-  }, [seasonTeams.isFetchedAfterMount, myTeams.isFetchedAfterMount, isPossibleToCreateMatch]);
+  }, [seasonTeams.isFetchedAfterMount, myTeams.isFetchedAfterMount, isPossibleToCreateMatch.allowed]);
 
   const onSubmit = async (values: IFormData) => {
     const endDate = dayjs(values.startDate).add(1, 'hour').add(15, 'minute').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);

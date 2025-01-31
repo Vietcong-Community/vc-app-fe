@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useUserMe } from '../../../api/hooks/auth/api';
 import {
   useApproveJoinRequest,
+  useHasAllowedToJoinTheTeam,
   useJoinTeam,
   useRejectJoinRequest,
   useTeamDetail,
@@ -42,11 +43,9 @@ export const TeamDetailCont: React.FC = () => {
   const rejectTeamJoin = useRejectJoinRequest(query.id);
 
   const teamPlayers = useTeamPlayers(query.id);
+  const hasAllowedJoinTeam = useHasAllowedToJoinTheTeam(query.id, [401]);
 
-  const userCanJoinTeam =
-    !teamPlayers.isLoading &&
-    !!userMe.data?.id &&
-    !teamPlayers.data?.items.find((item) => item.user.id === userMe.data?.id);
+  const userCanJoinTeam = !!hasAllowedJoinTeam.data?.hasAllowedToJoin;
   const userIsOwner =
     !!userMe.data?.id &&
     teamPlayers.data?.items.find((item) => item.user.id === userMe.data?.id)?.role === TeamRole.OWNER;

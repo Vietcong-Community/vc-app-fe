@@ -184,7 +184,7 @@ export const SeasonDetailCont: React.FC = () => {
                   <FormattedMessage {...messages.upcomingMatches} />
                 </S.CardTitle>
                 {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
-                {noUpcomingMatches && isPossibleToCreateMatch && (
+                {noUpcomingMatches && isPossibleToCreateMatch?.allowed && (
                   <>
                     <br />
                     <FormattedMessage
@@ -221,7 +221,7 @@ export const SeasonDetailCont: React.FC = () => {
                   <Gap defaultHeight={16} />
                   <FormattedMessage {...messages.noFinishedMatches} />
                   <Gap defaultHeight={8} />
-                  {isPossibleToCreateMatch && (
+                  {isPossibleToCreateMatch?.allowed && (
                     <div>
                       <FormattedMessage
                         {...messages.createMatchLink}
@@ -250,7 +250,7 @@ export const SeasonDetailCont: React.FC = () => {
           </Card>
         </S.Matches>
         <Gap defaultHeight={16} />
-        <EaseInOutContainer isOpen={isSeasonActive && isPossibleToCreateMatch}>
+        <EaseInOutContainer isOpen={isSeasonActive && isPossibleToCreateMatch?.allowed}>
           <Flex justify="flex-end">
             <Button
               onClick={onMatchCreateClick}
@@ -269,9 +269,10 @@ export const SeasonDetailCont: React.FC = () => {
           <Table
             columns={LADDER_COLUMNS(
               isSmallerThanMd,
-              isPossibleToCreateMatch,
+              isPossibleToCreateMatch?.allowed,
               (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', query.seasonId)}?opponentId=${id}`),
               (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),
+              isPossibleToCreateMatch?.myTeamId,
             )}
             data={ladderTableData}
             loading={ladder.isLoading}

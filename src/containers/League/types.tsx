@@ -124,6 +124,7 @@ export const LADDER_COLUMNS = (
   canUserManageMatch: boolean,
   goToCreateMatch?: (id: string) => void,
   goToTeamDetail?: (id: string) => void,
+  myTeamId?: string,
 ): TableColumnsType<ILadderTableRow> => {
   return [
     {
@@ -189,7 +190,9 @@ export const LADDER_COLUMNS = (
       render: (_, record) => {
         return (
           <S.Icons>
-            <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.id)} />
+            {record.id !== myTeamId && (
+              <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.id)} />
+            )}
             <FontAwesomeIcon icon={faCircleInfo} onClick={() => goToTeamDetail?.(record.id)} />
           </S.Icons>
         );

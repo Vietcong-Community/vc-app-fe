@@ -91,3 +91,19 @@ export const useTeamAvatarUploadUrl = (teamId: string) => {
     },
   });
 };
+
+export const useHasAllowedToJoinTheTeam = (teamId: string, ignoredErrorCodes?: IgnoredErrorCodes) => {
+  return useQuery({
+    queryKey: ['hasAllowedToJoinTheTeam', teamId],
+    queryFn: async () => {
+      const { data } = await get<{ hasAllowedToJoin: boolean }>(
+        TeamEndpoints.HAS_ALLOWED_TO_JOIN,
+        { teamId },
+        undefined,
+        ignoredErrorCodes,
+      );
+      return data;
+    },
+    staleTime: STALE_TIME,
+  });
+};

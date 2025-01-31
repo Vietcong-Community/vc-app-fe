@@ -56,7 +56,7 @@ export const MenuContainer = styled.div`
     background-color: ${(props: IThemeProps) => props.theme.mainColors.background} !important;
   }
 
-  ${() => makeMediaQuery(BreakPoints.md)`
+  ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
       display: none;
     `}
@@ -82,7 +82,7 @@ export const HamburgerCont = styled.div`
   justify-content: flex-end;
   display: none;
 
-  @media screen and (max-width: ${BreakPoints.md}px) {
+  @media screen and (max-width: ${BreakPoints.lg}px) {
     display: flex;
   }
 `;

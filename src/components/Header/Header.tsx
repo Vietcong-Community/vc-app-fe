@@ -14,6 +14,8 @@ import { ThemeType } from '../../providers/ThemeProvider/constants';
 import { Routes } from '../../routes/enums';
 import { BreakPoints } from '../../theme/theme';
 import { USER_AUTHENTICATION_STORAGE_KEY } from '../../utils/storageUtils';
+import { Button } from '../Button/Button';
+import { MainButtonVariant } from '../Button/enums';
 
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
 import { messages } from './messages';
@@ -25,7 +27,7 @@ export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();
-  const isSmallerThanMd = width <= BreakPoints.md;
+  const isSmallerThanLg = width <= BreakPoints.lg;
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
 
@@ -154,18 +156,32 @@ export const Header: React.FC = () => {
               <span />
             </S.MobileHamburger>
           </S.HamburgerCont>
-          {!isSmallerThanMd && (
-            <Dropdown
-              menu={{ items: isUserLoggedIn ? loggedUserMenu : anonymousUserMenu }}
-              trigger={['click', 'hover']}
-            >
-              <S.UserMenu>
-                <Avatar size={32} icon={getUserIcon()} />
-                <span style={{ fontSize: '14px' }}>
-                  {isUserLoggedIn ? userMe.data?.nickname : <FormattedMessage {...messages.userNotLoggedIn} />}
-                </span>
-              </S.UserMenu>
-            </Dropdown>
+          {!isSmallerThanLg && (
+            <>
+              {!isUserLoggedIn && (
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <Button onClick={() => navigate(Routes.LOGIN)} variant={MainButtonVariant.OUTLINED}>
+                    <FormattedMessage {...messages.goToLogin} />
+                  </Button>
+                  <Button onClick={() => navigate(Routes.REGISTRATION)}>
+                    <FormattedMessage {...messages.goToRegistration} />
+                  </Button>
+                </div>
+              )}
+              {isUserLoggedIn && (
+                <Dropdown
+                  menu={{ items: isUserLoggedIn ? loggedUserMenu : anonymousUserMenu }}
+                  trigger={['click', 'hover']}
+                >
+                  <S.UserMenu>
+                    <Avatar size={32} icon={getUserIcon()} />
+                    <span style={{ fontSize: '14px' }}>
+                      {isUserLoggedIn ? userMe.data?.nickname : <FormattedMessage {...messages.userNotLoggedIn} />}
+                    </span>
+                  </S.UserMenu>
+                </Dropdown>
+              )}
+            </>
           )}
         </S.RightSection>
       </S.Content>

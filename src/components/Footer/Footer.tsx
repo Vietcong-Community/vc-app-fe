@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { FacebookFilled, InstagramFilled, YoutubeFilled, DiscordFilled } from '@ant-design/icons';
+import { DiscordFilled, FacebookFilled, InstagramFilled, YoutubeFilled } from '@ant-design/icons';
 import { Divider } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import footerDarkBg from '../../assets/heli-footer-dark-design.webp';
+import footerLightBg from '../../assets/heli-footer-light-design.webp';
 import { EXTERNAL_LINKS } from '../../constants/externalLinks';
 import { useRouter } from '../../hooks/RouterHook';
+import { ThemeContext } from '../../providers/ThemeProvider/ThemeContext';
+import { ThemeType } from '../../providers/ThemeProvider/constants';
 import { Routes } from '../../routes/enums';
 import { theme } from '../../theme/theme';
 import { Gap } from '../Gap/Gap';
@@ -16,8 +20,10 @@ import * as S from './Footer.style';
 
 export const Footer: React.FC = () => {
   const { navigate } = useRouter();
+  const { selectedTheme } = useContext(ThemeContext);
+
   return (
-    <S.Background>
+    <S.Background $image={selectedTheme === ThemeType.LIGHT ? footerLightBg : footerDarkBg}>
       <S.FooterContainer>
         <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
           <FormattedMessage {...messages.about} />

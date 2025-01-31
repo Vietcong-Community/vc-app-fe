@@ -1,11 +1,10 @@
 import { BreakPoints, IThemeProps } from 'src/theme/theme';
 import styled, { css } from 'styled-components';
 
-import footerBg from '../../assets/heli-footer1.webp';
 import { makeMediaQuery } from '../../utils/mediaQuery';
 
-export const Background = styled.footer`
-  background-image: url(${footerBg});
+export const Background = styled.footer<{ $image: string }>`
+  background-image: url(${(props) => props.$image});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

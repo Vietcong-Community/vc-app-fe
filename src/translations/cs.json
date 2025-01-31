@@ -21,6 +21,8 @@
   "app.components.Header.changePasswordLink": "Změna hesla",
   "app.components.Header.czech": "CZ",
   "app.components.Header.darkTheme": "Tmavý",
+  "app.components.Header.desktopCzech": "Jazyk -> CZ",
+  "app.components.Header.desktopEnglish": "Jazyk -> EN",
   "app.components.Header.english": "EN",
   "app.components.Header.goToHomePage": "Domů",
   "app.components.Header.goToLogin": "Přihlášení",

@@ -1,4 +1,4 @@
-import bgCard from 'src/assets/heli-footer1.webp';
+import bgCard from 'src/assets/heli-footer-light-design.webp';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../../theme/theme';

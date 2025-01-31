@@ -31,7 +31,7 @@ export const Dates = styled.div`
 `;
 
 export const DateBox = styled.div`
-  align-items: flex-start;
+  align-items: center;
   background-color: ${(props: IThemeProps) => props.theme.mainColors.accent30};
   border-radius: 8px;
   display: flex;

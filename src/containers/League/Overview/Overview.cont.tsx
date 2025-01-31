@@ -28,7 +28,7 @@ export const OverviewCont: React.FC = () => {
         <Typography.Title>
           <FormattedMessage {...messages.title} />
         </Typography.Title>
-        <Typography.Text>
+        <Typography.Text style={{ maxWidth: 800 }}>
           <FormattedMessage {...messages.description} />
         </Typography.Text>
 

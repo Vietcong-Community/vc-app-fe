@@ -61,6 +61,14 @@ export const messages = defineMessages({
     id: 'app.components.Header.languageTitle',
     defaultMessage: 'Jazyk',
   },
+  desktopCzech: {
+    id: 'app.components.Header.desktopCzech',
+    defaultMessage: 'Jazyk -> CZ',
+  },
+  desktopEnglish: {
+    id: 'app.components.Header.desktopEnglish',
+    defaultMessage: 'Jazyk -> EN',
+  },
   czech: {
     id: 'app.components.Header.czech',
     defaultMessage: 'CZ',

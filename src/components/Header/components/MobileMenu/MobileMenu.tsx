@@ -14,6 +14,8 @@ import { Transition } from 'react-transition-group';
 
 import logo from '../../../../assets/vclogo-removebg-preview.png';
 import { useRouter } from '../../../../hooks/RouterHook';
+import { LanguageContext } from '../../../../providers/LanguageProvider/LanguageContext';
+import { PreferredLanguage } from '../../../../providers/LanguageProvider/constants';
 import { ThemeContext } from '../../../../providers/ThemeProvider/ThemeContext';
 import { ThemeType } from '../../../../providers/ThemeProvider/constants';
 import { Routes } from '../../../../routes/enums';
@@ -52,6 +54,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
   const nodeRef = useRef(null);
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
+  const { selectedLanguage, toggleLanguage } = useContext(LanguageContext);
 
   const { navigate, pathname } = useRouter();
 
@@ -175,7 +178,8 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                         <Switch
                           checkedChildren={<FormattedMessage {...messages.czech} />}
                           unCheckedChildren={<FormattedMessage {...messages.english} />}
-                          defaultChecked
+                          defaultChecked={selectedLanguage === PreferredLanguage.CS}
+                          onChange={toggleLanguage}
                         />
                       </S.SwitchContainer>
                     </Space>
@@ -228,7 +232,8 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                         <Switch
                           checkedChildren={<FormattedMessage {...messages.czech} />}
                           unCheckedChildren={<FormattedMessage {...messages.english} />}
-                          defaultChecked
+                          defaultChecked={selectedLanguage === PreferredLanguage.CS}
+                          onChange={toggleLanguage}
                         />
                       </S.SwitchContainer>
                     </Space>

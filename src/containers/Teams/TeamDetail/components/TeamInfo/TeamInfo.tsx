@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { UploadFile } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import teamImg from 'src/assets/heli-footer1.webp';
+import teamImg from 'src/assets/heli-footer-light-design.webp';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
 import { useTeamAvatarUploadUrl } from '../../../../../api/hooks/teams/api';

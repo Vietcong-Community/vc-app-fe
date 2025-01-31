@@ -9,6 +9,8 @@ import { useUserMe } from '../../api/hooks/auth/api';
 import logo from '../../assets/vclogo-removebg-preview.png';
 import { useRouter } from '../../hooks/RouterHook';
 import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
+import { LanguageContext } from '../../providers/LanguageProvider/LanguageContext';
+import { PreferredLanguage } from '../../providers/LanguageProvider/constants';
 import { ThemeContext } from '../../providers/ThemeProvider/ThemeContext';
 import { ThemeType } from '../../providers/ThemeProvider/constants';
 import { Routes } from '../../routes/enums';
@@ -30,6 +32,7 @@ export const Header: React.FC = () => {
   const isSmallerThanLg = width <= BreakPoints.lg;
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
+  const { selectedLanguage, toggleLanguage } = useContext(LanguageContext);
 
   const userMe = useUserMe('always', [401]);
 
@@ -71,6 +74,17 @@ export const Header: React.FC = () => {
       onClick: toggleTheme,
     },
     {
+      key: 'language',
+      label: (
+        <S.DropdownLabel>
+          <FormattedMessage
+            {...(selectedLanguage === PreferredLanguage.CS ? messages.desktopEnglish : messages.desktopCzech)}
+          />
+        </S.DropdownLabel>
+      ),
+      onClick: toggleLanguage,
+    },
+    {
       key: 'logout',
       label: (
         <S.DropdownLabel>
@@ -99,15 +113,6 @@ export const Header: React.FC = () => {
         </S.DropdownLabel>
       ),
       onClick: () => navigate(Routes.REGISTRATION),
-    },
-    {
-      key: 'theme',
-      label: (
-        <S.DropdownLabel>
-          <FormattedMessage {...(selectedTheme === ThemeType.LIGHT ? messages.darkTheme : messages.lightTheme)} />
-        </S.DropdownLabel>
-      ),
-      onClick: toggleTheme,
     },
   ];
 

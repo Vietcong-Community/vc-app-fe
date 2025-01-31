@@ -55,4 +55,8 @@ export const messages = defineMessages({
     id: 'app.components.Footer.copyright',
     defaultMessage: '© 2025 VietcongHUB',
   },
+  hosting: {
+    id: 'app.components.Footer.hosting',
+    defaultMessage: 'Hosted by <xscz>XS.cz</xscz> and <electra>ElectraDrive.cz</electra>',
+  },
 });

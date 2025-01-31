@@ -43,6 +43,7 @@ export const Footer: React.FC = () => {
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
               <FormattedMessage {...messages.sponsors} />
             </h4>
+            {/*
             <S.Link>
               <a href={EXTERNAL_LINKS.XS_STORE} target={'_blank'}>
                 <FormattedMessage {...messages.xsStore} />
@@ -53,6 +54,7 @@ export const Footer: React.FC = () => {
                 <FormattedMessage {...messages.electraDrive} />
               </a>
             </S.Link>
+            */}
           </S.Column>
           <S.Column>
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
@@ -69,7 +71,30 @@ export const Footer: React.FC = () => {
         <Divider style={{ backgroundColor: theme.colors.white, margin: 0 }} />
         <Gap defaultHeight={16} />
         <S.CopyrightAndSocialsLevel>
-          <FormattedMessage {...messages.copyright} />
+          <S.Hosting>
+            <FormattedMessage
+              {...messages.hosting}
+              values={{
+                xscz: (chunks) => (
+                  <S.Link>
+                    <a href={EXTERNAL_LINKS.XS_STORE} target="_blank" rel="noopener noreferrer">
+                      {chunks}
+                    </a>
+                  </S.Link>
+                ),
+                electra: (chunks) => (
+                  <S.Link>
+                    <a href={EXTERNAL_LINKS.ELECTRA_DRIVE} target="_blank" rel="noopener noreferrer">
+                      {chunks}
+                    </a>
+                  </S.Link>
+                ),
+              }}
+            />
+          </S.Hosting>
+          <S.CopyRight>
+            <FormattedMessage {...messages.copyright} />
+          </S.CopyRight>
           <S.Socials>
             <a href={EXTERNAL_LINKS.FACEBOOK} target={'_blank'}>
               <S.IconWrapper>

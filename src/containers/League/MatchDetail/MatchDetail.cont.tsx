@@ -53,6 +53,17 @@ export const MatchDetail: React.FC = () => {
     navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };
 
+  const challengerWon =
+    scoreExists &&
+    matchDetail.data?.challengerScore !== undefined &&
+    matchDetail.data?.opponentScore !== undefined &&
+    matchDetail.data?.challengerScore > matchDetail.data?.opponentScore;
+  const opponentWon =
+    scoreExists &&
+    matchDetail.data?.challengerScore !== undefined &&
+    matchDetail.data?.opponentScore !== undefined &&
+    matchDetail.data?.challengerScore < matchDetail.data?.opponentScore;
+
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -108,11 +119,33 @@ export const MatchDetail: React.FC = () => {
                     <br />
                     <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
                   </div>
-                  <S.Score>
-                    {scoreExists
-                      ? `${matchDetail.data?.challengerScore} - ${matchDetail.data?.opponentScore}`
-                      : ' ? - ?'}
-                  </S.Score>
+                  <S.MiddleContent>
+                    <FormattedMessage {...messages.result} />
+                    <S.DesktopScore>
+                      {scoreExists ? (
+                        <>
+                          {matchDetail.data?.status === MatchStatus.FINISHED && (
+                            <S.EloPoints $isWinning={challengerWon} $isLosing={opponentWon}>
+                              ({challengerWon && '+'}
+                              {opponentWon && '-'}
+                              {matchDetail.data?.eloRowAmount})
+                            </S.EloPoints>
+                          )}
+                          {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
+
+                          {matchDetail.data?.status === MatchStatus.FINISHED && (
+                            <S.EloPoints $isWinning={opponentWon} $isLosing={challengerWon}>
+                              ({challengerWon && '-'}
+                              {opponentWon && '+'}
+                              {matchDetail.data?.eloRowAmount})
+                            </S.EloPoints>
+                          )}
+                        </>
+                      ) : (
+                        ' ? : ?'
+                      )}
+                    </S.DesktopScore>
+                  </S.MiddleContent>
                   <div style={{ flex: 1, textAlign: 'end' }}>
                     <S.InformationLabel>
                       <FormattedMessage {...messages.status} />
@@ -122,6 +155,34 @@ export const MatchDetail: React.FC = () => {
                   </div>
                 </Flex>
                 <br />
+                <S.MobileResultContent>
+                  <FormattedMessage {...messages.result} />
+                  <S.MobileScore>
+                    {scoreExists ? (
+                      <>
+                        {matchDetail.data?.status === MatchStatus.FINISHED && (
+                          <S.EloPoints $isWinning={challengerWon} $isLosing={opponentWon}>
+                            ({challengerWon && '+'}
+                            {opponentWon && '-'}
+                            {matchDetail.data?.eloRowAmount})
+                          </S.EloPoints>
+                        )}
+                        {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
+
+                        {matchDetail.data?.status === MatchStatus.FINISHED && (
+                          <S.EloPoints $isWinning={opponentWon} $isLosing={challengerWon}>
+                            ({challengerWon && '-'}
+                            {opponentWon && '+'}
+                            {matchDetail.data?.eloRowAmount})
+                          </S.EloPoints>
+                        )}
+                      </>
+                    ) : (
+                      ' ? : ?'
+                    )}
+                  </S.MobileScore>
+                </S.MobileResultContent>
+                <Gap defaultHeight={0} height={{ md: 16 }} />
                 <S.TeamsContainer>
                   <Team goToTeamDetail={goToTeamDetail} team={matchDetail.data?.challenger?.team} />
                   <Team goToTeamDetail={goToTeamDetail} team={matchDetail.data?.opponent?.team} />

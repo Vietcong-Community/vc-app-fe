@@ -25,6 +25,7 @@ export interface ILadderItem {
   loses: number;
   countOfMatches: number;
   points: number;
+  eloPoints: number;
   joinedAt: string;
 }
 
@@ -62,6 +63,7 @@ export interface IMatch {
   challenger: ILadderItem;
   opponent: ILadderItem;
   startDate: string;
+  eloRowAmount?: number;
   endDate?: string;
   challengerMap: IMap;
   opponentMap?: IMap;

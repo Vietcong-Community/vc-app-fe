@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
-import { Nation } from '../../../../../constants/enums';
 
 import { messages } from './messages';
 
@@ -48,13 +47,9 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
                     <S.MapTitle>{round.map.name}</S.MapTitle>
                     <Gap defaultHeight={12} />
                     <S.ResultContainer>
-                      <S.TeamTag>
-                        {challengerTag} {round.challengerNation === Nation.US ? <>🇺🇸</> : <>🇻🇳</>}
-                      </S.TeamTag>
+                      <S.TeamTag>{challengerTag}</S.TeamTag>
                       {round.scoreChallenger} - {round.scoreOpponent}
-                      <S.TeamTag>
-                        {round.challengerNation === Nation.US ? <>🇻🇳</> : <>🇺🇸</>} {opponentTag}
-                      </S.TeamTag>
+                      <S.TeamTag>{opponentTag}</S.TeamTag>
                     </S.ResultContainer>
                   </S.RoundContainer>
                 );

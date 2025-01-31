@@ -111,6 +111,7 @@ export interface ILadderTableRow {
   draws: number;
   loses: number;
   winRate: string;
+  eloPoints: number;
 }
 
 export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadderTableRow> => {
@@ -162,6 +163,12 @@ export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadd
       sorter: (a, b) => {
         return Number(b.winRate.replace(' %', '')) - Number(a.winRate.replace(' %', ''));
       },
+    },
+    {
+      title: <FormattedMessage {...messages.points} />,
+      dataIndex: 'eloPoints',
+      key: '7',
+      sorter: (a, b) => b.eloPoints - a.eloPoints,
     },
   ];
 };

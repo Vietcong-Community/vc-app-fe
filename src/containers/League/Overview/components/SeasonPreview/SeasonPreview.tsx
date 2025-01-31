@@ -61,6 +61,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
         draws: item.draws,
         loses: item.loses,
         winRate: item.countOfMatches ? `${((100 / item.countOfMatches) * item.wins).toFixed(2)} %` : '0 %',
+        eloPoints: item.eloPoints,
       };
     }) ?? [];
 

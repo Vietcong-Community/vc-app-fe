@@ -29,6 +29,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.winRate',
     defaultMessage: '% výher',
   },
+  points: {
+    id: 'app.containers.League.points',
+    defaultMessage: 'Body',
+  },
   teamPositionShortcut: {
     id: 'app.containers.League.teamPositionShortcut',
     defaultMessage: '#',

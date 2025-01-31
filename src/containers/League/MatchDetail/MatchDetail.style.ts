@@ -33,14 +33,54 @@ export const InformationValue = styled.span`
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
 `;
 
-export const Score = styled.div`
-  flex: 1;
-  font-size: 26px;
+export const MiddleContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 22px;
   font-weight: 600;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       display: none;
+    `}
+  `};
+`;
+
+export const MobileResultContent = styled.div`
+  display: none;
+  flex-direction: column;
+  font-size: 22px;
+  font-weight: 600;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: flex;
+    `}
+  `};
+`;
+
+export const DesktopScore = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  font-size: 26px;
+  font-weight: 600;
+  gap: 8px;
+`;
+
+export const MobileScore = styled.div`
+  align-items: center;
+  display: none;
+  justify-content: center;
+  flex: 1;
+  font-size: 26px;
+  font-weight: 600;
+  gap: 8px;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: flex;
     `}
   `};
 `;
@@ -55,4 +95,23 @@ export const TeamsContainer = styled.div`
       flex-direction: column;
     `}
   `};
+`;
+
+interface IScoreProps {
+  $isWinning: boolean;
+  $isLosing: boolean;
+}
+
+export const EloPoints = styled.div<IScoreProps>`
+  font-size: 16px;
+  ${(props: IThemeProps & IScoreProps) =>
+    props.$isWinning &&
+    css`
+      color: ${props.theme.colors.green};
+    `};
+  ${(props: IThemeProps & IScoreProps) =>
+    props.$isLosing &&
+    css`
+      color: ${props.theme.colors.red};
+    `};
 `;

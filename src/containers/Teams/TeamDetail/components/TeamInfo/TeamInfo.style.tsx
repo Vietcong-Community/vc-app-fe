@@ -36,7 +36,7 @@ export const PictureDiv = styled.div`
 
   ${() => makeMediaQuery(BreakPoints.sm)`
     ${css`
-      display: none;
+      width: 100%;
     `}
   `};
 `;

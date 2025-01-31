@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.date',
     defaultMessage: 'Datum zápasu',
   },
+  result: {
+    id: 'app.containers.League.MatchDetail.result',
+    defaultMessage: 'Výsledek',
+  },
   status: {
     id: 'app.containers.League.MatchDetail.status',
     defaultMessage: 'Stav',

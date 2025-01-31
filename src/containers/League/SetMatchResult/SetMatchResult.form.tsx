@@ -101,7 +101,6 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
                               {...messages.nation}
                               values={{ nation: mapNationToTranslation(challengerNation) }}
                             />{' '}
-                            {challengerNation === Nation.US ? <>🇺🇸</> : <>🇻🇳</>}
                           </span>
                           <InputNumberField
                             label={<FormattedMessage {...messages.scoreChallenger} />}
@@ -115,7 +114,6 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
                               {...messages.nation}
                               values={{ nation: mapNationToTranslation(opponentNation) }}
                             />{' '}
-                            {opponentNation === Nation.US ? <>🇺🇸</> : <>🇻🇳</>}
                           </span>
                           <InputNumberField
                             label={<FormattedMessage {...messages.scoreOpponent} />}

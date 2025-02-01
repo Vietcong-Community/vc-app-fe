@@ -9,4 +9,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Rounds.draw',
     defaultMessage: 'REMÍZA',
   },
+  title: {
+    id: 'app.containers.League.MatchDetail.components.Rounds.title',
+    defaultMessage: 'Výsledky po kolech',
+  },
 });

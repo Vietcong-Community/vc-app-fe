@@ -14,4 +14,5 @@ export enum LeagueEndpoints {
   SET_MATCH_SCORE = '/matches/{matchId}/set-match-score',
   CONFIRM_MATCH_SCORE = '/matches/{matchId}/confirm-match-score',
   MATCH_DETAIL = '/matches/{matchId}',
+  EXPECTED_ELO_POINTS = '/matches/expected-elo-points/{challengerId}/{opponentId}',
 }

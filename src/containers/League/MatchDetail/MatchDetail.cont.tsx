@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
-import { useMatchDetail, useSeasonTeams } from '../../../api/hooks/league/api';
+import { useMatchDetail, useSeasonLadder, useSeasonTeams } from '../../../api/hooks/league/api';
 import { useMeTeams } from '../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
+import { Button } from '../../../components/Button/Button';
+import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -19,6 +21,7 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { canUserManageMatch } from '../utils';
 
+import { ExpectedEloPointsModal } from './components/ExpectedEloPointsModal/ExpectedEloPointsModal';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
 import { Team } from './components/Team/Team';
@@ -28,11 +31,15 @@ import * as S from './MatchDetail.style';
 
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const userMe = useUserMe('always', [401]);
   const matchDetail = useMatchDetail(query.matchId);
-  const myTeams = useMeTeams(undefined, [401]);
-  const seasonTeams = useSeasonTeams(matchDetail.data?.season?.id ?? '', [401], 'always');
+
+  const matchIsNotFinished = !!matchDetail.data?.status && matchDetail.data.status !== MatchStatus.FINISHED;
+  const userMe = useUserMe('always', [401], matchIsNotFinished);
+  const myTeams = useMeTeams(undefined, [401], matchIsNotFinished);
+  const seasonTeams = useSeasonTeams(matchDetail.data?.season?.id ?? '', [401], 'always', matchIsNotFinished);
+  const ladder = useSeasonLadder(matchDetail.data?.season?.id);
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
   const scoreExists =
@@ -63,6 +70,10 @@ export const MatchDetail: React.FC = () => {
     matchDetail.data?.challengerScore !== undefined &&
     matchDetail.data?.opponentScore !== undefined &&
     matchDetail.data?.challengerScore < matchDetail.data?.opponentScore;
+  const challengerSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.challenger?.id);
+  const opponentSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.opponent?.id);
+  console.log(challengerSeasonTeam);
+  console.log(opponentSeasonTeam);
 
   return (
     <ContentLayout
@@ -184,9 +195,25 @@ export const MatchDetail: React.FC = () => {
                 </S.MobileResultContent>
                 <Gap defaultHeight={0} height={{ md: 16 }} />
                 <S.TeamsContainer>
-                  <Team goToTeamDetail={goToTeamDetail} team={matchDetail.data?.challenger?.team} />
-                  <Team goToTeamDetail={goToTeamDetail} team={matchDetail.data?.opponent?.team} />
+                  <Team
+                    eloPoints={challengerSeasonTeam?.eloPoints}
+                    goToTeamDetail={goToTeamDetail}
+                    team={matchDetail.data?.challenger?.team}
+                  />
+                  <Team
+                    eloPoints={opponentSeasonTeam?.eloPoints}
+                    goToTeamDetail={goToTeamDetail}
+                    team={matchDetail.data?.opponent?.team}
+                  />
                 </S.TeamsContainer>
+                <EaseInOutContainer isOpen={matchIsNotFinished}>
+                  <Gap defaultHeight={16} />
+                  <Flex justify="end">
+                    <Button onClick={() => setIsOpen(true)} variant={MainButtonVariant.OUTLINED}>
+                      <FormattedMessage {...messages.expectedEloPoints} />
+                    </Button>
+                  </Flex>
+                </EaseInOutContainer>
               </Card>
             </S.ContentContainer>
           </>
@@ -201,6 +228,14 @@ export const MatchDetail: React.FC = () => {
         )}
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
+      <ExpectedEloPointsModal
+        closeModal={() => setIsOpen(false)}
+        challengerId={matchDetail?.data?.challenger?.id}
+        challengerName={matchDetail.data?.challenger?.team?.tag}
+        isOpen={isOpen}
+        opponentId={matchDetail.data?.opponent?.id}
+        opponentName={matchDetail.data?.opponent?.team?.tag}
+      />
     </ContentLayout>
   );
 };

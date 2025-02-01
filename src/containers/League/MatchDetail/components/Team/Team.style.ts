@@ -26,7 +26,7 @@ export const TeamTag = styled.span`
   font-size: 16px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
   padding: 0.25rem 0.5rem;
-  width: fit-content;
+  white-space: nowrap;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
@@ -48,6 +48,24 @@ export const TeamInfo = styled.div`
       flex-direction: column;
     `}
   `};
+`;
+
+export const ELO = styled.div`
+  display: flex;
+  font-size: 16px;
+  font-weight: ${(props: IThemeProps) => props.theme.fontWeight.normal};
+  gap: 8px;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      font-size: 14px;
+    `}
+  `};
+
+  span {
+    color: ${(props: IThemeProps) => props.theme.mainColors.accent};
+  }
 `;
 
 export const LineUpTitle = styled.div`

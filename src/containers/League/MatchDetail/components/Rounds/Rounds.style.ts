@@ -80,3 +80,10 @@ export const TeamTag = styled.div`
   padding: 0.25rem 0.5rem;
   width: fit-content;
 `;
+
+export const SectionTitle = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  text-align: start;
+  width: 100%;
+`;

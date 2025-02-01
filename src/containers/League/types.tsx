@@ -185,13 +185,14 @@ export const LADDER_COLUMNS = (
       title: <FormattedMessage {...messages.actions} />,
       dataIndex: '',
       key: '8',
-      hidden: !canUserManageMatch,
       align: 'center',
       render: (_, record) => {
         return (
           <S.Icons>
-            {record.id !== myTeamId && (
+            {record.id !== myTeamId && canUserManageMatch ? (
               <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.id)} />
+            ) : (
+              <div style={{ width: 22.5 }} />
             )}
             <FontAwesomeIcon icon={faCircleInfo} onClick={() => goToTeamDetail?.(record.id)} />
           </S.Icons>

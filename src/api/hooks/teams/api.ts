@@ -67,7 +67,11 @@ export const useRejectJoinRequest = (teamId: string) => {
   });
 };
 
-export const useMeTeams = (refetchOnMount?: boolean | 'always', ignoredErrorCodes?: IgnoredErrorCodes) => {
+export const useMeTeams = (
+  refetchOnMount?: boolean | 'always',
+  ignoredErrorCodes?: IgnoredErrorCodes,
+  enabled = true,
+) => {
   return useQuery({
     queryKey: ['loggedUserTeams'],
     queryFn: async () => {
@@ -75,6 +79,7 @@ export const useMeTeams = (refetchOnMount?: boolean | 'always', ignoredErrorCode
       return data;
     },
     staleTime: STALE_TIME,
+    enabled,
     refetchOnMount: refetchOnMount ?? 'always',
   });
 };

@@ -9,6 +9,7 @@ import { LeagueEndpoints } from './endpoints';
 import {
   IAcceptMatchChallenge,
   ICreateMatchChallenge,
+  IExpectedEloPointsItem,
   ILadderItem,
   ILeagueDetail,
   IMatch,
@@ -78,13 +79,14 @@ export const useMapsInSeason = (seasonId?: string) => {
   });
 };
 
-export const useSeasonLadder = (seasonId: string, refetchOnMount?: boolean | 'always') => {
+export const useSeasonLadder = (seasonId?: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
     queryKey: ['seasonLadder', seasonId],
     queryFn: async () => {
       const { data } = await get<{ items: ILadderItem[] }>(LeagueEndpoints.LADDER_LIST, { seasonId });
       return data;
     },
+    enabled: !!seasonId,
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? 'always',
   });
@@ -94,6 +96,7 @@ export const useSeasonTeams = (
   seasonId?: string,
   ignoredErrorCodes?: IgnoredErrorCodes,
   refetchOnMount?: boolean | 'always',
+  enabled = true,
 ) => {
   return useQuery({
     queryKey: ['seasonTeams', seasonId],
@@ -108,7 +111,7 @@ export const useSeasonTeams = (
       );
       return data;
     },
-    enabled: !!seasonId,
+    enabled: !!seasonId && enabled,
     staleTime: 0,
     refetchOnMount: refetchOnMount ?? 'always',
   });
@@ -198,5 +201,23 @@ export const useConfirmMatchScore = (matchId: string) => {
       });
       return data;
     },
+  });
+};
+
+export const useExpectedEloPoints = (challengerId?: string, opponentId?: string, enabled = false) => {
+  return useQuery({
+    queryKey: ['expectedEloPoints', challengerId, opponentId],
+    queryFn: async () => {
+      const { data } = await get<{ items: { [key: string]: IExpectedEloPointsItem } }>(
+        LeagueEndpoints.EXPECTED_ELO_POINTS,
+        {
+          challengerId,
+          opponentId,
+        },
+      );
+      return data;
+    },
+    enabled: !!challengerId && !!opponentId && enabled,
+    staleTime: Infinity,
   });
 };

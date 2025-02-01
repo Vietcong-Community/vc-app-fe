@@ -24,6 +24,10 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
 
   return (
     <Card>
+      <S.SectionTitle>
+        <FormattedMessage {...messages.title} />
+      </S.SectionTitle>
+      <Gap defaultHeight={8} />
       <S.Container>
         {splitRoundsByMap?.map((item) => {
           return (

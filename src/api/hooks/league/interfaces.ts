@@ -109,3 +109,10 @@ export interface ISetMatchScore {
     challengerNation: Nation;
   }[];
 }
+
+export interface IExpectedEloPointsItem {
+  newEloChallenger: number;
+  newEloOpponent: number;
+  pointsChangeChallenger: number;
+  pointsChangeOpponent: number;
+}

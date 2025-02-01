@@ -39,6 +39,18 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.goToTeamDetail',
     defaultMessage: 'Detail týmu',
   },
+  eloTitle: {
+    id: 'app.containers.League.MatchDetail.eloTitle',
+    defaultMessage: 'ELO: ',
+  },
+  expectedEloPoints: {
+    id: 'app.containers.League.MatchDetail.expectedEloPoints',
+    defaultMessage: 'Očekávané body',
+  },
+  roundsDescription: {
+    id: 'app.containers.League.MatchDetail.roundsDescription',
+    defaultMessage: 'Výsledky po kolech',
+  },
   matchBreadcrumb: {
     id: 'app.containers.League.MatchDetail.matchBreadcrumb',
     defaultMessage: 'Detail zápasu',

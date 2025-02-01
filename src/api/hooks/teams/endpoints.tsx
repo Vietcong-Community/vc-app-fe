@@ -7,4 +7,5 @@ export enum TeamEndpoints {
   ME_TEAMS = '/me/teams',
   HAS_ALLOWED_TO_JOIN = '/teams/{teamId}/has-allowed-to-join',
   UPLOAD_TEAM_AVATAR = '/teams/{teamId}/avatar-upload-url',
+  TEAM_SEASONS = '/teams/{teamId}/seasons',
 }

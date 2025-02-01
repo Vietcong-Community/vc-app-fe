@@ -46,16 +46,8 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
     limit: 5,
   });
 
-  const sortedMatches =
-    ladder.data?.items.sort((a, b) => {
-      const aWinRate = a.countOfMatches ? (100 / a.countOfMatches) * a.wins : 0;
-      const bWinRate = b.countOfMatches ? (100 / b.countOfMatches) * b.wins : 0;
-
-      return bWinRate - aWinRate;
-    }) ?? [];
-
   const ladderTableData: ILadderTableRow[] =
-    sortedMatches.map((item, index) => {
+    ladder.data?.items.map((item, index) => {
       return {
         id: item.team.id,
         position: index + 1,

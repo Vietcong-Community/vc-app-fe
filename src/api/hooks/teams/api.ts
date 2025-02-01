@@ -112,3 +112,15 @@ export const useHasAllowedToJoinTheTeam = (teamId: string, ignoredErrorCodes?: I
     staleTime: STALE_TIME,
   });
 };
+
+export const useTeamSeasons = (teamId: string, refetchOnMount?: boolean | 'always') => {
+  return useQuery({
+    queryKey: ['teamSeasons', teamId],
+    queryFn: async () => {
+      const { data } = await get<ITeam>(TeamEndpoints.TEAM_SEASONS, { teamId });
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
+  });
+};

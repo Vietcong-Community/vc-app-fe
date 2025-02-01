@@ -59,16 +59,8 @@ export const SeasonDetailCont: React.FC = () => {
     limit: 5,
   });
 
-  const sortedMatches =
-    ladder.data?.items.sort((a, b) => {
-      const aWinRate = a.countOfMatches ? (100 / a.countOfMatches) * a.wins : 0;
-      const bWinRate = b.countOfMatches ? (100 / b.countOfMatches) * b.wins : 0;
-
-      return bWinRate - aWinRate;
-    }) ?? [];
-
   const ladderTableData: ILadderTableRow[] =
-    sortedMatches.map((item, index) => {
+    ladder.data?.items?.map((item, index) => {
       return {
         id: item.team.id,
         position: index + 1,
@@ -284,7 +276,8 @@ export const SeasonDetailCont: React.FC = () => {
         <S.Divider />
         <Flex vertical align="flex-start">
           <H2>
-            <FormattedMessage {...messages.allMatchesTitle} />
+            <FormattedMessage {...messages.allMatchesTitle} />{' '}
+            {matches.data?.total !== undefined ? <>({matches.data?.total})</> : ''}
           </H2>
           <TableWithPagination
             columns={MATCH_COLUMNS(isSmallerThanMd)}

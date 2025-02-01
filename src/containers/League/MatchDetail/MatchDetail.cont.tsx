@@ -19,9 +19,9 @@ import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { ExpectedEloPointsModal } from '../components/ExpectedEloPointsModal/ExpectedEloPointsModal';
 import { canUserManageMatch } from '../utils';
 
-import { ExpectedEloPointsModal } from './components/ExpectedEloPointsModal/ExpectedEloPointsModal';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
 import { Team } from './components/Team/Team';
@@ -72,8 +72,6 @@ export const MatchDetail: React.FC = () => {
     matchDetail.data?.challengerScore < matchDetail.data?.opponentScore;
   const challengerSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.challenger?.id);
   const opponentSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.opponent?.id);
-  console.log(challengerSeasonTeam);
-  console.log(opponentSeasonTeam);
 
   return (
     <ContentLayout
@@ -196,12 +194,12 @@ export const MatchDetail: React.FC = () => {
                 <Gap defaultHeight={0} height={{ md: 16 }} />
                 <S.TeamsContainer>
                   <Team
-                    eloPoints={challengerSeasonTeam?.eloPoints}
+                    eloPoints={matchIsNotFinished ? challengerSeasonTeam?.eloPoints : undefined}
                     goToTeamDetail={goToTeamDetail}
                     team={matchDetail.data?.challenger?.team}
                   />
                   <Team
-                    eloPoints={opponentSeasonTeam?.eloPoints}
+                    eloPoints={matchIsNotFinished ? opponentSeasonTeam?.eloPoints : undefined}
                     goToTeamDetail={goToTeamDetail}
                     team={matchDetail.data?.opponent?.team}
                   />
@@ -232,9 +230,11 @@ export const MatchDetail: React.FC = () => {
         closeModal={() => setIsOpen(false)}
         challengerId={matchDetail?.data?.challenger?.id}
         challengerName={matchDetail.data?.challenger?.team?.tag}
+        challengerElo={challengerSeasonTeam?.eloPoints}
         isOpen={isOpen}
         opponentId={matchDetail.data?.opponent?.id}
         opponentName={matchDetail.data?.opponent?.team?.tag}
+        opponentElo={opponentSeasonTeam?.eloPoints}
       />
     </ContentLayout>
   );

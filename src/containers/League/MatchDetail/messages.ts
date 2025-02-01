@@ -41,7 +41,7 @@ export const messages = defineMessages({
   },
   eloTitle: {
     id: 'app.containers.League.MatchDetail.eloTitle',
-    defaultMessage: 'ELO: ',
+    defaultMessage: 'Body: ',
   },
   expectedEloPoints: {
     id: 'app.containers.League.MatchDetail.expectedEloPoints',

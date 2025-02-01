@@ -79,6 +79,7 @@ export const SeasonDetailCont: React.FC = () => {
         loses: item.loses,
         winRate: item.countOfMatches ? `${((100 / item.countOfMatches) * item.wins).toFixed(2)} %` : '0 %',
         eloPoints: item.eloPoints,
+        seasonTeamId: item.id,
       };
     }) ?? [];
 

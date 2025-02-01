@@ -86,11 +86,12 @@ export const CreateMatchCont: React.FC = () => {
       {showLoading && <Spin size="large" />}
       <EaseInOutContainer isOpen={!showLoading}>
         <CreateMatchForm
-          // initialValues={{ opponentId: query?.opponentId }}
+          initialValues={{ opponentId: query?.opponentId }}
           isSubmitting={createMatch.isPending}
           onCancel={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId))}
           maps={maps.data?.items ?? []}
           onSubmit={onSubmit}
+          myTeam={seasonTeams.data?.items.find((item) => item.userIsMemberOfTeam)}
           teams={seasonTeams.data?.items?.filter((item) => !item.userIsMemberOfTeam) ?? []}
         />
       </EaseInOutContainer>

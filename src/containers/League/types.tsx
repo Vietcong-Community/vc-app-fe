@@ -10,18 +10,6 @@ import { messages } from './messages';
 
 import * as S from './League.style';
 
-export interface IPlayersTable {
-  id: string;
-  order: number;
-  name: string;
-  played: number;
-  kills: number;
-  flags: number;
-  deaths: number;
-  ratio: number;
-  points: number;
-}
-
 export interface IMatchesTableRow {
   id: string;
   date: string;
@@ -30,55 +18,6 @@ export interface IMatchesTableRow {
   challengerTeamName: string;
   opponentTeamName: string;
 }
-
-export const PLAYERS_COLUMNS = (hidden: boolean): TableColumnsType<IPlayersTable> => {
-  return [
-    { dataIndex: 'order', key: '0' },
-    { title: 'Hráč', dataIndex: 'name', key: '1' },
-    {
-      title: 'Počet zápasů',
-      dataIndex: 'played',
-      key: '2',
-      hidden,
-      sorter: (a, b) => a.played - b.played,
-    },
-    {
-      title: 'Vlajky',
-      dataIndex: 'flags',
-      key: '3',
-      hidden,
-      sorter: (a, b) => a.flags - b.flags,
-    },
-    {
-      title: 'Zabití',
-      dataIndex: 'kills',
-      key: '4',
-      hidden,
-      sorter: (a, b) => a.kills - b.kills,
-    },
-    {
-      title: 'Úmrtí',
-      dataIndex: 'deaths',
-      key: '5',
-      hidden,
-      sorter: (a, b) => a.deaths - b.deaths,
-    },
-    {
-      title: 'K/D',
-      dataIndex: 'ratio',
-      key: '6',
-      hidden,
-      sorter: (a, b) => a.ratio - b.ratio,
-    },
-    {
-      title: 'Body',
-      dataIndex: 'points',
-      key: '7',
-      defaultSortOrder: 'descend',
-      sorter: (a, b) => a.points - b.points,
-    },
-  ];
-};
 
 export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRow> => {
   return [
@@ -117,6 +56,7 @@ export interface ILadderTableRow {
   loses: number;
   winRate: string;
   eloPoints: number;
+  seasonTeamId: string;
 }
 
 export const LADDER_COLUMNS = (
@@ -179,6 +119,7 @@ export const LADDER_COLUMNS = (
       title: <FormattedMessage {...messages.points} />,
       dataIndex: 'eloPoints',
       key: '7',
+      hidden: showShortLabels,
       sorter: (a, b) => b.eloPoints - a.eloPoints,
     },
     {
@@ -190,7 +131,7 @@ export const LADDER_COLUMNS = (
         return (
           <S.Icons>
             {record.id !== myTeamId && canUserManageMatch ? (
-              <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.id)} />
+              <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.seasonTeamId)} />
             ) : (
               <div style={{ width: 22.5 }} />
             )}

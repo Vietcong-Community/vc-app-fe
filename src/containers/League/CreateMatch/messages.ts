@@ -45,4 +45,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.CreateMatch.newMatchBreadcrumb',
     defaultMessage: 'Nový zápas',
   },
+  expectedPoints: {
+    id: 'app.containers.League.CreateMatch.expectedPoints',
+    defaultMessage: 'Očekávané body',
+  },
 });

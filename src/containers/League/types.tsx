@@ -23,20 +23,44 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
   return [
     { title: <FormattedMessage {...messages.matchDate} />, dataIndex: 'date', key: '0', defaultSortOrder: 'descend' },
     {
+      title: <FormattedMessage {...messages.matches} />,
+      render: (_, record) => {
+        return (
+          <>
+            <b>{record.challengerTeamName}</b> - <b>{record.opponentTeamName}</b>
+            <br />
+            <FormattedMessage {...messages.result} />: <b>{record.result}</b>
+            <br />
+            <FormattedMessage {...messages.matchStatus} />: <b>{record.status}</b>
+          </>
+        );
+      },
+      hidden: !hidden,
+    },
+    {
       title: <FormattedMessage {...messages.challenger} />,
       dataIndex: 'challengerTeamName',
       key: '1',
+      hidden,
+    },
+    {
+      title: <FormattedMessage {...messages.challenger} />,
+      dataIndex: 'challengerTeamName',
+      key: '1',
+      hidden,
     },
     {
       title: <FormattedMessage {...messages.opponent} />,
       dataIndex: 'opponentTeamName',
       key: '2',
+      hidden,
     },
     {
       title: <FormattedMessage {...messages.result} />,
       align: 'center',
       dataIndex: 'result',
       key: '3',
+      hidden,
     },
     {
       align: 'center',
@@ -70,17 +94,28 @@ export const LADDER_COLUMNS = (
 ): TableColumnsType<ILadderTableRow> => {
   return [
     {
-      title: showShortLabels ? (
-        <FormattedMessage {...messages.teamPositionShortcut} />
-      ) : (
-        <FormattedMessage {...messages.teamPosition} />
-      ),
+      title: <FormattedMessage {...messages.teamPosition} />,
       dataIndex: 'position',
       key: '0',
       defaultSortOrder: 'descend',
       align: 'center',
     },
-    { title: <FormattedMessage {...messages.teamName} />, dataIndex: 'name', key: '1' },
+    {
+      title: <FormattedMessage {...messages.teamMobile} />,
+      hidden: !showShortLabels,
+      render: (_, item) => {
+        return (
+          <>
+            <b>{item?.name}</b>
+            <br />
+            <FormattedMessage {...messages.winRate} />: <b>{item.winRate}</b>
+            <br />
+            <FormattedMessage {...messages.points} />: <b>{item.eloPoints}</b>
+          </>
+        );
+      },
+    },
+    { title: <FormattedMessage {...messages.teamName} />, dataIndex: 'name', key: '1', hidden: showShortLabels },
     {
       title: <FormattedMessage {...messages.countOfMatches} />,
       dataIndex: 'countOfMatches',
@@ -104,6 +139,7 @@ export const LADDER_COLUMNS = (
       key: '4',
       hidden: showShortLabels,
       sorter: (a, b) => b.draws - a.draws,
+      responsive: ['md'],
     },
     {
       title: <FormattedMessage {...messages.loses} />,

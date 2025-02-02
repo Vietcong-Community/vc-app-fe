@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.teamName',
     defaultMessage: 'Tým',
   },
+  matches: {
+    id: 'app.containers.League.matches',
+    defaultMessage: 'Zápasy',
+  },
   countOfMatches: {
     id: 'app.containers.League.countOfMatches',
     defaultMessage: 'Počet zápasů',
@@ -27,7 +31,7 @@ export const messages = defineMessages({
   },
   winRate: {
     id: 'app.containers.League.winRate',
-    defaultMessage: '% výher',
+    defaultMessage: 'Win-rate ',
   },
   points: {
     id: 'app.containers.League.points',
@@ -36,6 +40,10 @@ export const messages = defineMessages({
   actions: {
     id: 'app.containers.League.actions',
     defaultMessage: 'Akce',
+  },
+  teamMobile: {
+    id: 'app.containers.League.teamMobile',
+    defaultMessage: 'Týmy',
   },
   teamPositionShortcut: {
     id: 'app.containers.League.teamPositionShortcut',

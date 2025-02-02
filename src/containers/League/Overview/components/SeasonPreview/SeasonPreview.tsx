@@ -32,6 +32,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const { seasonDetail } = props;
   const { navigate } = useRouter();
   const { width } = useWindowDimensions();
+  const isSmallerThanLg = width < BreakPoints.lg;
   const isSmallerThanMd = width < BreakPoints.md;
 
   const myTeams = useMeTeams(undefined, [401]);
@@ -130,7 +131,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       <Flex vertical align="flex-start">
         <Table
           columns={LADDER_COLUMNS(
-            isSmallerThanMd,
+            isSmallerThanLg,
             isPossibleToCreateMatch?.allowed,
             (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', seasonDetail?.id)}?opponentId=${id}`),
             (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),

@@ -63,7 +63,8 @@ export interface IMatch {
   challenger: ILadderItem;
   opponent: ILadderItem;
   startDate: string;
-  eloRowAmount?: number;
+  challengerEloRowAmount?: number;
+  opponentEloRowAmount?: number;
   endDate?: string;
   challengerMap: IMap;
   opponentMap?: IMap;

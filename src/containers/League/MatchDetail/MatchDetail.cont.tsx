@@ -60,16 +60,10 @@ export const MatchDetail: React.FC = () => {
     navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };
 
-  const challengerWon =
-    scoreExists &&
-    matchDetail.data?.challengerScore !== undefined &&
-    matchDetail.data?.opponentScore !== undefined &&
-    matchDetail.data?.challengerScore > matchDetail.data?.opponentScore;
-  const opponentWon =
-    scoreExists &&
-    matchDetail.data?.challengerScore !== undefined &&
-    matchDetail.data?.opponentScore !== undefined &&
-    matchDetail.data?.challengerScore < matchDetail.data?.opponentScore;
+  const challengerEloAmountGreaterThanZero = (matchDetail.data?.challengerEloRowAmount ?? 0) > 0;
+  const challengerEloAmountLowerThanZero = (matchDetail.data?.challengerEloRowAmount ?? 0) < 0;
+  const opponentEloAmountGreaterThanZero = (matchDetail.data?.opponentEloRowAmount ?? 0) > 0;
+  const opponentEloAmountLowerThanZero = (matchDetail.data?.opponentEloRowAmount ?? 0) < 0;
   const challengerSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.challenger?.id);
   const opponentSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.opponent?.id);
 
@@ -134,19 +128,23 @@ export const MatchDetail: React.FC = () => {
                       {scoreExists ? (
                         <>
                           {matchDetail.data?.status === MatchStatus.FINISHED && (
-                            <S.EloPoints $isWinning={challengerWon} $isLosing={opponentWon}>
-                              ({challengerWon && '+'}
-                              {opponentWon && '-'}
-                              {matchDetail.data?.eloRowAmount})
+                            <S.EloPoints
+                              $isWinning={challengerEloAmountGreaterThanZero}
+                              $isLosing={challengerEloAmountLowerThanZero}
+                            >
+                              ({challengerEloAmountGreaterThanZero && '+'}
+                              {matchDetail.data?.challengerEloRowAmount})
                             </S.EloPoints>
                           )}
                           {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
 
                           {matchDetail.data?.status === MatchStatus.FINISHED && (
-                            <S.EloPoints $isWinning={opponentWon} $isLosing={challengerWon}>
-                              ({challengerWon && '-'}
-                              {opponentWon && '+'}
-                              {matchDetail.data?.eloRowAmount})
+                            <S.EloPoints
+                              $isWinning={opponentEloAmountGreaterThanZero}
+                              $isLosing={opponentEloAmountLowerThanZero}
+                            >
+                              ({opponentEloAmountGreaterThanZero && '+'}
+                              {matchDetail.data?.opponentEloRowAmount})
                             </S.EloPoints>
                           )}
                         </>
@@ -170,19 +168,23 @@ export const MatchDetail: React.FC = () => {
                     {scoreExists ? (
                       <>
                         {matchDetail.data?.status === MatchStatus.FINISHED && (
-                          <S.EloPoints $isWinning={challengerWon} $isLosing={opponentWon}>
-                            ({challengerWon && '+'}
-                            {opponentWon && '-'}
-                            {matchDetail.data?.eloRowAmount})
+                          <S.EloPoints
+                            $isWinning={challengerEloAmountGreaterThanZero}
+                            $isLosing={challengerEloAmountLowerThanZero}
+                          >
+                            ({challengerEloAmountGreaterThanZero && '+'}
+                            {matchDetail.data?.challengerEloRowAmount})
                           </S.EloPoints>
                         )}
                         {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
 
                         {matchDetail.data?.status === MatchStatus.FINISHED && (
-                          <S.EloPoints $isWinning={opponentWon} $isLosing={challengerWon}>
-                            ({challengerWon && '-'}
-                            {opponentWon && '+'}
-                            {matchDetail.data?.eloRowAmount})
+                          <S.EloPoints
+                            $isWinning={opponentEloAmountGreaterThanZero}
+                            $isLosing={opponentEloAmountLowerThanZero}
+                          >
+                            ({opponentEloAmountGreaterThanZero && '+'}
+                            {matchDetail.data?.opponentEloRowAmount})
                           </S.EloPoints>
                         )}
                       </>

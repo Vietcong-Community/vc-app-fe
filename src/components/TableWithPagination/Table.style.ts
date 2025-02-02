@@ -10,4 +10,8 @@ export const TableContainer = styled.div`
   th.ant-table-column-sort {
     background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30} !important;
   }
+
+  tbody tr:nth-child(2n) {
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.accent5};
+  }
 `;

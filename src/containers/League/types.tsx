@@ -44,12 +44,6 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
       hidden,
     },
     {
-      title: <FormattedMessage {...messages.challenger} />,
-      dataIndex: 'challengerTeamName',
-      key: '1',
-      hidden,
-    },
-    {
       title: <FormattedMessage {...messages.opponent} />,
       dataIndex: 'opponentTeamName',
       key: '2',

@@ -195,6 +195,7 @@
   "app.containers.Profile.myTeamsTitle": "Týmy",
   "app.containers.Profile.title": "Profil",
   "app.containers.Statistics.tba": "Makáme na tom, abychom statistiky zprovoznili co nejdříve, můžete se těšit v dalších verzích.",
+  "app.containers.Statistics.tbaA": "Zatím můžeš sledovat své statistiky zde: ",
   "app.containers.Statistics.title": "Statistiky",
   "app.containers.Teams.TeamDetail.approveFailed": "Přijetí se nezdařilo, kontaktujte adminy.",
   "app.containers.Teams.TeamDetail.approveSuccess": "Voják byl přijat do týmu!",

@@ -195,6 +195,7 @@
   "app.containers.Profile.myTeamsTitle": "",
   "app.containers.Profile.title": "Profile",
   "app.containers.Statistics.tba": "We're working on getting statistics up and running as soon as possible, you can look forward to it in future versions.",
+  "app.containers.Statistics.tbaA": "",
   "app.containers.Statistics.title": "Statistics",
   "app.containers.Teams.TeamDetail.approveFailed": "Failed to accept, please contact admins.",
   "app.containers.Teams.TeamDetail.approveSuccess": "The soldier has been accepted to the team!",

@@ -15,7 +15,7 @@ export const messages = defineMessages({
   },
   fakeDescription: {
     id: 'app.containers.Teams.TeamInfo.fakeDescription',
-    defaultMessage: 'Tenhle tým není vůbec kreativní, aby si vytvořili popis toho, jací jsou. Hanba.',
+    defaultMessage: 'Tenhle tým není vůbec kreativní. Ani si nevytvořili popis toho, jací jsou. Hanba.',
   },
   uploadAvatar: {
     id: 'app.containers.Teams.TeamInfo.uploadAvatar',

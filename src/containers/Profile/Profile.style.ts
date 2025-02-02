@@ -32,9 +32,7 @@ export const PlayerInfo = styled.div`
 
 export const Description = styled.div`
   display: flex;
-  gap: 16px;
-  justify-content: center;
-  max-width: ${BreakPoints.md}px;
+  max-width: 740px;
   width: 100%;
 
   ${() => makeMediaQuery(BreakPoints.md)`
@@ -93,4 +91,20 @@ export const EditProfileIcon = styled.div`
   position: absolute;
   right: 1.5rem;
   top: 1.5rem;
+`;
+
+export const MyTeamsContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  max-width: 740px;
+  justify-content: space-between;
+  margin: auto;
+  flex-wrap: wrap;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
 `;

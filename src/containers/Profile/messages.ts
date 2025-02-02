@@ -9,9 +9,9 @@ export const messages = defineMessages({
     id: 'app.containers.Profile.createdAt',
     defaultMessage: 'Členem od: ',
   },
-  nothingHere: {
-    id: 'app.containers.Profile.nothingHere',
-    defaultMessage: 'nic tu není :(',
+  myTeamsTitle: {
+    id: 'app.containers.Profile.myTeamsTitle',
+    defaultMessage: 'Týmy',
   },
   description: {
     id: 'app.containers.Profile.description',

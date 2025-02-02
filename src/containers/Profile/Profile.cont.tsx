@@ -9,17 +9,19 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../api/hooks/auth/api';
-import { useUserDetail } from '../../api/hooks/users/api';
+import { useUserDetail, useUserTeams } from '../../api/hooks/users/api';
 import { EaseInOutContainer } from '../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Card } from '../../components/Card/Card';
 import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
+import { H2 } from '../../components/Titles/H2/H2';
 import { useRouter } from '../../hooks/RouterHook';
 import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
 import { Routes } from '../../routes/enums';
 import { BreakPoints } from '../../theme/theme';
 import { formatDateForUser } from '../../utils/dateUtils';
 
+import { MyTeam } from './components/MyTeam/MyTeam';
 import { messages } from './messages';
 
 import * as S from './Profile.style';
@@ -32,6 +34,7 @@ export const ProfileCont: React.FC = () => {
 
   const userMe = useUserMe('always', [401]);
   const userDetail = useUserDetail(query.id);
+  const userTeams = useUserTeams(query.id);
 
   const showLoading = userDetail.isLoading;
   const showEditIcon = userMe.data?.id === query.id;
@@ -42,6 +45,10 @@ export const ProfileCont: React.FC = () => {
     }
 
     return <UserOutlined />;
+  };
+
+  const goToTeamDetail = (id: string) => {
+    navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };
 
   const showRealName = userDetail.data?.firstName || userDetail.data?.lastName;
@@ -71,9 +78,6 @@ export const ProfileCont: React.FC = () => {
               </S.PersonName>
               <Gap defaultHeight={16} />
               <S.Socials>
-                {!userDetail.data?.facebookLink && !userDetail.data?.twitchLink && !userDetail.data?.steamLink && (
-                  <FormattedMessage {...messages.nothingHere} />
-                )}
                 {userDetail.data?.facebookLink && (
                   <a href={userDetail.data?.facebookLink} target={'_blank'}>
                     <S.IconWrapper>
@@ -100,10 +104,18 @@ export const ProfileCont: React.FC = () => {
           </S.PlayerInfo>
           <Gap defaultHeight={32} height={{ md: 16 }} />
           <S.Description>
-            {userDetail.data?.description ?? <FormattedMessage {...messages.description} />}
+            <Card>{userDetail.data?.description ?? <FormattedMessage {...messages.description} />}</Card>
           </S.Description>
-          <Gap defaultHeight={32} height={{ md: 16 }} />
         </S.Container>
+      </EaseInOutContainer>
+      <Gap defaultHeight={16} height={{ md: 8 }} />
+      <EaseInOutContainer isOpen={!userTeams.isLoading && (userTeams.data?.items.length ?? 0) > 0}>
+        <H2>
+          <FormattedMessage {...messages.myTeamsTitle} />
+        </H2>
+        <S.MyTeamsContainer>
+          {userTeams.data?.items.map((item) => <MyTeam goToTeamDetail={goToTeamDetail} team={item} />)}
+        </S.MyTeamsContainer>
       </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
     </ContentLayout>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form as AntDForm, FormInstance } from 'antd';
 
-export interface IProps<T> {
+interface IProps<T> {
   children?: React.ReactNode;
   form: FormInstance<T>;
   initialValues?: Partial<T>;

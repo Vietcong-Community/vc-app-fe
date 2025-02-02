@@ -28,7 +28,7 @@ export const Team: React.FC<IProps> = (props: IProps) => {
     }
   };
 
-  const getUserIcon = () => {
+  const getTeamIcon = () => {
     if (team?.image?.url) {
       return <img alt="" src={team?.image?.url} />;
     }
@@ -40,7 +40,7 @@ export const Team: React.FC<IProps> = (props: IProps) => {
     <Card style={{ textAlign: 'start' }}>
       <S.TeamInfo>
         <div style={{ alignItems: 'center', display: 'flex', gap: 8, justifyContent: 'center' }}>
-          <Avatar shape="square" size={48} icon={getUserIcon()} style={{ minWidth: 48 }} />
+          <Avatar shape="square" size={48} icon={getTeamIcon()} style={{ minWidth: 48 }} />
           <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
         </div>
         <S.TeamTag>{team?.tag ?? ''}</S.TeamTag>

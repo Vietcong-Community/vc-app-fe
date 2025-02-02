@@ -34,10 +34,12 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
     },
     {
       title: <FormattedMessage {...messages.result} />,
+      align: 'center',
       dataIndex: 'result',
       key: '3',
     },
     {
+      align: 'center',
       title: <FormattedMessage {...messages.matchStatus} />,
       dataIndex: 'status',
       key: '4',
@@ -76,12 +78,14 @@ export const LADDER_COLUMNS = (
       dataIndex: 'position',
       key: '0',
       defaultSortOrder: 'descend',
+      align: 'center',
     },
     { title: <FormattedMessage {...messages.teamName} />, dataIndex: 'name', key: '1' },
     {
       title: <FormattedMessage {...messages.countOfMatches} />,
       dataIndex: 'countOfMatches',
       key: '2',
+      align: 'center',
       hidden: showShortLabels,
       sorter: (a, b) => b.countOfMatches - a.countOfMatches,
     },
@@ -89,12 +93,14 @@ export const LADDER_COLUMNS = (
       title: <FormattedMessage {...messages.wins} />,
       dataIndex: 'wins',
       key: '3',
+      align: 'center',
       hidden: showShortLabels,
       sorter: (a, b) => b.wins - a.wins,
     },
     {
       title: <FormattedMessage {...messages.draws} />,
       dataIndex: 'draws',
+      align: 'center',
       key: '4',
       hidden: showShortLabels,
       sorter: (a, b) => b.draws - a.draws,
@@ -102,6 +108,7 @@ export const LADDER_COLUMNS = (
     {
       title: <FormattedMessage {...messages.loses} />,
       dataIndex: 'loses',
+      align: 'center',
       key: '5',
       hidden: showShortLabels,
       sorter: (a, b) => b.loses - a.loses,
@@ -110,6 +117,7 @@ export const LADDER_COLUMNS = (
       title: <FormattedMessage {...messages.winRate} />,
       dataIndex: 'winRate',
       key: '6',
+      align: 'center',
       hidden: showShortLabels,
       sorter: (a, b) => {
         return Number(b.winRate.replace(' %', '')) - Number(a.winRate.replace(' %', ''));
@@ -118,6 +126,7 @@ export const LADDER_COLUMNS = (
     {
       title: <FormattedMessage {...messages.points} />,
       dataIndex: 'eloPoints',
+      align: 'center',
       key: '7',
       hidden: showShortLabels,
       sorter: (a, b) => b.eloPoints - a.eloPoints,
@@ -131,7 +140,13 @@ export const LADDER_COLUMNS = (
         return (
           <S.Icons>
             {record.id !== myTeamId && canUserManageMatch ? (
-              <FontAwesomeIcon icon={faHandshake} onClick={() => goToCreateMatch?.(record.seasonTeamId)} />
+              <FontAwesomeIcon
+                icon={faHandshake}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToCreateMatch?.(record.seasonTeamId);
+                }}
+              />
             ) : (
               <div style={{ width: 22.5 }} />
             )}

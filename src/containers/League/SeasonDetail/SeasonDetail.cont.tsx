@@ -267,6 +267,14 @@ export const SeasonDetailCont: React.FC = () => {
               (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),
               isPossibleToCreateMatch?.myTeamId,
             )}
+            onRow={(item) => {
+              return {
+                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
+                style: {
+                  cursor: 'pointer',
+                },
+              };
+            }}
             data={ladderTableData}
             loading={ladder.isLoading}
             pagination={{ hideOnSinglePage: true, pageSize: 20 }}

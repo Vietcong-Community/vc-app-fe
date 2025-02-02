@@ -9,4 +9,8 @@ export const messages = defineMessages({
     id: 'app.containers.Statistics.tba',
     defaultMessage: 'Makáme na tom, abychom statistiky zprovoznili co nejdříve, můžete se těšit v dalších verzích.',
   },
+  tbaA: {
+    id: 'app.containers.Statistics.tbaA',
+    defaultMessage: 'Zatím můžeš sledovat své statistiky zde: ',
+  },
 });

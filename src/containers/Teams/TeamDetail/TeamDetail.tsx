@@ -86,7 +86,7 @@ export const TeamDetailCont: React.FC = () => {
 
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-team', title: <FormattedMessage {...messages.title} /> }]}>
-      <Helmet title={`${formatMessage(messages.title)} - ${team.data?.name}`} />
+      <Helmet title={`${formatMessage(messages.title)}${team.data?.name ? ` - ${team.data?.name}` : ''}`} />
       {showLoading && (
         <>
           <Gap defaultHeight={32} height={{ md: 16 }} />

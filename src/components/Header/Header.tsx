@@ -174,10 +174,7 @@ export const Header: React.FC = () => {
                 </div>
               )}
               {isUserLoggedIn && (
-                <Dropdown
-                  menu={{ items: isUserLoggedIn ? loggedUserMenu : anonymousUserMenu }}
-                  trigger={['click', 'hover']}
-                >
+                <Dropdown menu={{ items: isUserLoggedIn ? loggedUserMenu : anonymousUserMenu }} trigger={['click']}>
                   <S.UserMenu>
                     <Avatar size={32} icon={getUserIcon()} />
                     <span style={{ fontSize: '14px' }}>

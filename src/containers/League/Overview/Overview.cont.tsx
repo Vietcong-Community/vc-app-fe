@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Flex, Spin, Typography } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
 import { useLeagueList } from '../../../api/hooks/league/api';
@@ -17,6 +18,7 @@ import { messages } from './messages';
 export const OverviewCont: React.FC = () => {
   const { pathname } = useRouter();
   const leagues = useLeagueList();
+  const { formatMessage } = useIntl();
 
   return (
     <ContentLayout
@@ -24,6 +26,7 @@ export const OverviewCont: React.FC = () => {
         pathname === Routes.LEAGUE ? [{ key: 'bc-league', title: <FormattedMessage {...messages.title} /> }] : []
       }
     >
+      <Helmet title={formatMessage(messages.title)} />
       <Flex justify="flex-start" align="center" vertical>
         <Typography.Title>
           <FormattedMessage {...messages.title} />

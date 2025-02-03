@@ -51,6 +51,14 @@ export const ProfileCont: React.FC = () => {
     navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };
 
+  const redirectToLink = (url: string) => {
+    if (url.startsWith('https://') || url.startsWith('http://')) {
+      return url;
+    }
+
+    return `https://${url}`;
+  };
+
   const showRealName = userDetail.data?.firstName || userDetail.data?.lastName;
 
   return (
@@ -79,21 +87,21 @@ export const ProfileCont: React.FC = () => {
               <Gap defaultHeight={16} />
               <S.Socials>
                 {userDetail.data?.facebookLink && (
-                  <a href={userDetail.data?.facebookLink} target={'_blank'}>
+                  <a href={redirectToLink(userDetail.data?.facebookLink)} target={'_blank'}>
                     <S.IconWrapper>
                       <FacebookFilled />
                     </S.IconWrapper>
                   </a>
                 )}
                 {userDetail.data?.twitchLink && (
-                  <a href={userDetail.data?.twitchLink} target={'_blank'}>
+                  <a href={redirectToLink(userDetail.data?.twitchLink)} target={'_blank'}>
                     <S.IconWrapper>
                       <TwitchFilled />
                     </S.IconWrapper>
                   </a>
                 )}
                 {userDetail.data?.steamLink && (
-                  <a href={userDetail.data?.steamLink} target={'_blank'}>
+                  <a href={redirectToLink(userDetail.data?.steamLink)} target={'_blank'}>
                     <S.IconWrapper>
                       <FontAwesomeIcon icon={faGamepad} />
                     </S.IconWrapper>

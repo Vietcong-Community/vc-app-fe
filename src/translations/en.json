@@ -269,7 +269,6 @@
   "app.containers.Users.Login.slideTextA": " Log in and fight for your place in the mixed league",
   "app.containers.Users.Login.slideTextB": " Collect awards for your statistics",
   "app.containers.Users.Login.title": "Login",
-  "app.containers.Users.Registration.activationInstructions": "To activate your account, click on the link sent to your email: <b>{email}</b>",
   "app.containers.Users.Registration.confirmPasswordLabel": "Password again",
   "app.containers.Users.Registration.emailLabel": "Email",
   "app.containers.Users.Registration.goToLogin": "Already have an account?",

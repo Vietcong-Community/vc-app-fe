@@ -27,6 +27,10 @@ export const ClipPath = styled.div`
   position: relative;
   width: 100%;
 
+  @media (min-width: 1980px) {
+    display: none;
+  }
+
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       display: none;

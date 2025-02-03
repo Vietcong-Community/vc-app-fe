@@ -264,7 +264,6 @@ export const SeasonDetailCont: React.FC = () => {
               isSmallerThanMd,
               isPossibleToCreateMatch?.allowed,
               (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', query.seasonId)}?opponentId=${id}`),
-              (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),
               isPossibleToCreateMatch?.myTeamId,
             )}
             onRow={(item) => {

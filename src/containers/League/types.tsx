@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableColumnsType } from 'antd';
@@ -83,7 +82,6 @@ export const LADDER_COLUMNS = (
   showShortLabels: boolean,
   canUserManageMatch: boolean,
   goToCreateMatch?: (id: string) => void,
-  goToTeamDetail?: (id: string) => void,
   myTeamId?: string,
 ): TableColumnsType<ILadderTableRow> => {
   return [
@@ -101,8 +99,6 @@ export const LADDER_COLUMNS = (
         return (
           <>
             <b>{item?.name}</b>
-            <br />
-            <FormattedMessage {...messages.winRate} />: <b>{item.winRate}</b>
             <br />
             <FormattedMessage {...messages.points} />: <b>{item.eloPoints}</b>
           </>
@@ -166,6 +162,7 @@ export const LADDER_COLUMNS = (
       dataIndex: '',
       key: '8',
       align: 'center',
+      hidden: !canUserManageMatch,
       render: (_, record) => {
         return (
           <S.Icons>
@@ -180,7 +177,6 @@ export const LADDER_COLUMNS = (
             ) : (
               <div style={{ width: 22.5 }} />
             )}
-            <FontAwesomeIcon icon={faCircleInfo} onClick={() => goToTeamDetail?.(record.id)} />
           </S.Icons>
         );
       },

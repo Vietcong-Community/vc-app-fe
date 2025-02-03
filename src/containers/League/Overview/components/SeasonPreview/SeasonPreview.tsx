@@ -134,7 +134,6 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
             isSmallerThanLg,
             isPossibleToCreateMatch?.allowed,
             (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', seasonDetail?.id)}?opponentId=${id}`),
-            (id: string) => navigate(Routes.TEAM_DETAIL.replace(':id', id)),
             isPossibleToCreateMatch?.myTeamId,
           )}
           onRow={(item) => {

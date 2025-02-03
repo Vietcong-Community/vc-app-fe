@@ -10,6 +10,7 @@ import { UploadField } from '../../../components/Fields/UploadField/UploadField'
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
+import { parseToLowerCase, removeWhiteSpaces } from '../../../utils/formUtils';
 
 import { fields, IFormData } from './EditProfile.fields';
 import { messages } from './messages';
@@ -75,6 +76,7 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
                       {...fields.email}
                       label={<FormattedMessage {...messages.emailLabel} />}
                       placeholder={formatMessage(messages.emailLabel)}
+                      normalize={(value) => parseToLowerCase(removeWhiteSpaces(value))}
                     />
                   </>
                 ),

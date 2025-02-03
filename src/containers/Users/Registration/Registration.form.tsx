@@ -9,6 +9,7 @@ import { InputField } from '../../../components/Fields/InputField/InputField';
 import { PasswordField } from '../../../components/Fields/PasswordField/PasswordField';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
+import { parseToLowerCase, removeWhiteSpaces } from '../../../utils/formUtils';
 
 import { fields, IFormData } from './Registration.fields';
 import { messages } from './messages';
@@ -55,6 +56,7 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
               {...fields.email}
               label={<FormattedMessage {...messages.emailLabel} />}
               placeholder={formatMessage(messages.emailLabel)}
+              normalize={(value) => parseToLowerCase(removeWhiteSpaces(value))}
             />
             <PasswordField
               {...fields.password}

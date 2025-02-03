@@ -117,7 +117,12 @@ export const useSeasonTeams = (
   });
 };
 
-export const useSeasonMatchList = (seasonId: string, query?: IMatchListQuery) => {
+export const useSeasonMatchList = (
+  seasonId: string,
+  query?: IMatchListQuery,
+  refetchOnMount?: boolean | 'always',
+  staleTime = STALE_TIME,
+) => {
   return useQuery({
     queryKey: ['matchList', seasonId, JSON.stringify(query ?? {})],
     queryFn: async () => {
@@ -131,7 +136,8 @@ export const useSeasonMatchList = (seasonId: string, query?: IMatchListQuery) =>
       );
       return data;
     },
-    staleTime: STALE_TIME,
+    staleTime,
+    refetchOnMount: refetchOnMount ?? true,
   });
 };
 

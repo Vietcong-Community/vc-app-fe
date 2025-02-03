@@ -38,14 +38,24 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const myTeams = useMeTeams(undefined, [401]);
   const seasonTeams = useSeasonTeams(seasonDetail.id, [401]);
   const ladder = useSeasonLadder(seasonDetail.id);
-  const futureMatches = useSeasonMatchList(seasonDetail.id, {
-    status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
-    limit: 5,
-  });
-  const finishedMatches = useSeasonMatchList(seasonDetail.id, {
-    status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
-    limit: 5,
-  });
+  const futureMatches = useSeasonMatchList(
+    seasonDetail.id,
+    {
+      status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
+      limit: 5,
+    },
+    'always',
+    0,
+  );
+  const finishedMatches = useSeasonMatchList(
+    seasonDetail.id,
+    {
+      status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+      limit: 5,
+    },
+    'always',
+    0,
+  );
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items.map((item, index) => {

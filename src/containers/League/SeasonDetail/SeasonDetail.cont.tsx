@@ -50,14 +50,24 @@ export const SeasonDetailCont: React.FC = () => {
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
   const matches = useSeasonMatchList(query.seasonId, { page: selectedMatchPage, limit: 10 });
-  const futureMatches = useSeasonMatchList(query.seasonId, {
-    status: [MatchStatus.NEW, MatchStatus.ACCEPTED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
-    limit: 5,
-  });
-  const finishedMatches = useSeasonMatchList(query.seasonId, {
-    status: [MatchStatus.FINISHED].join(','),
-    limit: 5,
-  });
+  const futureMatches = useSeasonMatchList(
+    query.seasonId,
+    {
+      status: [MatchStatus.NEW, MatchStatus.ACCEPTED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+      limit: 5,
+    },
+    'always',
+    0,
+  );
+  const finishedMatches = useSeasonMatchList(
+    query.seasonId,
+    {
+      status: [MatchStatus.FINISHED].join(','),
+      limit: 5,
+    },
+    'always',
+    0,
+  );
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items?.map((item, index) => {

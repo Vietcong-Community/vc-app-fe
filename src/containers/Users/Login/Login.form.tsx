@@ -10,6 +10,7 @@ import { PasswordField } from '../../../components/Fields/PasswordField/Password
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
 import { H2 } from '../../../components/Titles/H2/H2';
+import { parseToLowerCase, removeWhiteSpaces } from '../../../utils/formUtils';
 
 import { fields, IFormData } from './Login.fields';
 import { messages } from './messages';
@@ -45,6 +46,7 @@ export const LoginForm: React.FC<IProps> = (props: IProps) => {
               {...fields.email}
               label={<FormattedMessage {...messages.emailLabel} />}
               placeholder={formatMessage(messages.emailLabel)}
+              normalize={(value) => parseToLowerCase(removeWhiteSpaces(value))}
             />
             <PasswordField
               {...fields.password}

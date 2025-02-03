@@ -37,7 +37,7 @@ export const messages = defineMessages({
   },
   contactEmail: {
     id: 'app.components.Footer.contactEmail',
-    defaultMessage: 'support@veitconghub.eu',
+    defaultMessage: 'support@vietconghub.eu',
   },
   sponsors: {
     id: 'app.components.Footer.sponsors',

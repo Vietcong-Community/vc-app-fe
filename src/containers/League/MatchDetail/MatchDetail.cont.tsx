@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
@@ -45,15 +45,19 @@ export const MatchDetail: React.FC = () => {
   const scoreExists =
     matchDetail.data?.status === MatchStatus.FINISHED ||
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
-  const isPossibleToManageMatch =
-    myTeams.isFetchedAfterMount &&
-    seasonTeams.isFetchedAfterMount &&
-    canUserManageMatch(
+  const isPossibleToManageMatch = useMemo(() => {
+    return canUserManageMatch(
       myTeams.data?.items ?? [],
       seasonTeams.data?.items ?? [],
       matchDetail.data?.challenger.team?.id,
       matchDetail.data?.opponent?.team?.id,
-    )?.allowed;
+    );
+  }, [
+    !!myTeams?.data?.items,
+    !!seasonTeams?.data?.items,
+    matchDetail.data?.challenger.team?.id,
+    matchDetail.data?.opponent.team?.id,
+  ]);
   const showLoading = matchDetail.isLoading;
 
   const goToTeamDetail = (id: string) => {
@@ -98,8 +102,11 @@ export const MatchDetail: React.FC = () => {
         <H1>
           <FormattedMessage {...messages.title} />
         </H1>
-        {(isPossibleToManageMatch || userIsAdmin) && (
+        {(isPossibleToManageMatch?.allowed || userIsAdmin) && (
           <ManageMenu
+            canConfirmMatch={isPossibleToManageMatch?.myTeamId === matchDetail.data?.opponent?.team?.id}
+            canEnterResult={isPossibleToManageMatch?.allowed}
+            // canConfirmResult={isPossibleToManageMatch?.myTeamId}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             status={matchDetail.data?.status}

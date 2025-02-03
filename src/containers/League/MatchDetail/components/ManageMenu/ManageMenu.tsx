@@ -13,6 +13,9 @@ import { Routes } from '../../../../../routes/enums';
 import { messages } from './messages';
 
 interface IProps {
+  canConfirmMatch?: boolean;
+  canConfirmResult?: boolean;
+  canEnterResult?: boolean;
   matchId: string;
   seasonId?: string;
   status?: MatchStatus;
@@ -20,7 +23,7 @@ interface IProps {
 }
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
-  const { matchId, seasonId, status, userIsAdmin } = props;
+  const { canConfirmMatch = false, canEnterResult = false, matchId, seasonId, status, userIsAdmin } = props;
   const { navigate } = useRouter<{ id: string }>();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
@@ -58,13 +61,13 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.confirmTheMatch} />,
       key: '1',
       onClick: onConfirmMatch,
-      disabled: status !== MatchStatus.NEW,
+      disabled: status !== MatchStatus.NEW || (!canConfirmMatch && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '2',
       onClick: () => navigate(Routes.SET_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled: status !== MatchStatus.ACCEPTED,
+      disabled: status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
     },
 
     {

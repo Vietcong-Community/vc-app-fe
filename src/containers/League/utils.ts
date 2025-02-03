@@ -2,12 +2,17 @@ import { ISeasonTeamItem } from '../../api/hooks/league/interfaces';
 import { IMeTeams } from '../../api/hooks/teams/interfaces';
 import { TeamRole } from '../../constants/enums';
 
+export interface ICanHandleMatch {
+  allowed: boolean;
+  myTeamId?: string;
+}
+
 export const canUserManageMatch = (
   userTeams: IMeTeams[],
   seasonTeams: ISeasonTeamItem[],
   challengerId?: string,
   opponentId?: string,
-): { allowed: boolean; myTeamId?: string } => {
+): ICanHandleMatch => {
   const myTeamInSeason = seasonTeams.find((item) => item.userIsMemberOfTeam);
 
   if (!myTeamInSeason) {

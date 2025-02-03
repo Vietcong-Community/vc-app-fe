@@ -41,7 +41,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const futureMatches = useSeasonMatchList(
     seasonDetail.id,
     {
-      status: [MatchStatus.NEW, MatchStatus.ACCEPTED].join(','),
+      status: [MatchStatus.NEW, MatchStatus.ACCEPTED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
       limit: 5,
     },
     'always',
@@ -50,7 +50,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const finishedMatches = useSeasonMatchList(
     seasonDetail.id,
     {
-      status: [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+      status: [MatchStatus.FINISHED].join(','),
       limit: 5,
     },
     'always',

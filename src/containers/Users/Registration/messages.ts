@@ -43,8 +43,4 @@ export const messages = defineMessages({
       'Jménem tvůrců webu hhackera, Trappera, Bascciho, M.Polcara' +
       ' a celé Vietcong komunity Vám děkujeme za registraci.',
   },
-  activationInstructions: {
-    id: 'app.containers.Users.Registration.activationInstructions',
-    defaultMessage: 'Pro aktivaci vašeho účtu klikněte na odkaz, který vám byl zaslán na email: <b>{email}</b>',
-  },
 });

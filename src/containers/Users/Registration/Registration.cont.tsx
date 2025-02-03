@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React from 'react';
 
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -16,19 +16,15 @@ import { IFormData } from './Registration.fields';
 import { RegistrationForm } from './Registration.form';
 import { messages } from './messages';
 
-import * as S from './Registration.style';
-
 export const RegistrationCont: React.FC = () => {
   const { navigate } = useRouter();
   const { showNotification } = useNotifications();
   const { formatMessage } = useIntl();
-  const [userMail, setUserMail] = useState<string | undefined>(undefined);
 
   const createUser = useCreateUser();
 
   const onSubmit = async (values: IFormData) => {
     try {
-      setUserMail(values.email);
       await createUser.mutateAsync({ nickname: values.nickname, password: values.password, email: values.email });
     } catch (e) {
       showNotification(messages.registerFailed, undefined, NotificationType.ERROR);
@@ -60,12 +56,6 @@ export const RegistrationCont: React.FC = () => {
           </H1>
           <p>
             <FormattedMessage {...messages.registrationSuccessDisclaimer} />
-          </p>
-          <p>
-            <FormattedMessage
-              {...messages.activationInstructions}
-              values={{ email: userMail, b: (msg: ReactNode) => <S.Email>{msg}</S.Email> }}
-            />
           </p>
         </>
       )}

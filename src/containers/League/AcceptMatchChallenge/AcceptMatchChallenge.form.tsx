@@ -5,6 +5,7 @@ import { Form, Space } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { IMap } from '../../../api/hooks/interfaces';
+import { ILadderItem } from '../../../api/hooks/league/interfaces';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
@@ -16,7 +17,11 @@ import { BreakPoints } from '../../../theme/theme';
 import { fields, IFormData } from './AcceptMatchChallenge.fields';
 import { messages } from './messages';
 
+import * as S from './AcceptMatchChallenge.style';
+
 interface IProps {
+  challenger?: ILadderItem;
+  challengerMap?: IMap;
   goBack: () => void;
   isSubmitting: boolean;
   maps: IMap[];
@@ -25,15 +30,25 @@ interface IProps {
 }
 
 export const AcceptMatchChallengeForm: React.FC<IProps> = (props: IProps) => {
-  const { goBack, isSubmitting, maps, onReject, onSubmit } = props;
+  const { challenger, challengerMap, goBack, isSubmitting, maps, onReject, onSubmit } = props;
   const { formatMessage } = useIntl();
   const [form] = Form.useForm<IFormData>();
 
   const mapsOptions = maps?.map((item) => ({ id: item.id, value: item.id, label: item.name })) ?? [];
 
   return (
-    <Card style={{ margin: '1rem auto', maxWidth: BreakPoints.sm }} title={<FormattedMessage {...messages.title} />}>
+    <Card
+      bodyStyle={{ paddingTop: 8 }}
+      style={{ margin: '1rem auto', maxWidth: BreakPoints.sm }}
+      title={<FormattedMessage {...messages.title} />}
+    >
       <FormComponent form={form} onSubmit={onSubmit}>
+        <S.ChallengerBox>
+          <b>{challenger?.team?.name}</b>
+          <br />
+          <FormattedMessage {...messages.mapLabel} />: {challengerMap?.name ?? ''}
+        </S.ChallengerBox>
+        <Gap defaultHeight={16} />
         <SelectField
           {...fields.opponentMapId}
           label={<FormattedMessage {...messages.mapLabel} />}

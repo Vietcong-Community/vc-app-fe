@@ -1,11 +1,14 @@
 import React, { useMemo, useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import { some } from 'lodash';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useMatchDetail, useSeasonLadder, useSeasonTeams } from '../../../api/hooks/league/api';
+import { IMatchRound } from '../../../api/hooks/league/interfaces';
 import { useMeTeams } from '../../../api/hooks/teams/api';
+import { Alert } from '../../../components/Alert/Alert';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
@@ -32,6 +35,7 @@ import * as S from './MatchDetail.style';
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { formatMessage } = useIntl();
 
   const matchDetail = useMatchDetail(query.matchId);
 
@@ -70,6 +74,9 @@ export const MatchDetail: React.FC = () => {
   const opponentEloAmountLowerThanZero = (matchDetail.data?.opponentEloRowAmount ?? 0) < 0;
   const challengerSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.challenger?.id);
   const opponentSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.opponent?.id);
+  const showUploadRoundImagesAlert =
+    matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
+    some(matchDetail.data?.rounds ?? [], (item: IMatchRound) => !item.screenshot);
 
   return (
     <ContentLayout
@@ -117,6 +124,17 @@ export const MatchDetail: React.FC = () => {
       <Divider style={{ marginTop: 0 }} />
       {showLoading && <Spin size="large" />}
       <EaseInOutContainer isOpen={!showLoading}>
+        {showUploadRoundImagesAlert && (
+          <>
+            <Alert
+              title={formatMessage(messages.uploadScreensForAllRoundsAlert)}
+              type="info"
+              showIcon
+              style={{ textAlign: 'start' }}
+            />
+            <Gap defaultHeight={16} />
+          </>
+        )}
         <S.MatchInformationContainer>
           <>
             <S.ContentContainer>
@@ -205,11 +223,13 @@ export const MatchDetail: React.FC = () => {
                   <Team
                     eloPoints={matchIsNotFinished ? challengerSeasonTeam?.eloPoints : undefined}
                     goToTeamDetail={goToTeamDetail}
+                    map={matchDetail.data?.challengerMap}
                     team={matchDetail.data?.challenger?.team}
                   />
                   <Team
                     eloPoints={matchIsNotFinished ? opponentSeasonTeam?.eloPoints : undefined}
                     goToTeamDetail={goToTeamDetail}
+                    map={matchDetail.data?.opponentMap}
                     team={matchDetail.data?.opponent?.team}
                   />
                 </S.TeamsContainer>
@@ -228,8 +248,13 @@ export const MatchDetail: React.FC = () => {
         <Gap defaultHeight={16} />
         {scoreExists && !!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
           <Rounds
+            allowUpload={
+              matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
+              (isPossibleToManageMatch.allowed || userIsAdmin)
+            }
             challengerTag={matchDetail.data?.challenger.team.tag}
             opponentTag={matchDetail.data?.opponent.team.tag}
+            matchId={query.matchId}
             rounds={matchDetail.data?.rounds}
           />
         )}

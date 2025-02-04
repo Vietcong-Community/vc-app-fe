@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { IMap } from '../../../api/hooks/interfaces';
 import { ITeam } from '../../../api/hooks/teams/interfaces';
+import usaFlag from '../../../assets/usa.png';
+import vietnamFlag from '../../../assets/vietnam.png';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
@@ -89,6 +91,14 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
 
                   const opponentNation = challengerNation === Nation.US ? Nation.VC : Nation.US;
 
+                  const getFlag = (nation: Nation) => {
+                    if (nation === Nation.US) {
+                      return usaFlag;
+                    }
+
+                    return vietnamFlag;
+                  };
+
                   return (
                     <S.RoundContainer>
                       <S.MapTitle>
@@ -96,12 +106,13 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
                       </S.MapTitle>
                       <S.TeamsContainer>
                         <S.TeamContainer>
-                          <span>
+                          <div style={{ display: 'flex', gap: 4 }}>
                             <FormattedMessage
                               {...messages.nation}
                               values={{ nation: mapNationToTranslation(challengerNation) }}
                             />{' '}
-                          </span>
+                            <S.Flag src={getFlag(challengerNation)} alt="" />
+                          </div>
                           <InputNumberField
                             label={<FormattedMessage {...messages.scoreChallenger} />}
                             name={[field.name, roundFields.scoreChallenger.name]}
@@ -109,12 +120,13 @@ export const SetMatchResultForm: React.FC<IProps> = (props: IProps) => {
                           />
                         </S.TeamContainer>
                         <S.TeamContainer>
-                          <span>
+                          <div style={{ display: 'flex', gap: 4 }}>
                             <FormattedMessage
                               {...messages.nation}
                               values={{ nation: mapNationToTranslation(opponentNation) }}
                             />{' '}
-                          </span>
+                            <S.Flag src={getFlag(opponentNation)} alt="" />
+                          </div>
                           <InputNumberField
                             label={<FormattedMessage {...messages.scoreOpponent} />}
                             name={[field.name, roundFields.scoreOpponent.name]}

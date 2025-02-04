@@ -88,3 +88,7 @@ export const Score = styled.div<IScoreProps>`
       background-color: ${props.theme.colors.red};
     `};
 `;
+
+export const Flag = styled.img`
+  width: 20px;
+`;

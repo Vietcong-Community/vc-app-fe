@@ -53,7 +53,7 @@ export const AcceptMatchChallengeCont: React.FC = () => {
     }
   };
 
-  const showLoading = maps.isLoading;
+  const showLoading = maps.isLoading || matchDetail.isLoading;
 
   return (
     <ContentLayout
@@ -96,6 +96,8 @@ export const AcceptMatchChallengeCont: React.FC = () => {
       {showLoading && <Spin size="large" />}
       <EaseInOutContainer isOpen={!showLoading}>
         <AcceptMatchChallengeForm
+          challenger={matchDetail.data?.challenger}
+          challengerMap={matchDetail.data?.challengerMap}
           goBack={() => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId))}
           isSubmitting={acceptMatchChallenge.isPending || rejectMatchChallenge.isPending}
           onReject={onRejectChallenge}

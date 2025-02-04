@@ -15,4 +15,5 @@ export enum LeagueEndpoints {
   CONFIRM_MATCH_SCORE = '/matches/{matchId}/confirm-match-score',
   MATCH_DETAIL = '/matches/{matchId}',
   EXPECTED_ELO_POINTS = '/matches/expected-elo-points/{challengerId}/{opponentId}',
+  ROUNDS_SCREENSHOT_UPLOAD = '/matches/{matchId}/rounds/{roundId}/screenshot-upload-url',
 }

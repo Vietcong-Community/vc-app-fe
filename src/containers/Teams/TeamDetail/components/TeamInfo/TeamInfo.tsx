@@ -12,6 +12,7 @@ import { Button } from '../../../../../components/Button/Button';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
+import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
 
@@ -50,7 +51,7 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
         showNotification(messages.avatarUploadSuccess);
       }
     } catch {
-      showNotification(messages.avatarUploadFailed);
+      showNotification(messages.avatarUploadFailed, undefined, NotificationType.ERROR);
     }
   };
 

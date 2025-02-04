@@ -17,6 +17,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.status',
     defaultMessage: 'Stav',
   },
+  map: {
+    id: 'app.containers.League.MatchDetail.map',
+    defaultMessage: 'Mapa: ',
+  },
   lineup: {
     id: 'app.containers.League.MatchDetail.lineup',
     defaultMessage: 'Sestava',
@@ -54,5 +58,9 @@ export const messages = defineMessages({
   matchBreadcrumb: {
     id: 'app.containers.League.MatchDetail.matchBreadcrumb',
     defaultMessage: 'Detail zápasu',
+  },
+  uploadScreensForAllRoundsAlert: {
+    id: 'app.containers.League.MatchDetail.uploadScreensForAllRoundsAlert',
+    defaultMessage: 'Pro potvrzení zápasu je nutné nahrát screeny všech kol.',
   },
 });

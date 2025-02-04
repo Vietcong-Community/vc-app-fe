@@ -6,19 +6,22 @@ import { FormattedMessage } from 'react-intl';
 import { IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { Round } from '../Round/Round';
 
 import { messages } from './messages';
 
 import * as S from './Rounds.style';
 
 interface IProps {
+  allowUpload: boolean;
   challengerTag?: string;
+  matchId: string;
   opponentTag?: string;
   rounds?: IMatchRound[];
 }
 
 export const Rounds: React.FC<IProps> = (props: IProps) => {
-  const { challengerTag, opponentTag, rounds } = props;
+  const { allowUpload, challengerTag, matchId, opponentTag, rounds } = props;
 
   const splitRoundsByMap = chunk(rounds, 2);
 
@@ -29,35 +32,19 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
       </S.SectionTitle>
       <Gap defaultHeight={8} />
       <S.Container>
-        {splitRoundsByMap?.map((item) => {
+        {splitRoundsByMap?.map((item, index) => {
           return (
-            <S.MapContainer>
-              {item.map((round) => {
-                const getWinnerMessage = () => {
-                  if (round.scoreChallenger > round.scoreOpponent) {
-                    return challengerTag;
-                  } else if (round.scoreChallenger < round.scoreOpponent) {
-                    return opponentTag;
-                  }
-
-                  return <FormattedMessage {...messages.draw} />;
-                };
-
-                const isDraw = round.scoreChallenger === round.scoreOpponent;
-
-                return (
-                  <S.RoundContainer>
-                    <S.WinnerTag $isDraw={isDraw}>{getWinnerMessage()}</S.WinnerTag>
-                    <S.MapTitle>{round.map.name}</S.MapTitle>
-                    <Gap defaultHeight={12} />
-                    <S.ResultContainer>
-                      <S.TeamTag>{challengerTag}</S.TeamTag>
-                      {round.scoreChallenger} - {round.scoreOpponent}
-                      <S.TeamTag>{opponentTag}</S.TeamTag>
-                    </S.ResultContainer>
-                  </S.RoundContainer>
-                );
-              })}
+            <S.MapContainer key={`chunk-${index}`}>
+              {item.map((round) => (
+                <Round
+                  allowUpload={allowUpload}
+                  challengerTag={challengerTag}
+                  key={round.id}
+                  opponentTag={opponentTag}
+                  matchId={matchId}
+                  round={round}
+                />
+              ))}
             </S.MapContainer>
           );
         })}

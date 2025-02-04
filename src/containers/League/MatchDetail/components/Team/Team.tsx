@@ -4,6 +4,7 @@ import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { IMap } from '../../../../../api/hooks/interfaces';
 import { ITeam } from '../../../../../api/hooks/teams/interfaces';
 import { AnimatedHeightContainer } from '../../../../../components/Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Card } from '../../../../../components/Card/Card';
@@ -15,11 +16,12 @@ import * as S from './Team.style';
 interface IProps {
   eloPoints?: number;
   goToTeamDetail: (id: string) => void;
+  map?: IMap;
   team?: ITeam;
 }
 
 export const Team: React.FC<IProps> = (props: IProps) => {
-  const { eloPoints, goToTeamDetail, team } = props;
+  const { eloPoints, goToTeamDetail, map, team } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const navigateToTeam = () => {
@@ -54,6 +56,12 @@ export const Team: React.FC<IProps> = (props: IProps) => {
           </S.ELO>
         </>
       )}
+      <Gap defaultHeight={8} />
+
+      <S.ELO>
+        <FormattedMessage {...messages.map} />
+        <span>{map?.name ?? ''}</span>
+      </S.ELO>
       <Gap defaultHeight={8} />
       <S.LineUpTitle>
         <div onClick={() => setIsOpen((val) => !val)}>

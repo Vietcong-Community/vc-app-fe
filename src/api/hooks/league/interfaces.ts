@@ -56,6 +56,11 @@ export interface IMatchRound {
   confirmationDate?: string;
   confirmedBy?: IUser;
   challengerNation: Nation;
+  opponentNation: Nation;
+  screenshot?: {
+    url: string;
+    id: string;
+  };
 }
 
 export interface IMatch {

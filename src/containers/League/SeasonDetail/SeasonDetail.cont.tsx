@@ -82,11 +82,11 @@ export const SeasonDetailCont: React.FC = () => {
   };
 
   useEffect(() => {
-    if (query.scrollTo && query.scrollTo === 'matches') {
+    if (query.scrollTo && query.scrollTo === 'matches' && !season.isLoading) {
       scrollToAllMatches();
       navigate(removeURLParameter(window.location.search, 'scrollTo'), { replace: true });
     }
-  }, [query.scrollTo]);
+  }, [query.scrollTo, season.isLoading]);
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items?.map((item, index) => {

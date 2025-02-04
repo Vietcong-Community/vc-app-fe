@@ -4,6 +4,7 @@ import { get, post } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IMap } from '../interfaces';
+import { IAvatarUpload } from '../teams/interfaces';
 
 import { LeagueEndpoints } from './endpoints';
 import {
@@ -28,18 +29,6 @@ export const useLeagueList = () => {
       return data;
     },
     staleTime: Infinity,
-  });
-};
-
-export const useLeagueDetail = (id: string, refetchOnMount?: boolean | 'always') => {
-  return useQuery({
-    queryKey: ['league', id],
-    queryFn: async () => {
-      const { data } = await get<ILeagueDetail>(LeagueEndpoints.LEAGUE_BY_ID, { id });
-      return data;
-    },
-    staleTime: Infinity,
-    refetchOnMount: refetchOnMount ?? 'always',
   });
 };
 
@@ -225,5 +214,18 @@ export const useExpectedEloPoints = (challengerId?: string, opponentId?: string,
     },
     enabled: !!challengerId && !!opponentId && enabled,
     staleTime: Infinity,
+  });
+};
+
+export const useRoundResultImageUploadUrl = (matchId: string, roundId: string) => {
+  return useMutation({
+    mutationFn: async (payload: IAvatarUpload) => {
+      const { data } = await post<IAvatarUpload, { fileId: string; uploadUrl: string }>(
+        LeagueEndpoints.ROUNDS_SCREENSHOT_UPLOAD,
+        payload,
+        { matchId, roundId },
+      );
+      return data;
+    },
   });
 };

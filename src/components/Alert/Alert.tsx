@@ -6,7 +6,7 @@ import * as S from './Alert.style';
 
 interface IProps {
   title: string;
-  description: string;
+  description?: string;
   type: 'info' | 'warning' | 'success' | 'error';
   showIcon?: boolean;
   style?: CSSProperties;

@@ -13,13 +13,12 @@ import { DatePickerField } from '../../../components/Fields/DatePickerField/Date
 import { SelectField } from '../../../components/Fields/SelectField/SelectField';
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { BreakPoints } from '../../../theme/theme';
 import { ExpectedEloPointsModal } from '../components/ExpectedEloPointsModal/ExpectedEloPointsModal';
 
 import { fields, IFormData } from './CreateMatch.fields';
 import { messages } from './messages';
-
-import * as S from './CreateMatch.style';
 
 interface IProps {
   initialValues?: Partial<IFormData>;
@@ -71,9 +70,9 @@ export const CreateMatchForm: React.FC<IProps> = (props: IProps) => {
             <>
               <Gap defaultHeight={8} />
               <Flex justify="end">
-                <S.LinkButton onClick={() => setIsOpen(true)}>
+                <LinkButton withScale={false} onClick={() => setIsOpen(true)}>
                   <FormattedMessage {...messages.expectedPoints} />
-                </S.LinkButton>
+                </LinkButton>
               </Flex>
             </>
           )}

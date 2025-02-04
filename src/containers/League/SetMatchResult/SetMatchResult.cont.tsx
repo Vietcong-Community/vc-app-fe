@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useMatchDetail, useSetMatchScore } from '../../../api/hooks/league/api';
+import { Alert } from '../../../components/Alert/Alert';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
@@ -14,6 +15,7 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
+import { BreakPoints } from '../../../theme/theme';
 
 import { IFormData } from './SetMatchResult.fields';
 import { SetMatchResultForm } from './SetMatchResult.form';
@@ -92,9 +94,18 @@ export const SetMatchScoreCont: React.FC = () => {
       ]}
     >
       <Helmet title={formatMessage(messages.title)} />
-      <Gap defaultHeight={32} height={{ md: 16 }} />
       {showLoading && <Spin size="large" />}
       <EaseInOutContainer isOpen={!showLoading}>
+        <div style={{ margin: 'auto', maxWidth: BreakPoints.md }}>
+          <Alert
+            style={{ textAlign: 'start' }}
+            title={formatMessage(messages.correctScoreAlertTitle)}
+            description={formatMessage(messages.correctScoreAlert)}
+            type="info"
+            showIcon
+          />
+        </div>
+        <Gap defaultHeight={16} />
         <SetMatchResultForm
           challengerTeam={matchDetail.data?.challenger?.team}
           challengerMap={matchDetail.data?.challengerMap}

@@ -10,6 +10,7 @@ import { useMeTeams } from '../../../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
 import { Table } from '../../../../../components/Table/Table';
 import { MatchStatus, SeasonStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
@@ -85,7 +86,14 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
           <>
             <Flex justify="center" vertical>
               <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
-                <FormattedMessage {...messages.openMatches} />
+                <FormattedMessage {...messages.openMatches} />{' '}
+                {(futureMatches.data?.total ?? 0) > 0 ? (
+                  <span style={{ fontSize: 12 }}>
+                    ({futureMatches.data?.matches?.length}/{futureMatches.data?.total})
+                  </span>
+                ) : (
+                  ''
+                )}
               </Typography.Title>
               {futureMatches.isLoading && <Spin size="large" />}
               <EaseInOutContainer isOpen={!futureMatches.isLoading}>
@@ -137,6 +145,14 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
           </EaseInOutContainer>
         </Flex>
       </S.Matches>
+      <Gap defaultHeight={16} />
+      <Flex vertical align="flex-end">
+        <LinkButton
+          onClick={() => navigate(`${Routes.SEASON_DETAIL.replace(':seasonId', seasonDetail.id)}?scrollTo=matches`)}
+        >
+          <FormattedMessage {...messages.allMatches} />
+        </LinkButton>
+      </Flex>
       <Gap defaultHeight={32} />
       <Flex vertical align="flex-start">
         <Table

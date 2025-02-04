@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useChangePasswordWithToken } from '../../../api/hooks/auth/api';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
@@ -15,8 +16,6 @@ import { Routes } from '../../../routes/enums';
 import { IFormData } from './ChangePassword.fields';
 import { ChangePasswordForm } from './ChangePassword.form';
 import { messages } from './messages';
-
-import * as S from './ChangePassword.style';
 
 export const ChangePasswordCont: React.FC = () => {
   const { navigate, query } = useRouter<{ token: string }>();
@@ -57,7 +56,11 @@ export const ChangePasswordCont: React.FC = () => {
               <FormattedMessage
                 {...messages.successDescription}
                 values={{
-                  link: (msg: ReactNode) => <S.LinkButton onClick={() => navigate(Routes.LOGIN)}>{msg}</S.LinkButton>,
+                  link: (msg: ReactNode) => (
+                    <LinkButton withScale={false} onClick={() => navigate(Routes.LOGIN)}>
+                      {msg}
+                    </LinkButton>
+                  ),
                 }}
               />
             </span>

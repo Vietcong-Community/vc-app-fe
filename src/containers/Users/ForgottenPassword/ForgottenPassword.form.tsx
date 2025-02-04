@@ -8,6 +8,7 @@ import { Button } from '../../../components/Button/Button';
 import { InputField } from '../../../components/Fields/InputField/InputField';
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { parseToLowerCase, removeWhiteSpaces } from '../../../utils/formUtils';
 
@@ -52,9 +53,9 @@ export const ForgottenPasswordForm: React.FC<IProps> = (props: IProps) => {
           </Button>
         </FormComponent>
         <Gap defaultHeight={32} />
-        <S.LinkButton onClick={goBackToLogin}>
+        <LinkButton onClick={goBackToLogin}>
           <FormattedMessage {...messages.backToLogin} />
-        </S.LinkButton>
+        </LinkButton>
       </Col>
     </Row>
   );

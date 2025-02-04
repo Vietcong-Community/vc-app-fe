@@ -9,6 +9,7 @@ import { InputField } from '../../../components/Fields/InputField/InputField';
 import { PasswordField } from '../../../components/Fields/PasswordField/PasswordField';
 import { FormComponent } from '../../../components/Form/FormComponent';
 import { Gap } from '../../../components/Gap/Gap';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { parseToLowerCase, removeWhiteSpaces } from '../../../utils/formUtils';
 
@@ -53,17 +54,17 @@ export const LoginForm: React.FC<IProps> = (props: IProps) => {
               label={<FormattedMessage {...messages.passwordLabel} />}
               placeholder={formatMessage(messages.passwordLabel)}
             />
-            <S.LinkButton onClick={goToResetPassword} style={{ textAlign: 'end' }}>
+            <LinkButton withScale={false} onClick={goToResetPassword} style={{ textAlign: 'end' }}>
               <FormattedMessage {...messages.forgottenPasswordButton} />
-            </S.LinkButton>
+            </LinkButton>
             <Gap defaultHeight={16} />
             <Button loading={isSubmitting} type="submit" style={{ padding: '1.25rem 3rem' }}>
               <FormattedMessage {...messages.loginButtonLabel} />
             </Button>
             <Gap defaultHeight={24} />
-            <S.LinkButton onClick={goToRegistration}>
+            <LinkButton withScale={false} onClick={goToRegistration}>
               <FormattedMessage {...messages.registrationButton} values={{ br: <br /> }} />
-            </S.LinkButton>
+            </LinkButton>
           </FormComponent>
         </Col>
       </Row>

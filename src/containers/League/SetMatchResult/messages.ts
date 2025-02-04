@@ -57,4 +57,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.SetMatchResult.matchDetailBreadcrumb',
     defaultMessage: 'Zápas',
   },
+  correctScoreAlertTitle: {
+    id: 'app.containers.League.SetMatchResult.correctScoreAlertTitle',
+    defaultMessage: 'Zadávání skóre!',
+  },
+  correctScoreAlert: {
+    id: 'app.containers.League.SetMatchResult.correctScoreAlert',
+    defaultMessage: 'Skóre v kolech zadávejte dle skórovaných vlajek v kole, nezapisujte pouze zkráceně 1:0/0:1.',
+  },
 });

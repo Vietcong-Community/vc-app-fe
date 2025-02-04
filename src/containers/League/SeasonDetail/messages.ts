@@ -31,7 +31,11 @@ export const messages = defineMessages({
   },
   finishedMatches: {
     id: 'app.containers.League.SeasonDetail.finishedMatches',
-    defaultMessage: 'Odehrané zápasy',
+    defaultMessage: 'Nejnovější odehrané zápasy',
+  },
+  allMatches: {
+    id: 'app.containers.League.SeasonDetail.allMatches',
+    defaultMessage: 'Přejít na všechny zápasy',
   },
   noFinishedMatches: {
     id: 'app.containers.League.SeasonDetail.noFinishedMatches',

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { FrownOutlined } from '@ant-design/icons';
 import { Flex, Space, Spin } from 'antd';
@@ -17,6 +17,7 @@ import { Card } from '../../../components/Card/Card';
 import { DEFAULT_USER_DATE_FORMAT } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { Table } from '../../../components/Table/Table';
 import { TableWithPagination } from '../../../components/TableWithPagination/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -28,6 +29,7 @@ import { Routes } from '../../../routes/enums';
 import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation, mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { removeURLParameter } from '../../../utils/urlUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from '../types';
 import { canUserManageMatch } from '../utils';
@@ -38,7 +40,7 @@ import { messages } from './messages';
 import * as S from './SeasonDetail.style';
 
 export const SeasonDetailCont: React.FC = () => {
-  const { navigate, query } = useRouter<{ seasonId: string }>();
+  const { navigate, query } = useRouter<{ seasonId: string; scrollTo?: string }>();
   const { width } = useWindowDimensions();
   const { formatMessage } = useIntl();
   const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
@@ -49,7 +51,7 @@ export const SeasonDetailCont: React.FC = () => {
   const season = useSeasonsDetail(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
-  const matches = useSeasonMatchList(query.seasonId, { page: selectedMatchPage, limit: 10 });
+  const matches = useSeasonMatchList(query.seasonId, { page: selectedMatchPage, limit: 10 }, 'always');
   const futureMatches = useSeasonMatchList(
     query.seasonId,
     {
@@ -68,6 +70,23 @@ export const SeasonDetailCont: React.FC = () => {
     'always',
     0,
   );
+
+  const scrollToAllMatches = () => {
+    const element = document.getElementById('all-matches');
+    if (element) {
+      const yOffset = -100;
+      const y = element?.getBoundingClientRect().top + window.scrollY + yOffset;
+
+      setTimeout(() => window.scrollTo({ top: y, behavior: 'smooth' }), 200);
+    }
+  };
+
+  useEffect(() => {
+    if (query.scrollTo && query.scrollTo === 'matches') {
+      scrollToAllMatches();
+      navigate(removeURLParameter(window.location.search, 'scrollTo'), { replace: true });
+    }
+  }, [query.scrollTo]);
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items?.map((item, index) => {
@@ -184,7 +203,14 @@ export const SeasonDetailCont: React.FC = () => {
               {futureMatches.isLoading && <Spin size="large" />}
               <EaseInOutContainer isOpen={!futureMatches.isLoading}>
                 <S.CardTitle>
-                  <FormattedMessage {...messages.upcomingMatches} />
+                  <FormattedMessage {...messages.upcomingMatches} />{' '}
+                  {(futureMatches.data?.total ?? 0) > 0 ? (
+                    <span style={{ fontSize: 12 }}>
+                      ({futureMatches.data?.matches?.length}/{futureMatches.data?.total})
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </S.CardTitle>
                 {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
                 {noUpcomingMatches && isPossibleToCreateMatch?.allowed && (
@@ -253,6 +279,12 @@ export const SeasonDetailCont: React.FC = () => {
           </Card>
         </S.Matches>
         <Gap defaultHeight={16} />
+        <Flex vertical align="flex-end">
+          <LinkButton onClick={scrollToAllMatches}>
+            <FormattedMessage {...messages.allMatches} />
+          </LinkButton>
+        </Flex>
+        <Gap defaultHeight={32} />
         <EaseInOutContainer isOpen={isSeasonActive && isPossibleToCreateMatch?.allowed}>
           <Flex justify="flex-end">
             <Button
@@ -292,7 +324,7 @@ export const SeasonDetailCont: React.FC = () => {
         </Flex>
         <S.Divider />
         <Flex vertical align="flex-start">
-          <H2>
+          <H2 id="all-matches">
             <FormattedMessage {...messages.allMatchesTitle} />{' '}
             {matches.data?.total !== undefined ? <>({matches.data?.total})</> : ''}
           </H2>

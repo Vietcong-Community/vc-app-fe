@@ -8,6 +8,7 @@ import { Button } from '../../../components/Button/Button';
 import { InputField } from '../../../components/Fields/InputField/InputField';
 import { PasswordField } from '../../../components/Fields/PasswordField/PasswordField';
 import { Gap } from '../../../components/Gap/Gap';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { parseToLowerCase, removeWhiteSpaces } from '../../../utils/formUtils';
 
@@ -72,9 +73,9 @@ export const RegistrationForm: React.FC<IProps> = (props: IProps) => {
               <FormattedMessage {...messages.registerButtonLabel} />
             </Button>
             <Gap defaultHeight={24} />
-            <S.LinkButton onClick={goToLogin}>
+            <LinkButton onClick={goToLogin} withScale={false}>
               <FormattedMessage {...messages.goToLogin} values={{ br: <br /> }} />
-            </S.LinkButton>
+            </LinkButton>
           </Form>
         </Col>
       </Row>

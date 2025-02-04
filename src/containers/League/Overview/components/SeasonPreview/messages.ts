@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export const messages = defineMessages({
   playedMatches: {
     id: 'app.containers.League.Overview.component.SeasonPreview.playedMatches',
-    defaultMessage: 'Odehrané zápasy',
+    defaultMessage: 'Nejnovější odehrané zápasy',
   },
   openMatches: {
     id: 'app.containers.League.Overview.component.SeasonPreview.openMatches',
@@ -24,5 +24,9 @@ export const messages = defineMessages({
   noFinishedMatches: {
     id: 'app.containers.League.Overview.component.SeasonPreview.noFinishedMatches',
     defaultMessage: 'Nic tu není, koukejte něco odehrát!',
+  },
+  allMatches: {
+    id: 'app.containers.League.Overview.component.SeasonPreview.allMatches',
+    defaultMessage: 'Přejít na všechny zápasy',
   },
 });

@@ -91,12 +91,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
           <Gap defaultHeight={16} />
           <FormattedMessage {...messages.screenshot} />
           <Gap defaultHeight={8} />
-          <Image
-            width="100%"
-            src={
-              'https://vietcong-hub.fra1.digitaloceanspaces.com/team/avatars/7ef5ae8f-c200-4574-9a4e-5d0d9e796ecf/472965033_583992801175215_5739325119773577940_n.jpg'
-            }
-          />
+          <Image width="100%" src={round.screenshot?.url} />
         </>
       )}
       {!round.screenshot && allowUpload && (

@@ -33,7 +33,9 @@ export const PlayerInfo = styled.div`
 export const Description = styled.div`
   display: flex;
   max-width: 740px;
+  text-align: start;
   width: 100%;
+  white-space: pre-wrap;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`

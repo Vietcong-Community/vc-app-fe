@@ -11,6 +11,7 @@ import usaFlag from '../../../../../assets/usa.png';
 import vietnamFlag from '../../../../../assets/vietnam.png';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { Nation } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
@@ -72,6 +73,14 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     return <FormattedMessage {...messages.draw} />;
   };
 
+  const getFlag = (nation: Nation) => {
+    if (nation === Nation.US) {
+      return usaFlag;
+    }
+
+    return vietnamFlag;
+  };
+
   const isDraw = round.scoreChallenger === round.scoreOpponent;
 
   return (
@@ -80,11 +89,11 @@ export const Round: React.FC<IProps> = (props: IProps) => {
       <S.MapTitle>{round.map.name}</S.MapTitle>
       <Gap defaultHeight={12} />
       <S.ResultContainer>
-        <S.Flag src={usaFlag} alt="" />
+        <S.Flag src={getFlag(round.challengerNation)} alt="" />
         <S.TeamTag>{challengerTag}</S.TeamTag>
         {round.scoreChallenger} - {round.scoreOpponent}
         <S.TeamTag>{opponentTag}</S.TeamTag>
-        <S.Flag src={vietnamFlag} alt="" />
+        <S.Flag src={getFlag(round.opponentNation)} alt="" />
       </S.ResultContainer>
       {round.screenshot?.url && (
         <>

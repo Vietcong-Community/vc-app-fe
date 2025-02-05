@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { Image, UploadFile } from 'antd';
+import { Image, Spin, UploadFile } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
-import { useRoundResultImageUploadUrl } from '../../../../../api/hooks/league/api';
+import { useRemoveRoundScreenshot, useRoundResultImageUploadUrl } from '../../../../../api/hooks/league/api';
 import { IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import usaFlag from '../../../../../assets/usa.png';
 import vietnamFlag from '../../../../../assets/vietnam.png';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
 import { Nation } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
+import { theme } from '../../../../../theme/theme';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
 
 import { messages } from './messages';
@@ -36,6 +38,16 @@ export const Round: React.FC<IProps> = (props: IProps) => {
 
   const confirmUpload = useConfirmImageUploadUrl();
   const screenshotUpload = useRoundResultImageUploadUrl(matchId, round.id);
+  const removeScreenshot = useRemoveRoundScreenshot(round.id);
+
+  const handleDelete = async () => {
+    try {
+      await removeScreenshot.mutateAsync();
+      await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+    } catch {
+      showNotification(messages.screenshotUploadFailed, undefined, NotificationType.ERROR);
+    }
+  };
 
   const uploadScreenshot = async () => {
     try {
@@ -101,6 +113,19 @@ export const Round: React.FC<IProps> = (props: IProps) => {
           <FormattedMessage {...messages.screenshot} />
           <Gap defaultHeight={8} />
           <Image width="100%" src={round.screenshot?.url} />
+          {allowUpload && (
+            <>
+              <Gap defaultHeight={8} />
+              {removeScreenshot.isPending && <Spin size="small" />}
+              {!removeScreenshot.isPending && (
+                <div style={{ textAlign: 'end', width: '100%' }}>
+                  <LinkButton onClick={handleDelete} style={{ color: theme.colors.red }} withScale={false}>
+                    <FormattedMessage {...messages.delete} />
+                  </LinkButton>
+                </div>
+              )}
+            </>
+          )}
         </>
       )}
       {!round.screenshot && allowUpload && (

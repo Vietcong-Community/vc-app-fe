@@ -85,6 +85,10 @@ export const messages = defineMessages({
     id: 'app.utils.teamRoleOwner',
     defaultMessage: 'Kapitán',
   },
+  teamRoleSlave: {
+    id: 'app.utils.teamRoleSlave',
+    defaultMessage: 'Otrok',
+  },
   teamRoleMatchManager: {
     id: 'app.utils.teamRoleMatchManager',
     defaultMessage: 'Manager zápasů',

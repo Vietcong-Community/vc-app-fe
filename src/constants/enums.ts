@@ -42,6 +42,7 @@ export enum MatchStatus {
 export enum TeamRole {
   OWNER = 'OWNER',
   MATCH_ORGANIZER = 'MATCH_ORGANIZER',
+  OTROK = 'OTROK',
   MEMBER = 'MEMBER',
 }
 

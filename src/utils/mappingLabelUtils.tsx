@@ -89,6 +89,8 @@ export const mapTeamRoleToTranslation = (teamRole?: TeamRole): ReactNode | undef
       return <FormattedMessage {...messages.teamRoleOwner} />;
     case TeamRole.MATCH_ORGANIZER:
       return <FormattedMessage {...messages.teamRoleMatchManager} />;
+    case TeamRole.OTROK:
+      return <FormattedMessage {...messages.teamRoleSlave} />;
     case TeamRole.MEMBER:
       return <FormattedMessage {...messages.teamRoleMember} />;
     default:

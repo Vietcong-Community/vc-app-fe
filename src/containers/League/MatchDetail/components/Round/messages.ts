@@ -17,4 +17,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Round.screenshotUploadFailed',
     defaultMessage: 'Screenshot se nepodařilo nahrát, Trapper je taková lopata, že neumí udělat uložení obrázku.',
   },
+  delete: {
+    id: 'app.containers.League.MatchDetail.components.Round.delete',
+    defaultMessage: 'Smazat',
+  },
+  screenshotDeleteFailed: {
+    id: 'app.containers.League.MatchDetail.components.Round.screenshotDeleteFailed',
+    defaultMessage: 'Screenshot se nesmazal, asi nechce být zapomenut.',
+  },
 });

@@ -39,6 +39,7 @@ export const canUserManageMatch = (
   return {
     allowed:
       userTeamInSeason.userInTeam.role === TeamRole.MATCH_ORGANIZER ||
+      userTeamInSeason.userInTeam.role === TeamRole.OTROK ||
       userTeamInSeason.userInTeam.role === TeamRole.OWNER,
     myTeamId: myTeamInSeason?.team?.team?.id,
   };

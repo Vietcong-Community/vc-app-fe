@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { get, post } from '../../apiFactory';
+import { del, get, post } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IMap } from '../interfaces';
@@ -225,6 +225,17 @@ export const useRoundResultImageUploadUrl = (matchId: string, roundId: string) =
         payload,
         { matchId, roundId },
       );
+      return data;
+    },
+  });
+};
+
+export const useRemoveRoundScreenshot = (roundId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await del(LeagueEndpoints.REMOVE_ROUND_SCREENSHOT, {
+        roundId,
+      });
       return data;
     },
   });

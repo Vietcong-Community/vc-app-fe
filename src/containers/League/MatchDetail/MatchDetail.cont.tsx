@@ -113,7 +113,7 @@ export const MatchDetail: React.FC = () => {
           <ManageMenu
             canConfirmMatch={isPossibleToManageMatch?.myTeamId === matchDetail.data?.opponent?.team?.id}
             canEnterResult={isPossibleToManageMatch?.allowed}
-            // canConfirmResult={isPossibleToManageMatch?.myTeamId}
+            canConfirmResult={isPossibleToManageMatch?.allowed && !showUploadRoundImagesAlert}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             status={matchDetail.data?.status}

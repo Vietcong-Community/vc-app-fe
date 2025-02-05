@@ -2,6 +2,7 @@
   "app.api.serverNotAvailable": "Server is not available, please try again later.",
   "app.api.tooManyRequests": "You have exceeded the request limit, please try again later.",
   "app.api.unexpectedError": "An unexpected error occurred, please try again later.",
+  "app.components.Fields.UploadField.allowedPhotoMimeTypes": "Allowed file types are png, jpg and webp.",
   "app.components.Fields.UploadField.uploadButton": "Upload photo",
   "app.components.Footer.about": "About Us",
   "app.components.Footer.aboutContent": "We are the official league provider for the game Vietcong. We offer several game modes. Join, play, and earn achievements.",

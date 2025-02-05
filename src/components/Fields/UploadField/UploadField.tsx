@@ -3,6 +3,13 @@ import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { GetProp, Image, Upload, UploadFile, UploadProps } from 'antd';
 
+import { useNotifications } from '../../../hooks/NotificationsHook';
+import { NotificationType } from '../../../providers/NotificationsProvider/enums';
+
+import { messages } from './messages';
+
+const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 const getBase64 = (file: FileType): Promise<string> =>
@@ -23,6 +30,7 @@ export const UploadField: React.FC<IProps> = (props: IProps) => {
   const { fileList = [], maxFiles = 1, setFileList } = props;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
+  const { showNotification } = useNotifications();
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -42,6 +50,12 @@ export const UploadField: React.FC<IProps> = (props: IProps) => {
     },
     onPreview: handlePreview,
     beforeUpload: (file) => {
+      const isAllowedType = allowedMimeTypes.includes(file.type);
+
+      if (!isAllowedType) {
+        showNotification(messages.allowedPhotoMimeTypes, undefined, NotificationType.ERROR);
+        return Upload.LIST_IGNORE;
+      }
       setFileList([...fileList, file]);
 
       return false;

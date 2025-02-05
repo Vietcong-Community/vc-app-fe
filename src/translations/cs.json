@@ -2,6 +2,7 @@
   "app.api.serverNotAvailable": "Server není dostupný, zkuste to prosím později.",
   "app.api.tooManyRequests": "Vyčerpali jste limit požadavků, zkuste to prosím později.",
   "app.api.unexpectedError": "Došlo k neočekávané chybě, zkuste to prosím později.",
+  "app.components.Fields.UploadField.allowedPhotoMimeTypes": "Povolené typy souborů jsou png, jpg a webp.",
   "app.components.Fields.UploadField.uploadButton": "Nahrát fotku",
   "app.components.Footer.about": "O nás",
   "app.components.Footer.aboutContent": "Jsme oficiální poskytovatel ligy pro hru Vietcong. Nabízíme několik herních módů. Připoj se, hraj a získávej ocenění.",

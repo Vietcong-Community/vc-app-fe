@@ -23,7 +23,15 @@ interface IProps {
 }
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
-  const { canConfirmMatch = false, canEnterResult = false, matchId, seasonId, status, userIsAdmin } = props;
+  const {
+    canConfirmMatch = false,
+    canEnterResult = false,
+    canConfirmResult = false,
+    matchId,
+    seasonId,
+    status,
+    userIsAdmin,
+  } = props;
   const { navigate } = useRouter<{ id: string }>();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
@@ -69,12 +77,11 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       onClick: () => navigate(Routes.SET_MATCH_SCORE.replace(':matchId', matchId)),
       disabled: status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
     },
-
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '3',
       onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
     },
     ...adminItems,
   ];

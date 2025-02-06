@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { UploadFile } from 'antd';
+import { Spin, UploadFile } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import teamImg from 'src/assets/heli-footer-light-design.webp';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
-import { useTeamAvatarUploadUrl } from '../../../../../api/hooks/teams/api';
+import { useTeamAvatarUploadUrl, useTeamSeasons } from '../../../../../api/hooks/teams/api';
 import { ITeam } from '../../../../../api/hooks/teams/interfaces';
+import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { H2 } from '../../../../../components/Titles/H2/H2';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
+import { Matches } from '../Matches/Matches';
 
 import { messages } from './messages';
 
@@ -32,6 +35,7 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { showNotification } = useNotifications();
 
+  const seasons = useTeamSeasons(teamDetail?.id ?? '');
   const logoUrl = useTeamAvatarUploadUrl(teamDetail?.id ?? '');
   const confirmUpload = useConfirmImageUploadUrl();
 
@@ -64,48 +68,70 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
   const usePlaceholderLogo = !teamDetail?.image?.url;
 
   return (
-    <S.Content>
-      <S.PictureDiv>
-        {usePlaceholderLogo && !showAvatarUpload && <S.TeamImage src={teamImg} />}
-        {!usePlaceholderLogo && !showAvatarUpload && <S.TeamImage src={teamDetail?.image?.url} alt="" />}
-        {showAvatarUpload && <UploadField fileList={fileList} setFileList={setFileList} />}
-        {showAvatarUploadOption && (
-          <Button onClick={() => setShowAvatarUpload(true)}>
-            <FormattedMessage {...messages.uploadAvatar} />
-          </Button>
-        )}
-      </S.PictureDiv>
-      <S.InfoDiv>
-        <S.InfoCard>
-          <b>
-            <FormattedMessage {...messages.teamName} />
-          </b>
-          <i>{teamDetail?.name}</i>
-          <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
-        </S.InfoCard>
-        <S.InfoCard>
-          <b>
-            <FormattedMessage {...messages.clanTag} />
-          </b>
-          <i>{teamDetail?.tag}</i>
-          <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
-        </S.InfoCard>
-        <S.InfoCard>
-          <b>
-            <FormattedMessage {...messages.memberFrom} />
-          </b>
-          <i>{formatDateForUser(teamDetail?.createdAt)}</i>
-          <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
-        </S.InfoCard>
-        <S.InfoCard>
-          {teamDetail?.description ?? (
-            <i>
-              <FormattedMessage {...messages.fakeDescription} />
-            </i>
+    <>
+      <S.Content>
+        <S.PictureDiv>
+          {usePlaceholderLogo && !showAvatarUpload && <S.TeamImage src={teamImg} />}
+          {!usePlaceholderLogo && !showAvatarUpload && <S.TeamImage src={teamDetail?.image?.url} alt="" />}
+          {showAvatarUpload && <UploadField fileList={fileList} setFileList={setFileList} />}
+          {showAvatarUploadOption && (
+            <Button onClick={() => setShowAvatarUpload(true)}>
+              <FormattedMessage {...messages.uploadAvatar} />
+            </Button>
           )}
-          <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
-        </S.InfoCard>
-      </S.InfoDiv>
-    </S.Content>
+        </S.PictureDiv>
+        <S.InfoDiv>
+          <S.InfoCard>
+            <b>
+              <FormattedMessage {...messages.teamName} />
+            </b>
+            <i>{teamDetail?.name}</i>
+            <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
+          </S.InfoCard>
+          <S.InfoCard>
+            <b>
+              <FormattedMessage {...messages.clanTag} />
+            </b>
+            <i>{teamDetail?.tag}</i>
+            <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
+          </S.InfoCard>
+          <S.InfoCard>
+            <b>
+              <FormattedMessage {...messages.memberFrom} />
+            </b>
+            <i>{formatDateForUser(teamDetail?.createdAt)}</i>
+            <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
+          </S.InfoCard>
+          <S.InfoCard>
+            {teamDetail?.description ?? (
+              <i>
+                <FormattedMessage {...messages.fakeDescription} />
+              </i>
+            )}
+            <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
+          </S.InfoCard>
+        </S.InfoDiv>
+      </S.Content>
+      <Gap defaultHeight={32} height={{ md: 16 }} />
+      <S.Divider />
+      <H2 style={{ textAlign: 'start' }}>
+        <FormattedMessage {...messages.seasonsMatches} />
+      </H2>
+      {seasons.isLoading && <Spin size="large" />}
+      <EaseInOutContainer isOpen={!seasons.isLoading && (seasons.data?.items?.length ?? 0) > 0 && !!teamDetail?.id}>
+        <Gap defaultHeight={16} />
+        {seasons.data?.items.map((season, index) => {
+          const isLast = index === seasons.data?.items.length - 1;
+          return (
+            <>
+              <div style={{ textAlign: 'start', width: '100%' }}>{season.name}</div>
+              <Gap defaultHeight={8} />
+              <Matches teamId={teamDetail?.id ?? ''} seasonId={season.id} />
+              {!isLast && <Gap defaultHeight={16} />}
+            </>
+          );
+        })}
+      </EaseInOutContainer>
+    </>
   );
 };

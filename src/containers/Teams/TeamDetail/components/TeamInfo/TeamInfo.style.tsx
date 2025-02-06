@@ -1,3 +1,4 @@
+import { Divider as AntDDivider } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
@@ -26,7 +27,8 @@ export const PictureDiv = styled.div`
   gap: 8px;
   flex: 1;
   justify-content: center;
-  width: 280px;
+  max-width: 200px;
+  width: 100%;
 
   ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
@@ -86,4 +88,9 @@ export const InfoCard = styled.div`
   i {
     color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   }
+`;
+
+export const Divider = styled(AntDDivider)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  margin: 0;
 `;

@@ -4,6 +4,7 @@ import { get, post } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
+import { ISeason } from '../league/interfaces';
 
 import { TeamEndpoints } from './endpoints';
 import { ITeamPlayers, ITeam, IMeTeams, IAvatarUpload } from './interfaces';
@@ -117,7 +118,7 @@ export const useTeamSeasons = (teamId: string, refetchOnMount?: boolean | 'alway
   return useQuery({
     queryKey: ['teamSeasons', teamId],
     queryFn: async () => {
-      const { data } = await get<ITeam>(TeamEndpoints.TEAM_SEASONS, { teamId });
+      const { data } = await get<{ items: ISeason[] }>(TeamEndpoints.TEAM_SEASONS, { teamId });
       return data;
     },
     staleTime: Infinity,

@@ -29,4 +29,8 @@ export const messages = defineMessages({
     id: 'app.containers.Teams.TeamInfo.avatarUploadFailed',
     defaultMessage: 'Logo se nepodařilo nahrát, zkuste to prosím později nebo kontaktujte adminský tým.',
   },
+  seasonsMatches: {
+    id: 'app.containers.Teams.TeamInfo.seasonsMatches',
+    defaultMessage: 'Zápasy týmu',
+  },
 });

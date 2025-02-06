@@ -120,6 +120,7 @@ export const TeamDetailCont: React.FC = () => {
           </S.Members>
         </S.Content>
       </EaseInOutContainer>
+      <Gap defaultHeight={32} height={{ md: 16 }} />
     </ContentLayout>
   );
 };

@@ -153,6 +153,12 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
           <FormattedMessage {...messages.allMatches} />
         </LinkButton>
       </Flex>
+      <Gap defaultHeight={16} />
+      <Flex justify="flex-end">
+        <Button onClick={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', seasonDetail.id))}>
+          <FormattedMessage {...messages.goToDetail} />
+        </Button>
+      </Flex>
       <Gap defaultHeight={32} />
       <Flex vertical align="flex-start">
         <Table

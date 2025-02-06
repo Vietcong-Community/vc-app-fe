@@ -35,6 +35,7 @@ import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from
 import { canUserManageMatch } from '../utils';
 
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
+import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { messages } from './messages';
 
 import * as S from './SeasonDetail.style';
@@ -52,15 +53,6 @@ export const SeasonDetailCont: React.FC = () => {
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
   const matches = useSeasonMatchList(query.seasonId, { page: selectedMatchPage, limit: 10 }, 'always');
-  const futureMatches = useSeasonMatchList(
-    query.seasonId,
-    {
-      status: [MatchStatus.NEW, MatchStatus.ACCEPTED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
-      limit: 5,
-    },
-    'always',
-    0,
-  );
   const finishedMatches = useSeasonMatchList(
     query.seasonId,
     {
@@ -132,7 +124,6 @@ export const SeasonDetailCont: React.FC = () => {
   };
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
-  const noUpcomingMatches = futureMatches.data?.total === 0;
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
@@ -164,20 +155,19 @@ export const SeasonDetailCont: React.FC = () => {
           {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
         </Flex>
         <S.Divider style={{ marginTop: 0 }} />
-        <S.Matches>
-          <Card style={{ flex: 0.5 }}>
-            <S.CardTitle>
-              <FormattedMessage {...messages.seasonInformationTitle} />
-            </S.CardTitle>
-            <Flex vertical align="flex-start" style={{ textAlign: 'start' }}>
+        <Card style={{ flex: 0.5 }} bodyStyle={{ padding: '8px 24px' }}>
+          <S.SeasonInfoContainer>
+            <div>
               <S.InformationLabel>
                 <FormattedMessage {...messages.seasonStatus} />
               </S.InformationLabel>
-              <S.InformationValue>{mapSeasonStatusToTranslation(season.data?.status)}</S.InformationValue>
-              <br />
+              : <S.InformationValue>{mapSeasonStatusToTranslation(season.data?.status)}</S.InformationValue>
+            </div>
+            <div>
               <S.InformationLabel>
                 <FormattedMessage {...messages.seasonBeginDate} />
               </S.InformationLabel>
+              :{' '}
               <S.InformationValue>
                 {season.data?.startDate ? (
                   formatDateForUser(season.data.startDate, DEFAULT_USER_DATE_FORMAT)
@@ -185,10 +175,12 @@ export const SeasonDetailCont: React.FC = () => {
                   <FormattedMessage {...messages.dateNotSpecified} />
                 )}
               </S.InformationValue>
-              <br />
+            </div>
+            <div>
               <S.InformationLabel>
                 <FormattedMessage {...messages.seasonEndDate} />
               </S.InformationLabel>
+              :{' '}
               <S.InformationValue>
                 {season.data?.endDate ? (
                   formatDateForUser(season.data.endDate, DEFAULT_USER_DATE_FORMAT)
@@ -196,95 +188,69 @@ export const SeasonDetailCont: React.FC = () => {
                   <FormattedMessage {...messages.dateNotSpecified} />
                 )}
               </S.InformationValue>
-            </Flex>
-          </Card>
-          {isSeasonActive && (
+            </div>
+          </S.SeasonInfoContainer>
+        </Card>
+        <Gap defaultHeight={16} />
+        {isSeasonActive && (
+          <S.Matches>
+            <FutureMatches
+              canCreateNewMatch={isPossibleToCreateMatch?.allowed}
+              onMatchCreateClick={onMatchCreateClick}
+              seasonId={query.seasonId}
+            />
             <Card style={{ flex: 1 }}>
-              {futureMatches.isLoading && <Spin size="large" />}
-              <EaseInOutContainer isOpen={!futureMatches.isLoading}>
+              {finishedMatches.isLoading && <Spin size="large" />}
+              <EaseInOutContainer isOpen={!finishedMatches.isLoading}>
                 <S.CardTitle>
-                  <FormattedMessage {...messages.upcomingMatches} />{' '}
-                  {(futureMatches.data?.total ?? 0) > 0 ? (
-                    <span style={{ fontSize: 12 }}>
-                      ({futureMatches.data?.matches?.length}/{futureMatches.data?.total})
-                    </span>
-                  ) : (
-                    ''
-                  )}
+                  <FormattedMessage {...messages.finishedMatches} />
                 </S.CardTitle>
-                {noUpcomingMatches && <FormattedMessage {...messages.noUpcomingMatches} />}
-                {noUpcomingMatches && isPossibleToCreateMatch?.allowed && (
+                {noFinishedMatches && (
+                  <S.NoFinishedMatches>
+                    <Gap defaultHeight={16} />
+                    <FrownOutlined />
+                    <Gap defaultHeight={16} />
+                    <FormattedMessage {...messages.noFinishedMatches} />
+                    <Gap defaultHeight={8} />
+                    {isPossibleToCreateMatch?.allowed && (
+                      <div>
+                        <FormattedMessage
+                          {...messages.createMatchLink}
+                          values={{
+                            b: (msg: ReactNode) => (
+                              <b
+                                onClick={onMatchCreateClick}
+                                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                              >
+                                {msg}
+                              </b>
+                            ),
+                          }}
+                        />
+                      </div>
+                    )}
+                  </S.NoFinishedMatches>
+                )}
+                {!noFinishedMatches && (
                   <>
-                    <br />
-                    <FormattedMessage
-                      {...messages.createMatchLink}
-                      values={{
-                        b: (msg: ReactNode) => (
-                          <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                            {msg}
-                          </b>
-                        ),
-                      }}
-                    />
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                      {finishedMatches.data?.matches.map((item: IMatchListItem) => {
+                        return <MatchRow match={item} />;
+                      })}
+                    </Space>
                   </>
                 )}
-                <Space direction="vertical" style={{ width: '100%' }}>
-                  {!noUpcomingMatches &&
-                    futureMatches.data?.matches.map((item: IMatchListItem) => {
-                      return <MatchRow match={item} />;
-                    })}
-                </Space>
+                <Gap defaultHeight={24} />
+                <Flex vertical align="flex-end">
+                  <LinkButton onClick={scrollToAllMatches}>
+                    <FormattedMessage {...messages.allMatches} />
+                  </LinkButton>
+                </Flex>
               </EaseInOutContainer>
             </Card>
-          )}
-          <Card style={{ flex: 1 }}>
-            {finishedMatches.isLoading && <Spin size="large" />}
-            <EaseInOutContainer isOpen={!finishedMatches.isLoading}>
-              <S.CardTitle>
-                <FormattedMessage {...messages.finishedMatches} />
-              </S.CardTitle>
-              {noFinishedMatches && (
-                <S.NoFinishedMatches>
-                  <Gap defaultHeight={16} />
-                  <FrownOutlined />
-                  <Gap defaultHeight={16} />
-                  <FormattedMessage {...messages.noFinishedMatches} />
-                  <Gap defaultHeight={8} />
-                  {isPossibleToCreateMatch?.allowed && (
-                    <div>
-                      <FormattedMessage
-                        {...messages.createMatchLink}
-                        values={{
-                          b: (msg: ReactNode) => (
-                            <b onClick={onMatchCreateClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                              {msg}
-                            </b>
-                          ),
-                        }}
-                      />
-                    </div>
-                  )}
-                </S.NoFinishedMatches>
-              )}
-              {!noFinishedMatches && (
-                <>
-                  <Space direction="vertical" style={{ width: '100%' }}>
-                    {finishedMatches.data?.matches.map((item: IMatchListItem) => {
-                      return <MatchRow match={item} />;
-                    })}
-                  </Space>
-                </>
-              )}
-            </EaseInOutContainer>
-          </Card>
-        </S.Matches>
+          </S.Matches>
+        )}
         <Gap defaultHeight={16} />
-        <Flex vertical align="flex-end">
-          <LinkButton onClick={scrollToAllMatches}>
-            <FormattedMessage {...messages.allMatches} />
-          </LinkButton>
-        </Flex>
-        <Gap defaultHeight={32} />
         <EaseInOutContainer isOpen={isSeasonActive && isPossibleToCreateMatch?.allowed}>
           <Flex justify="flex-end">
             <Button

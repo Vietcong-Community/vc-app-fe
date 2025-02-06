@@ -78,6 +78,12 @@ export const MatchDetail: React.FC = () => {
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
     some(matchDetail.data?.rounds ?? [], (item: IMatchRound) => !item.screenshot);
 
+  const showLineUp = [
+    MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+    MatchStatus.FINISHED,
+    MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+  ].includes(matchDetail.data?.status as MatchStatus);
+
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -225,6 +231,7 @@ export const MatchDetail: React.FC = () => {
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.challengerMap}
                     players={matchDetail.data?.challengerMatchPlayers ?? []}
+                    showLineUp={showLineUp}
                     team={matchDetail.data?.challenger?.team}
                   />
                   <Team
@@ -232,6 +239,7 @@ export const MatchDetail: React.FC = () => {
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.opponentMap}
                     players={matchDetail.data?.opponentMatchPlayers ?? []}
+                    showLineUp={showLineUp}
                     team={matchDetail.data?.opponent?.team}
                   />
                 </S.TeamsContainer>

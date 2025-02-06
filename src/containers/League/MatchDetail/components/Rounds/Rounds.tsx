@@ -3,7 +3,7 @@ import React from 'react';
 import { chunk } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { IMatchRound } from '../../../../../api/hooks/league/interfaces';
+import { IMatchPlayer, IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { Round } from '../Round/Round';
@@ -14,14 +14,26 @@ import * as S from './Rounds.style';
 
 interface IProps {
   allowUpload: boolean;
+  challengerMatchPlayers: IMatchPlayer[];
   challengerTag?: string;
   matchId: string;
   opponentTag?: string;
+  opponentMatchPlayers: IMatchPlayer[];
   rounds?: IMatchRound[];
+  showStatistics?: boolean;
 }
 
 export const Rounds: React.FC<IProps> = (props: IProps) => {
-  const { allowUpload, challengerTag, matchId, opponentTag, rounds } = props;
+  const {
+    allowUpload,
+    challengerMatchPlayers,
+    challengerTag,
+    matchId,
+    opponentMatchPlayers,
+    opponentTag,
+    rounds,
+    showStatistics = true,
+  } = props;
 
   const splitRoundsByMap = chunk(rounds, 2);
 
@@ -38,11 +50,14 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
               {item.map((round) => (
                 <Round
                   allowUpload={allowUpload}
+                  challengerMatchPlayers={challengerMatchPlayers}
                   challengerTag={challengerTag}
                   key={round.id}
+                  opponentMatchPlayers={opponentMatchPlayers}
                   opponentTag={opponentTag}
                   matchId={matchId}
                   round={round}
+                  showStatistics={showStatistics}
                 />
               ))}
             </S.MapContainer>

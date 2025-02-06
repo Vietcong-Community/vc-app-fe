@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
+import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
+import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
+import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQueryClient } from '@tanstack/react-query';
 import { Image, Spin, UploadFile } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
 import { useRemoveRoundScreenshot, useRoundResultImageUploadUrl } from '../../../../../api/hooks/league/api';
-import { IMatchRound } from '../../../../../api/hooks/league/interfaces';
+import { IMatchPlayer, IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import usaFlag from '../../../../../assets/usa.png';
 import vietnamFlag from '../../../../../assets/vietnam.png';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
@@ -24,14 +28,26 @@ import * as S from './Round.style';
 
 interface IProps {
   allowUpload: boolean;
+  challengerMatchPlayers: IMatchPlayer[];
   challengerTag?: string;
   matchId: string;
   opponentTag?: string;
+  opponentMatchPlayers: IMatchPlayer[];
   round: IMatchRound;
+  showStatistics: boolean;
 }
 
 export const Round: React.FC<IProps> = (props: IProps) => {
-  const { allowUpload, challengerTag, matchId, opponentTag, round } = props;
+  const {
+    allowUpload,
+    challengerMatchPlayers,
+    challengerTag,
+    matchId,
+    opponentMatchPlayers,
+    opponentTag,
+    round,
+    showStatistics,
+  } = props;
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
@@ -95,6 +111,22 @@ export const Round: React.FC<IProps> = (props: IProps) => {
 
   const isDraw = round.scoreChallenger === round.scoreOpponent;
 
+  const challengerRoundStatistics = round.playersRoundStats
+    ?.filter((item) => !!challengerMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId))
+    .map((item) => {
+      const player = challengerMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId);
+
+      return { ...item, nickname: player?.user.nickname, playerId: player?.user.id };
+    });
+
+  const opponentRoundStatistics = round.playersRoundStats
+    ?.filter((item) => !!opponentMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId))
+    .map((item) => {
+      const player = opponentMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId);
+
+      return { ...item, nickname: player?.user.nickname, playerId: player?.user.id };
+    });
+
   return (
     <S.RoundContainer>
       <S.WinnerTag $isDraw={isDraw}>{getWinnerMessage()}</S.WinnerTag>
@@ -107,6 +139,56 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         <S.TeamTag>{opponentTag}</S.TeamTag>
         <S.Flag src={getFlag(round.opponentNation)} alt="" />
       </S.ResultContainer>
+      {showStatistics && (
+        <>
+          <Gap defaultHeight={16} />
+          <FormattedMessage {...messages.statistics} />
+          <Gap defaultHeight={8} />
+          <S.Players>
+            <S.TeamTag>{challengerTag}</S.TeamTag>
+            {challengerRoundStatistics?.map((item) => {
+              return (
+                <S.StatisticItem>
+                  <b>{item.nickname}</b>
+                  <S.Statistics>
+                    <div>
+                      <FontAwesomeIcon icon={faFlag} /> {item.flags}
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faSkull} /> {item.kills}
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faCross} /> {item.deaths}
+                    </div>
+                  </S.Statistics>
+                </S.StatisticItem>
+              );
+            })}
+          </S.Players>
+          <Gap defaultHeight={8} />
+          <S.Players>
+            <S.TeamTag>{opponentTag}</S.TeamTag>
+            {opponentRoundStatistics?.map((item) => {
+              return (
+                <S.StatisticItem>
+                  <b>{item.nickname}</b>
+                  <S.Statistics>
+                    <div>
+                      <FontAwesomeIcon icon={faFlag} /> {item.flags}
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faSkull} /> {item.kills}
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faCross} /> {item.deaths}
+                    </div>
+                  </S.Statistics>
+                </S.StatisticItem>
+              );
+            })}
+          </S.Players>
+        </>
+      )}
       {round.screenshot?.url && (
         <>
           <Gap defaultHeight={16} />

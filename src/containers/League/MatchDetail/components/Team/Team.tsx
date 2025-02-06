@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 
 import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
+import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
+import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
+import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { IMap } from '../../../../../api/hooks/interfaces';
+import { IMatchPlayer } from '../../../../../api/hooks/league/interfaces';
 import { ITeam } from '../../../../../api/hooks/teams/interfaces';
 import { AnimatedHeightContainer } from '../../../../../components/Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Card } from '../../../../../components/Card/Card';
@@ -17,11 +22,12 @@ interface IProps {
   eloPoints?: number;
   goToTeamDetail: (id: string) => void;
   map?: IMap;
+  players: IMatchPlayer[];
   team?: ITeam;
 }
 
 export const Team: React.FC<IProps> = (props: IProps) => {
-  const { eloPoints, goToTeamDetail, map, team } = props;
+  const { eloPoints, goToTeamDetail, map, players, team } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const navigateToTeam = () => {
@@ -71,7 +77,36 @@ export const Team: React.FC<IProps> = (props: IProps) => {
       </S.LineUpTitle>
       <AnimatedHeightContainer isOpen={isOpen}>
         <Gap defaultHeight={16} />
-        <FormattedMessage {...messages.lineupTBA} />
+        {players.length === 0 && <FormattedMessage {...messages.lineupEmpty} />}
+        {players.length > 0 && (
+          <S.LineUp>
+            {players.map((player: IMatchPlayer) => {
+              return (
+                <S.Player>
+                  <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <Avatar
+                      size={24}
+                      icon={player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />}
+                    />
+                    <b>{player.user.nickname}</b>
+                  </div>
+                  <Gap defaultHeight={8} />
+                  <S.Statistics>
+                    <div>
+                      <FontAwesomeIcon icon={faFlag} /> {player.flags}
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faSkull} /> {player.kills}
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faCross} /> {player.deaths}
+                    </div>
+                  </S.Statistics>
+                </S.Player>
+              );
+            })}
+          </S.LineUp>
+        )}
       </AnimatedHeightContainer>
       <Gap defaultHeight={32} />
       <S.LinkButton onClick={navigateToTeam}>

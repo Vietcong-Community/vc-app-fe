@@ -8,7 +8,6 @@ export const Content = styled.div`
   display: flex;
   justify-content: space-between; /* Rozdělí podřazené divy na levou a pravou stranu */
   align-items: flex-start; /* Zarovná podřazené divy nahoru */
-  padding: 20px;
   gap: 20px; /* Mezera mezi podřazenými divy */
 
   ${() => makeMediaQuery(BreakPoints.md)`

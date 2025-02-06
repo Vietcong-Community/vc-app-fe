@@ -13,12 +13,6 @@ export const DesktopContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 100%;
-
-  ${() => makeMediaQuery(BreakPoints.md)`
-    ${css`
-      display: none;
-    `}
-  `};
 `;
 
 export const PlayerCard = styled.div`

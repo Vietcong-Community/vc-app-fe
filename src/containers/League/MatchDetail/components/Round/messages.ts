@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Round.screenshot',
     defaultMessage: 'Screenshot',
   },
+  statistics: {
+    id: 'app.containers.League.MatchDetail.components.Round.statistics',
+    defaultMessage: 'Statistiky',
+  },
   screenshotUploadSuccess: {
     id: 'app.containers.League.MatchDetail.components.Round.screenshotUploadSuccess',
     defaultMessage: 'Screenshot úspěšně nahrán',

@@ -106,3 +106,39 @@ export const LinkButton = styled.div`
   text-decoration: underline;
   text-align: end;
 `;
+
+export const Player = styled.div`
+  border-radius: 8px;
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary20};
+  display: flex;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  justify-content: space-between;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
+`;
+
+export const LineUp = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+`;
+
+export const Statistics = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+
+  > * {
+    align-items: center;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    width: 35px;
+  }
+`;

@@ -45,6 +45,14 @@ export interface IAcceptMatchChallenge {
   opponentMapId: string;
 }
 
+export interface IPlayerRoundStats {
+  id: string;
+  playerInMatchId: string;
+  flags: number;
+  kills: number;
+  deaths: number;
+}
+
 export interface IMatchRound {
   id: string;
   round: number;
@@ -57,10 +65,22 @@ export interface IMatchRound {
   confirmedBy?: IUser;
   challengerNation: Nation;
   opponentNation: Nation;
+  playersRoundStats: IPlayerRoundStats[];
   screenshot?: {
     url: string;
     id: string;
   };
+}
+
+export interface IMatchPlayer {
+  id: string;
+  flags: number;
+  kills: number;
+  deaths: number;
+  differencePlayer: string;
+  mapHandicap: string;
+  playerHandicap: string;
+  user: IUser;
 }
 
 export interface IMatch {
@@ -83,6 +103,8 @@ export interface IMatch {
   rejectedAt?: string;
   rejectedBy?: IUser;
   season: ISeason;
+  challengerMatchPlayers?: IMatchPlayer[];
+  opponentMatchPlayers?: IMatchPlayer[];
   rounds: IMatchRound[];
 }
 

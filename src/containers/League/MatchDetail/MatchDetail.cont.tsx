@@ -224,12 +224,14 @@ export const MatchDetail: React.FC = () => {
                     eloPoints={matchIsNotFinished ? challengerSeasonTeam?.eloPoints : undefined}
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.challengerMap}
+                    players={matchDetail.data?.challengerMatchPlayers ?? []}
                     team={matchDetail.data?.challenger?.team}
                   />
                   <Team
                     eloPoints={matchIsNotFinished ? opponentSeasonTeam?.eloPoints : undefined}
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.opponentMap}
+                    players={matchDetail.data?.opponentMatchPlayers ?? []}
                     team={matchDetail.data?.opponent?.team}
                   />
                 </S.TeamsContainer>
@@ -252,8 +254,10 @@ export const MatchDetail: React.FC = () => {
               matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
               (isPossibleToManageMatch.allowed || userIsAdmin)
             }
+            challengerMatchPlayers={matchDetail.data?.challengerMatchPlayers ?? []}
             challengerTag={matchDetail.data?.challenger.team.tag}
             opponentTag={matchDetail.data?.opponent.team.tag}
+            opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
             matchId={query.matchId}
             rounds={matchDetail.data?.rounds}
           />

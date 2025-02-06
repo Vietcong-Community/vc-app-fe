@@ -66,3 +66,35 @@ export const UploadBox = styled.div`
     width: 100% !important;
   }
 `;
+
+export const Players = styled.div`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent35};
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  padding: 0.5rem;
+  flex-direction: column;
+`;
+
+export const StatisticItem = styled.div`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary30};
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+`;
+
+export const Statistics = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+
+  > * {
+    align-items: center;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    width: 35px;
+  }
+`;

@@ -25,11 +25,15 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.lineup',
     defaultMessage: 'Sestava',
   },
-  lineupTBA: {
-    id: 'app.containers.League.MatchDetail.lineupTBA',
+  lineupEmpty: {
+    id: 'app.containers.League.MatchDetail.lineupEmpty',
     defaultMessage:
-      'To koukáš, že tu nic neni, co? Neboj, pracujeme na tom, abychom v dalších ' +
-      'updatech evidovali hráče, kteří hráli zápas.',
+      'Ze snímků průzkumnického týmu jsme nedokázali identifikovat žádné hráče. Zápas buď nebyl odehrán ' +
+      'nebo měli hráči perfektní maskování.',
+  },
+  statistics: {
+    id: 'app.containers.League.MatchDetail.statistics',
+    defaultMessage: 'Výkon na bojišti',
   },
   leaguesBreadcrumb: {
     id: 'app.containers.League.MatchDetail.leaguesBreadcrumb',

@@ -46,9 +46,11 @@ export const MatchDetail: React.FC = () => {
   const ladder = useSeasonLadder(matchDetail.data?.season?.id);
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
-  const scoreExists =
-    matchDetail.data?.status === MatchStatus.FINISHED ||
-    matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
+  const scoreExists = [
+    MatchStatus.FINISHED,
+    MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+    MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+  ].includes(matchDetail.data?.status as MatchStatus);
   const isPossibleToManageMatch = useMemo(() => {
     return canUserManageMatch(
       myTeams.data?.items ?? [],

@@ -24,8 +24,11 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const scoreExists =
-    match.status === MatchStatus.FINISHED || match.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
+  const scoreExists = [
+    MatchStatus.FINISHED,
+    MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+    MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+  ].includes(match.status as MatchStatus);
 
   const onMatchClick = () => {
     navigate(Routes.MATCH_DETAIL.replace(':matchId', match.id));

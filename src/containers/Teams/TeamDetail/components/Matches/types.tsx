@@ -10,7 +10,7 @@ export interface IMatchesTableRow {
   date: string;
   status: ReactNode;
   result: string;
-  opponentTeamName: string;
+  opponentTeamName?: string;
 }
 
 export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRow> => {

@@ -42,7 +42,7 @@ export const CreateMatchCont: React.FC = () => {
   }, [seasonTeams.isFetchedAfterMount, myTeams.isFetchedAfterMount, isPossibleToCreateMatch.allowed]);
 
   const onSubmit = async (values: IFormData) => {
-    const endDate = dayjs(values.startDate).add(1, 'hour').add(15, 'minute').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
+    const endDate = dayjs(values.startDate).add(1, 'hour').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
     try {
       const response = await createMatch.mutateAsync({ ...values, endDate });
       showNotification(messages.createSuccess);

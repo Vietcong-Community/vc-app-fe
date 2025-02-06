@@ -27,7 +27,12 @@ export const FutureMatches: React.FC<IProps> = (props: IProps) => {
   const futureMatches = useSeasonMatchList(
     seasonId,
     {
-      status: [MatchStatus.NEW, MatchStatus.ACCEPTED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].join(','),
+      status: [
+        MatchStatus.NEW,
+        MatchStatus.ACCEPTED,
+        MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+        MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+      ].join(','),
       limit: 5,
       page: selectedPage,
     },

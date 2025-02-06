@@ -30,8 +30,8 @@ export const Matches: React.FC<IProps> = (props: IProps) => {
   const allMatchesTableData: IMatchesTableRow[] =
     matches.data?.matches?.map((item) => {
       const getOpponentTeamName = () => {
-        if (!item.opponent?.team.name) {
-          return '-';
+        if (item.opponent?.team?.id === teamId) {
+          return isSmallerThanMd ? item.challenger?.team.tag : item.challenger?.team.name;
         }
 
         return isSmallerThanMd ? item.opponent?.team.tag : item.opponent?.team.name;
@@ -42,10 +42,13 @@ export const Matches: React.FC<IProps> = (props: IProps) => {
         date: formatDateForUser(item.startDate) ?? '',
         status: mapMatchStatusToTranslation(item.status),
         opponentTeamName: getOpponentTeamName(),
-        result:
-          item.status === MatchStatus.FINISHED || item.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION
-            ? `${item.challengerScore} - ${item.opponentScore}`
-            : '? - ?',
+        result: [
+          MatchStatus.FINISHED,
+          MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+          MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+        ].includes(item.status as MatchStatus)
+          ? `${item.challengerScore} - ${item.opponentScore}`
+          : '? - ?',
       };
     }) ?? [];
 

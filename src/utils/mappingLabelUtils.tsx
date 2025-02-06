@@ -27,6 +27,8 @@ export const mapMatchStatusToTranslation = (status?: MatchStatus): ReactNode | u
       return <FormattedMessage {...messages.matchStatusWaitingForConfirmation} />;
     case MatchStatus.ACCEPTED:
       return <FormattedMessage {...messages.matchStatusAccepted} />;
+    case MatchStatus.CONFIRMED_SCORE_BY_SYSTEM:
+      return <FormattedMessage {...messages.matchStatusConfirmedBySystem} />;
     case MatchStatus.WAITING_FOR_SCORE_CONFIRMATION:
       return <FormattedMessage {...messages.matchStatusWaitingForConfirmation} />;
     case MatchStatus.REJECTED_BY_ADMIN:

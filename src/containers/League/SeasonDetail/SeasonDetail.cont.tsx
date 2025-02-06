@@ -112,10 +112,13 @@ export const SeasonDetailCont: React.FC = () => {
         status: mapMatchStatusToTranslation(item.status),
         challengerTeamName: isSmallerThanMd ? item.challenger?.team.tag : item.challenger.team.name,
         opponentTeamName: getOpponentTeamName(),
-        result:
-          item.status === MatchStatus.FINISHED || item.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION
-            ? `${item.challengerScore} - ${item.opponentScore}`
-            : '? - ?',
+        result: [
+          MatchStatus.FINISHED,
+          MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+          MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+        ].includes(item.status as MatchStatus)
+          ? `${item.challengerScore} - ${item.opponentScore}`
+          : '? - ?',
       };
     }) ?? [];
 

@@ -179,7 +179,12 @@ export const Round: React.FC<IProps> = (props: IProps) => {
             {opponentRoundStatistics?.map((item) => {
               return (
                 <S.StatisticItem>
-                  <b>{item.nickname}</b>
+                  <b
+                    onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {item.nickname}
+                  </b>
                   <S.Statistics>
                     <div>
                       <FontAwesomeIcon icon={faFlag} /> {item.flags}

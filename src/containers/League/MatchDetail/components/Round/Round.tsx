@@ -18,7 +18,9 @@ import { Gap } from '../../../../../components/Gap/Gap';
 import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
 import { Nation } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
+import { useRouter } from '../../../../../hooks/RouterHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
+import { Routes } from '../../../../../routes/enums';
 import { theme } from '../../../../../theme/theme';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
 
@@ -49,6 +51,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     showStatistics,
   } = props;
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const { navigate } = useRouter();
   const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
 
@@ -139,7 +142,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         <S.TeamTag>{opponentTag}</S.TeamTag>
         <S.Flag src={getFlag(round.opponentNation)} alt="" />
       </S.ResultContainer>
-      {showStatistics && (
+      {showStatistics && challengerMatchPlayers.length > 0 && (
         <>
           <Gap defaultHeight={16} />
           <FormattedMessage {...messages.statistics} />
@@ -149,7 +152,12 @@ export const Round: React.FC<IProps> = (props: IProps) => {
             {challengerRoundStatistics?.map((item) => {
               return (
                 <S.StatisticItem>
-                  <b>{item.nickname}</b>
+                  <b
+                    onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {item.nickname}
+                  </b>
                   <S.Statistics>
                     <div>
                       <FontAwesomeIcon icon={faFlag} /> {item.flags}

@@ -14,6 +14,7 @@ export enum Routes {
   USER_PROFILE = '/uzivatel/:id',
   PRIVATE_CHANGE_PASSWORD = '/zmena-hesla',
   EDIT_PROFILE = '/uprava-uzivatele/:id',
+  MY_TEAMS = '/moje-tymy',
   // TEAM ROUTES
   TEAM_DETAIL = '/tym/:id',
   // LEAGUE

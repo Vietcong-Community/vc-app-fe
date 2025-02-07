@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { EditOutlined, FacebookFilled, TwitchFilled, UserOutlined } from '@ant-design/icons';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons/faGamepad';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons/faSquarePlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Spin } from 'antd';
 import { compact } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useUserMe } from '../../api/hooks/auth/api';
-import { useUserDetail, useUserTeams } from '../../api/hooks/users/api';
-import { EaseInOutContainer } from '../../components/Animations/EaseInOutContainer/EaseInOutContainer';
-import { Card } from '../../components/Card/Card';
-import { Gap } from '../../components/Gap/Gap';
-import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
-import { H2 } from '../../components/Titles/H2/H2';
-import { useRouter } from '../../hooks/RouterHook';
-import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
-import { Routes } from '../../routes/enums';
-import { BreakPoints } from '../../theme/theme';
-import { formatDateForUser } from '../../utils/dateUtils';
+import { useUserMe } from '../../../api/hooks/auth/api';
+import { useUserDetail, useUserTeams } from '../../../api/hooks/users/api';
+import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
+import { Card } from '../../../components/Card/Card';
+import { Divider } from '../../../components/Divider/Divider';
+import { Gap } from '../../../components/Gap/Gap';
+import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { H2 } from '../../../components/Titles/H2/H2';
+import { useRouter } from '../../../hooks/RouterHook';
+import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
+import { Routes } from '../../../routes/enums';
+import { BreakPoints } from '../../../theme/theme';
+import { formatDateForUser } from '../../../utils/dateUtils';
+import { CreateTeamModalForm } from '../components/CreateTeamModal/CreateTeamModal.form';
+import { MyTeam } from '../components/MyTeam/MyTeam';
 
-import { MyTeam } from './components/MyTeam/MyTeam';
 import { messages } from './messages';
 
 import * as S from './Profile.style';
@@ -30,6 +33,7 @@ export const ProfileCont: React.FC = () => {
   const { navigate, query } = useRouter<{ id: string }>();
   const { formatMessage } = useIntl();
   const { width } = useWindowDimensions();
+  const [isCreateTeamOpen, setIsCreateTeamOpen] = useState<boolean>(false);
   const isSmallerThanMD = width < BreakPoints.md;
 
   const userMe = useUserMe('always', [401]);
@@ -117,15 +121,29 @@ export const ProfileCont: React.FC = () => {
         </S.Container>
       </EaseInOutContainer>
       <Gap defaultHeight={16} height={{ md: 8 }} />
-      <EaseInOutContainer isOpen={!userTeams.isLoading && (userTeams.data?.items.length ?? 0) > 0}>
-        <H2>
-          <FormattedMessage {...messages.myTeamsTitle} />
-        </H2>
+      <EaseInOutContainer isOpen={!userTeams.isLoading}>
+        <S.MyTeamsTitle>
+          <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+            <H2>
+              <FormattedMessage {...messages.myTeamsTitle} />
+            </H2>
+            <S.IconContainer onClick={() => setIsCreateTeamOpen(true)}>
+              <FontAwesomeIcon icon={faSquarePlus} />
+            </S.IconContainer>
+          </div>
+          <Divider style={{ margin: 'auto', maxWidth: 740 }} />
+        </S.MyTeamsTitle>
+        <Gap defaultHeight={16} />
         <S.MyTeamsContainer>
-          {userTeams.data?.items.map((item) => <MyTeam goToTeamDetail={goToTeamDetail} team={item} />)}
+          {userTeams.data?.items.length === 0 ? (
+            <FormattedMessage {...messages.noTeams} />
+          ) : (
+            <>{userTeams.data?.items.map((item) => <MyTeam goToTeamDetail={goToTeamDetail} team={item} />)}</>
+          )}
         </S.MyTeamsContainer>
       </EaseInOutContainer>
       <Gap defaultHeight={48} height={{ md: 32 }} />
+      <CreateTeamModalForm isOpen={isCreateTeamOpen} onClose={() => setIsCreateTeamOpen(false)} />
     </ContentLayout>
   );
 };

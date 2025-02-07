@@ -7,7 +7,7 @@ import { IIdentifiedEntity } from '../interfaces';
 import { ISeason } from '../league/interfaces';
 
 import { TeamEndpoints } from './endpoints';
-import { ITeamPlayers, ITeam, IMeTeams, IAvatarUpload } from './interfaces';
+import { ITeamPlayers, ITeam, IMeTeams, IAvatarUpload, ICreateTeam, IUpdateTeam } from './interfaces';
 
 export const useTeamDetail = (id: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
@@ -123,5 +123,23 @@ export const useTeamSeasons = (teamId: string, refetchOnMount?: boolean | 'alway
     },
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useCreateTeam = () => {
+  return useMutation({
+    mutationFn: async (payload: ICreateTeam) => {
+      const { data } = await post<ICreateTeam, IIdentifiedEntity>(TeamEndpoints.CREATE_TEAM, payload);
+      return data;
+    },
+  });
+};
+
+export const useUpdateTeam = (teamId: string) => {
+  return useMutation({
+    mutationFn: async (payload: IUpdateTeam) => {
+      const { data } = await post<IUpdateTeam, undefined>(TeamEndpoints.TEAM_BY_ID, payload, { teamId });
+      return data;
+    },
   });
 };

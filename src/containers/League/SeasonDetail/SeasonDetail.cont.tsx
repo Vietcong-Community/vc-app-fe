@@ -14,6 +14,7 @@ import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbIte
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
+import { Divider } from '../../../components/Divider/Divider';
 import { DEFAULT_USER_DATE_FORMAT } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -157,7 +158,7 @@ export const SeasonDetailCont: React.FC = () => {
           <H1>{season.data?.name}</H1>
           {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
         </Flex>
-        <S.Divider style={{ marginTop: 0 }} />
+        <Divider style={{ marginBottom: 16 }} />
         <Card style={{ flex: 0.5 }} bodyStyle={{ padding: '8px 24px' }}>
           <S.SeasonInfoContainer>
             <div>
@@ -265,7 +266,7 @@ export const SeasonDetailCont: React.FC = () => {
             </Button>
           </Flex>
         </EaseInOutContainer>
-        <S.Divider />
+        <Divider style={{ margin: '16px 0' }} />
         <Flex vertical align="flex-start">
           <H2>
             <FormattedMessage {...messages.ladderTitle} />
@@ -291,7 +292,7 @@ export const SeasonDetailCont: React.FC = () => {
             style={{ width: '100%' }}
           />
         </Flex>
-        <S.Divider />
+        <Divider style={{ margin: '16px 0' }} />
         <Flex vertical align="flex-start">
           <H2 id="all-matches">
             <FormattedMessage {...messages.allMatchesTitle} />{' '}
@@ -316,7 +317,7 @@ export const SeasonDetailCont: React.FC = () => {
             style={{ width: '100%' }}
             totalItems={matches.data?.total}
           />
-          <S.Divider />
+          <Divider style={{ margin: '16px 0' }} />
           <Flex vertical align="flex-start">
             <H2>
               <FormattedMessage {...messages.statisticsTitle} />

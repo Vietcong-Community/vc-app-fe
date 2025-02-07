@@ -16,6 +16,7 @@ import {
 } from '../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../components/Button/Button';
+import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -103,7 +104,7 @@ export const TeamDetailCont: React.FC = () => {
             </Button>
           )}
         </Flex>
-        <S.Divider />
+        <Divider />
         <Gap defaultHeight={16} />
         <S.Content>
           <S.TeamInfo>

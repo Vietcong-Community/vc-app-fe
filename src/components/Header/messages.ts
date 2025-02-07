@@ -33,6 +33,10 @@ export const messages = defineMessages({
     id: 'app.components.Header.goToProfileEditPage',
     defaultMessage: 'Upravit profil',
   },
+  myTeams: {
+    id: 'app.components.Header.myTeams',
+    defaultMessage: 'Mé týmy',
+  },
   mcrvcLink: {
     id: 'app.components.Header.mcrvcLink',
     defaultMessage: 'MČRVC',
@@ -63,11 +67,11 @@ export const messages = defineMessages({
   },
   desktopCzech: {
     id: 'app.components.Header.desktopCzech',
-    defaultMessage: 'Jazyk -> CZ',
+    defaultMessage: 'CZ',
   },
   desktopEnglish: {
     id: 'app.components.Header.desktopEnglish',
-    defaultMessage: 'Jazyk -> EN',
+    defaultMessage: 'EN',
   },
   czech: {
     id: 'app.components.Header.czech',

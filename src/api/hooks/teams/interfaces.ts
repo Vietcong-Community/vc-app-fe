@@ -29,3 +29,12 @@ export interface IMeTeams {
 export interface IAvatarUpload {
   fileName: string;
 }
+
+export interface ICreateTeam {
+  name: string;
+  tag: string;
+}
+
+export interface IUpdateTeam extends ICreateTeam {
+  description: string;
+}

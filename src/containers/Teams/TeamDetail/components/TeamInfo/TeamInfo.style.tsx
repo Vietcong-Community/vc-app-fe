@@ -1,4 +1,3 @@
-import { Divider as AntDDivider } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
@@ -88,9 +87,4 @@ export const InfoCard = styled.div`
   i {
     color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   }
-`;
-
-export const Divider = styled(AntDDivider)`
-  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
-  margin: 0;
 `;

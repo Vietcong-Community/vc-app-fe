@@ -9,6 +9,7 @@ import { IMatchListItem, ISeason } from '../../../../../api/hooks/league/interfa
 import { useMeTeams } from '../../../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
+import { Divider } from '../../../../../components/Divider/Divider';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
 import { Table } from '../../../../../components/Table/Table';
@@ -118,7 +119,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
             {isSmallerThanMd && (
               <>
                 <Gap defaultHeight={16} />
-                <S.Divider />
+                <Divider />
                 <Gap defaultHeight={16} />
               </>
             )}

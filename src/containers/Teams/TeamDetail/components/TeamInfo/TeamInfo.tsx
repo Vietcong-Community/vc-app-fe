@@ -10,6 +10,7 @@ import { useTeamAvatarUploadUrl, useTeamSeasons } from '../../../../../api/hooks
 import { ITeam } from '../../../../../api/hooks/teams/interfaces';
 import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
+import { Divider } from '../../../../../components/Divider/Divider';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { H2 } from '../../../../../components/Titles/H2/H2';
@@ -113,7 +114,7 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
         </S.InfoDiv>
       </S.Content>
       <Gap defaultHeight={32} height={{ md: 16 }} />
-      <S.Divider />
+      <Divider />
       <H2 style={{ textAlign: 'start' }}>
         <FormattedMessage {...messages.seasonsMatches} />
       </H2>

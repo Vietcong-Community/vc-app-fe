@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import { ProfileCont } from 'src/containers/Profile/Profile.cont';
+import { ProfileCont } from 'src/containers/Users/Profile/Profile.cont';
 
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
@@ -21,6 +21,7 @@ import { ChangePasswordCont } from '../containers/Users/ChangePassword/ChangePas
 import { EditProfileCont } from '../containers/Users/EditProfile/EditProfile.cont';
 import { ForgottenPasswordCont } from '../containers/Users/ForgottenPassword/ForgottenPassword.cont';
 import { LoginCont } from '../containers/Users/Login/Login.cont';
+import { MyTeams } from '../containers/Users/MyTeams/MyTeams';
 import { RegistrationCont } from '../containers/Users/Registration/Registration.cont';
 
 import { Routes } from './enums';
@@ -33,6 +34,7 @@ export const routesObject: RouteObject[] = [
       { element: <ProfileCont />, path: Routes.USER_PROFILE },
       { element: <EditProfileCont />, path: Routes.EDIT_PROFILE },
       { element: <PrivatePasswordChangeCont />, path: Routes.PRIVATE_CHANGE_PASSWORD },
+      { element: <MyTeams />, path: Routes.MY_TEAMS },
       // TEAM ROUTES
       { element: <TeamDetailCont />, path: Routes.TEAM_DETAIL },
       // LEAGUE

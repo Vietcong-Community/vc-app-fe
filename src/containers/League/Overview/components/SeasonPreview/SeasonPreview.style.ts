@@ -1,4 +1,3 @@
-import { Divider as AntDDivider } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
@@ -56,9 +55,4 @@ export const NoMatches = styled.div`
     color: ${(props: IThemeProps) => props.theme.mainColors.primary};
     font-size: 24px;
   }
-`;
-
-export const Divider = styled(AntDDivider)`
-  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
-  margin: 0;
 `;

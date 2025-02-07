@@ -5,6 +5,7 @@ import { Form as AntDForm, FormInstance } from 'antd';
 interface IProps<T> {
   children?: React.ReactNode;
   form: FormInstance<T>;
+  id?: string;
   initialValues?: Partial<T>;
   layout?: 'horizontal' | 'inline' | 'vertical';
   requiredMark?: boolean;
@@ -17,6 +18,7 @@ export function FormComponent<T>(props: IProps<T>) {
   const {
     children,
     form,
+    id,
     initialValues,
     layout = 'vertical',
     onSubmit,
@@ -28,6 +30,7 @@ export function FormComponent<T>(props: IProps<T>) {
   return (
     <AntDForm
       form={form}
+      id={id}
       initialValues={initialValues}
       onFinish={onSubmit}
       scrollToFirstError={scrollToFirstError}

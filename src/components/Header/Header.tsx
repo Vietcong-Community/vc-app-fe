@@ -65,6 +65,15 @@ export const Header: React.FC = () => {
       onClick: () => navigate(Routes.EDIT_PROFILE.replace(':id', userMe.data?.id ?? '')),
     },
     {
+      key: 'my-teams',
+      label: (
+        <S.DropdownLabel>
+          <FormattedMessage {...messages.myTeams} />
+        </S.DropdownLabel>
+      ),
+      onClick: () => navigate(Routes.MY_TEAMS),
+    },
+    {
       key: 'theme',
       label: (
         <S.DropdownLabel>
@@ -72,17 +81,6 @@ export const Header: React.FC = () => {
         </S.DropdownLabel>
       ),
       onClick: toggleTheme,
-    },
-    {
-      key: 'language',
-      label: (
-        <S.DropdownLabel>
-          <FormattedMessage
-            {...(selectedLanguage === PreferredLanguage.CS ? messages.desktopEnglish : messages.desktopCzech)}
-          />
-        </S.DropdownLabel>
-      ),
-      onClick: toggleLanguage,
     },
     {
       key: 'logout',
@@ -163,6 +161,15 @@ export const Header: React.FC = () => {
           </S.HamburgerCont>
           {!isSmallerThanLg && (
             <>
+              <Button
+                onClick={toggleLanguage}
+                style={{ padding: '0.25rem', marginRight: 8 }}
+                variant={MainButtonVariant.OUTLINED}
+              >
+                <FormattedMessage
+                  {...(selectedLanguage === PreferredLanguage.CS ? messages.desktopEnglish : messages.desktopCzech)}
+                />
+              </Button>
               {!isUserLoggedIn && (
                 <div style={{ display: 'flex', gap: 8 }}>
                   <Button onClick={() => navigate(Routes.LOGIN)} variant={MainButtonVariant.OUTLINED}>

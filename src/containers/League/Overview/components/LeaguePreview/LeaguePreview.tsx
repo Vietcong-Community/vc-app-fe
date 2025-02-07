@@ -4,6 +4,7 @@ import { Tabs, Typography } from 'antd';
 
 import { useSeasonsInLeague } from '../../../../../api/hooks/league/api';
 import { ILeagueDetail, ISeason } from '../../../../../api/hooks/league/interfaces';
+import { Divider } from '../../../../../components/Divider/Divider';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { SeasonStatus } from '../../../../../constants/enums';
 import { mapSeasonStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
@@ -23,7 +24,7 @@ export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
     <S.Container>
       <Typography.Text>{leagueDetail.description}</Typography.Text>
       <Gap defaultHeight={16} />
-      <S.Divider />
+      <Divider />
       <Gap defaultHeight={16} />
       <Tabs
         defaultActiveKey="tab-season-1"

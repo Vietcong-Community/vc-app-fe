@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { del, get, post } from '../../apiFactory';
+import { MatchStatus } from '../../../constants/enums';
+import { del, get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity, IMap } from '../interfaces';
@@ -235,6 +236,17 @@ export const useRemoveRoundScreenshot = (roundId: string) => {
     mutationFn: async () => {
       const { data } = await del(LeagueEndpoints.REMOVE_ROUND_SCREENSHOT, {
         roundId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useUpdateMatchStatus = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (payload: { status: MatchStatus }) => {
+      const { data } = await put<{ status: MatchStatus }, undefined>(LeagueEndpoints.UPDATE_MATCH_STATUS, payload, {
+        matchId,
       });
       return data;
     },

@@ -109,3 +109,32 @@ export const TEAM_ROLE_SELECT_OPTIONS = [
   },
   { id: TeamRole.MEMBER, value: TeamRole.MEMBER, label: <FormattedMessage {...messages.teamRoleMember} /> },
 ];
+
+export const MATCH_STATUS_SELECT_OPTIONS = [
+  { id: MatchStatus.NEW, value: MatchStatus.NEW, label: <FormattedMessage {...messages.matchStatusNew} /> },
+  {
+    id: MatchStatus.ACCEPTED,
+    value: MatchStatus.ACCEPTED,
+    label: <FormattedMessage {...messages.matchStatusAccepted} />,
+  },
+  {
+    id: MatchStatus.WAITING_FOR_CONFIRMATION,
+    value: MatchStatus.WAITING_FOR_CONFIRMATION,
+    label: <FormattedMessage {...messages.matchStatusWaitingForConfirmation} />,
+  },
+  {
+    id: MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+    value: MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+    label: <FormattedMessage {...messages.matchStatusWaitingForScoreConfirmation} />,
+  },
+  {
+    id: MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+    value: MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+    label: <FormattedMessage {...messages.matchStatusConfirmedBySystem} />,
+  },
+  {
+    id: MatchStatus.FINISHED,
+    value: MatchStatus.FINISHED,
+    label: <FormattedMessage {...messages.matchStatusFinished} />,
+  },
+];

@@ -34,7 +34,7 @@ import * as S from './MatchDetail.style';
 
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isEloModalOpen, setIsEloModalOpen] = useState<boolean>(false);
   const { formatMessage } = useIntl();
 
   const matchDetail = useMatchDetail(query.matchId);
@@ -249,7 +249,7 @@ export const MatchDetail: React.FC = () => {
                 <EaseInOutContainer isOpen={matchIsNotFinished}>
                   <Gap defaultHeight={16} />
                   <Flex justify="end">
-                    <Button onClick={() => setIsOpen(true)} variant={MainButtonVariant.OUTLINED}>
+                    <Button onClick={() => setIsEloModalOpen(true)} variant={MainButtonVariant.OUTLINED}>
                       <FormattedMessage {...messages.expectedEloPoints} />
                     </Button>
                   </Flex>
@@ -277,11 +277,11 @@ export const MatchDetail: React.FC = () => {
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
       <ExpectedEloPointsModal
-        closeModal={() => setIsOpen(false)}
+        closeModal={() => setIsEloModalOpen(false)}
         challengerId={matchDetail?.data?.challenger?.id}
         challengerName={matchDetail.data?.challenger?.team?.tag}
         challengerElo={challengerSeasonTeam?.eloPoints}
-        isOpen={isOpen}
+        isOpen={isEloModalOpen}
         opponentId={matchDetail.data?.opponent?.id}
         opponentName={matchDetail.data?.opponent?.team?.tag}
         opponentElo={opponentSeasonTeam?.eloPoints}

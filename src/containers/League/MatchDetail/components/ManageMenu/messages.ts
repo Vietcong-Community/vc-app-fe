@@ -33,16 +33,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.ManageMenu.confirmMatchFailed',
     defaultMessage: 'Zápas se nepovedlo potvrdit',
   },
+  matchStatusUpdate: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.matchStatusUpdate',
+    defaultMessage: 'Změnit stav zápasu',
+  },
   deleteMatch: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteMatch',
     defaultMessage: 'Smazat zápas',
-  },
-  deleteSuccess: {
-    id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteSuccess',
-    defaultMessage: 'Smazání zápasu bylo úspěšné',
-  },
-  deleteFailed: {
-    id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteFailed',
-    defaultMessage: 'Smazání se nezdařilo',
   },
 });

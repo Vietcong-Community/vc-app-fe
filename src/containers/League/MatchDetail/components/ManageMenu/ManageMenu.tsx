@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useDeleteMatch } from '../../../../../api/hooks/admin/api';
 import { MatchStatus } from '../../../../../constants/enums';
-import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { Routes } from '../../../../../routes/enums';
+import { DeleteMatchModal } from '../DeleteMatchModal/DeleteMatchModal';
+import { MatchStatusModal } from '../MatchStatusModal/MatchStatusModal';
 
 import { messages } from './messages';
 
@@ -32,32 +31,24 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     status,
     userIsAdmin,
   } = props;
+  const [isMatchStatusModalOpen, setIsMatchStatusModalOpen] = useState<boolean>(false);
+  const [isDeleteMatchModalOpen, setIsDeleteMatchModalOpen] = useState<boolean>(false);
   const { navigate } = useRouter<{ id: string }>();
-  const { showNotification } = useNotifications();
-  const queryClient = useQueryClient();
-
-  const deleteMatch = useDeleteMatch();
 
   const onConfirmMatch = async () => {
     navigate(Routes.MATCH_CHALLENGE.replace(':matchId', matchId));
   };
 
-  const onDeleteMatch = async () => {
-    try {
-      await deleteMatch.mutateAsync(matchId);
-      showNotification(messages.deleteSuccess);
-      queryClient.refetchQueries({ queryKey: ['', seasonId] });
-      navigate(Routes.SEASON_DETAIL.replace(':seasonId', seasonId ?? ''));
-    } catch {
-      showNotification(messages.deleteFailed);
-    }
-  };
-
   const adminItems: MenuProps['items'] = [
     {
-      label: <FormattedMessage {...messages.deleteMatch} />,
+      label: <FormattedMessage {...messages.matchStatusUpdate} />,
       key: '1',
-      onClick: onDeleteMatch,
+      onClick: () => setIsMatchStatusModalOpen(true),
+    },
+    {
+      label: <FormattedMessage {...messages.deleteMatch} />,
+      key: 'ě',
+      onClick: () => setIsDeleteMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },
   ];
@@ -84,19 +75,33 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   ];
 
   return (
-    <div style={{ display: 'flex', gap: 8 }}>
-      {userIsAdmin && (
-        <Dropdown menu={{ items: adminItems }}>
+    <>
+      <div style={{ display: 'flex', gap: 8 }}>
+        {userIsAdmin && (
+          <Dropdown menu={{ items: adminItems }}>
+            <Button>
+              <FormattedMessage {...messages.adminLabel} />
+            </Button>
+          </Dropdown>
+        )}
+        <Dropdown menu={{ items }}>
           <Button>
-            <FormattedMessage {...messages.adminLabel} />
+            <FormattedMessage {...messages.menuLabel} />
           </Button>
         </Dropdown>
-      )}
-      <Dropdown menu={{ items }}>
-        <Button>
-          <FormattedMessage {...messages.menuLabel} />
-        </Button>
-      </Dropdown>
-    </div>
+      </div>
+      <MatchStatusModal
+        matchId={matchId}
+        onClose={() => setIsMatchStatusModalOpen(false)}
+        isOpen={isMatchStatusModalOpen}
+        initialValues={{ status }}
+      />
+      <DeleteMatchModal
+        isOpen={isDeleteMatchModalOpen}
+        onClose={() => setIsDeleteMatchModalOpen(false)}
+        matchId={matchId}
+        seasonId={seasonId}
+      />
+    </>
   );
 };

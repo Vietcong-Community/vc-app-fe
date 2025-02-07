@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { FrownOutlined } from '@ant-design/icons';
 import { Flex, Space, Spin } from 'antd';
@@ -20,7 +20,6 @@ import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { Table } from '../../../components/Table/Table';
-import { TableWithPagination } from '../../../components/TableWithPagination/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { MatchStatus, Role, SeasonStatus } from '../../../constants/enums';
@@ -29,13 +28,14 @@ import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
 import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
-import { mapMatchStatusToTranslation, mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { removeURLParameter } from '../../../utils/urlUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
-import { ILadderTableRow, IMatchesTableRow, LADDER_COLUMNS, MATCH_COLUMNS } from '../types';
+import { ILadderTableRow, LADDER_COLUMNS } from '../types';
 import { canUserManageMatch } from '../utils';
 
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
+import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { messages } from './messages';
 
@@ -45,7 +45,6 @@ export const SeasonDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ seasonId: string; scrollTo?: string }>();
   const { width } = useWindowDimensions();
   const { formatMessage } = useIntl();
-  const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
   const isSmallerThanMd = width < BreakPoints.md;
 
   const userMe = useUserMe('always', [401]);
@@ -53,7 +52,6 @@ export const SeasonDetailCont: React.FC = () => {
   const season = useSeasonsDetail(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, [401]);
   const ladder = useSeasonLadder(query.seasonId);
-  const matches = useSeasonMatchList(query.seasonId, { page: selectedMatchPage, limit: 10 }, 'always');
   const finishedMatches = useSeasonMatchList(
     query.seasonId,
     {
@@ -97,32 +95,6 @@ export const SeasonDetailCont: React.FC = () => {
       };
     }) ?? [];
 
-  const allMatchesTableData: IMatchesTableRow[] =
-    matches.data?.matches?.map((item) => {
-      const getOpponentTeamName = () => {
-        if (!item.opponent?.team.name) {
-          return '-';
-        }
-
-        return isSmallerThanMd ? item.opponent?.team.tag : item.opponent?.team.name;
-      };
-
-      return {
-        id: item.id,
-        date: formatDateForUser(item.startDate) ?? '',
-        status: mapMatchStatusToTranslation(item.status),
-        challengerTeamName: isSmallerThanMd ? item.challenger?.team.tag : item.challenger.team.name,
-        opponentTeamName: getOpponentTeamName(),
-        result: [
-          MatchStatus.FINISHED,
-          MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
-          MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
-        ].includes(item.status as MatchStatus)
-          ? `${item.challengerScore} - ${item.opponentScore}`
-          : '? - ?',
-      };
-    }) ?? [];
-
   const onMatchCreateClick = () => {
     navigate(Routes.MATCH_CREATE.replace(':seasonId', query.seasonId));
   };
@@ -131,8 +103,6 @@ export const SeasonDetailCont: React.FC = () => {
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
-
-  const onMatchPageChange = (pageNumber: number) => setSelectedMatchPage(pageNumber);
 
   return (
     <ContentLayout
@@ -293,37 +263,13 @@ export const SeasonDetailCont: React.FC = () => {
           />
         </Flex>
         <Divider style={{ margin: '16px 0' }} />
+        <AllMatches seasonId={query.seasonId} />
+        <Divider style={{ margin: '16px 0' }} />
         <Flex vertical align="flex-start">
-          <H2 id="all-matches">
-            <FormattedMessage {...messages.allMatchesTitle} />{' '}
-            {matches.data?.total !== undefined ? <>({matches.data?.total})</> : ''}
+          <H2>
+            <FormattedMessage {...messages.statisticsTitle} />
           </H2>
-          <TableWithPagination
-            columns={MATCH_COLUMNS(isSmallerThanMd)}
-            data={allMatchesTableData}
-            loading={matches.isLoading}
-            onPageChange={onMatchPageChange}
-            onRow={(item) => {
-              const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
-
-              return {
-                onClick,
-                style: {
-                  cursor: 'pointer',
-                },
-              };
-            }}
-            selectedPage={selectedMatchPage}
-            style={{ width: '100%' }}
-            totalItems={matches.data?.total}
-          />
-          <Divider style={{ margin: '16px 0' }} />
-          <Flex vertical align="flex-start">
-            <H2>
-              <FormattedMessage {...messages.statisticsTitle} />
-            </H2>
-            <FormattedMessage {...messages.statisticsDescription} />
-          </Flex>
+          <FormattedMessage {...messages.statisticsDescription} />
         </Flex>
       </EaseInOutContainer>
       <Gap defaultHeight={48} />

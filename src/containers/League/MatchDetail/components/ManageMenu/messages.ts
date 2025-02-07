@@ -1,6 +1,10 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
+  adminLabel: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.adminLabel',
+    defaultMessage: 'Admin',
+  },
   menuLabel: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.menuLabel',
     defaultMessage: 'Správa',
@@ -31,7 +35,7 @@ export const messages = defineMessages({
   },
   deleteMatch: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteMatch',
-    defaultMessage: 'ADMIN - Smazat zápas',
+    defaultMessage: 'Smazat zápas',
   },
   deleteSuccess: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteSuccess',

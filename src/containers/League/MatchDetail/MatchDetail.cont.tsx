@@ -50,6 +50,7 @@ export const MatchDetail: React.FC = () => {
     MatchStatus.FINISHED,
     MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
     MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+    MatchStatus.ACCEPTED,
   ].includes(matchDetail.data?.status as MatchStatus);
   const isPossibleToManageMatch = useMemo(() => {
     return canUserManageMatch(
@@ -169,7 +170,7 @@ export const MatchDetail: React.FC = () => {
                               {matchDetail.data?.challengerEloRowAmount})
                             </S.EloPoints>
                           )}
-                          {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
+                          {`${matchDetail.data?.challengerScore ?? '?'} : ${matchDetail.data?.opponentScore ?? '?'}`}
 
                           {matchDetail.data?.status === MatchStatus.FINISHED && (
                             <S.EloPoints
@@ -182,7 +183,7 @@ export const MatchDetail: React.FC = () => {
                           )}
                         </>
                       ) : (
-                        ' ? : ?'
+                        '? : ?'
                       )}
                     </S.DesktopScore>
                   </S.MiddleContent>
@@ -270,6 +271,7 @@ export const MatchDetail: React.FC = () => {
             opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
             matchId={query.matchId}
             rounds={matchDetail.data?.rounds}
+            userIsAdmin={userIsAdmin}
           />
         )}
       </EaseInOutContainer>

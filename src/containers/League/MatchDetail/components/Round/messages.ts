@@ -1,10 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  draw: {
-    id: 'app.containers.League.MatchDetail.components.Round.draw',
-    defaultMessage: 'REMÍZA',
-  },
   screenshot: {
     id: 'app.containers.League.MatchDetail.components.Round.screenshot',
     defaultMessage: 'Screenshot',

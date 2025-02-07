@@ -21,6 +21,7 @@ interface IProps {
   opponentMatchPlayers: IMatchPlayer[];
   rounds?: IMatchRound[];
   showStatistics?: boolean;
+  userIsAdmin?: boolean;
 }
 
 export const Rounds: React.FC<IProps> = (props: IProps) => {
@@ -33,6 +34,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
     opponentTag,
     rounds,
     showStatistics = true,
+    userIsAdmin = false,
   } = props;
 
   const splitRoundsByMap = chunk(rounds, 2);
@@ -58,6 +60,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
                   matchId={matchId}
                   round={round}
                   showStatistics={showStatistics}
+                  userIsAdmin={userIsAdmin}
                 />
               ))}
             </S.MapContainer>

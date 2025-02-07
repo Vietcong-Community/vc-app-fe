@@ -15,15 +15,10 @@ export const RoundContainer = styled.div`
   width: 100%;
 `;
 
-export const WinnerTag = styled.div<{ $isDraw: boolean }>`
-  border-radius: 4px;
-  background-color: ${(props: IThemeProps & { $isDraw: boolean }) =>
-    props.$isDraw ? '#808080' : props.theme.colors.green};
-  font-size: 12px;
-  padding: 0 0.25rem;
+export const AdminActions = styled.div`
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 1rem;
+  right: 1rem;
 `;
 
 export const MapTitle = styled.div`

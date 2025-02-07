@@ -53,16 +53,14 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     }
   };
 
-  const adminItems: MenuProps['items'] = userIsAdmin
-    ? [
-        {
-          label: <FormattedMessage {...messages.deleteMatch} />,
-          key: '4',
-          onClick: onDeleteMatch,
-          disabled: status === MatchStatus.FINISHED,
-        },
-      ]
-    : [];
+  const adminItems: MenuProps['items'] = [
+    {
+      label: <FormattedMessage {...messages.deleteMatch} />,
+      key: '1',
+      onClick: onDeleteMatch,
+      disabled: status === MatchStatus.FINISHED,
+    },
+  ];
 
   const items: MenuProps['items'] = [
     {
@@ -83,14 +81,22 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
       disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
     },
-    ...adminItems,
   ];
 
   return (
-    <Dropdown menu={{ items }}>
-      <Button>
-        <FormattedMessage {...messages.menuLabel} />
-      </Button>
-    </Dropdown>
+    <div style={{ display: 'flex', gap: 8 }}>
+      {userIsAdmin && (
+        <Dropdown menu={{ items: adminItems }}>
+          <Button>
+            <FormattedMessage {...messages.adminLabel} />
+          </Button>
+        </Dropdown>
+      )}
+      <Dropdown menu={{ items }}>
+        <Button>
+          <FormattedMessage {...messages.menuLabel} />
+        </Button>
+      </Dropdown>
+    </div>
   );
 };

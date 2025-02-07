@@ -240,3 +240,14 @@ export const useRemoveRoundScreenshot = (roundId: string) => {
     },
   });
 };
+
+export const useRemoveRound = (roundId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await del(LeagueEndpoints.REMOVE_ROUND, {
+        roundId,
+      });
+      return data;
+    },
+  });
+};

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
 import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
 import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
@@ -23,6 +24,7 @@ import { NotificationType } from '../../../../../providers/NotificationsProvider
 import { Routes } from '../../../../../routes/enums';
 import { theme } from '../../../../../theme/theme';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
+import { RemoveRoundModal } from '../RemoveRoundModal/RemoveRoundModal';
 
 import { messages } from './messages';
 
@@ -37,6 +39,7 @@ interface IProps {
   opponentMatchPlayers: IMatchPlayer[];
   round: IMatchRound;
   showStatistics: boolean;
+  userIsAdmin: boolean;
 }
 
 export const Round: React.FC<IProps> = (props: IProps) => {
@@ -49,7 +52,9 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     opponentTag,
     round,
     showStatistics,
+    userIsAdmin,
   } = props;
+  const [removeRoundModalIsOpen, setRemoveRoundModalIsOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { navigate } = useRouter();
   const queryClient = useQueryClient();
@@ -94,16 +99,6 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     }
   }, [fileList.length]);
 
-  const getWinnerMessage = () => {
-    if (round.scoreChallenger > round.scoreOpponent) {
-      return challengerTag;
-    } else if (round.scoreChallenger < round.scoreOpponent) {
-      return opponentTag;
-    }
-
-    return <FormattedMessage {...messages.draw} />;
-  };
-
   const getFlag = (nation: Nation) => {
     if (nation === Nation.US) {
       return usaFlag;
@@ -111,8 +106,6 @@ export const Round: React.FC<IProps> = (props: IProps) => {
 
     return vietnamFlag;
   };
-
-  const isDraw = round.scoreChallenger === round.scoreOpponent;
 
   const challengerRoundStatistics = round.playersRoundStats
     ?.filter((item) => !!challengerMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId))
@@ -131,108 +124,123 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     });
 
   return (
-    <S.RoundContainer>
-      <S.WinnerTag $isDraw={isDraw}>{getWinnerMessage()}</S.WinnerTag>
-      <S.MapTitle>{round.map.name}</S.MapTitle>
-      <Gap defaultHeight={12} />
-      <S.ResultContainer>
-        <S.Flag src={getFlag(round.challengerNation)} alt="" />
-        <S.TeamTag>{challengerTag}</S.TeamTag>
-        {round.scoreChallenger} - {round.scoreOpponent}
-        <S.TeamTag>{opponentTag}</S.TeamTag>
-        <S.Flag src={getFlag(round.opponentNation)} alt="" />
-      </S.ResultContainer>
-      {showStatistics && challengerMatchPlayers.length > 0 && (
-        <>
-          <Gap defaultHeight={16} />
-          <FormattedMessage {...messages.statistics} />
-          <Gap defaultHeight={8} />
-          <S.Players>
-            <S.TeamTag>{challengerTag}</S.TeamTag>
-            {challengerRoundStatistics?.map((item) => {
-              return (
-                <S.StatisticItem>
-                  <b
-                    onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {item.nickname}
-                  </b>
-                  <S.Statistics>
-                    <div>
-                      <FontAwesomeIcon icon={faFlag} /> {item.flags}
-                    </div>
-                    <div>
-                      <FontAwesomeIcon icon={faSkull} /> {item.kills}
-                    </div>
-                    <div>
-                      <FontAwesomeIcon icon={faCross} /> {item.deaths}
-                    </div>
-                  </S.Statistics>
-                </S.StatisticItem>
-              );
-            })}
-          </S.Players>
-          <Gap defaultHeight={8} />
-          <S.Players>
-            <S.TeamTag>{opponentTag}</S.TeamTag>
-            {opponentRoundStatistics?.map((item) => {
-              return (
-                <S.StatisticItem>
-                  <b
-                    onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {item.nickname}
-                  </b>
-                  <S.Statistics>
-                    <div>
-                      <FontAwesomeIcon icon={faFlag} /> {item.flags}
-                    </div>
-                    <div>
-                      <FontAwesomeIcon icon={faSkull} /> {item.kills}
-                    </div>
-                    <div>
-                      <FontAwesomeIcon icon={faCross} /> {item.deaths}
-                    </div>
-                  </S.Statistics>
-                </S.StatisticItem>
-              );
-            })}
-          </S.Players>
-        </>
-      )}
-      {round.screenshot?.url && (
-        <>
-          <Gap defaultHeight={16} />
-          <FormattedMessage {...messages.screenshot} />
-          <Gap defaultHeight={8} />
-          <Image width="100%" src={round.screenshot?.url} />
-          {allowUpload && (
-            <>
-              <Gap defaultHeight={8} />
-              {removeScreenshot.isPending && <Spin size="small" />}
-              {!removeScreenshot.isPending && (
-                <div style={{ textAlign: 'end', width: '100%' }}>
-                  <LinkButton onClick={handleDelete} style={{ color: theme.colors.red }} withScale={false}>
-                    <FormattedMessage {...messages.delete} />
-                  </LinkButton>
-                </div>
-              )}
-            </>
-          )}
-        </>
-      )}
-      {!round.screenshot && allowUpload && (
-        <>
-          <Gap defaultHeight={16} />
-          <FormattedMessage {...messages.screenshot} />
-          <Gap defaultHeight={8} />
-          <S.UploadBox>
-            <UploadField fileList={fileList} setFileList={setFileList} />
-          </S.UploadBox>
-        </>
-      )}
-    </S.RoundContainer>
+    <>
+      <S.RoundContainer>
+        {userIsAdmin && (
+          <S.AdminActions>
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              onClick={() => setRemoveRoundModalIsOpen(true)}
+              style={{ cursor: 'pointer', fontSize: 20 }}
+            />
+          </S.AdminActions>
+        )}
+        <S.MapTitle>{round.map.name}</S.MapTitle>
+        <Gap defaultHeight={12} />
+        <S.ResultContainer>
+          <S.Flag src={getFlag(round.challengerNation)} alt="" />
+          <S.TeamTag>{challengerTag}</S.TeamTag>
+          {round.scoreChallenger} - {round.scoreOpponent}
+          <S.TeamTag>{opponentTag}</S.TeamTag>
+          <S.Flag src={getFlag(round.opponentNation)} alt="" />
+        </S.ResultContainer>
+        {showStatistics && challengerMatchPlayers.length > 0 && (
+          <>
+            <Gap defaultHeight={16} />
+            <FormattedMessage {...messages.statistics} />
+            <Gap defaultHeight={8} />
+            <S.Players>
+              <S.TeamTag>{challengerTag}</S.TeamTag>
+              {challengerRoundStatistics?.map((item) => {
+                return (
+                  <S.StatisticItem>
+                    <b
+                      onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {item.nickname}
+                    </b>
+                    <S.Statistics>
+                      <div>
+                        <FontAwesomeIcon icon={faFlag} /> {item.flags}
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faSkull} /> {item.kills}
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faCross} /> {item.deaths}
+                      </div>
+                    </S.Statistics>
+                  </S.StatisticItem>
+                );
+              })}
+            </S.Players>
+            <Gap defaultHeight={8} />
+            <S.Players>
+              <S.TeamTag>{opponentTag}</S.TeamTag>
+              {opponentRoundStatistics?.map((item) => {
+                return (
+                  <S.StatisticItem>
+                    <b
+                      onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {item.nickname}
+                    </b>
+                    <S.Statistics>
+                      <div>
+                        <FontAwesomeIcon icon={faFlag} /> {item.flags}
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faSkull} /> {item.kills}
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faCross} /> {item.deaths}
+                      </div>
+                    </S.Statistics>
+                  </S.StatisticItem>
+                );
+              })}
+            </S.Players>
+          </>
+        )}
+        {round.screenshot?.url && (
+          <>
+            <Gap defaultHeight={16} />
+            <FormattedMessage {...messages.screenshot} />
+            <Gap defaultHeight={8} />
+            <Image width="100%" src={round.screenshot?.url} />
+            {allowUpload && (
+              <>
+                <Gap defaultHeight={8} />
+                {removeScreenshot.isPending && <Spin size="small" />}
+                {!removeScreenshot.isPending && (
+                  <div style={{ textAlign: 'end', width: '100%' }}>
+                    <LinkButton onClick={handleDelete} style={{ color: theme.colors.red }} withScale={false}>
+                      <FormattedMessage {...messages.delete} />
+                    </LinkButton>
+                  </div>
+                )}
+              </>
+            )}
+          </>
+        )}
+        {!round.screenshot && allowUpload && (
+          <>
+            <Gap defaultHeight={16} />
+            <FormattedMessage {...messages.screenshot} />
+            <Gap defaultHeight={8} />
+            <S.UploadBox>
+              <UploadField fileList={fileList} setFileList={setFileList} />
+            </S.UploadBox>
+          </>
+        )}
+      </S.RoundContainer>
+      <RemoveRoundModal
+        isOpen={removeRoundModalIsOpen}
+        onClose={() => setRemoveRoundModalIsOpen(false)}
+        roundId={round.id}
+      />
+    </>
   );
 };

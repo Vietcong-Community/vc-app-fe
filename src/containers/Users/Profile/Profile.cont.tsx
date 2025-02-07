@@ -41,7 +41,7 @@ export const ProfileCont: React.FC = () => {
   const userTeams = useUserTeams(query.id);
 
   const showLoading = userDetail.isLoading;
-  const showEditIcon = userMe.data?.id === query.id;
+  const showActionsOnProfile = userMe.data?.id === query.id;
 
   const getUserIcon = () => {
     if (userDetail.data?.image?.url) {
@@ -75,7 +75,7 @@ export const ProfileCont: React.FC = () => {
           <S.PlayerInfo>
             <Avatar size={175} icon={getUserIcon()} />
             <Card style={{ maxWidth: isSmallerThanMD ? 'initial' : 550, position: 'relative', textAlign: 'start' }}>
-              {showEditIcon && (
+              {showActionsOnProfile && (
                 <S.EditProfileIcon onClick={() => navigate(Routes.EDIT_PROFILE.replace(':id', query.id))}>
                   <EditOutlined />
                 </S.EditProfileIcon>
@@ -127,9 +127,11 @@ export const ProfileCont: React.FC = () => {
             <H2>
               <FormattedMessage {...messages.myTeamsTitle} />
             </H2>
-            <S.IconContainer onClick={() => setIsCreateTeamOpen(true)}>
-              <FontAwesomeIcon icon={faSquarePlus} />
-            </S.IconContainer>
+            {showActionsOnProfile && (
+              <S.IconContainer onClick={() => setIsCreateTeamOpen(true)}>
+                <FontAwesomeIcon icon={faSquarePlus} />
+              </S.IconContainer>
+            )}
           </div>
           <Divider style={{ margin: 'auto', maxWidth: 740 }} />
         </S.MyTeamsTitle>

@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDeleteMatch } from '../../../../../api/hooks/admin/api';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { useRouter } from '../../../../../hooks/RouterHook';
+import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../../../routes/enums';
 
 import { messages } from './messages';
@@ -31,7 +32,7 @@ export const DeleteMatchModal: React.FC<IProps> = (props: IProps) => {
       showNotification(messages.deleteSuccess);
       navigate(Routes.SEASON_DETAIL.replace(':seasonId', seasonId ?? ''));
     } catch {
-      showNotification(messages.deleteFailed);
+      showNotification(messages.deleteFailed, undefined, NotificationType.ERROR);
     }
   };
 

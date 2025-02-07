@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
 import { MatchStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { Routes } from '../../../../../routes/enums';
@@ -17,6 +18,7 @@ interface IProps {
   canEnterResult?: boolean;
   matchId: string;
   seasonId?: string;
+  setIsUpdateMatchModalOpen: (value: boolean) => void;
   status?: MatchStatus;
   userIsAdmin: boolean;
 }
@@ -28,12 +30,15 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     canConfirmResult = false,
     matchId,
     seasonId,
+    setIsUpdateMatchModalOpen,
     status,
     userIsAdmin,
   } = props;
   const [isMatchStatusModalOpen, setIsMatchStatusModalOpen] = useState<boolean>(false);
   const [isDeleteMatchModalOpen, setIsDeleteMatchModalOpen] = useState<boolean>(false);
   const { navigate } = useRouter<{ id: string }>();
+
+  const recalculatePlayerStats = useRecalculatePlayerStats(matchId);
 
   const onConfirmMatch = async () => {
     navigate(Routes.MATCH_CHALLENGE.replace(':matchId', matchId));
@@ -47,8 +52,19 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
     {
       label: <FormattedMessage {...messages.deleteMatch} />,
-      key: 'ě',
+      key: '2',
       onClick: () => setIsDeleteMatchModalOpen(true),
+      disabled: status === MatchStatus.FINISHED,
+    },
+    {
+      label: <FormattedMessage {...messages.recalculatePlayerStats} />,
+      key: '3',
+      onClick: () => recalculatePlayerStats.mutateAsync(),
+    },
+    {
+      label: <FormattedMessage {...messages.updateMatch} />,
+      key: '3',
+      onClick: () => setIsUpdateMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },
   ];

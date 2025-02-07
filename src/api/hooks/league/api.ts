@@ -20,6 +20,7 @@ import {
   ISeason,
   ISeasonTeamItem,
   ISetMatchScore,
+  IUpdateMatch,
 } from './interfaces';
 
 export const useLeagueList = () => {
@@ -170,7 +171,7 @@ export const useMatchDetail = (matchId: string, refetchOnMount?: boolean | 'alwa
   return useQuery({
     queryKey: ['matchDetail', matchId],
     queryFn: async () => {
-      const { data } = await get<IMatch>(LeagueEndpoints.MATCH_DETAIL, { matchId });
+      const { data } = await get<IMatch>(LeagueEndpoints.MATCH_BY_ID, { matchId });
       return data;
     },
     staleTime: Infinity,
@@ -258,6 +259,28 @@ export const useRemoveRound = (roundId: string) => {
     mutationFn: async () => {
       const { data } = await del(LeagueEndpoints.REMOVE_ROUND, {
         roundId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useUpdateMatch = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (payload: IUpdateMatch) => {
+      const { data } = await put<IUpdateMatch, undefined>(LeagueEndpoints.MATCH_BY_ID, payload, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useRecalculatePlayerStats = (matchId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await post<undefined, undefined>(LeagueEndpoints.RECALCULATE_PLAYER_STATS, undefined, {
+        matchId,
       });
       return data;
     },

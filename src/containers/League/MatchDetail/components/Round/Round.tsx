@@ -128,115 +128,117 @@ export const Round: React.FC<IProps> = (props: IProps) => {
   return (
     <>
       <S.RoundContainer>
-        {userIsAdmin && (
-          <S.AdminActions>
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              onClick={() => setRemoveRoundModalIsOpen(true)}
-              style={{ cursor: 'pointer', fontSize: 20 }}
-            />
-          </S.AdminActions>
-        )}
-        <S.MapTitle>{round.map.name}</S.MapTitle>
-        <Gap defaultHeight={12} />
-        <S.ResultContainer>
-          <S.Flag src={getFlag(round.challengerNation)} alt="" />
-          <S.TeamTag>{challengerTag}</S.TeamTag>
-          {round.scoreChallenger} - {round.scoreOpponent}
-          <S.TeamTag>{opponentTag}</S.TeamTag>
-          <S.Flag src={getFlag(round.opponentNation)} alt="" />
-        </S.ResultContainer>
-        {showStatistics && challengerMatchPlayers.length > 0 && (
-          <>
-            <Gap defaultHeight={16} />
-            <FormattedMessage {...messages.statistics} />
-            <Gap defaultHeight={8} />
-            <S.Players>
-              <S.TeamTag>{challengerTag}</S.TeamTag>
-              {challengerRoundStatistics?.map((item) => {
-                return (
-                  <S.StatisticItem>
-                    <b
-                      onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {item.nickname}
-                    </b>
-                    <S.Statistics>
-                      <div>
-                        <FontAwesomeIcon icon={faFlag} /> {item.flags}
-                      </div>
-                      <div>
-                        <FontAwesomeIcon icon={faSkull} /> {item.kills}
-                      </div>
-                      <div>
-                        <FontAwesomeIcon icon={faCross} /> {item.deaths}
-                      </div>
-                    </S.Statistics>
-                  </S.StatisticItem>
-                );
-              })}
-            </S.Players>
-            <Gap defaultHeight={8} />
-            <S.Players>
-              <S.TeamTag>{opponentTag}</S.TeamTag>
-              {opponentRoundStatistics?.map((item) => {
-                return (
-                  <S.StatisticItem>
-                    <b
-                      onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {item.nickname}
-                    </b>
-                    <S.Statistics>
-                      <div>
-                        <FontAwesomeIcon icon={faFlag} /> {item.flags}
-                      </div>
-                      <div>
-                        <FontAwesomeIcon icon={faSkull} /> {item.kills}
-                      </div>
-                      <div>
-                        <FontAwesomeIcon icon={faCross} /> {item.deaths}
-                      </div>
-                    </S.Statistics>
-                  </S.StatisticItem>
-                );
-              })}
-            </S.Players>
-          </>
-        )}
-        {round.screenshot?.url && (
-          <>
-            <Gap defaultHeight={16} />
-            <FormattedMessage {...messages.screenshot} />
-            <Gap defaultHeight={8} />
-            <Image width="100%" src={round.screenshot?.url} />
-            {allowUpload && (
-              <>
-                <Gap defaultHeight={8} />
-                {removeScreenshot.isPending && <Spin size="small" />}
-                {!removeScreenshot.isPending && (
-                  <div style={{ textAlign: 'end', width: '100%' }}>
-                    <LinkButton onClick={handleDelete} style={{ color: theme.colors.red }} withScale={false}>
-                      <FormattedMessage {...messages.delete} />
-                    </LinkButton>
-                  </div>
-                )}
-              </>
-            )}
-          </>
-        )}
-        {!round.screenshot && allowUpload && (
-          <>
-            <Gap defaultHeight={16} />
-            <FormattedMessage {...messages.screenshot} />
-            <Gap defaultHeight={8} />
-            <S.UploadBox>
-              <UploadField fileList={fileList} setFileList={setFileList} />
-            </S.UploadBox>
-          </>
-        )}
+        <div>
+          {userIsAdmin && (
+            <S.AdminActions>
+              <FontAwesomeIcon
+                icon={faCircleXmark}
+                onClick={() => setRemoveRoundModalIsOpen(true)}
+                style={{ cursor: 'pointer', fontSize: 20 }}
+              />
+            </S.AdminActions>
+          )}
+          <S.MapTitle>{round.map.name}</S.MapTitle>
+          <Gap defaultHeight={12} />
+          <S.ResultContainer>
+            <S.Flag src={getFlag(round.challengerNation)} alt="" />
+            <S.TeamTag>{challengerTag}</S.TeamTag>
+            {round.scoreChallenger} - {round.scoreOpponent}
+            <S.TeamTag>{opponentTag}</S.TeamTag>
+            <S.Flag src={getFlag(round.opponentNation)} alt="" />
+          </S.ResultContainer>
+          {showStatistics && (challengerRoundStatistics.length > 0 || opponentRoundStatistics?.length > 0) && (
+            <>
+              <Gap defaultHeight={16} />
+              <FormattedMessage {...messages.statistics} />
+              <Gap defaultHeight={8} />
+              <S.Players>
+                <S.TeamTag>{challengerTag}</S.TeamTag>
+                {challengerRoundStatistics?.map((item) => {
+                  return (
+                    <S.StatisticItem>
+                      <b
+                        onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {item.nickname}
+                      </b>
+                      <S.Statistics>
+                        <div>
+                          <FontAwesomeIcon icon={faFlag} /> {item.flags}
+                        </div>
+                        <div>
+                          <FontAwesomeIcon icon={faSkull} /> {item.kills}
+                        </div>
+                        <div>
+                          <FontAwesomeIcon icon={faCross} /> {item.deaths}
+                        </div>
+                      </S.Statistics>
+                    </S.StatisticItem>
+                  );
+                })}
+              </S.Players>
+              <Gap defaultHeight={8} />
+              <S.Players>
+                <S.TeamTag>{opponentTag}</S.TeamTag>
+                {opponentRoundStatistics?.map((item) => {
+                  return (
+                    <S.StatisticItem>
+                      <b
+                        onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {item.nickname}
+                      </b>
+                      <S.Statistics>
+                        <div>
+                          <FontAwesomeIcon icon={faFlag} /> {item.flags}
+                        </div>
+                        <div>
+                          <FontAwesomeIcon icon={faSkull} /> {item.kills}
+                        </div>
+                        <div>
+                          <FontAwesomeIcon icon={faCross} /> {item.deaths}
+                        </div>
+                      </S.Statistics>
+                    </S.StatisticItem>
+                  );
+                })}
+              </S.Players>
+            </>
+          )}
+          {round.screenshot?.url && (
+            <>
+              <Gap defaultHeight={16} />
+              <FormattedMessage {...messages.screenshot} />
+              <Gap defaultHeight={8} />
+              <Image width="100%" src={round.screenshot?.url} />
+              {allowUpload && (
+                <>
+                  <Gap defaultHeight={8} />
+                  {removeScreenshot.isPending && <Spin size="small" />}
+                  {!removeScreenshot.isPending && (
+                    <div style={{ textAlign: 'end', width: '100%' }}>
+                      <LinkButton onClick={handleDelete} style={{ color: theme.colors.red }} withScale={false}>
+                        <FormattedMessage {...messages.delete} />
+                      </LinkButton>
+                    </div>
+                  )}
+                </>
+              )}
+            </>
+          )}
+          {!round.screenshot && allowUpload && (
+            <>
+              <Gap defaultHeight={16} />
+              <FormattedMessage {...messages.screenshot} />
+              <Gap defaultHeight={8} />
+              <S.UploadBox>
+                <UploadField fileList={fileList} setFileList={setFileList} />
+              </S.UploadBox>
+            </>
+          )}
+        </div>
         {!!round.createdBy && (
           <>
             <Gap defaultHeight={16} />
@@ -255,6 +257,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
       <RemoveRoundModal
         isOpen={removeRoundModalIsOpen}
         onClose={() => setRemoveRoundModalIsOpen(false)}
+        matchId={matchId}
         roundId={round.id}
       />
     </>

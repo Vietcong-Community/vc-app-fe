@@ -144,3 +144,12 @@ export interface IExpectedEloPointsItem {
   pointsChangeChallenger: number;
   pointsChangeOpponent: number;
 }
+
+export interface IUpdateMatch {
+  challengerMapId: string;
+  opponentMapId: string;
+  startDate: string;
+  endDate: string;
+  challengerScore?: number;
+  opponentScore?: number;
+}

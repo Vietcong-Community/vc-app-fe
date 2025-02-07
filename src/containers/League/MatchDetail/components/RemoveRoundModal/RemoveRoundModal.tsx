@@ -1,21 +1,38 @@
 import React from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Modal } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useRemoveRound } from '../../../../../api/hooks/league/api';
+import { useNotifications } from '../../../../../hooks/NotificationsHook';
+import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 
 import { messages } from './messages';
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
+  matchId: string;
   roundId: string;
 }
+
 export const RemoveRoundModal: React.FC<IProps> = (props: IProps) => {
-  const { isOpen, onClose, roundId } = props;
+  const { isOpen, onClose, matchId, roundId } = props;
   const { formatMessage } = useIntl();
+  const { showNotification } = useNotifications();
+  const queryClient = useQueryClient();
   const removeRound = useRemoveRound(roundId);
+
+  const onDeleteRound = async () => {
+    try {
+      await removeRound.mutateAsync();
+      await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+      showNotification(messages.deleteSuccess);
+    } catch {
+      showNotification(messages.deleteFailed, undefined, NotificationType.ERROR);
+    }
+  };
 
   return (
     <Modal
@@ -23,6 +40,7 @@ export const RemoveRoundModal: React.FC<IProps> = (props: IProps) => {
       cancelButtonProps={{ title: formatMessage(messages.cancel) }}
       okButtonProps={{ title: formatMessage(messages.confirm) }}
       onCancel={onClose}
+      onOk={onDeleteRound}
       confirmLoading={removeRound.isPending}
       open={isOpen}
     >

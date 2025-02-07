@@ -12,9 +12,10 @@ export enum LeagueEndpoints {
   SET_MATCH_SCORE = '/matches/{matchId}/set-match-score',
   UPDATE_MATCH_STATUS = '/matches/{matchId}/update-status',
   CONFIRM_MATCH_SCORE = '/matches/{matchId}/confirm-match-score',
-  MATCH_DETAIL = '/matches/{matchId}',
+  MATCH_BY_ID = '/matches/{matchId}',
   EXPECTED_ELO_POINTS = '/matches/expected-elo-points/{challengerId}/{opponentId}',
   ROUNDS_SCREENSHOT_UPLOAD = '/matches/{matchId}/rounds/{roundId}/screenshot-upload-url',
   REMOVE_ROUND_SCREENSHOT = '/match-rounds/{roundId}/remove-screenshot',
   REMOVE_ROUND = '/match-rounds/{roundId}',
+  RECALCULATE_PLAYER_STATS = '/matches/{matchId}/recalculate-match-player-stats',
 }

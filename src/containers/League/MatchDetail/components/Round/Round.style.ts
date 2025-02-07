@@ -9,6 +9,7 @@ export const RoundContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 14px;
+  justify-content: space-between;
   padding: 1rem;
   position: relative;
   text-align: start;

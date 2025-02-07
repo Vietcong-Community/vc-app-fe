@@ -17,4 +17,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.RemoveRoundModal.confirm',
     defaultMessage: 'Potvrdit',
   },
+  deleteSuccess: {
+    id: 'app.containers.League.MatchDetail.components.RemoveRoundModal.deleteSuccess',
+    defaultMessage: 'Smazání kola bylo úspěšné',
+  },
+  deleteFailed: {
+    id: 'app.containers.League.MatchDetail.components.RemoveRoundModal.deleteFailed',
+    defaultMessage: 'Smazání se nezdařilo',
+  },
 });

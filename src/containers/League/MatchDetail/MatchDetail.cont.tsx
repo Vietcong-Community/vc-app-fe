@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
+import dayjs from 'dayjs';
 import { some } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -28,6 +29,7 @@ import { canUserManageMatch } from '../utils';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
 import { Team } from './components/Team/Team';
+import { UpdateMatchModal } from './components/UpdateMatchModal/UpdateMatchModal';
 import { messages } from './messages';
 
 import * as S from './MatchDetail.style';
@@ -35,6 +37,7 @@ import * as S from './MatchDetail.style';
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
   const [isEloModalOpen, setIsEloModalOpen] = useState<boolean>(false);
+  const [isUpdateMatchModalOpen, setIsUpdateMatchModalOpen] = useState<boolean>(false);
   const { formatMessage } = useIntl();
 
   const matchDetail = useMatchDetail(query.matchId);
@@ -125,6 +128,7 @@ export const MatchDetail: React.FC = () => {
             canConfirmResult={isPossibleToManageMatch?.allowed && !showUploadRoundImagesAlert}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
+            setIsUpdateMatchModalOpen={setIsUpdateMatchModalOpen}
             status={matchDetail.data?.status}
             userIsAdmin={userIsAdmin}
           />
@@ -262,7 +266,8 @@ export const MatchDetail: React.FC = () => {
         {scoreExists && !!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
           <Rounds
             allowUpload={
-              matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
+              (matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION ||
+                matchDetail.data?.status === MatchStatus.CONFIRMED_SCORE_BY_SYSTEM) &&
               (isPossibleToManageMatch.allowed || userIsAdmin)
             }
             challengerMatchPlayers={matchDetail.data?.challengerMatchPlayers ?? []}
@@ -285,6 +290,19 @@ export const MatchDetail: React.FC = () => {
         opponentId={matchDetail.data?.opponent?.id}
         opponentName={matchDetail.data?.opponent?.team?.tag}
         opponentElo={opponentSeasonTeam?.eloPoints}
+      />
+      <UpdateMatchModal
+        isOpen={isUpdateMatchModalOpen}
+        initialValues={{
+          challengerMapId: matchDetail.data?.challengerMap?.id,
+          opponentMapId: matchDetail.data?.opponentMap?.id,
+          startDate: dayjs(matchDetail.data?.startDate) as unknown as string,
+          challengerScore: matchDetail.data?.challengerScore,
+          opponentScore: matchDetail.data?.opponentScore,
+        }}
+        onClose={() => setIsUpdateMatchModalOpen(false)}
+        matchId={query.matchId}
+        seasonId={matchDetail.data?.season?.id}
       />
     </ContentLayout>
   );

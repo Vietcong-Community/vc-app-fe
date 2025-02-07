@@ -1,13 +1,21 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { get, post } from '../../apiFactory';
+import { get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
 import { ISeason } from '../league/interfaces';
 
 import { TeamEndpoints } from './endpoints';
-import { ITeamPlayers, ITeam, IMeTeams, IAvatarUpload, ICreateTeam, IUpdateTeam } from './interfaces';
+import {
+  ITeamPlayers,
+  ITeam,
+  IMeTeams,
+  IAvatarUpload,
+  ICreateTeam,
+  IUpdateTeam,
+  IUpdateUserInTeam,
+} from './interfaces';
 
 export const useTeamDetail = (id: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
@@ -135,10 +143,21 @@ export const useCreateTeam = () => {
   });
 };
 
-export const useUpdateTeam = (teamId: string) => {
+export const useUpdateTeam = (id: string) => {
   return useMutation({
     mutationFn: async (payload: IUpdateTeam) => {
-      const { data } = await post<IUpdateTeam, undefined>(TeamEndpoints.TEAM_BY_ID, payload, { teamId });
+      const { data } = await put<IUpdateTeam, undefined>(TeamEndpoints.TEAM_BY_ID, payload, { id });
+      return data;
+    },
+  });
+};
+
+export const useUpdateUserInTeam = (userInTeamId: string) => {
+  return useMutation({
+    mutationFn: async (payload: IUpdateUserInTeam) => {
+      const { data } = await put<IUpdateUserInTeam, undefined>(TeamEndpoints.UPDATE_USER_IN_TEAM, payload, {
+        userInTeamId,
+      });
       return data;
     },
   });

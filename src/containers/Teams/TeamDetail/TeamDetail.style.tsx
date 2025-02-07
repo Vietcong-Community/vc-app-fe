@@ -1,6 +1,7 @@
+import { Avatar } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../theme/theme';
 import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const Content = styled.div`
@@ -31,4 +32,13 @@ export const TeamInfo = styled.div`
 export const Members = styled.div`
   flex: 1;
   width: 100%;
+`;
+
+export const AvatarIcon = styled(Avatar)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;

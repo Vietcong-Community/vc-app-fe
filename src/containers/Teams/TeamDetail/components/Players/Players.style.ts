@@ -1,3 +1,4 @@
+import { Avatar } from 'antd';
 import bgCard from 'src/assets/heli-footer-light-design.webp';
 import styled, { css } from 'styled-components';
 
@@ -32,7 +33,6 @@ export const PlayerCard = styled.div`
   &:hover {
     cursor: pointer;
     filter: grayscale(0%); /* Obrázek bude barevný při hoveru */
-    transform: scale(1.03);
   }
 
   ${() => makeMediaQuery(BreakPoints.md)`
@@ -51,20 +51,17 @@ export const PlayerImage = styled.img`
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      bottom: 0;
       height: 100px; /* Výška obrázku */
-      position: absolute;
-
       width: 100px; /* Šířka obrázku */
     `}
   `};
 `;
 
 export const PlayerInfo = styled.div`
-  position: absolute;
   right: 1rem;
   padding: 15px;
   top: 0;
+  width: 100%;
 `;
 
 export const PlayerName = styled.h3`
@@ -87,20 +84,6 @@ export const PlayerRole = styled.p`
   color: #8b8c89;
 `;
 
-export const CarouselDiv = styled.div`
-  width: 100%;
-  max-width: 600px; /* Maximální šířka carouselu */
-  margin: 0 auto; /* Horizontální centrování */
-  overflow: hidden; /* Skryje obsah mimo hranice carouselu */
-  position: relative; /* Pro umístění ovládacích prvků */
-  display: none;
-
-  ${() => makeMediaQuery(BreakPoints.md)` 
-    ${css`
-      display: block;
-    `}
-  `};
-`;
 export const Buttons = styled.div`
   display: flex;
   gap: 8px;
@@ -108,5 +91,20 @@ export const Buttons = styled.div`
 
   button {
     padding: 0.5rem 1rem;
+  }
+`;
+
+export const GearIcon = styled(Avatar)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  filter: grayscale(80%); /* Obrázek bude šedý */
+  right: 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+    filter: grayscale(0%); /* Obrázek bude barevný při hoveru */
+    transform: scale(1.2);
   }
 `;

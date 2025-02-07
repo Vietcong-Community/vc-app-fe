@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Flex, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -26,6 +26,7 @@ import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
 
+import { EditTeamModalForm } from './components/EditTeamModal/EditTeamModal.form';
 import { Players } from './components/Players/Players';
 import { TeamInfo } from './components/TeamInfo/TeamInfo';
 import { messages } from './messages';
@@ -35,10 +36,11 @@ import * as S from '../TeamDetail/TeamDetail.style';
 export const TeamDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ id: string }>();
   const { formatMessage } = useIntl();
+  const { showNotification } = useNotifications();
+  const [updateModalIsOpen, setUpdateModalIsOpen] = useState<boolean>(false);
+
   const team = useTeamDetail(query.id);
   const userMe = useUserMe(false, [401]);
-  const { showNotification } = useNotifications();
-
   const joinTeam = useJoinTeam(query.id);
   const approveTeamJoin = useApproveJoinRequest(query.id);
   const rejectTeamJoin = useRejectJoinRequest(query.id);
@@ -86,42 +88,59 @@ export const TeamDetailCont: React.FC = () => {
   const showLoading = team.isLoading || userMe.isLoading || teamPlayers.isLoading;
 
   return (
-    <ContentLayout breadcrumbItems={[{ key: 'bc-team', title: <FormattedMessage {...messages.title} /> }]}>
-      <Helmet title={`${formatMessage(messages.title)}${team.data?.name ? ` - ${team.data?.name}` : ''}`} />
-      {showLoading && (
-        <>
-          <Gap defaultHeight={32} height={{ md: 16 }} />
-          <Spin size="large" />
-        </>
-      )}
-      <EaseInOutContainer isOpen={!showLoading}>
-        <Flex align="center" justify="space-between" style={{ gap: 16, textAlign: 'start' }}>
-          <H1>{team.data?.name}</H1>
-          {userCanJoinTeam && (
-            <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
-              <PlusOutlined />
-              <FormattedMessage {...messages.joinBtn} />
-            </Button>
-          )}
-        </Flex>
-        <Divider />
-        <Gap defaultHeight={16} />
-        <S.Content>
-          <S.TeamInfo>
-            <TeamInfo teamDetail={team.data} showAvatarUploadOption={userIsOwner} />
-          </S.TeamInfo>
-          <S.Members>
-            <Players
-              goToPlayerDetail={goToPlayerDetail}
-              handleApproveRequest={handleApproveJoinRequest}
-              handleRejectRequest={handleRejectJoinRequest}
-              players={teamPlayers.data?.items ?? []}
-              userIsOwner={userIsOwner}
-            />
-          </S.Members>
-        </S.Content>
-      </EaseInOutContainer>
-      <Gap defaultHeight={32} height={{ md: 16 }} />
-    </ContentLayout>
+    <>
+      <ContentLayout breadcrumbItems={[{ key: 'bc-team', title: <FormattedMessage {...messages.title} /> }]}>
+        <Helmet title={`${formatMessage(messages.title)}${team.data?.name ? ` - ${team.data?.name}` : ''}`} />
+        {showLoading && (
+          <>
+            <Gap defaultHeight={32} height={{ md: 16 }} />
+            <Spin size="large" />
+          </>
+        )}
+        <EaseInOutContainer isOpen={!showLoading}>
+          <Flex align="center" justify="space-between" style={{ gap: 16, textAlign: 'start' }}>
+            <H1>{team.data?.name}</H1>
+            {userIsOwner && (
+              <S.AvatarIcon
+                shape="square"
+                size={32}
+                icon={<EditOutlined />}
+                onClick={() => setUpdateModalIsOpen(true)}
+              />
+            )}
+            {userCanJoinTeam && (
+              <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
+                <PlusOutlined />
+                <FormattedMessage {...messages.joinBtn} />
+              </Button>
+            )}
+          </Flex>
+          <Divider />
+          <Gap defaultHeight={16} />
+          <S.Content>
+            <S.TeamInfo>
+              <TeamInfo teamDetail={team.data} showAvatarUploadOption={userIsOwner} />
+            </S.TeamInfo>
+            <S.Members>
+              <Players
+                goToPlayerDetail={goToPlayerDetail}
+                handleApproveRequest={handleApproveJoinRequest}
+                handleRejectRequest={handleRejectJoinRequest}
+                players={teamPlayers.data?.items ?? []}
+                teamId={query.id}
+                userIsOwner={userIsOwner}
+              />
+            </S.Members>
+          </S.Content>
+        </EaseInOutContainer>
+        <Gap defaultHeight={32} height={{ md: 16 }} />
+      </ContentLayout>
+      <EditTeamModalForm
+        isOpen={updateModalIsOpen}
+        onClose={() => setUpdateModalIsOpen(false)}
+        initialValues={{ name: team.data?.name, tag: team.data?.tag, description: team.data?.description }}
+        teamId={query.id}
+      />
+    </>
   );
 };

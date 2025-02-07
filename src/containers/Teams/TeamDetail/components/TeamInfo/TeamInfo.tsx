@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { Spin, UploadFile } from 'antd';
+import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import teamImg from 'src/assets/heli-footer-light-design.webp';
 
@@ -104,10 +105,12 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
             <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
           </S.InfoCard>
           <S.InfoCard>
-            {teamDetail?.description ?? (
+            {isEmpty(teamDetail?.description) ? (
               <i>
                 <FormattedMessage {...messages.fakeDescription} />
               </i>
+            ) : (
+              teamDetail?.description
             )}
             <Gap defaultHeight={32} height={{ md: 32, sm: 16 }} />
           </S.InfoCard>

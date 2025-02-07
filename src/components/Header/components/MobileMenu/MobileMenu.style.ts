@@ -123,9 +123,6 @@ export const UserName = styled.div`
 export const LogoutLink = styled.a`
   bottom: 1rem;
   font-size: 16px;
-  left: 0;
-  position: absolute;
-  right: 0;
 `;
 
 export const SwitchContainer = styled.div`

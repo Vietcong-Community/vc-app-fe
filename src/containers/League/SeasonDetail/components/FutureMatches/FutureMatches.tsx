@@ -17,7 +17,7 @@ import * as S from '../../SeasonDetail.style';
 
 interface IProps {
   canCreateNewMatch: boolean;
-  onMatchCreateClick: () => void;
+  onMatchCreateClick?: () => void;
   seasonId: string;
 }
 

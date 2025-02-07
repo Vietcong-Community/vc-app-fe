@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FrownOutlined } from '@ant-design/icons';
-import { Flex, Spin, Typography } from 'antd';
+import { Flex, Space, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useSeasonLadder, useSeasonMatchList, useSeasonTeams } from '../../../../../api/hooks/league/api';
@@ -9,7 +9,7 @@ import { IMatchListItem, ISeason } from '../../../../../api/hooks/league/interfa
 import { useMeTeams } from '../../../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
-import { Divider } from '../../../../../components/Divider/Divider';
+import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
 import { Table } from '../../../../../components/Table/Table';
@@ -18,6 +18,7 @@ import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
 import { BreakPoints } from '../../../../../theme/theme';
+import { FutureMatches } from '../../../SeasonDetail/components/FutureMatches/FutureMatches';
 import { MatchRow } from '../../../components/MatchRow/MatchRow';
 import { ILadderTableRow, LADDER_COLUMNS } from '../../../types';
 import { canUserManageMatch } from '../../../utils';
@@ -35,25 +36,10 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
   const { navigate } = useRouter();
   const { width } = useWindowDimensions();
   const isSmallerThanLg = width < BreakPoints.lg;
-  const isSmallerThanMd = width < BreakPoints.md;
 
   const myTeams = useMeTeams(undefined, [401]);
   const seasonTeams = useSeasonTeams(seasonDetail.id, [401]);
   const ladder = useSeasonLadder(seasonDetail.id);
-  const futureMatches = useSeasonMatchList(
-    seasonDetail.id,
-    {
-      status: [
-        MatchStatus.NEW,
-        MatchStatus.ACCEPTED,
-        MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
-        MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
-      ].join(','),
-      limit: 5,
-    },
-    'always',
-    0,
-  );
   const finishedMatches = useSeasonMatchList(
     seasonDetail.id,
     {
@@ -81,7 +67,6 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
     }) ?? [];
 
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
-  const noUpcomingMatches = futureMatches.data?.total === 0;
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = seasonDetail.status === SeasonStatus.ACTIVE;
 
@@ -89,76 +74,48 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
     <Flex vertical>
       <S.Matches>
         {isSeasonActive && (
-          <>
-            <Flex justify="center" vertical>
-              <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
-                <FormattedMessage {...messages.openMatches} />{' '}
-                {(futureMatches.data?.total ?? 0) > 0 ? (
-                  <span style={{ fontSize: 12 }}>
-                    ({futureMatches.data?.matches?.length}/{futureMatches.data?.total})
-                  </span>
-                ) : (
-                  ''
-                )}
-              </Typography.Title>
-              {futureMatches.isLoading && <Spin size="large" />}
-              <EaseInOutContainer isOpen={!futureMatches.isLoading}>
-                <S.LastMatchesContainer>
-                  {noUpcomingMatches && (
-                    <S.NoMatches>
-                      <FormattedMessage {...messages.noUpcomingMatches} />
-                    </S.NoMatches>
-                  )}
-                  {!noUpcomingMatches &&
-                    futureMatches.data?.matches.map((item: IMatchListItem) => {
-                      return <MatchRow match={item} />;
-                    })}
-                </S.LastMatchesContainer>
-              </EaseInOutContainer>
-            </Flex>
-            {isSmallerThanMd && (
-              <>
-                <Gap defaultHeight={16} />
-                <Divider />
-                <Gap defaultHeight={16} />
-              </>
-            )}
-          </>
+          <Flex justify="center" vertical>
+            <FutureMatches canCreateNewMatch={false} seasonId={seasonDetail.id} />
+          </Flex>
         )}
         <Flex justify="center" vertical>
-          <Typography.Title level={4} style={{ textAlign: isSmallerThanMd ? 'start' : 'center' }}>
-            <FormattedMessage {...messages.playedMatches} />
-          </Typography.Title>
-          {finishedMatches.isLoading && <Spin size="large" />}
-          <EaseInOutContainer isOpen={!finishedMatches.isLoading}>
-            {noFinishedMatches && (
-              <S.NoMatches>
-                <Gap defaultHeight={16} />
-                <FrownOutlined />
-                <Gap defaultHeight={16} />
-                <FormattedMessage {...messages.noFinishedMatches} />
-              </S.NoMatches>
-            )}
-            {!noFinishedMatches && (
-              <>
-                <S.LastMatchesContainer>
-                  {finishedMatches.data?.matches?.map((item: IMatchListItem) => {
-                    return <MatchRow match={item} />;
-                  })}
-                </S.LastMatchesContainer>
-              </>
-            )}
-          </EaseInOutContainer>
+          <Card style={{ flex: 1 }}>
+            {finishedMatches.isLoading && <Spin size="large" />}
+            <EaseInOutContainer isOpen={!finishedMatches.isLoading}>
+              <S.CardTitle>
+                <FormattedMessage {...messages.playedMatches} />
+              </S.CardTitle>
+              {noFinishedMatches && (
+                <S.NoMatches>
+                  <Gap defaultHeight={16} />
+                  <FrownOutlined />
+                  <Gap defaultHeight={16} />
+                  <FormattedMessage {...messages.noFinishedMatches} />
+                </S.NoMatches>
+              )}
+              {!noFinishedMatches && (
+                <>
+                  <Space direction="vertical" style={{ width: '100%' }}>
+                    {finishedMatches.data?.matches.map((item: IMatchListItem) => {
+                      return <MatchRow match={item} />;
+                    })}
+                  </Space>
+                </>
+              )}
+              <Gap defaultHeight={24} />
+              <Flex vertical align="flex-end">
+                <LinkButton
+                  onClick={() =>
+                    navigate(`${Routes.SEASON_DETAIL.replace(':seasonId', seasonDetail.id)}?scrollTo=matches`)
+                  }
+                >
+                  <FormattedMessage {...messages.allMatches} />
+                </LinkButton>
+              </Flex>
+            </EaseInOutContainer>
+          </Card>
         </Flex>
       </S.Matches>
-      <Gap defaultHeight={16} />
-      <Flex vertical align="flex-end">
-        <LinkButton
-          onClick={() => navigate(`${Routes.SEASON_DETAIL.replace(':seasonId', seasonDetail.id)}?scrollTo=matches`)}
-        >
-          <FormattedMessage {...messages.allMatches} />
-        </LinkButton>
-      </Flex>
       <Gap defaultHeight={16} />
       <Flex justify="flex-end">
         <Button onClick={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', seasonDetail.id))}>

@@ -4,43 +4,26 @@ import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
 import { makeMediaQuery } from '../../../../../utils/mediaQuery';
 
 export const Matches = styled.div`
-  align-items: flex-start;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
 
   > * {
-    width: 100%;
+    flex: 1;
   }
 
-  ${() => makeMediaQuery(BreakPoints.md)`
+  ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
       flex-direction: column;
     `}
   `};
 `;
 
-export const LastMatchesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0 1rem;
-  width: 100%;
-
-  ${() => makeMediaQuery(BreakPoints.md)`
-    ${css`
-      padding: 0;
-    `}
-  `};
-`;
-
-export const TableContainer = styled.div`
-  width: 100%;
-  .ant-table-thead .ant-table-cell {
-    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30};
-  }
-  th.ant-table-column-sort {
-    background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary30} !important;
-  }
+export const CardTitle = styled.h3`
+  font-weight: 600;
+  margin-top: 0;
+  text-align: center;
 `;
 
 export const NoMatches = styled.div`

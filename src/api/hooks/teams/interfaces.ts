@@ -38,3 +38,7 @@ export interface ICreateTeam {
 export interface IUpdateTeam extends ICreateTeam {
   description: string;
 }
+
+export interface IUpdateUserInTeam {
+  role: TeamRole;
+}

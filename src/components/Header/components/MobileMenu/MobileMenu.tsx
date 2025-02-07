@@ -8,6 +8,8 @@ import {
   UserAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Divider, Space, Switch } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { Transition } from 'react-transition-group';
@@ -149,6 +151,16 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                       </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>
+                    <S.MenuItem onClick={() => onMenuItemClick(Routes.MY_TEAMS)}>
+                      <div>
+                        <S.AvatarIcon
+                          size={28}
+                          icon={<FontAwesomeIcon style={{ fontSize: 16 }} icon={faPeopleGroup} />}
+                        />
+                        <FormattedMessage {...messages.myTeams} />
+                      </div>
+                      <RightOutlined style={{ fontSize: 22 }} />
+                    </S.MenuItem>
                     <S.MenuItem onClick={() => onMenuItemClick(Routes.EDIT_PROFILE.replace(':id', userId ?? ''))}>
                       <div>
                         <S.AvatarIcon size={28} icon={<EditOutlined />} />
@@ -186,6 +198,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                     <S.LogoutLink onClick={handleLogout}>
                       <FormattedMessage {...messages.logout} />
                     </S.LogoutLink>
+                    <Gap defaultHeight={16} />
                   </>
                 )}
                 {!isUserLoggedIn && (

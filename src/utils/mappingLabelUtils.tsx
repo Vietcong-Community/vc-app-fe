@@ -99,3 +99,13 @@ export const mapTeamRoleToTranslation = (teamRole?: TeamRole): ReactNode | undef
       return undefined;
   }
 };
+
+export const TEAM_ROLE_SELECT_OPTIONS = [
+  { id: TeamRole.OWNER, value: TeamRole.OWNER, label: <FormattedMessage {...messages.teamRoleOwner} /> },
+  {
+    id: TeamRole.MATCH_ORGANIZER,
+    value: TeamRole.MATCH_ORGANIZER,
+    label: <FormattedMessage {...messages.teamRoleMatchManager} />,
+  },
+  { id: TeamRole.MEMBER, value: TeamRole.MEMBER, label: <FormattedMessage {...messages.teamRoleMember} /> },
+];

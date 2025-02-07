@@ -7,6 +7,7 @@ import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQueryClient } from '@tanstack/react-query';
 import { Image, Spin, UploadFile } from 'antd';
+import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
@@ -14,6 +15,7 @@ import { useRemoveRoundScreenshot, useRoundResultImageUploadUrl } from '../../..
 import { IMatchPlayer, IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import usaFlag from '../../../../../assets/usa.png';
 import vietnamFlag from '../../../../../assets/vietnam.png';
+import { DEFAULT_USER_DATE_FORMAT_WITH_TIME } from '../../../../../components/Fields/DatePickerField/DatePickerField';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
@@ -233,6 +235,20 @@ export const Round: React.FC<IProps> = (props: IProps) => {
             <S.UploadBox>
               <UploadField fileList={fileList} setFileList={setFileList} />
             </S.UploadBox>
+          </>
+        )}
+        {!!round.createdBy && (
+          <>
+            <Gap defaultHeight={16} />
+            <div style={{ fontSize: 12 }}>
+              <FormattedMessage
+                {...messages.createdBy}
+                values={{
+                  nickname: round.createdBy.nickname,
+                  date: dayjs(round.createdAt).format(DEFAULT_USER_DATE_FORMAT_WITH_TIME),
+                }}
+              />
+            </div>
           </>
         )}
       </S.RoundContainer>

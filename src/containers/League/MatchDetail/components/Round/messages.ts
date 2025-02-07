@@ -25,4 +25,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Round.screenshotDeleteFailed',
     defaultMessage: 'Screenshot se nesmazal, asi nechce být zapomenut.',
   },
+  createdBy: {
+    id: 'app.containers.League.MatchDetail.components.Round.createdBy',
+    defaultMessage: 'Vytvořil: {nickname}, {date}',
+  },
 });

@@ -112,7 +112,7 @@ export const MyTeamsContainer = styled.div`
   flex-wrap: wrap;
 
   > * {
-    width: calc(100% / 3 - 18px);
+    width: calc(100% / 3 - 11px);
   }
 
   ${() => makeMediaQuery(BreakPoints.md)`

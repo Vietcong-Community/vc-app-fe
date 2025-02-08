@@ -118,11 +118,11 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
       </S.Content>
       <Gap defaultHeight={32} height={{ md: 16 }} />
       <Divider />
-      <H2 style={{ textAlign: 'start' }}>
-        <FormattedMessage {...messages.seasonsMatches} />
-      </H2>
       {seasons.isLoading && <Spin size="large" />}
       <EaseInOutContainer isOpen={!seasons.isLoading && (seasons.data?.items?.length ?? 0) > 0 && !!teamDetail?.id}>
+        <H2 style={{ textAlign: 'start' }}>
+          <FormattedMessage {...messages.seasonsMatches} />
+        </H2>
         <Gap defaultHeight={16} />
         {seasons.data?.items.map((season, index) => {
           const isLast = index === seasons.data?.items.length - 1;

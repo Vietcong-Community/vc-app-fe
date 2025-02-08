@@ -19,7 +19,7 @@ export const messages = defineMessages({
   },
   nation: {
     id: 'app.containers.League.SetMatchResult.nation',
-    defaultMessage: 'Národ: <b>{nation}</b>',
+    defaultMessage: 'Strana: <b>{nation}</b>',
   },
   scoreChallenger: {
     id: 'app.containers.League.SetMatchResult.scoreChallenger',

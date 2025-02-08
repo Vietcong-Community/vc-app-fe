@@ -3,13 +3,19 @@ import { ReactNode } from 'react';
 import { TableColumnsType } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { MatchResult } from '../../../../../constants/enums';
+import { mapMatchResultToTranslation } from '../../../../../utils/mappingLabelUtils';
+
 import { messages } from './messages';
+
+import * as S from './Matches.style';
 
 export interface IMatchesTableRow {
   id: string;
   date: string;
   status: ReactNode;
-  result: string;
+  result?: MatchResult;
+  score: string;
   opponentTeamName?: string;
 }
 
@@ -21,12 +27,17 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
       render: (_, record) => {
         return (
           <>
-            <b>
-              <FormattedMessage {...messages.opponent} />
-            </b>
-            : <b>{record.opponentTeamName}</b>
+            {record.result ? (
+              <>
+                <S.Tag $result={record.result}>{mapMatchResultToTranslation(record.result)}</S.Tag>
+                <br />
+              </>
+            ) : (
+              '-'
+            )}
+            <FormattedMessage {...messages.opponent} />: <b>{record.opponentTeamName}</b>
             <br />
-            <FormattedMessage {...messages.result} />: <b>{record.result}</b>
+            <FormattedMessage {...messages.result} />: <b>{record.score}</b>
             <br />
             <FormattedMessage {...messages.matchStatus} />: <b>{record.status}</b>
           </>
@@ -41,10 +52,24 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
       hidden,
     },
     {
+      title: <FormattedMessage {...messages.score} />,
+      align: 'center',
+      dataIndex: 'score',
+      key: '3',
+      hidden,
+    },
+    {
       title: <FormattedMessage {...messages.result} />,
       align: 'center',
-      dataIndex: 'result',
+      dataIndex: 'score',
       key: '3',
+      render: (_, record) => {
+        return (
+          <>
+            {record.result ? <S.Tag $result={record.result}>{mapMatchResultToTranslation(record.result)}</S.Tag> : '-'}
+          </>
+        );
+      },
       hidden,
     },
     {

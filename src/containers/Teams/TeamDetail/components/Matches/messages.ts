@@ -17,6 +17,10 @@ export const messages = defineMessages({
     id: 'app.containers.Teams.TeamDetail.components.Matches.opponent',
     defaultMessage: 'Oponent',
   },
+  score: {
+    id: 'app.containers.Teams.TeamDetail.components.Matches.score',
+    defaultMessage: 'Skóre',
+  },
   result: {
     id: 'app.containers.Teams.TeamDetail.components.Matches.result',
     defaultMessage: 'Výsledek',

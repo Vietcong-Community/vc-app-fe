@@ -22,6 +22,10 @@ export const Container = styled.div`
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       width: 100%;
+
+      &:hover {
+        transform: none;
+      }
     `}
   `};
 `;

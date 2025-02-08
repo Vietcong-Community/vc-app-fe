@@ -17,6 +17,12 @@ export enum PlayersCount {
   TEN = 'TEN',
 }
 
+export enum MatchResult {
+  WIN = 'WIN',
+  DRAW = 'DRAW',
+  DEFEAT = 'DEFEAT',
+}
+
 export enum LeagueType {
   TEAMPLAY = 'TEAMPLAY',
 }

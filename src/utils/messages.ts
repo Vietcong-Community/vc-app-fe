@@ -101,4 +101,16 @@ export const messages = defineMessages({
     id: 'app.utils.teamRoleMember',
     defaultMessage: 'Člen',
   },
+  matchResultWin: {
+    id: 'app.utils.matchResultWin',
+    defaultMessage: 'Výhra',
+  },
+  matchResultDraw: {
+    id: 'app.utils.matchResultDraw',
+    defaultMessage: 'Remíza',
+  },
+  matchResultDefeat: {
+    id: 'app.utils.matchResultDefeat',
+    defaultMessage: 'Prohra',
+  },
 });

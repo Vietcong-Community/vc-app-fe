@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { LeagueType, MatchStatus, Nation, PlayersCount, SeasonStatus, TeamRole } from '../constants/enums';
+import { LeagueType, MatchResult, MatchStatus, Nation, PlayersCount, SeasonStatus, TeamRole } from '../constants/enums';
 
 import { messages } from './messages';
 
@@ -69,6 +69,19 @@ export const mapNumberOfPlayersToTranslation = (playersCount?: PlayersCount): Re
       return <FormattedMessage {...messages.nineVsNine} />;
     case PlayersCount.TEN:
       return <FormattedMessage {...messages.tenVsTen} />;
+    default:
+      return undefined;
+  }
+};
+
+export const mapMatchResultToTranslation = (result?: MatchResult): ReactNode | undefined => {
+  switch (result) {
+    case MatchResult.WIN:
+      return <FormattedMessage {...messages.matchResultWin} />;
+    case MatchResult.DRAW:
+      return <FormattedMessage {...messages.matchResultDraw} />;
+    case MatchResult.DEFEAT:
+      return <FormattedMessage {...messages.matchResultDefeat} />;
     default:
       return undefined;
   }

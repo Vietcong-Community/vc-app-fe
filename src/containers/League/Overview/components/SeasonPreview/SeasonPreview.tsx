@@ -97,7 +97,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
                 <>
                   <Space direction="vertical" style={{ width: '100%' }}>
                     {finishedMatches.data?.matches.map((item: IMatchListItem) => {
-                      return <MatchRow match={item} />;
+                      return <MatchRow key={item.id} match={item} />;
                     })}
                   </Space>
                 </>

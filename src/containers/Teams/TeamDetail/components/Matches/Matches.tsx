@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
 import { TableWithPagination } from '../../../../../components/TableWithPagination/Table';
-import { MatchStatus } from '../../../../../constants/enums';
+import { MatchResult, MatchStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
@@ -10,7 +10,7 @@ import { BreakPoints } from '../../../../../theme/theme';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
 
-import { MATCH_COLUMNS, IMatchesTableRow } from './types';
+import { IMatchesTableRow, MATCH_COLUMNS } from './types';
 
 interface IProps {
   teamId: string;
@@ -37,18 +37,43 @@ export const Matches: React.FC<IProps> = (props: IProps) => {
         return isSmallerThanMd ? item.opponent?.team.tag : item.opponent?.team.name;
       };
 
+      const getMatchResult = () => {
+        if (
+          ![
+            MatchStatus.FINISHED,
+            MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
+            MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
+          ].includes(item.status)
+        ) {
+          return undefined;
+        }
+
+        if ((item.opponentScore ?? 0) === (item.challengerScore ?? 0)) {
+          return MatchResult.DRAW;
+        }
+
+        if (item.opponent?.team?.id === teamId) {
+          return (item.opponentScore ?? 0) > (item.challengerScore ?? 0) ? MatchResult.WIN : MatchResult.DEFEAT;
+        }
+
+        return (item.challengerScore ?? 0) > (item.opponentScore ?? 0) ? MatchResult.WIN : MatchResult.DEFEAT;
+      };
+
+      const getScore = () => {
+        if (item.opponent?.team?.id === teamId) {
+          return `${item.opponentScore ?? '?'} - ${item.challengerScore ?? '?'}`;
+        }
+
+        return `${item.challengerScore ?? '?'} - ${item.opponentScore ?? '?'}`;
+      };
+
       return {
         id: item.id,
         date: formatDateForUser(item.startDate) ?? '',
         status: mapMatchStatusToTranslation(item.status),
         opponentTeamName: getOpponentTeamName(),
-        result: [
-          MatchStatus.FINISHED,
-          MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
-          MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
-        ].includes(item.status as MatchStatus)
-          ? `${item.challengerScore} - ${item.opponentScore}`
-          : '? - ?',
+        result: getMatchResult(),
+        score: getScore(),
       };
     }) ?? [];
 

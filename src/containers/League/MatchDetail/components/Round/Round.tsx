@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
 import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
+import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
 import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,6 +28,7 @@ import { Routes } from '../../../../../routes/enums';
 import { theme } from '../../../../../theme/theme';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
 import { RemoveRoundModal } from '../RemoveRoundModal/RemoveRoundModal';
+import { UpdateRoundModal } from '../UpdateRoundModal/UpdateMatchModal';
 
 import { messages } from './messages';
 
@@ -40,6 +42,7 @@ interface IProps {
   opponentTag?: string;
   opponentMatchPlayers: IMatchPlayer[];
   round: IMatchRound;
+  seasonId?: string;
   showStatistics: boolean;
   userIsAdmin: boolean;
 }
@@ -53,9 +56,11 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     opponentMatchPlayers,
     opponentTag,
     round,
+    seasonId,
     showStatistics,
     userIsAdmin,
   } = props;
+  const [updateRoundModalIsOpen, setUpdateRoundModalIsOpen] = useState<boolean>(false);
   const [removeRoundModalIsOpen, setRemoveRoundModalIsOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { navigate } = useRouter();
@@ -131,6 +136,11 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         <div>
           {userIsAdmin && (
             <S.AdminActions>
+              <FontAwesomeIcon
+                icon={faEdit}
+                onClick={() => setUpdateRoundModalIsOpen(true)}
+                style={{ cursor: 'pointer', fontSize: 20, marginRight: 8 }}
+              />
               <FontAwesomeIcon
                 icon={faCircleXmark}
                 onClick={() => setRemoveRoundModalIsOpen(true)}
@@ -254,6 +264,19 @@ export const Round: React.FC<IProps> = (props: IProps) => {
           </>
         )}
       </S.RoundContainer>
+      <UpdateRoundModal
+        isOpen={updateRoundModalIsOpen}
+        onClose={() => setUpdateRoundModalIsOpen(false)}
+        matchId={matchId}
+        seasonId={seasonId}
+        initialValues={{
+          mapId: round.map.id,
+          round: round.round,
+          scoreChallenger: round.scoreChallenger,
+          scoreOpponent: round.scoreOpponent,
+        }}
+        roundId={round.id}
+      />
       <RemoveRoundModal
         isOpen={removeRoundModalIsOpen}
         onClose={() => setRemoveRoundModalIsOpen(false)}

@@ -21,6 +21,7 @@ import {
   ISeasonTeamItem,
   ISetMatchScore,
   IUpdateMatch,
+  IUpdateRound,
 } from './interfaces';
 
 export const useLeagueList = () => {
@@ -257,7 +258,18 @@ export const useUpdateMatchStatus = (matchId: string) => {
 export const useRemoveRound = (roundId: string) => {
   return useMutation({
     mutationFn: async () => {
-      const { data } = await del(LeagueEndpoints.REMOVE_ROUND, {
+      const { data } = await del(LeagueEndpoints.ROUND_BY_ID, {
+        roundId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useUpdateRound = (roundId: string) => {
+  return useMutation({
+    mutationFn: async (payload: IUpdateRound) => {
+      const { data } = await put<IUpdateRound, undefined>(LeagueEndpoints.ROUND_BY_ID, payload, {
         roundId,
       });
       return data;

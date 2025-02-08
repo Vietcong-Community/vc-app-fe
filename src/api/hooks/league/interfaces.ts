@@ -153,3 +153,10 @@ export interface IUpdateMatch {
   challengerScore?: number;
   opponentScore?: number;
 }
+
+export interface IUpdateRound {
+  mapId: string;
+  round: number;
+  scoreChallenger: number;
+  scoreOpponent: number;
+}

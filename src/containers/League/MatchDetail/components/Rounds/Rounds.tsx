@@ -20,6 +20,7 @@ interface IProps {
   opponentTag?: string;
   opponentMatchPlayers: IMatchPlayer[];
   rounds?: IMatchRound[];
+  seasonId?: string;
   showStatistics?: boolean;
   userIsAdmin?: boolean;
 }
@@ -33,6 +34,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
     opponentMatchPlayers,
     opponentTag,
     rounds,
+    seasonId,
     showStatistics = true,
     userIsAdmin = false,
   } = props;
@@ -59,6 +61,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
                   opponentTag={opponentTag}
                   matchId={matchId}
                   round={round}
+                  seasonId={seasonId}
                   showStatistics={showStatistics}
                   userIsAdmin={userIsAdmin}
                 />

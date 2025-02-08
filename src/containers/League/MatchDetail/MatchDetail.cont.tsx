@@ -276,6 +276,7 @@ export const MatchDetail: React.FC = () => {
             opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
             matchId={query.matchId}
             rounds={matchDetail.data?.rounds}
+            seasonId={matchDetail.data?.season?.id}
             userIsAdmin={userIsAdmin}
           />
         )}

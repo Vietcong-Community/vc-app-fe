@@ -67,12 +67,22 @@ export const Matches: React.FC<IProps> = (props: IProps) => {
         return `${item.challengerScore ?? '?'} - ${item.opponentScore ?? '?'}`;
       };
 
+      const getPoints = () => {
+        if (item.opponent?.team?.id === teamId) {
+          return item.opponentEloRowAmount ?? 0;
+        }
+
+        return item.challengerEloRowAmount ?? 0;
+      };
+
       return {
         id: item.id,
         date: formatDateForUser(item.startDate) ?? '',
         status: mapMatchStatusToTranslation(item.status),
         opponentTeamName: getOpponentTeamName(),
         result: getMatchResult(),
+        matchStatus: item.status,
+        points: getPoints(),
         score: getScore(),
       };
     }) ?? [];

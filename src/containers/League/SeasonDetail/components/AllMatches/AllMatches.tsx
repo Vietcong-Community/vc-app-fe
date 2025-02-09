@@ -47,6 +47,9 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         status: mapMatchStatusToTranslation(item.status),
         challengerTeamName: isSmallerThanMd ? item.challenger?.team.tag : item.challenger.team.name,
         opponentTeamName: getOpponentTeamName(),
+        challengerElo: item.challengerEloRowAmount,
+        opponentElo: item.opponentEloRowAmount,
+        matchStatus: item.status,
         result: [
           MatchStatus.FINISHED,
           MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,

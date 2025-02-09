@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
 import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
-import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
+import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
 import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQueryClient } from '@tanstack/react-query';
-import { Image, Spin, UploadFile } from 'antd';
+import { Dropdown, Image, MenuProps, Spin, UploadFile } from 'antd';
 import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 
@@ -20,7 +19,7 @@ import { DEFAULT_USER_DATE_FORMAT_WITH_TIME } from '../../../../../components/Fi
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
-import { Nation } from '../../../../../constants/enums';
+import { MatchStatus, Nation } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
@@ -41,6 +40,7 @@ interface IProps {
   matchId: string;
   opponentTag?: string;
   opponentMatchPlayers: IMatchPlayer[];
+  matchStatus?: MatchStatus;
   round: IMatchRound;
   seasonId?: string;
   showStatistics: boolean;
@@ -53,6 +53,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     challengerMatchPlayers,
     challengerTag,
     matchId,
+    matchStatus,
     opponentMatchPlayers,
     opponentTag,
     round,
@@ -130,22 +131,30 @@ export const Round: React.FC<IProps> = (props: IProps) => {
       return { ...item, nickname: player?.user.nickname, playerId: player?.user.id };
     });
 
+  const adminItems: MenuProps['items'] = [
+    {
+      label: <FormattedMessage {...messages.roundUpdate} />,
+      key: '1',
+      onClick: () => setUpdateRoundModalIsOpen(true),
+    },
+    {
+      label: <FormattedMessage {...messages.roundDelete} />,
+      key: '2',
+      onClick: () => setRemoveRoundModalIsOpen(true),
+    },
+  ];
+
+  const matchIsFinished = matchStatus === MatchStatus.FINISHED;
+
   return (
     <>
       <S.RoundContainer>
         <div>
-          {userIsAdmin && (
+          {userIsAdmin && !matchIsFinished && (
             <S.AdminActions>
-              <FontAwesomeIcon
-                icon={faEdit}
-                onClick={() => setUpdateRoundModalIsOpen(true)}
-                style={{ cursor: 'pointer', fontSize: 20, marginRight: 8 }}
-              />
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                onClick={() => setRemoveRoundModalIsOpen(true)}
-                style={{ cursor: 'pointer', fontSize: 20 }}
-              />
+              <Dropdown menu={{ items: adminItems }} trigger={['click']}>
+                <FontAwesomeIcon icon={faGear} style={{ cursor: 'pointer', fontSize: 20 }} />
+              </Dropdown>
             </S.AdminActions>
           )}
           <S.MapTitle>{round.map.name}</S.MapTitle>
@@ -223,7 +232,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
               <FormattedMessage {...messages.screenshot} />
               <Gap defaultHeight={8} />
               <Image width="100%" src={round.screenshot?.url} />
-              {allowUpload && (
+              {allowUpload && !matchIsFinished && (
                 <>
                   <Gap defaultHeight={8} />
                   {removeScreenshot.isPending && <Spin size="small" />}

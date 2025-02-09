@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { IMatchPlayer, IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { MatchStatus } from '../../../../../constants/enums';
 import { Round } from '../Round/Round';
 
 import { messages } from './messages';
@@ -20,6 +21,7 @@ interface IProps {
   opponentTag?: string;
   opponentMatchPlayers: IMatchPlayer[];
   rounds?: IMatchRound[];
+  matchStatus?: MatchStatus;
   seasonId?: string;
   showStatistics?: boolean;
   userIsAdmin?: boolean;
@@ -31,6 +33,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
     challengerMatchPlayers,
     challengerTag,
     matchId,
+    matchStatus,
     opponentMatchPlayers,
     opponentTag,
     rounds,
@@ -60,6 +63,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
                   opponentMatchPlayers={opponentMatchPlayers}
                   opponentTag={opponentTag}
                   matchId={matchId}
+                  matchStatus={matchStatus}
                   round={round}
                   seasonId={seasonId}
                   showStatistics={showStatistics}

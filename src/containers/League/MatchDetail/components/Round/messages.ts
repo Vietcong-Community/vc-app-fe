@@ -29,4 +29,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Round.createdBy',
     defaultMessage: 'Vytvořil: {nickname}, {date}',
   },
+  roundUpdate: {
+    id: 'app.containers.League.MatchDetail.components.Round.roundUpdate',
+    defaultMessage: 'Upravit kolo',
+  },
+  roundDelete: {
+    id: 'app.containers.League.MatchDetail.components.Round.roundDelete',
+    defaultMessage: 'Smazat kolo',
+  },
 });

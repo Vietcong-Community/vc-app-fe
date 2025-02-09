@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableColumnsType } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { MatchStatus } from '../../constants/enums';
+
 import { messages } from './messages';
 
 import * as S from './League.style';
@@ -13,7 +15,10 @@ export interface IMatchesTableRow {
   id: string;
   date: string;
   status: ReactNode;
+  matchStatus: MatchStatus;
   result: string;
+  challengerElo?: number;
+  opponentElo?: number;
   challengerTeamName: string;
   opponentTeamName: string;
 }
@@ -24,11 +29,39 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
     {
       title: <FormattedMessage {...messages.matches} />,
       render: (_, record) => {
+        const challengerEloAmountGreaterThanZero = (record?.challengerElo ?? 0) > 0;
+        const challengerEloAmountLowerThanZero = (record?.challengerElo ?? 0) < 0;
+        const opponentEloAmountGreaterThanZero = (record?.opponentElo ?? 0) > 0;
+        const opponentEloAmountLowerThanZero = (record?.opponentElo ?? 0) < 0;
+        const showElo = record.matchStatus === MatchStatus.FINISHED;
+
         return (
           <>
             <b>{record.challengerTeamName}</b> - <b>{record.opponentTeamName}</b>
             <br />
-            <FormattedMessage {...messages.result} />: <b>{record.result}</b>
+            <span>
+              {showElo && (
+                <>
+                  <S.EloPoints
+                    $isWinning={challengerEloAmountGreaterThanZero}
+                    $isLosing={challengerEloAmountLowerThanZero}
+                  >
+                    ({challengerEloAmountGreaterThanZero && '+'}
+                    {record.challengerElo}){' '}
+                  </S.EloPoints>
+                </>
+              )}
+              <b>{record.result}</b>
+              {showElo && (
+                <>
+                  <S.EloPoints $isWinning={opponentEloAmountGreaterThanZero} $isLosing={opponentEloAmountLowerThanZero}>
+                    {' '}
+                    ({opponentEloAmountGreaterThanZero && '+'}
+                    {record.opponentElo})
+                  </S.EloPoints>
+                </>
+              )}
+            </span>
             <br />
             <FormattedMessage {...messages.matchStatus} />: <b>{record.status}</b>
           </>
@@ -53,6 +86,38 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
       align: 'center',
       dataIndex: 'result',
       key: '3',
+      render: (_, record) => {
+        const challengerEloAmountGreaterThanZero = (record?.challengerElo ?? 0) > 0;
+        const challengerEloAmountLowerThanZero = (record?.challengerElo ?? 0) < 0;
+        const opponentEloAmountGreaterThanZero = (record?.opponentElo ?? 0) > 0;
+        const opponentEloAmountLowerThanZero = (record?.opponentElo ?? 0) < 0;
+        const showElo = record.matchStatus === MatchStatus.FINISHED;
+        return (
+          <span>
+            {showElo && (
+              <>
+                <S.EloPoints
+                  $isWinning={challengerEloAmountGreaterThanZero}
+                  $isLosing={challengerEloAmountLowerThanZero}
+                >
+                  ({challengerEloAmountGreaterThanZero && '+'}
+                  {record.challengerElo}){' '}
+                </S.EloPoints>
+              </>
+            )}
+            <b>{record.result}</b>
+            {showElo && (
+              <>
+                <S.EloPoints $isWinning={opponentEloAmountGreaterThanZero} $isLosing={opponentEloAmountLowerThanZero}>
+                  {' '}
+                  ({opponentEloAmountGreaterThanZero && '+'}
+                  {record.opponentElo})
+                </S.EloPoints>
+              </>
+            )}
+          </span>
+        );
+      },
       hidden,
     },
     {

@@ -31,6 +31,8 @@ export const Container = styled.div`
 `;
 
 export const Score = styled.div`
+  align-items: center;
+  display: flex;
   font-size: 18px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
   white-space: nowrap;
@@ -57,5 +59,24 @@ export const HighlightedText = styled.span<ITextProps>`
     props.$isLosing &&
     css`
       font-weight: 400;
+    `};
+`;
+
+interface IScoreProps {
+  $isWinning: boolean;
+  $isLosing: boolean;
+}
+
+export const EloPoints = styled.span<IScoreProps>`
+  font-size: 12px;
+  ${(props: IThemeProps & IScoreProps) =>
+    props.$isWinning &&
+    css`
+      color: ${props.theme.colors.green};
+    `};
+  ${(props: IThemeProps & IScoreProps) =>
+    props.$isLosing &&
+    css`
+      color: ${props.theme.colors.red};
     `};
 `;

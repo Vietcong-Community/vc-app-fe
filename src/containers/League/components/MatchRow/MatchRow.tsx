@@ -45,6 +45,12 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
     match.opponentScore !== undefined &&
     match.challengerScore < match.opponentScore;
 
+  const challengerEloAmountGreaterThanZero = (match?.challengerEloRowAmount ?? 0) > 0;
+  const challengerEloAmountLowerThanZero = (match?.challengerEloRowAmount ?? 0) < 0;
+  const opponentEloAmountGreaterThanZero = (match?.opponentEloRowAmount ?? 0) > 0;
+  const opponentEloAmountLowerThanZero = (match?.opponentEloRowAmount ?? 0) < 0;
+  const showElo = match.status === MatchStatus.FINISHED;
+
   return (
     <S.Container onClick={onMatchClick}>
       {formatDateForUser(
@@ -63,6 +69,18 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
       <S.Score>
         {scoreExists ? (
           <>
+            {showElo && (
+              <>
+                <S.EloPoints
+                  $isWinning={challengerEloAmountGreaterThanZero}
+                  $isLosing={challengerEloAmountLowerThanZero}
+                  style={{ marginRight: 4 }}
+                >
+                  ({challengerEloAmountGreaterThanZero && '+'}
+                  {match?.challengerEloRowAmount ?? 0})
+                </S.EloPoints>
+              </>
+            )}
             <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
               {match.challengerScore}
             </S.HighlightedText>{' '}
@@ -70,6 +88,19 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
             <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
               {match.opponentScore}
             </S.HighlightedText>
+            {showElo && (
+              <>
+                <S.EloPoints
+                  $isWinning={opponentEloAmountGreaterThanZero}
+                  $isLosing={opponentEloAmountLowerThanZero}
+                  style={{ marginLeft: 4 }}
+                >
+                  {' '}
+                  ({opponentEloAmountGreaterThanZero && '+'}
+                  {match?.opponentEloRowAmount ?? 0})
+                </S.EloPoints>
+              </>
+            )}
           </>
         ) : (
           '? - ?'

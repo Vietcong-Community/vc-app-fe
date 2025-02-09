@@ -117,6 +117,8 @@ export interface IMatchListItem {
   status: MatchStatus;
   challengerScore?: number;
   opponentScore?: number;
+  challengerEloRowAmount?: number;
+  opponentEloRowAmount?: number;
 }
 
 export interface IMatchListQuery {

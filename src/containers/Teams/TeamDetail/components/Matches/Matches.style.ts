@@ -2,6 +2,7 @@ import { Tag as AntDTag } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { MatchResult } from '../../../../../constants/enums';
+import { IThemeProps } from '../../../../../theme/theme';
 
 export const Tag = styled(AntDTag)<{ $result: MatchResult }>`
   box-sizing: border-box;
@@ -27,4 +28,24 @@ export const Tag = styled(AntDTag)<{ $result: MatchResult }>`
       background-color: ${props.theme.mainColors.defeat};
       color: ${props.theme.colors.white};
     `}
+`;
+
+interface IScoreProps {
+  $isWinning: boolean;
+  $isLosing: boolean;
+}
+
+export const EloPoints = styled.span<IScoreProps>`
+  font-size: 14px;
+  font-weight: 600;
+  ${(props: IThemeProps & IScoreProps) =>
+    props.$isWinning &&
+    css`
+      color: ${props.theme.colors.green};
+    `};
+  ${(props: IThemeProps & IScoreProps) =>
+    props.$isLosing &&
+    css`
+      color: ${props.theme.colors.red};
+    `};
 `;

@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { TableColumnsType } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { MatchResult } from '../../../../../constants/enums';
+import { MatchResult, MatchStatus } from '../../../../../constants/enums';
 import { mapMatchResultToTranslation } from '../../../../../utils/mappingLabelUtils';
 
 import { messages } from './messages';
@@ -14,7 +14,9 @@ export interface IMatchesTableRow {
   id: string;
   date: string;
   status: ReactNode;
+  matchStatus: MatchStatus;
   result?: MatchResult;
+  points?: number;
   score: string;
   opponentTeamName?: string;
 }
@@ -25,6 +27,10 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
     {
       title: <FormattedMessage {...messages.matches} />,
       render: (_, record) => {
+        const eloAmountGreaterThanZero = (record?.points ?? 0) > 0;
+        const eloAmountLowerThanZero = (record?.points ?? 0) < 0;
+        const showPoints = record.matchStatus === MatchStatus.FINISHED;
+
         return (
           <>
             {record.result ? (
@@ -38,6 +44,16 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
             <FormattedMessage {...messages.opponent} />: <b>{record.opponentTeamName}</b>
             <br />
             <FormattedMessage {...messages.result} />: <b>{record.score}</b>
+            {showPoints && (
+              <>
+                <br />
+                <FormattedMessage {...messages.points} />:{' '}
+                <S.EloPoints $isWinning={eloAmountGreaterThanZero} $isLosing={eloAmountLowerThanZero}>
+                  ({eloAmountGreaterThanZero && '+'}
+                  {record.points})
+                </S.EloPoints>
+              </>
+            )}
             <br />
             <FormattedMessage {...messages.matchStatus} />: <b>{record.status}</b>
           </>
@@ -62,7 +78,7 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
       title: <FormattedMessage {...messages.result} />,
       align: 'center',
       dataIndex: 'score',
-      key: '3',
+      key: '4',
       render: (_, record) => {
         return (
           <>
@@ -73,10 +89,34 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
       hidden,
     },
     {
+      title: <FormattedMessage {...messages.points} />,
+      align: 'center',
+      dataIndex: 'points',
+      key: '5',
+      render: (_, record) => {
+        const eloAmountGreaterThanZero = (record?.points ?? 0) > 0;
+        const eloAmountLowerThanZero = (record?.points ?? 0) < 0;
+        const showPoints = record.matchStatus === MatchStatus.FINISHED;
+        return (
+          <>
+            {showPoints ? (
+              <S.EloPoints $isWinning={eloAmountGreaterThanZero} $isLosing={eloAmountLowerThanZero}>
+                ({eloAmountGreaterThanZero && '+'}
+                {record.points})
+              </S.EloPoints>
+            ) : (
+              '-'
+            )}
+          </>
+        );
+      },
+      hidden,
+    },
+    {
       align: 'center',
       title: <FormattedMessage {...messages.matchStatus} />,
       dataIndex: 'status',
-      key: '4',
+      key: '6',
       hidden,
     },
   ];

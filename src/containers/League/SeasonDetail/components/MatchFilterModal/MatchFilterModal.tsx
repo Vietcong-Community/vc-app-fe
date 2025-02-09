@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Form, Modal } from 'antd';
+import { sortBy } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { IMap } from '../../../../../api/hooks/interfaces';
@@ -28,8 +29,10 @@ export const MatchFilterModal: React.FC<IProps> = (props: IProps) => {
   const { formatMessage } = useIntl();
   const [form] = Form.useForm<IFormData>();
 
-  const teamOptions =
-    seasonLadder.map((item) => ({ id: item.team.id, value: item.team.id, label: item.team.name })) ?? [];
+  const teamOptions = sortBy(
+    seasonLadder.map((item) => ({ id: item.team.id, value: item.team.id, label: item.team.name })) ?? [],
+    'label',
+  );
   const mapsOptions = maps.map((item) => ({ id: item.id, value: item.id, label: item.name })) ?? [];
 
   return (

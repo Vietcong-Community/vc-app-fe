@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
+import { IMap } from '../../../../../api/hooks/interfaces';
 import { useRemoveRoundScreenshot, useRoundResultImageUploadUrl } from '../../../../../api/hooks/league/api';
 import { IMatchPlayer, IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import usaFlag from '../../../../../assets/usa.png';
@@ -38,6 +39,7 @@ interface IProps {
   challengerMatchPlayers: IMatchPlayer[];
   challengerTag?: string;
   matchId: string;
+  matchMaps: IMap[];
   opponentTag?: string;
   opponentMatchPlayers: IMatchPlayer[];
   matchStatus?: MatchStatus;
@@ -53,11 +55,11 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     challengerMatchPlayers,
     challengerTag,
     matchId,
+    matchMaps,
     matchStatus,
     opponentMatchPlayers,
     opponentTag,
     round,
-    seasonId,
     showStatistics,
     userIsAdmin,
   } = props;
@@ -277,7 +279,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         isOpen={updateRoundModalIsOpen}
         onClose={() => setUpdateRoundModalIsOpen(false)}
         matchId={matchId}
-        seasonId={seasonId}
+        maps={matchMaps}
         initialValues={{
           mapId: round.map.id,
           round: round.round,

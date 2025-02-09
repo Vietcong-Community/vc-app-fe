@@ -263,7 +263,7 @@ export const SeasonDetailCont: React.FC = () => {
           />
         </Flex>
         <Divider style={{ margin: '16px 0' }} />
-        <AllMatches seasonId={query.seasonId} />
+        <AllMatches seasonLadder={ladder.data?.items ?? []} seasonId={query.seasonId} />
         <Divider style={{ margin: '16px 0' }} />
         <Flex vertical align="flex-start">
           <H2>

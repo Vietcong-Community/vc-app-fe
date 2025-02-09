@@ -16,6 +16,7 @@ interface IProps {
   label: ReactNode;
   name: string;
   options: ISelectOptionType[];
+  mode?: 'multiple' | 'tags';
   placeholder?: string;
   required?: boolean;
   rules?: FormRule[];
@@ -27,6 +28,7 @@ export const SelectField: React.FC<IProps> = (props: IProps) => {
     allowSearch = true,
     disabled = false,
     label,
+    mode,
     name,
     options,
     placeholder,
@@ -39,6 +41,7 @@ export const SelectField: React.FC<IProps> = (props: IProps) => {
       <Select
         allowClear={allowClear}
         disabled={disabled}
+        mode={mode}
         options={options}
         optionFilterProp="label"
         placeholder={placeholder}

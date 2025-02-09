@@ -30,11 +30,19 @@ export const Container = styled.div`
   `};
 `;
 
+export const Teams = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+`;
+
 export const Score = styled.div`
   align-items: center;
   display: flex;
+  flex: 1;
   font-size: 18px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
+  justify-content: center;
   white-space: nowrap;
 
   ${() => makeMediaQuery(BreakPoints.sm)`

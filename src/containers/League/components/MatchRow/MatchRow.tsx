@@ -53,11 +53,13 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
 
   return (
     <S.Container onClick={onMatchClick}>
-      {formatDateForUser(
-        match.startDate,
-        isSmallerThanMd ? DEFAULT_USER_DATE_FORMAT : DEFAULT_USER_DATE_FORMAT_WITH_TIME,
-      ) ?? ''}
-      <div>
+      <div style={{ flex: 1 }}>
+        {formatDateForUser(
+          match.startDate,
+          isSmallerThanMd ? DEFAULT_USER_DATE_FORMAT : DEFAULT_USER_DATE_FORMAT_WITH_TIME,
+        ) ?? ''}
+      </div>
+      <S.Teams>
         <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
           {match.challenger?.team.tag}
         </S.HighlightedText>
@@ -65,7 +67,7 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
         <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
           {match.opponent?.team.tag}
         </S.HighlightedText>
-      </div>
+      </S.Teams>
       <S.Score>
         {scoreExists ? (
           <>

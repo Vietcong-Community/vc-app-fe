@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
 import dayjs from 'dayjs';
-import { some } from 'lodash';
+import { compact, some } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
@@ -275,6 +275,7 @@ export const MatchDetail: React.FC = () => {
             opponentTag={matchDetail.data?.opponent.team.tag}
             opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
             matchId={query.matchId}
+            matchMaps={compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap])}
             matchStatus={matchDetail.data?.status}
             rounds={matchDetail.data?.rounds}
             seasonId={matchDetail.data?.season?.id}

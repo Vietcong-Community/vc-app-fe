@@ -3,6 +3,7 @@ import React from 'react';
 import { chunk } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
+import { IMap } from '../../../../../api/hooks/interfaces';
 import { IMatchPlayer, IMatchRound } from '../../../../../api/hooks/league/interfaces';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
@@ -21,6 +22,7 @@ interface IProps {
   opponentTag?: string;
   opponentMatchPlayers: IMatchPlayer[];
   rounds?: IMatchRound[];
+  matchMaps: IMap[];
   matchStatus?: MatchStatus;
   seasonId?: string;
   showStatistics?: boolean;
@@ -33,6 +35,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
     challengerMatchPlayers,
     challengerTag,
     matchId,
+    matchMaps,
     matchStatus,
     opponentMatchPlayers,
     opponentTag,
@@ -63,6 +66,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
                   opponentMatchPlayers={opponentMatchPlayers}
                   opponentTag={opponentTag}
                   matchId={matchId}
+                  matchMaps={matchMaps}
                   matchStatus={matchStatus}
                   round={round}
                   seasonId={seasonId}

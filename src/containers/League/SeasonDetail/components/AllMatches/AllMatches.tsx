@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 
+import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Flex } from 'antd';
+import isEmpty from 'lodash/isEmpty';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
+import { useMapsInSeason, useSeasonMatchList } from '../../../../../api/hooks/league/api';
+import { ILadderItem } from '../../../../../api/hooks/league/interfaces';
+import { Gap } from '../../../../../components/Gap/Gap';
 import { TableWithPagination } from '../../../../../components/TableWithPagination/Table';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 import { MatchStatus } from '../../../../../constants/enums';
@@ -14,22 +19,34 @@ import { BreakPoints } from '../../../../../theme/theme';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
 import { IMatchesTableRow, MATCH_COLUMNS } from '../../../types';
+import { MatchFilterModal } from '../MatchFilterModal/MatchFilterModal';
+import { IFormData } from '../MatchFilterModal/MatchFilterModal.fields';
 
 import { messages } from './messages';
 
+import * as S from './AllMatches.style';
+
 interface IProps {
+  seasonLadder: ILadderItem[];
   seasonId: string;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
-  const { seasonId } = props;
+  const { seasonId, seasonLadder } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
   const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [filterValues, setFilterValues] = useState<Partial<IFormData>>({});
 
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const matches = useSeasonMatchList(seasonId, { page: selectedMatchPage, limit: 10 }, 'always');
+  const maps = useMapsInSeason(seasonId);
+  const matches = useSeasonMatchList(
+    seasonId,
+    { page: selectedMatchPage, limit: 10, ...filterValues, status: filterValues.status?.join(',') },
+    'always',
+  );
 
   const allMatchesTableData: IMatchesTableRow[] =
     matches.data?.matches?.map((item) => {
@@ -60,32 +77,79 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
       };
     }) ?? [];
 
+  const onFilterSubmit = (values: IFormData) => {
+    setFilterValues(values);
+    setIsModalOpen(false);
+  };
+
   const onMatchPageChange = (pageNumber: number) => setSelectedMatchPage(pageNumber);
+  const filteredMap = maps.data?.items?.find((item) => item.id === filterValues.mapId);
+  const filteredTeam = seasonLadder?.find((item) => item.team.id === filterValues.teamId);
 
   return (
-    <Flex vertical align="flex-start">
-      <H2 id="all-matches">
-        <FormattedMessage {...messages.title} /> {matches.data?.total !== undefined ? <>({matches.data?.total})</> : ''}
-      </H2>
-      <TableWithPagination
-        columns={MATCH_COLUMNS(isSmallerThanMd)}
-        data={allMatchesTableData}
-        loading={matches.isLoading}
-        onPageChange={onMatchPageChange}
-        onRow={(item) => {
-          const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
+    <>
+      <Flex vertical align="flex-start">
+        <Flex align="center" justify="space-between" style={{ width: '100%' }}>
+          <H2 id="all-matches">
+            <FormattedMessage {...messages.title} />{' '}
+            {matches.data?.total !== undefined ? <>({matches.data?.total})</> : ''}
+          </H2>
+          <S.AvatarIcon
+            shape="square"
+            size={32}
+            icon={<FontAwesomeIcon icon={faFilter} />}
+            onClick={() => setIsModalOpen(true)}
+          />
+        </Flex>
+        {!isEmpty(filterValues) && (
+          <>
+            <Gap defaultHeight={8} />
+            <Flex>
+              {!!filteredMap && <S.Tag>{filteredMap.name}</S.Tag>}
+              {!!filteredTeam && <S.Tag>{filteredTeam.team.name}</S.Tag>}
+              {filterValues.status?.map((item) => <S.Tag>{mapMatchStatusToTranslation(item)}</S.Tag>)}
+              {!!filterValues.startDateFrom && (
+                <S.Tag>
+                  <FormattedMessage {...messages.from} /> {formatDateForUser(filterValues.startDateFrom)}
+                </S.Tag>
+              )}
+              {!!filterValues.startDateTo && (
+                <S.Tag>
+                  <FormattedMessage {...messages.to} /> {formatDateForUser(filterValues.startDateTo)}
+                </S.Tag>
+              )}
+            </Flex>
+            <Gap defaultHeight={8} />
+          </>
+        )}
+        <TableWithPagination
+          columns={MATCH_COLUMNS(isSmallerThanMd)}
+          data={allMatchesTableData}
+          loading={matches.isLoading}
+          onPageChange={onMatchPageChange}
+          onRow={(item) => {
+            const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
 
-          return {
-            onClick,
-            style: {
-              cursor: 'pointer',
-            },
-          };
-        }}
-        selectedPage={selectedMatchPage}
-        style={{ width: '100%' }}
-        totalItems={matches.data?.total}
+            return {
+              onClick,
+              style: {
+                cursor: 'pointer',
+              },
+            };
+          }}
+          selectedPage={selectedMatchPage}
+          style={{ width: '100%' }}
+          totalItems={matches.data?.total}
+        />
+      </Flex>
+      <MatchFilterModal
+        closeModal={() => setIsModalOpen(false)}
+        isOpen={isModalOpen}
+        isSubmitting={matches.isLoading || matches.isFetching}
+        maps={maps.data?.items ?? []}
+        onSubmit={onFilterSubmit}
+        seasonLadder={seasonLadder}
       />
-    </Flex>
+    </>
   );
 };

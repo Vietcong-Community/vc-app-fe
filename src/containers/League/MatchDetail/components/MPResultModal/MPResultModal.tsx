@@ -37,7 +37,12 @@ export const MPResultModal: React.FC<IProps> = (props: IProps) => {
     >
       <FormattedMessage {...messages.url} /> {url ?? ''}
       <Gap defaultHeight={16} />
-      {content.map((item) => item)}
+      {content.map((item) => (
+        <>
+          {item}
+          <br />
+        </>
+      ))}
     </Modal>
   );
 };

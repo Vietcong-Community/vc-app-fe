@@ -66,6 +66,10 @@ export interface IMatchRound {
   challengerNation: Nation;
   opponentNation: Nation;
   playersRoundStats: IPlayerRoundStats[];
+  scoreFile?: {
+    url: string;
+    id: string;
+  };
   screenshot?: {
     url: string;
     id: string;

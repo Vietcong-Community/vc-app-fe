@@ -36,6 +36,7 @@ interface IScoreProps {
 }
 
 export const EloPoints = styled.span<IScoreProps>`
+  color: ${(props: IThemeProps) => props.theme.colors.grey};
   font-size: 14px;
   font-weight: 600;
   ${(props: IThemeProps & IScoreProps) =>

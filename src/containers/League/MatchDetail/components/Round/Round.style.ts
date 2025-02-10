@@ -41,6 +41,13 @@ export const ResultContainer = styled.div`
   justify-content: center;
 `;
 
+export const StatisticsFileSource = styled.div`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent60};
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+`;
+
 export const TeamTag = styled.div`
   align-items: center;
   border-radius: 4px;

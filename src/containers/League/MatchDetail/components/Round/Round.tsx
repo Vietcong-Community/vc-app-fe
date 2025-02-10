@@ -27,6 +27,7 @@ import { NotificationType } from '../../../../../providers/NotificationsProvider
 import { Routes } from '../../../../../routes/enums';
 import { theme } from '../../../../../theme/theme';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
+import { MPResultModal } from '../MPResultModal/MPResultModal';
 import { RemoveRoundModal } from '../RemoveRoundModal/RemoveRoundModal';
 import { UpdateRoundModal } from '../UpdateRoundModal/UpdateMatchModal';
 
@@ -65,6 +66,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
   } = props;
   const [updateRoundModalIsOpen, setUpdateRoundModalIsOpen] = useState<boolean>(false);
   const [removeRoundModalIsOpen, setRemoveRoundModalIsOpen] = useState<boolean>(false);
+  const [isMpResultModalOpen, setIsMpResultModalOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { navigate } = useRouter();
   const queryClient = useQueryClient();
@@ -172,6 +174,14 @@ export const Round: React.FC<IProps> = (props: IProps) => {
             <>
               <Gap defaultHeight={16} />
               <FormattedMessage {...messages.statistics} />
+              {round.scoreFile?.url && userIsAdmin && (
+                <>
+                  <Gap defaultHeight={8} />
+                  <LinkButton onClick={() => setIsMpResultModalOpen(true)} withScale={false}>
+                    <FormattedMessage {...messages.statisticsByFile} />
+                  </LinkButton>
+                </>
+              )}
               <Gap defaultHeight={8} />
               <S.Players>
                 <S.TeamTag>{challengerTag}</S.TeamTag>
@@ -293,6 +303,11 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         onClose={() => setRemoveRoundModalIsOpen(false)}
         matchId={matchId}
         roundId={round.id}
+      />
+      <MPResultModal
+        isOpen={isMpResultModalOpen}
+        onClose={() => setIsMpResultModalOpen(false)}
+        url={round.scoreFile?.url}
       />
     </>
   );

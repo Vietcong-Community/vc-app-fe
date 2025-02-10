@@ -21,6 +21,7 @@ interface IScoreProps {
 }
 
 export const EloPoints = styled.span<IScoreProps>`
+  color: ${(props: IThemeProps) => props.theme.colors.grey};
   font-size: 12px;
   ${(props: IThemeProps & IScoreProps) =>
     props.$isWinning &&

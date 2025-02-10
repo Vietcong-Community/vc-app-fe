@@ -37,4 +37,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Round.roundDelete',
     defaultMessage: 'Smazat kolo',
   },
+  statisticsByFile: {
+    id: 'app.containers.League.MatchDetail.components.Round.statisticsByFile',
+    defaultMessage: 'MP-result soubor',
+  },
 });

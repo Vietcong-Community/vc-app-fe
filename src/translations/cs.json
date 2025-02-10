@@ -138,7 +138,7 @@
   "app.containers.League.MatchDetail.components.Round.screenshotUploadFailed": "Screenshot se nepodařilo nahrát, Trapper je taková lopata, že neumí udělat uložení obrázku.",
   "app.containers.League.MatchDetail.components.Round.screenshotUploadSuccess": "Screenshot úspěšně nahrán",
   "app.containers.League.MatchDetail.components.Round.statistics": "Statistiky",
-  "app.containers.League.MatchDetail.components.Round.statisticsByFile": "MP-result soubor",
+  "app.containers.League.MatchDetail.components.Round.statisticsByFile": "MP result",
   "app.containers.League.MatchDetail.components.Rounds.draw": "REMÍZA",
   "app.containers.League.MatchDetail.components.Rounds.result": "Výsledek: ",
   "app.containers.League.MatchDetail.components.Rounds.title": "Výsledky po kolech",

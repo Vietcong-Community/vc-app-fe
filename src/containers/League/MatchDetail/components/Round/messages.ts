@@ -39,6 +39,6 @@ export const messages = defineMessages({
   },
   statisticsByFile: {
     id: 'app.containers.League.MatchDetail.components.Round.statisticsByFile',
-    defaultMessage: 'MP-result soubor',
+    defaultMessage: 'MP result',
   },
 });

@@ -46,6 +46,7 @@ export const MPResultModal: React.FC<IProps> = (props: IProps) => {
     <Modal
       title={<FormattedMessage {...messages.title} />}
       cancelButtonProps={{ style: { display: 'none' } }}
+      onCancel={onClose}
       onOk={onClose}
       open={isOpen}
     >

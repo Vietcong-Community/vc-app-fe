@@ -37,6 +37,7 @@ import * as S from './Round.style';
 
 interface IProps {
   allowUpload: boolean;
+  hostMatchPlayers: IMatchPlayer[];
   challengerMatchPlayers: IMatchPlayer[];
   challengerTag?: string;
   matchId: string;
@@ -53,6 +54,7 @@ interface IProps {
 export const Round: React.FC<IProps> = (props: IProps) => {
   const {
     allowUpload,
+    hostMatchPlayers,
     challengerMatchPlayers,
     challengerTag,
     matchId,
@@ -119,6 +121,40 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     return vietnamFlag;
   };
 
+  const americanPlayers = round.playersRoundStats
+    ?.filter((item) => item.nation === Nation.US)
+    .map((item) => {
+      const playersToPick = round.challengerNation === Nation.US ? challengerMatchPlayers : opponentMatchPlayers;
+      let player = playersToPick.find((matchPlayer) => matchPlayer.id === item.playerInMatchId);
+      let isHost = false;
+
+      if (!player) {
+        player = hostMatchPlayers.find((matchPlayer) => matchPlayer.id === item.playerInMatchId);
+        if (player) {
+          isHost = true;
+        }
+      }
+
+      return { ...item, nickname: player?.user.nickname, playerId: player?.user.id, isHost };
+    });
+
+  const vietnamPlayers = round.playersRoundStats
+    ?.filter((item) => item.nation === Nation.VC)
+    .map((item) => {
+      const playersToPick = round.challengerNation === Nation.VC ? challengerMatchPlayers : opponentMatchPlayers;
+      let player = playersToPick.find((matchPlayer) => matchPlayer.id === item.playerInMatchId);
+      let isHost = false;
+
+      if (!player) {
+        player = hostMatchPlayers.find((matchPlayer) => matchPlayer.id === item.playerInMatchId);
+        if (player) {
+          isHost = true;
+        }
+      }
+
+      return { ...item, nickname: player?.user.nickname, playerId: player?.user.id, isHost };
+    });
+
   const challengerRoundStatistics = round.playersRoundStats
     ?.filter((item) => !!challengerMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId))
     .map((item) => {
@@ -149,6 +185,62 @@ export const Round: React.FC<IProps> = (props: IProps) => {
   ];
 
   const matchIsFinished = matchStatus === MatchStatus.FINISHED;
+
+  const renderChallengerStatistics = () => {
+    const arrayToRender = round.challengerNation === Nation.US ? americanPlayers : vietnamPlayers;
+    return arrayToRender?.map((item) => {
+      return (
+        <S.StatisticItem>
+          <b
+            onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+            style={{ cursor: 'pointer' }}
+          >
+            {item.isHost && <>(H) </>}
+            {item.nickname}
+          </b>
+          <S.Statistics>
+            <div>
+              <FontAwesomeIcon icon={faFlag} /> {item.flags}
+            </div>
+            <div>
+              <FontAwesomeIcon icon={faSkull} /> {item.kills}
+            </div>
+            <div>
+              <FontAwesomeIcon icon={faCross} /> {item.deaths}
+            </div>
+          </S.Statistics>
+        </S.StatisticItem>
+      );
+    });
+  };
+
+  const renderOpponentStatistics = () => {
+    const arrayToRender = round.opponentNation === Nation.US ? americanPlayers : vietnamPlayers;
+    return arrayToRender?.map((item) => {
+      return (
+        <S.StatisticItem>
+          <b
+            onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
+            style={{ cursor: 'pointer' }}
+          >
+            {item.isHost && <>(H) </>}
+            {item.nickname}
+          </b>
+          <S.Statistics>
+            <div>
+              <FontAwesomeIcon icon={faFlag} /> {item.flags}
+            </div>
+            <div>
+              <FontAwesomeIcon icon={faSkull} /> {item.kills}
+            </div>
+            <div>
+              <FontAwesomeIcon icon={faCross} /> {item.deaths}
+            </div>
+          </S.Statistics>
+        </S.StatisticItem>
+      );
+    });
+  };
 
   return (
     <>
@@ -185,56 +277,12 @@ export const Round: React.FC<IProps> = (props: IProps) => {
               <Gap defaultHeight={8} />
               <S.Players>
                 <S.TeamTag>{challengerTag}</S.TeamTag>
-                {challengerRoundStatistics?.map((item) => {
-                  return (
-                    <S.StatisticItem>
-                      <b
-                        onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {item.nickname}
-                      </b>
-                      <S.Statistics>
-                        <div>
-                          <FontAwesomeIcon icon={faFlag} /> {item.flags}
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={faSkull} /> {item.kills}
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={faCross} /> {item.deaths}
-                        </div>
-                      </S.Statistics>
-                    </S.StatisticItem>
-                  );
-                })}
+                {renderChallengerStatistics()}
               </S.Players>
               <Gap defaultHeight={8} />
               <S.Players>
                 <S.TeamTag>{opponentTag}</S.TeamTag>
-                {opponentRoundStatistics?.map((item) => {
-                  return (
-                    <S.StatisticItem>
-                      <b
-                        onClick={() => navigate(Routes.USER_PROFILE.replace(':id', item.playerId ?? ''))}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {item.nickname}
-                      </b>
-                      <S.Statistics>
-                        <div>
-                          <FontAwesomeIcon icon={faFlag} /> {item.flags}
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={faSkull} /> {item.kills}
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={faCross} /> {item.deaths}
-                        </div>
-                      </S.Statistics>
-                    </S.StatisticItem>
-                  );
-                })}
+                {renderOpponentStatistics()}
               </S.Players>
             </>
           )}

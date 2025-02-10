@@ -48,6 +48,7 @@ export interface IAcceptMatchChallenge {
 export interface IPlayerRoundStats {
   id: string;
   playerInMatchId: string;
+  nation: Nation;
   flags: number;
   kills: number;
   deaths: number;
@@ -107,6 +108,7 @@ export interface IMatch {
   rejectedAt?: string;
   rejectedBy?: IUser;
   season: ISeason;
+  hostMatchPlayers?: IMatchPlayer[];
   challengerMatchPlayers?: IMatchPlayer[];
   opponentMatchPlayers?: IMatchPlayer[];
   rounds: IMatchRound[];

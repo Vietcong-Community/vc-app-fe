@@ -16,6 +16,7 @@ import * as S from './Rounds.style';
 
 interface IProps {
   allowUpload: boolean;
+  hostMatchPlayers: IMatchPlayer[];
   challengerMatchPlayers: IMatchPlayer[];
   challengerTag?: string;
   matchId: string;
@@ -32,6 +33,7 @@ interface IProps {
 export const Rounds: React.FC<IProps> = (props: IProps) => {
   const {
     allowUpload,
+    hostMatchPlayers,
     challengerMatchPlayers,
     challengerTag,
     matchId,
@@ -60,6 +62,7 @@ export const Rounds: React.FC<IProps> = (props: IProps) => {
               {item.map((round) => (
                 <Round
                   allowUpload={allowUpload}
+                  hostMatchPlayers={hostMatchPlayers}
                   challengerMatchPlayers={challengerMatchPlayers}
                   challengerTag={challengerTag}
                   key={round.id}

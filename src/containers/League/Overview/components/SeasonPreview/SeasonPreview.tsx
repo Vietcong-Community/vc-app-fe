@@ -80,7 +80,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
         )}
         <Flex justify="center" vertical>
           <Card style={{ flex: 1 }}>
-            {finishedMatches.isLoading && <Spin size="large" />}
+            {finishedMatches.isLoading && <Spin size="large" style={{ margin: 'auto', width: '100%' }} />}
             <EaseInOutContainer isOpen={!finishedMatches.isLoading}>
               <S.CardTitle>
                 <FormattedMessage {...messages.playedMatches} />

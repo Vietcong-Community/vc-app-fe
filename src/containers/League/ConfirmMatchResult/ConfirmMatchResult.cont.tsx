@@ -31,7 +31,7 @@ export const ConfirmMatchResultCont: React.FC = () => {
       showNotification(messages.confirmSuccess);
       navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     } catch (e) {
-      showNotification(messages.confirmFailed, undefined, NotificationType.ERROR);
+      showNotification(messages.confirmFailed, messages.confirmFailedDescription, NotificationType.ERROR);
     }
   };
 

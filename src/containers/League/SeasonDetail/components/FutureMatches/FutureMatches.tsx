@@ -44,7 +44,7 @@ export const FutureMatches: React.FC<IProps> = (props: IProps) => {
 
   return (
     <Card style={{ flex: 1 }}>
-      {futureMatches.isLoading && <Spin size="large" />}
+      {futureMatches.isLoading && <Spin size="large" style={{ margin: 'auto', width: '100%' }} />}
       <EaseInOutContainer isOpen={!futureMatches.isLoading}>
         <S.CardTitle>
           <FormattedMessage {...messages.upcomingMatches} />{' '}

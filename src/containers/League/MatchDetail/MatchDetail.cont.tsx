@@ -270,6 +270,7 @@ export const MatchDetail: React.FC = () => {
                 matchDetail.data?.status === MatchStatus.CONFIRMED_SCORE_BY_SYSTEM) &&
               (isPossibleToManageMatch.allowed || userIsAdmin)
             }
+            hostMatchPlayers={matchDetail.data?.hostMatchPlayers ?? []}
             challengerMatchPlayers={matchDetail.data?.challengerMatchPlayers ?? []}
             challengerTag={matchDetail.data?.challenger.team.tag}
             opponentTag={matchDetail.data?.opponent.team.tag}

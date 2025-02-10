@@ -13,6 +13,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.ConfirmMatchResult.confirmFailed',
     defaultMessage: 'Potvrzení zápasu selhalo',
   },
+  confirmFailedDescription: {
+    id: 'app.containers.League.ConfirmMatchResult.confirmFailedDescription',
+    defaultMessage:
+      'Tož to je fest v řiti! Hhacker to tak zvoral, že aj Brňáci majó žbluňga v pajšlu. ' +
+      'Zkus to eště raz, než nám z toho šlahne!',
+  },
   submitButton: {
     id: 'app.containers.League.ConfirmMatchResult.submitButton',
     defaultMessage: 'Potvrdit',

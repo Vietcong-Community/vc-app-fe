@@ -41,13 +41,6 @@ export const ResultContainer = styled.div`
   justify-content: center;
 `;
 
-export const StatisticsFileSource = styled.div`
-  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent60};
-  cursor: pointer;
-  font-size: 12px;
-  text-decoration: underline;
-`;
-
 export const TeamTag = styled.div`
   align-items: center;
   border-radius: 4px;
@@ -85,6 +78,12 @@ export const StatisticItem = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
 `;
 
 export const Statistics = styled.div`

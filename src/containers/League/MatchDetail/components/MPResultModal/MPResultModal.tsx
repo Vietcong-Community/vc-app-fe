@@ -10,11 +10,12 @@ import { messages } from './messages';
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
+  showFileUrl: boolean;
   url?: string;
 }
 
 export const MPResultModal: React.FC<IProps> = (props: IProps) => {
-  const { isOpen, onClose, url } = props;
+  const { isOpen, onClose, showFileUrl, url } = props;
   const [content, setContent] = useState<string[]>([]);
 
   useEffect(() => {
@@ -35,7 +36,14 @@ export const MPResultModal: React.FC<IProps> = (props: IProps) => {
       onOk={onClose}
       open={isOpen}
     >
-      <FormattedMessage {...messages.url} /> {url ?? ''}
+      {showFileUrl && (
+        <>
+          <b>
+            <FormattedMessage {...messages.url} />
+          </b>{' '}
+          {url ?? ''}
+        </>
+      )}
       <Gap defaultHeight={16} />
       {content.map((item) => (
         <>

@@ -174,7 +174,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
             <>
               <Gap defaultHeight={16} />
               <FormattedMessage {...messages.statistics} />
-              {round.scoreFile?.url && userIsAdmin && (
+              {round.scoreFile?.url && (
                 <>
                   <Gap defaultHeight={8} />
                   <LinkButton onClick={() => setIsMpResultModalOpen(true)} withScale={false}>
@@ -307,6 +307,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
       <MPResultModal
         isOpen={isMpResultModalOpen}
         onClose={() => setIsMpResultModalOpen(false)}
+        showFileUrl={userIsAdmin}
         url={round.scoreFile?.url}
       />
     </>

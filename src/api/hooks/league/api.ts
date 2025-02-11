@@ -16,6 +16,7 @@ import {
   ILadderItem,
   ILeagueDetail,
   IMatch,
+  IMatchComment,
   IMatchListItem,
   IMatchListQuery,
   ISeason,
@@ -304,6 +305,29 @@ export const useRecalculatePlayerStats = (matchId: string) => {
   return useMutation({
     mutationFn: async () => {
       const { data } = await post<undefined, undefined>(LeagueEndpoints.RECALCULATE_PLAYER_STATS, undefined, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useMatchComment = (matchId: string, refetchOnMount?: boolean | 'always') => {
+  return useQuery({
+    queryKey: ['matchComment', matchId],
+    queryFn: async () => {
+      const { data } = await get<{ comments: IMatchComment[] }>(LeagueEndpoints.MATCH_COMMENT, { matchId });
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useAddMatchComment = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (payload: { comment: string }) => {
+      const { data } = await post<{ comment: string }, IIdentifiedEntity>(LeagueEndpoints.MATCH_COMMENT, payload, {
         matchId,
       });
       return data;

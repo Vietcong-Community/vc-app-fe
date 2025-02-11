@@ -62,6 +62,7 @@ export const Footer: React.FC = () => {
             </S.Link>
             */}
           </S.Column>
+
           <S.Column>
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
               <FormattedMessage {...messages.contact} />

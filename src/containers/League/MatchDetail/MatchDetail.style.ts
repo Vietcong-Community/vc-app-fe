@@ -97,6 +97,18 @@ export const TeamsContainer = styled.div`
   `};
 `;
 
+export const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
+`;
+
 interface IScoreProps {
   $isWinning: boolean;
   $isLosing: boolean;

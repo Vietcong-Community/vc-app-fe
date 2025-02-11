@@ -26,6 +26,7 @@ import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { ExpectedEloPointsModal } from '../components/ExpectedEloPointsModal/ExpectedEloPointsModal';
 import { canUserManageMatch } from '../utils';
 
+import { Comments } from './components/Comments/Comments';
 import { CreateRoundModal } from './components/CreateRoundModal/CreateMatchModal';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
@@ -254,6 +255,7 @@ export const MatchDetail: React.FC = () => {
                     team={matchDetail.data?.opponent?.team}
                   />
                 </S.TeamsContainer>
+
                 <EaseInOutContainer isOpen={matchIsNotFinished}>
                   <Gap defaultHeight={16} />
                   <Flex justify="end">
@@ -288,6 +290,10 @@ export const MatchDetail: React.FC = () => {
           />
         )}
       </EaseInOutContainer>
+      <Gap defaultHeight={16} />
+      <S.CommentsContainer>
+        <Comments matchId={query.matchId} />
+      </S.CommentsContainer>
       <Gap defaultHeight={48} />
       <ExpectedEloPointsModal
         closeModal={() => setIsEloModalOpen(false)}

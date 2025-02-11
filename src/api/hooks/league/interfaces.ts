@@ -153,6 +153,13 @@ export interface IExpectedEloPointsItem {
   pointsChangeOpponent: number;
 }
 
+export interface IMatchComment {
+  id: string;
+  author: IUser;
+  createdAt: string;
+  comment: string;
+}
+
 export interface IUpdateMatch {
   challengerMapId: string;
   opponentMapId: string;

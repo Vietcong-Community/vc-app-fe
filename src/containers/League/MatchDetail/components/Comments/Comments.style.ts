@@ -89,6 +89,11 @@ export const Icons = styled.span`
   }
 `;
 
+export const NoCommentsText = styled.p`
+  color: ${(props: IThemeProps) => props.theme.mainColors.secondary55};
+  font-style: italic;
+`;
+
 export const Image = styled.img`
   max-width: 100%;
   height: 100%;

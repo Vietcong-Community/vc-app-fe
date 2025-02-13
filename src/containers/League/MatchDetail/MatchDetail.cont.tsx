@@ -291,9 +291,9 @@ export const MatchDetail: React.FC = () => {
         )}
       </EaseInOutContainer>
       <Gap defaultHeight={16} />
-      <S.CommentsContainer>
+      <EaseInOutContainer isOpen={!showLoading}>
         <Comments matchId={query.matchId} />
-      </S.CommentsContainer>
+      </EaseInOutContainer>
       <Gap defaultHeight={48} />
       <ExpectedEloPointsModal
         closeModal={() => setIsEloModalOpen(false)}

@@ -9,6 +9,7 @@ import { useAddMatchComment, useMatchComment } from '../../../../../api/hooks/le
 import soldier from '../../../../../assets/teamDetail/soldier.webp';
 import { Button } from '../../../../../components/Button/Button';
 import { Card } from '../../../../../components/Card/Card';
+import { Divider } from '../../../../../components/Divider/Divider';
 import { InputAreaField } from '../../../../../components/Fields/InputAreaField/InputAreaField';
 import { FormComponent } from '../../../../../components/Form/FormComponent';
 import { Gap } from '../../../../../components/Gap/Gap';
@@ -48,7 +49,11 @@ export const Comments: React.FC<IProps> = (props: IProps) => {
       <S.SectionTitle>
         <FormattedMessage {...messages.title} />
       </S.SectionTitle>
-
+      {comments.data?.comments?.length === 0 && (
+        <S.NoCommentsText>
+          <FormattedMessage {...messages.noCommentYet} />
+        </S.NoCommentsText>
+      )}
       {comments.data?.comments?.map((c, index) => (
         <S.CommentBox key={index}>
           <S.CommentAvatar>
@@ -84,9 +89,8 @@ export const Comments: React.FC<IProps> = (props: IProps) => {
           </S.CommentContent>
         </S.CommentBox>
       ))}
-
-      <hr />
-      {userMe && (
+      <Divider />
+      {userMe.isSuccess && (
         <FormComponent form={form} onSubmit={onSubmit}>
           <S.CommentInput>
             <InputAreaField label={''} name={'comment'} />

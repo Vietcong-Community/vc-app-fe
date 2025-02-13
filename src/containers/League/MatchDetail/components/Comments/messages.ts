@@ -9,12 +9,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Comments.addButton',
     defaultMessage: 'Přidat',
   },
-  commentedAt: {
-    id: 'app.containers.League.MatchDetail.components.Comments.commentedAt',
-    defaultMessage: '{date}',
-  },
-  commentedBy: {
-    id: 'app.containers.League.MatchDetail.components.Comments.commentedBy',
-    defaultMessage: '{nickname}',
+  noCommentYet: {
+    id: 'app.containers.League.MatchDetail.components.Comments.noCommentYet',
+    defaultMessage: 'Zatím žádný hater nesebral odvahu.. budeš první?',
   },
 });

@@ -1,11 +1,22 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { get, post, put } from '../../apiFactory';
+import { del, get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { ArticlesEndpoints } from './endpoints';
-import { IArticle, IArticleListQuery, ICreateArticle, IUpdateArticle } from './interfaces';
+import { IArticle, IArticleList, IArticleListQuery, ICategory, ICreateArticle, IUpdateArticle } from './interfaces';
+
+export const useArticleCategories = () => {
+  return useQuery({
+    queryKey: ['articleCategories'],
+    queryFn: async () => {
+      const { data } = await get<{ items: ICategory[] }>(ArticlesEndpoints.ARTICLE_CATEGORIES);
+      return data;
+    },
+    staleTime: Infinity,
+  });
+};
 
 export const useArticlesList = (
   query?: IArticleListQuery,
@@ -15,7 +26,7 @@ export const useArticlesList = (
   return useQuery({
     queryKey: ['articles', JSON.stringify(query ?? {})],
     queryFn: async () => {
-      const { data } = await get<{ articles: IArticle[]; total: number }>(ArticlesEndpoints.ARTICLES, undefined, query);
+      const { data } = await get<IArticleList>(ArticlesEndpoints.ARTICLES, undefined, query);
       return data;
     },
     staleTime,
@@ -48,6 +59,17 @@ export const useUpdateArticle = (articleId: string) => {
   return useMutation({
     mutationFn: async (payload: IUpdateArticle) => {
       const { data } = await put<IUpdateArticle, undefined>(ArticlesEndpoints.ARTICLE_BY_ID, payload, {
+        articleId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useRemoveArticle = (articleId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await del(ArticlesEndpoints.ARTICLE_BY_ID, {
         articleId,
       });
       return data;

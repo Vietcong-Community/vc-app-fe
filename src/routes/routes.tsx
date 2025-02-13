@@ -7,6 +7,7 @@ import { CreateMatchCont as AdminCreateMatchCont } from '../containers/Admin/Cre
 import { ArticleDetailCont } from '../containers/Articles/ArticleDetail/ArticleDetail.cont';
 import { CreateArticleCont } from '../containers/Articles/CreateArticle/CreateArticle.cont';
 import { ArticlesOverview } from '../containers/Articles/Overview/Articles.cont';
+import { UpdateArticleCont } from '../containers/Articles/UpdateArticle/UpdateArticle.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
@@ -56,6 +57,7 @@ export const routesObject: RouteObject[] = [
       // ARTICLES
       { element: <ArticlesOverview />, path: Routes.ARTICLES },
       { element: <CreateArticleCont />, path: Routes.NEW_ARTICLE },
+      { element: <UpdateArticleCont />, path: Routes.UPDATE_ARTICLE },
       { element: <ArticleDetailCont />, path: Routes.ARTICLE_DETAIL },
 
       // GENERAL ROUTES

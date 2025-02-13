@@ -5,8 +5,18 @@ export const messages = defineMessages({
     id: 'app.containers.Articles.title',
     defaultMessage: 'Články',
   },
+  allCategories: {
+    id: 'app.containers.Articles.allCategories',
+    defaultMessage: 'Vše',
+  },
   newArticle: {
     id: 'app.containers.Articles.newArticle',
     defaultMessage: 'Nový článek',
+  },
+  noArticles: {
+    id: 'app.containers.Articles.noArticles',
+    defaultMessage:
+      'Nic tu není šohaji.. buď Bambi není schopná vytvořit kvalitní článek (asi peče chleba..) ' +
+      'nebo jsi filtroval tak divoce, až se z toho všechny články ztratily.',
   },
 });

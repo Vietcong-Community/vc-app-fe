@@ -25,6 +25,7 @@ export const ArticlePreview: React.FC<IProps> = (props: IProps) => {
 
   return (
     <Card>
+      <S.Image src={article.image.url} alt="" />
       <S.Title>{article.title}</S.Title>
       <Gap defaultHeight={16} />
       <LinkButton onClick={goToDetail}>

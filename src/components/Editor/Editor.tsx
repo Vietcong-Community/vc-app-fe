@@ -1,32 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Parser from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
+import { ReactQuillRenderer } from '../ReactQuillRenderer/ReactQuillRenderer';
+
+import * as S from './Editor.style';
+
 interface IProps {
-  initialData?: string;
+  setValue: (value: string) => void;
+  value: string;
 }
 
 export const Editor: React.FC<IProps> = (props: IProps) => {
-  const { initialData } = props;
-  const [value, setValue] = useState(initialData);
+  const { setValue, value } = props;
   const modules = {
     toolbar: [
-      [{ header: [1, 2, 3, 4, false] }],
+      [{ header: [1, 2, 3, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-      ['link', 'image'],
+      ['link'],
     ],
   };
-  console.log(value);
 
   return (
     <>
-      <ReactQuill theme="snow" modules={modules} value={value} onChange={setValue} />
-
-      {Parser(value ?? '')}
+      <S.EditorContainer>
+        <ReactQuill theme="snow" modules={modules} value={value} onChange={setValue} />
+      </S.EditorContainer>
+      <ReactQuillRenderer data={value ?? ''} />
     </>
   );
 };

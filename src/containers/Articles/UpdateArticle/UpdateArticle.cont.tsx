@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { Flex } from 'antd';
+import { Flex, Spin } from 'antd';
 import some from 'lodash/some';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useArticleCategories, useCreateArticle } from '../../../api/hooks/articles/api';
+import { useArticleById, useArticleCategories, useUpdateArticle } from '../../../api/hooks/articles/api';
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Editor } from '../../../components/Editor/Editor';
@@ -22,15 +22,17 @@ import { ArticleForm } from '../components/ArticleForm/ArticleForm.form';
 
 import { messages } from './messages';
 
-export const CreateArticleCont: React.FC = () => {
-  const { navigate } = useRouter();
+export const UpdateArticleCont: React.FC = () => {
+  const { navigate, query } = useRouter<{ articleId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
-  const [articleContent, setArticleContent] = useState<string>('');
 
   const userMe = useUserMe('always');
   const articleCategories = useArticleCategories();
-  const createArticle = useCreateArticle();
+  const articleDetail = useArticleById(query.articleId);
+  const updateArticle = useUpdateArticle(query.articleId);
+
+  const [articleContent, setArticleContent] = useState<string>(articleDetail.data?.content ?? '');
 
   useEffect(() => {
     if (
@@ -42,18 +44,25 @@ export const CreateArticleCont: React.FC = () => {
     }
   }, [userMe.data?.roles]);
 
+  useEffect(() => {
+    if (!articleDetail.isLoading) {
+      setArticleContent(articleDetail.data?.content ?? '');
+    }
+  }, [articleDetail.isLoading]);
+
   const onSubmit = async (values: IFormData) => {
     try {
-      const response = await createArticle.mutateAsync({
+      await updateArticle.mutateAsync({
         title: values.title,
         perex: values.perex,
         categoryId: values.categoryId,
         content: articleContent,
+        published: articleDetail.data?.published ?? false,
       });
-      showNotification(messages.createSuccess);
-      navigate(Routes.ARTICLE_DETAIL.replace(':articleId', response.id));
+      showNotification(messages.updateSuccess);
+      navigate(Routes.ARTICLE_DETAIL.replace(':articleId', query.articleId));
     } catch {
-      showNotification(messages.createFailed, undefined, NotificationType.ERROR);
+      showNotification(messages.updateFailed, undefined, NotificationType.ERROR);
     }
   };
 
@@ -78,13 +87,28 @@ export const CreateArticleCont: React.FC = () => {
           <FormattedMessage {...messages.title} />
         </H1>
       </Flex>
-      <ArticleForm
-        categories={articleCategories.data?.items ?? []}
-        isSubmitting={createArticle.isPending}
-        onSubmit={onSubmit}
-      />
-      <Gap defaultHeight={32} height={{ md: 16 }} />
-      <Editor setValue={setArticleContent} value={articleContent} />
+      {articleDetail.isLoading && (
+        <>
+          <Gap defaultHeight={32} />
+          <Spin size="large" />
+        </>
+      )}
+      {(!articleDetail.isLoading || !articleDetail.data) && (
+        <>
+          <ArticleForm
+            categories={articleCategories.data?.items ?? []}
+            initialValues={{
+              categoryId: articleDetail.data?.category.id,
+              perex: articleDetail.data?.perex,
+              title: articleDetail.data?.title,
+            }}
+            isSubmitting={updateArticle.isPending}
+            onSubmit={onSubmit}
+          />
+          <Gap defaultHeight={32} height={{ md: 16 }} />
+          <Editor setValue={setArticleContent} value={articleContent} />
+        </>
+      )}
     </ContentLayout>
   );
 };

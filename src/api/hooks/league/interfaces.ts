@@ -168,3 +168,11 @@ export interface IUpdateRound {
   scoreChallenger: number;
   scoreOpponent: number;
 }
+
+export interface ICreateRound {
+  mapId: string;
+  roundNumber: number;
+  scoreChallenger: number;
+  scoreOpponent: number;
+  challengerNation: Nation;
+}

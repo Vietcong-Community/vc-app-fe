@@ -113,6 +113,11 @@ export const mapTeamRoleToTranslation = (teamRole?: TeamRole): ReactNode | undef
   }
 };
 
+export const NATION_SELECT_OPTIONS = [
+  { id: Nation.US, value: Nation.US, label: <FormattedMessage {...messages.usNation} /> },
+  { id: Nation.VC, value: Nation.VC, label: <FormattedMessage {...messages.vcNation} /> },
+];
+
 export const TEAM_ROLE_SELECT_OPTIONS = [
   { id: TeamRole.OWNER, value: TeamRole.OWNER, label: <FormattedMessage {...messages.teamRoleOwner} /> },
   {

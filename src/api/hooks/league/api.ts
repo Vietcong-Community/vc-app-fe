@@ -11,6 +11,7 @@ import { LeagueEndpoints } from './endpoints';
 import {
   IAcceptMatchChallenge,
   ICreateMatchChallenge,
+  ICreateRound,
   IExpectedEloPointsItem,
   ILadderItem,
   ILeagueDetail,
@@ -260,6 +261,17 @@ export const useRemoveRound = (roundId: string) => {
     mutationFn: async () => {
       const { data } = await del(LeagueEndpoints.ROUND_BY_ID, {
         roundId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useCreateRound = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (payload: ICreateRound) => {
+      const { data } = await post<ICreateRound, undefined>(LeagueEndpoints.CREATE_ROUND, payload, {
+        matchId,
       });
       return data;
     },

@@ -26,6 +26,7 @@ import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { ExpectedEloPointsModal } from '../components/ExpectedEloPointsModal/ExpectedEloPointsModal';
 import { canUserManageMatch } from '../utils';
 
+import { CreateRoundModal } from './components/CreateRoundModal/CreateMatchModal';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
 import { Team } from './components/Team/Team';
@@ -38,6 +39,7 @@ export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
   const [isEloModalOpen, setIsEloModalOpen] = useState<boolean>(false);
   const [isUpdateMatchModalOpen, setIsUpdateMatchModalOpen] = useState<boolean>(false);
+  const [isCreateRoundModalOpen, setIsCreateRoundModalOpen] = useState<boolean>(false);
   const { formatMessage } = useIntl();
 
   const matchDetail = useMatchDetail(query.matchId);
@@ -89,6 +91,7 @@ export const MatchDetail: React.FC = () => {
     MatchStatus.FINISHED,
     MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
   ].includes(matchDetail.data?.status as MatchStatus);
+  const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
 
   return (
     <ContentLayout
@@ -128,6 +131,7 @@ export const MatchDetail: React.FC = () => {
             canConfirmResult={isPossibleToManageMatch?.allowed && !showUploadRoundImagesAlert}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
+            setIsCreateRoundModalOpen={setIsCreateRoundModalOpen}
             setIsUpdateMatchModalOpen={setIsUpdateMatchModalOpen}
             status={matchDetail.data?.status}
             userIsAdmin={userIsAdmin}
@@ -276,7 +280,7 @@ export const MatchDetail: React.FC = () => {
             opponentTag={matchDetail.data?.opponent.team.tag}
             opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
             matchId={query.matchId}
-            matchMaps={compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap])}
+            matchMaps={matchMaps}
             matchStatus={matchDetail.data?.status}
             rounds={matchDetail.data?.rounds}
             seasonId={matchDetail.data?.season?.id}
@@ -307,6 +311,12 @@ export const MatchDetail: React.FC = () => {
         onClose={() => setIsUpdateMatchModalOpen(false)}
         matchId={query.matchId}
         seasonId={matchDetail.data?.season?.id}
+      />
+      <CreateRoundModal
+        isOpen={isCreateRoundModalOpen}
+        maps={matchMaps}
+        matchId={query.matchId}
+        onClose={() => setIsCreateRoundModalOpen(false)}
       />
     </ContentLayout>
   );

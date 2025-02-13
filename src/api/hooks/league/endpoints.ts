@@ -16,6 +16,7 @@ export enum LeagueEndpoints {
   EXPECTED_ELO_POINTS = '/matches/expected-elo-points/{challengerId}/{opponentId}',
   ROUNDS_SCREENSHOT_UPLOAD = '/matches/{matchId}/rounds/{roundId}/screenshot-upload-url',
   REMOVE_ROUND_SCREENSHOT = '/match-rounds/{roundId}/remove-screenshot',
+  CREATE_ROUND = '/matches/{matchId}/match-rounds',
   ROUND_BY_ID = '/match-rounds/{roundId}',
   RECALCULATE_PLAYER_STATS = '/matches/{matchId}/recalculate-match-player-stats',
 }

@@ -18,6 +18,7 @@ interface IProps {
   canEnterResult?: boolean;
   matchId: string;
   seasonId?: string;
+  setIsCreateRoundModalOpen: (value: boolean) => void;
   setIsUpdateMatchModalOpen: (value: boolean) => void;
   status?: MatchStatus;
   userIsAdmin: boolean;
@@ -30,6 +31,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     canConfirmResult = false,
     matchId,
     seasonId,
+    setIsCreateRoundModalOpen,
     setIsUpdateMatchModalOpen,
     status,
     userIsAdmin,
@@ -65,6 +67,12 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.updateMatch} />,
       key: '3',
       onClick: () => setIsUpdateMatchModalOpen(true),
+      disabled: status === MatchStatus.FINISHED,
+    },
+    {
+      label: <FormattedMessage {...messages.createRound} />,
+      key: '4',
+      onClick: () => setIsCreateRoundModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },
   ];

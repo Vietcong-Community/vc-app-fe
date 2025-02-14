@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { Flex, Radio, RadioChangeEvent, Spin } from 'antd';
@@ -42,6 +42,17 @@ export const ArticlesOverview: React.FC = () => {
     (item) => item === Role.ADMIN || item === Role.CONTENT_CREATOR,
   );
 
+  // REMOVE LATER
+  useEffect(() => {
+    if (
+      (userMe.data &&
+        !some(userMe.data?.roles ?? [], (item) => item === Role.ADMIN || item === Role.CONTENT_CREATOR)) ||
+      userMe.isError
+    ) {
+      navigate(Routes.HOME);
+    }
+  }, [userMe.data?.roles, userMe.isError]);
+
   const onCreateNewArticle = () => navigate(Routes.NEW_ARTICLE);
 
   const articlesData = articles.data?.articles?.filter((item) => {
@@ -59,10 +70,12 @@ export const ArticlesOverview: React.FC = () => {
         <H1>
           <FormattedMessage {...messages.title} />
         </H1>
-        <Button onClick={onCreateNewArticle} style={{ padding: '0.25rem 1rem' }}>
-          <PlusOutlined />
-          <FormattedMessage {...messages.newArticle} />
-        </Button>
+        {userCanManageArticles && (
+          <Button onClick={onCreateNewArticle} style={{ padding: '0.25rem 1rem' }}>
+            <PlusOutlined />
+            <FormattedMessage {...messages.newArticle} />
+          </Button>
+        )}
       </Flex>
       <Gap defaultHeight={16} />
       <EaseInOutContainer isOpen={!articleCategories.isLoading}>

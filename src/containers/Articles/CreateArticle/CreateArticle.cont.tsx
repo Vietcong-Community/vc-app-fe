@@ -34,8 +34,9 @@ export const CreateArticleCont: React.FC = () => {
 
   useEffect(() => {
     if (
-      userMe.data &&
-      !some(userMe.data?.roles ?? [], (item) => item === Role.ADMIN || item === Role.CONTENT_CREATOR)
+      (userMe.data &&
+        !some(userMe.data?.roles ?? [], (item) => item === Role.ADMIN || item === Role.CONTENT_CREATOR)) ||
+      userMe.isError
     ) {
       showNotification(messages.insufficientPrivileges, undefined, NotificationType.ERROR);
       navigate(Routes.ARTICLES);

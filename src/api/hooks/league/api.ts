@@ -4,7 +4,7 @@ import { MatchStatus } from '../../../constants/enums';
 import { del, get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
-import { IIdentifiedEntity, IMap } from '../interfaces';
+import { IIdentifiedEntity, IMap, IPagination } from '../interfaces';
 import { IAvatarUpload } from '../teams/interfaces';
 
 import { LeagueEndpoints } from './endpoints';
@@ -312,11 +312,15 @@ export const useRecalculatePlayerStats = (matchId: string) => {
   });
 };
 
-export const useMatchComment = (matchId: string, refetchOnMount?: boolean | 'always') => {
+export const useMatchComment = (matchId: string, query?: IPagination, refetchOnMount?: boolean | 'always') => {
   return useQuery({
-    queryKey: ['matchComment', matchId],
+    queryKey: ['matchComment', matchId, JSON.stringify(query)],
     queryFn: async () => {
-      const { data } = await get<{ comments: IMatchComment[] }>(LeagueEndpoints.MATCH_COMMENT, { matchId });
+      const { data } = await get<{ comments: IMatchComment[]; total: number }>(
+        LeagueEndpoints.MATCH_COMMENT,
+        { matchId },
+        query,
+      );
       return data;
     },
     staleTime: Infinity,

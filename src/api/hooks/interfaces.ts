@@ -27,3 +27,8 @@ export interface IUser {
   };
   roles: Role[];
 }
+
+export interface IPagination {
+  page?: number;
+  limit?: number;
+}

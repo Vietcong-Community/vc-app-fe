@@ -25,6 +25,11 @@ export enum Routes {
   SET_MATCH_SCORE = '/zadani-vysledku-zapasu/:matchId',
   CONFIRM_MATCH_SCORE = '/potvrzeni-vysledku-zapasu/:matchId',
   MATCH_DETAIL = '/detail-zapasu/:matchId',
+  // ARTICLES
+  ARTICLES = '/clanky',
+  ARTICLE_DETAIL = '/clanek/:articleId',
+  NEW_ARTICLE = '/novy-clanek',
+  UPDATE_ARTICLE = '/uprava-clanku/:articleId',
   // ADMIN
   ADMIN_CREATE_MATCH = '/admin/vytvoreni-zapasu/:seasonId',
 }

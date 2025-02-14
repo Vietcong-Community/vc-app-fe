@@ -4,6 +4,10 @@ import { ProfileCont } from 'src/containers/Users/Profile/Profile.cont';
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
 import { CreateMatchCont as AdminCreateMatchCont } from '../containers/Admin/CreateMatch/CreateMatch.cont';
+import { ArticleDetailCont } from '../containers/Articles/ArticleDetail/ArticleDetail.cont';
+import { CreateArticleCont } from '../containers/Articles/CreateArticle/CreateArticle.cont';
+import { ArticlesOverview } from '../containers/Articles/Overview/Articles.cont';
+import { UpdateArticleCont } from '../containers/Articles/UpdateArticle/UpdateArticle.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
@@ -49,6 +53,12 @@ export const routesObject: RouteObject[] = [
 
       // ADMIN ROUTES
       { element: <AdminCreateMatchCont />, path: Routes.ADMIN_CREATE_MATCH },
+
+      // ARTICLES
+      { element: <ArticlesOverview />, path: Routes.ARTICLES },
+      { element: <CreateArticleCont />, path: Routes.NEW_ARTICLE },
+      { element: <UpdateArticleCont />, path: Routes.UPDATE_ARTICLE },
+      { element: <ArticleDetailCont />, path: Routes.ARTICLE_DETAIL },
 
       // GENERAL ROUTES
       { element: <OverviewCont />, path: Routes.HOME }, // TODO Create homepage

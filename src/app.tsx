@@ -13,8 +13,11 @@ const router = createBrowserRouter(routesObject);
 export const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <Helmet titleTemplate="" defaultTitle="Vietcong">
-        <meta name="description" content="Portál pro hraní a informace o počítačové hře Vietcong" />
+      <Helmet titleTemplate="" defaultTitle="Vietcong HUB">
+        <meta name="description" content="Portál pro hraní a informace o počítačové hře Vietcong | Vietcong HUB" />
+        <meta name="keywords" content="vietcong veitconghub fps games multiplayer strilecka ceske hry pterodon ctf" />
+        <meta name="og:title" content="Vietcong HUB" />
+        <meta name="og:description" content="Portál pro hraní a informace o počítačové hře Vietcong | Vietcong HUB" />
       </Helmet>
       <S.AppContainer>
         <RouterProvider router={router} />

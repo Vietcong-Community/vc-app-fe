@@ -6,7 +6,7 @@ import * as S from './InputAreaField.style';
 
 interface IProps {
   disabled?: boolean;
-  label: ReactNode;
+  label?: ReactNode;
   name: string;
   placeholder?: string;
   required?: boolean;

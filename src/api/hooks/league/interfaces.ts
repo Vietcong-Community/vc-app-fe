@@ -1,5 +1,5 @@
 import { LeagueType, MatchStatus, Nation, SeasonStatus } from '../../../constants/enums';
-import { IMap, IUser } from '../interfaces';
+import { IMap, IPagination, IUser } from '../interfaces';
 import { ITeam } from '../teams/interfaces';
 
 export interface ILeagueDetail {
@@ -127,14 +127,12 @@ export interface IMatchListItem {
   opponentEloRowAmount?: number;
 }
 
-export interface IMatchListQuery {
+export interface IMatchListQuery extends IPagination {
   teamId?: string;
   mapId?: string;
   startDateFrom?: string;
   startDateTo?: string;
   status?: string;
-  page?: number;
-  limit?: number;
 }
 
 export interface ISetMatchScore {

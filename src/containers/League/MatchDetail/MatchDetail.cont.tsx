@@ -37,7 +37,7 @@ import { messages } from './messages';
 import * as S from './MatchDetail.style';
 
 export const MatchDetail: React.FC = () => {
-  const { navigate, query } = useRouter<{ matchId: string; comments?: string }>();
+  const { navigate, query } = useRouter<{ matchId: string }>();
   const [isEloModalOpen, setIsEloModalOpen] = useState<boolean>(false);
   const [isUpdateMatchModalOpen, setIsUpdateMatchModalOpen] = useState<boolean>(false);
   const [isCreateRoundModalOpen, setIsCreateRoundModalOpen] = useState<boolean>(false);
@@ -93,8 +93,6 @@ export const MatchDetail: React.FC = () => {
     MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
   ].includes(matchDetail.data?.status as MatchStatus);
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
-
-  const showComments = query.comments === 'true';
 
   return (
     <ContentLayout
@@ -292,12 +290,8 @@ export const MatchDetail: React.FC = () => {
           />
         )}
       </EaseInOutContainer>
-      {showComments && (
-        <>
-          <Gap defaultHeight={16} />
-          <Comments matchId={query.matchId} />
-        </>
-      )}
+      <Gap defaultHeight={16} />
+      <Comments matchId={query.matchId} />
       <Gap defaultHeight={48} />
       <ExpectedEloPointsModal
         closeModal={() => setIsEloModalOpen(false)}

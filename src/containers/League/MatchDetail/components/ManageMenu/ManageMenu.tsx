@@ -19,6 +19,7 @@ interface IProps {
   matchId: string;
   seasonId?: string;
   setIsCreateRoundModalOpen: (value: boolean) => void;
+  setIsSortRoundsModalOpen: (value: boolean) => void;
   setIsUpdateMatchModalOpen: (value: boolean) => void;
   status?: MatchStatus;
   userIsAdmin: boolean;
@@ -32,6 +33,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     matchId,
     seasonId,
     setIsCreateRoundModalOpen,
+    setIsSortRoundsModalOpen,
     setIsUpdateMatchModalOpen,
     status,
     userIsAdmin,
@@ -70,8 +72,14 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       disabled: status === MatchStatus.FINISHED,
     },
     {
-      label: <FormattedMessage {...messages.createRound} />,
+      label: <FormattedMessage {...messages.sortRounds} />,
       key: '4',
+      onClick: () => setIsSortRoundsModalOpen(true),
+      disabled: status === MatchStatus.FINISHED,
+    },
+    {
+      label: <FormattedMessage {...messages.createRound} />,
+      key: '5',
       onClick: () => setIsCreateRoundModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },

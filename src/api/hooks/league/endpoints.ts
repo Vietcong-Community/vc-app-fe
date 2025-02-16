@@ -18,6 +18,7 @@ export enum LeagueEndpoints {
   REMOVE_ROUND_SCREENSHOT = '/match-rounds/{roundId}/remove-screenshot',
   MATCH_COMMENT = '/matches/{matchId}/comments',
   CREATE_ROUND = '/matches/{matchId}/match-rounds',
+  SORT_ROUNDS = '/matches/{matchId}/sort-rounds',
   ROUND_BY_ID = '/match-rounds/{roundId}',
   RECALCULATE_PLAYER_STATS = '/matches/{matchId}/recalculate-match-player-stats',
 }

@@ -22,6 +22,7 @@ import {
   ISeason,
   ISeasonTeamItem,
   ISetMatchScore,
+  ISortRounds,
   IUpdateMatch,
   IUpdateRound,
 } from './interfaces';
@@ -332,6 +333,17 @@ export const useAddMatchComment = (matchId: string) => {
   return useMutation({
     mutationFn: async (payload: { comment: string }) => {
       const { data } = await post<{ comment: string }, IIdentifiedEntity>(LeagueEndpoints.MATCH_COMMENT, payload, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useSortRounds = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (payload: ISortRounds) => {
+      const { data } = await put<ISortRounds, undefined>(LeagueEndpoints.SORT_ROUNDS, payload, {
         matchId,
       });
       return data;

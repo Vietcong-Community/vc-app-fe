@@ -30,6 +30,7 @@ import { Comments } from './components/Comments/Comments';
 import { CreateRoundModal } from './components/CreateRoundModal/CreateMatchModal';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
+import { SortRoundsModal } from './components/SortRoundsModal/SortRoundsModal';
 import { Team } from './components/Team/Team';
 import { UpdateMatchModal } from './components/UpdateMatchModal/UpdateMatchModal';
 import { messages } from './messages';
@@ -39,6 +40,7 @@ import * as S from './MatchDetail.style';
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
   const [isEloModalOpen, setIsEloModalOpen] = useState<boolean>(false);
+  const [isSortRoundsModalOpen, setIsSortRoundsModalOpen] = useState<boolean>(false);
   const [isUpdateMatchModalOpen, setIsUpdateMatchModalOpen] = useState<boolean>(false);
   const [isCreateRoundModalOpen, setIsCreateRoundModalOpen] = useState<boolean>(false);
   const { formatMessage } = useIntl();
@@ -133,6 +135,7 @@ export const MatchDetail: React.FC = () => {
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             setIsCreateRoundModalOpen={setIsCreateRoundModalOpen}
+            setIsSortRoundsModalOpen={setIsSortRoundsModalOpen}
             setIsUpdateMatchModalOpen={setIsUpdateMatchModalOpen}
             status={matchDetail.data?.status}
             userIsAdmin={userIsAdmin}
@@ -315,6 +318,14 @@ export const MatchDetail: React.FC = () => {
         onClose={() => setIsUpdateMatchModalOpen(false)}
         matchId={query.matchId}
         seasonId={matchDetail.data?.season?.id}
+      />
+      <SortRoundsModal
+        challengerTag={matchDetail.data?.challenger.team.tag}
+        isOpen={isSortRoundsModalOpen}
+        matchId={query.matchId}
+        onClose={() => setIsSortRoundsModalOpen(false)}
+        opponentTag={matchDetail.data?.opponent.team?.tag}
+        rounds={matchDetail.data?.rounds ?? []}
       />
       <CreateRoundModal
         isOpen={isCreateRoundModalOpen}

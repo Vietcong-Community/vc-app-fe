@@ -45,6 +45,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.ManageMenu.updateMatch',
     defaultMessage: 'Upravit zápas',
   },
+  sortRounds: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.sortRounds',
+    defaultMessage: 'Seřadit kola',
+  },
   createRound: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.createRound',
     defaultMessage: 'Vytvořit kolo',

@@ -181,3 +181,7 @@ export interface ICreateRound {
   scoreOpponent: number;
   challengerNation: Nation;
 }
+
+export interface ISortRounds {
+  matchRoundsIds: string[];
+}

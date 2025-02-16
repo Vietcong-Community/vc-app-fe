@@ -62,7 +62,7 @@ export const Comments: React.FC<IProps> = (props: IProps) => {
               <Avatar
                 shape="square"
                 size={100}
-                src={<img alt="" src={c.author.image.url ?? soldier} />}
+                src={<img alt="" src={c.author.image?.url ?? soldier} />}
                 onClick={() => navigate(Routes.USER_PROFILE.replace(':id', c.author.id))}
               />
             </S.DesktopAvatar>
@@ -73,7 +73,7 @@ export const Comments: React.FC<IProps> = (props: IProps) => {
                     <Avatar
                       shape="square"
                       size={60}
-                      src={<img alt="" src={c.author.image.url ?? soldier} />}
+                      src={<img alt="" src={c.author.image?.url ?? soldier} />}
                       onClick={() => navigate(Routes.USER_PROFILE.replace(':id', c.author.id))}
                     />
                   </S.MobileAvatar>

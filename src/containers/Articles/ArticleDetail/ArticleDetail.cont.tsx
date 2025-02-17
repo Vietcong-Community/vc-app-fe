@@ -24,7 +24,7 @@ import { DeleteArticleModal } from '../components/DeleteArticleModal/DeleteArtic
 
 import { messages } from './messages';
 
-import * as S from '../../Teams/TeamDetail/TeamDetail.style';
+import * as S from './ArticleDetail.style';
 
 export const ArticleDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ articleId: string }>();
@@ -80,7 +80,7 @@ export const ArticleDetailCont: React.FC = () => {
       label: <FormattedMessage {...messages.deleteArticle} />,
       key: '4',
       onClick: () => setRemoveModalIsOpen(true),
-      disabled: !articleDetail.data?.published,
+      disabled: articleDetail.data?.published,
     },
   ];
 
@@ -108,17 +108,19 @@ export const ArticleDetailCont: React.FC = () => {
           </>
         )}
         <EaseInOutContainer isOpen={!articleDetail.isLoading}>
-          <Flex align="center" justify="space-between">
-            <H1>{articleDetail.data?.title ?? ''}</H1>
-            {userCanManageArticles && (
-              <Dropdown menu={{ items: adminItems }} trigger={['click']}>
-                <S.AvatarIcon shape="square" size={32} icon={<SettingOutlined />} />
-              </Dropdown>
-            )}
-          </Flex>
-          <Gap defaultHeight={8} />
-          <Divider />
-          <Gap defaultHeight={16} />
+          <S.Container>
+            <Flex align="center" justify="space-between">
+              <H1>{articleDetail.data?.title ?? ''}</H1>
+              {userCanManageArticles && (
+                <Dropdown menu={{ items: adminItems }} trigger={['click']}>
+                  <S.AvatarIcon shape="square" size={32} icon={<SettingOutlined />} />
+                </Dropdown>
+              )}
+            </Flex>
+            <Gap defaultHeight={8} />
+            <Divider />
+            <Gap defaultHeight={16} />
+          </S.Container>
           <ReactQuillRenderer data={articleDetail.data?.content} />
         </EaseInOutContainer>
       </ContentLayout>

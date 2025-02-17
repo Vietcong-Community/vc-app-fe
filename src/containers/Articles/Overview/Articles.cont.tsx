@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { Flex, Radio, RadioChangeEvent, Spin } from 'antd';
+import { Checkbox, Flex, Pagination, Radio, RadioChangeEvent, Spin } from 'antd';
 import some from 'lodash/some';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -27,6 +27,7 @@ export const ArticlesOverview: React.FC = () => {
   const { formatMessage } = useIntl();
   const [selectedPage, setSelectedPage] = useState<number>(1);
   const [selectedCategory, setCategory] = useState<undefined | string>(undefined);
+  const [showPublished, setShowPublished] = useState<boolean>(true);
 
   const onCategoryChange = (e: RadioChangeEvent) => {
     setSelectedPage(1);
@@ -34,7 +35,7 @@ export const ArticlesOverview: React.FC = () => {
   };
 
   const articleCategories = useArticleCategories();
-  const articles = useArticlesList({ categoryId: selectedCategory, page: selectedPage });
+  const articles = useArticlesList({ categoryId: selectedCategory, published: showPublished, page: selectedPage });
   const userMe = useUserMe('always', [401]);
 
   const userCanManageArticles = some(
@@ -94,6 +95,14 @@ export const ArticlesOverview: React.FC = () => {
                 ...(articleCategories.data?.items.map((item) => ({ value: item.id, label: item.name })) ?? []),
               ]}
             ></Radio.Group>
+            {userCanManageArticles && (
+              <>
+                <Gap defaultHeight={4} />
+                <Checkbox defaultChecked={showPublished} onChange={() => setShowPublished((value) => !value)}>
+                  <FormattedMessage {...messages.published} />
+                </Checkbox>
+              </>
+            )}
           </S.Categories>
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             {articles.isLoading && (
@@ -113,11 +122,24 @@ export const ArticlesOverview: React.FC = () => {
               <S.ArticlesContainer>
                 {articlesData?.map((item) => <ArticlePreview article={item} />)}
               </S.ArticlesContainer>
+              <Gap defaultHeight={32} />
+              <Pagination
+                align={'end'}
+                responsive
+                current={selectedPage}
+                defaultPageSize={10}
+                hideOnSinglePage
+                total={articles.data?.total ?? 0}
+                onChange={(value) => setSelectedPage(value)}
+                showQuickJumper
+                showSizeChanger={false}
+                style={{ width: '100%' }}
+              />
             </EaseInOutContainer>
           </div>
         </S.Content>
       </EaseInOutContainer>
-      <Gap defaultHeight={32} height={{ md: 16 }} />
+      <Gap defaultHeight={32} />
     </ContentLayout>
   );
 };

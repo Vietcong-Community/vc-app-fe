@@ -5,12 +5,17 @@ import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const ArticlesContainer = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 24px;
   flex-wrap: wrap;
   width: 100%;
 
   > * {
-    width: calc(50% - 8px);
+    width: calc(50% - 12px);
+    ${() => makeMediaQuery(BreakPoints.md)`
+      ${css`
+        width: 100%;
+      `}
+  `};
   }
 
   ${() => makeMediaQuery(BreakPoints.lg)`
@@ -31,6 +36,12 @@ export const Categories = styled.div`
   gap: 1rem;
   text-align: start;
   width: 200px;
+
+  ${() => makeMediaQuery(BreakPoints.lg)`
+    ${css`
+      display: none;
+    `}
+  `};
 `;
 
 export const NoArticles = styled.div`

@@ -13,6 +13,10 @@ export const messages = defineMessages({
     id: 'app.containers.Articles.newArticle',
     defaultMessage: 'Nový článek',
   },
+  published: {
+    id: 'app.containers.Articles.published',
+    defaultMessage: 'Publikované',
+  },
   noArticles: {
     id: 'app.containers.Articles.noArticles',
     defaultMessage:

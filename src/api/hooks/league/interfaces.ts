@@ -125,6 +125,7 @@ export interface IMatchListItem {
   opponentScore?: number;
   challengerEloRowAmount?: number;
   opponentEloRowAmount?: number;
+  commentsCount?: number;
 }
 
 export interface IMatchListQuery extends IPagination {

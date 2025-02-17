@@ -1,6 +1,8 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { FrownOutlined } from '@ant-design/icons';
+import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons/faArrowRightToBracket';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Flex, Space, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -32,11 +34,12 @@ import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { removeURLParameter } from '../../../utils/urlUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, LADDER_COLUMNS } from '../types';
-import { canUserManageMatch } from '../utils';
+import { canUserJoinSeasonWithTeam, canUserManageMatch } from '../utils';
 
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
+import { JoinSeasonModal } from './components/JoinSeasonModal/JoinSeasonModal';
 import { messages } from './messages';
 
 import * as S from './SeasonDetail.style';
@@ -46,6 +49,7 @@ export const SeasonDetailCont: React.FC = () => {
   const { width } = useWindowDimensions();
   const { formatMessage } = useIntl();
   const isSmallerThanMd = width < BreakPoints.md;
+  const [isJoinSeasonModalOpen, setIsJoinSeasonModalOpen] = useState<boolean>(false);
 
   const userMe = useUserMe('always', [401]);
   const myTeams = useMeTeams(undefined, [401]);
@@ -103,6 +107,9 @@ export const SeasonDetailCont: React.FC = () => {
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
+  const teamsToJoinSeason = canUserJoinSeasonWithTeam(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
+
+  console.log(teamsToJoinSeason);
 
   return (
     <ContentLayout
@@ -126,7 +133,15 @@ export const SeasonDetailCont: React.FC = () => {
       <EaseInOutContainer isOpen={!season.isLoading}>
         <Flex align="center" justify="space-between">
           <H1>{season.data?.name}</H1>
-          {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
+          <S.ActionButtons>
+            {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
+            {teamsToJoinSeason.length > 0 && (
+              <Button onClick={() => setIsJoinSeasonModalOpen(true)} style={{ padding: '0.25rem 1rem' }}>
+                <FontAwesomeIcon icon={faArrowRightToBracket} />
+                <FormattedMessage {...messages.joinSeason} />
+              </Button>
+            )}
+          </S.ActionButtons>
         </Flex>
         <Divider style={{ marginBottom: 16 }} />
         <Card style={{ flex: 0.5 }} bodyStyle={{ padding: '8px 24px' }}>
@@ -273,6 +288,12 @@ export const SeasonDetailCont: React.FC = () => {
         </Flex>
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
+      <JoinSeasonModal
+        closeModal={() => setIsJoinSeasonModalOpen(false)}
+        isOpen={isJoinSeasonModalOpen}
+        seasonId={query.seasonId}
+        userTeams={teamsToJoinSeason}
+      />
     </ContentLayout>
   );
 };

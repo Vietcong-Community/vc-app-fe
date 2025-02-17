@@ -73,4 +73,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.seasonDetailBreadcrumb',
     defaultMessage: 'Sezóna',
   },
+  joinSeason: {
+    id: 'app.containers.League.SeasonDetail.joinSeason',
+    defaultMessage: 'Zapojit se',
+  },
 });

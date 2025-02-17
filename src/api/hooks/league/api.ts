@@ -350,3 +350,15 @@ export const useSortRounds = (matchId: string) => {
     },
   });
 };
+
+export const useJoinSeason = (seasonId: string) => {
+  return useMutation({
+    mutationFn: async (payload: { teamId: string }) => {
+      const { data } = await post<undefined, IIdentifiedEntity>(LeagueEndpoints.JOIN_SEASON, undefined, {
+        seasonId,
+        teamId: payload.teamId,
+      });
+      return data;
+    },
+  });
+};

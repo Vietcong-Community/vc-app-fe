@@ -135,24 +135,33 @@ export const Header: React.FC = () => {
             mode="horizontal"
             selectable={false}
             style={{ borderBottom: 'none', display: 'flex', justifyContent: 'center', width: '100%' }}
-          >
-            <Menu.Item key="leagues" onClick={() => navigate(Routes.LEAGUE)} style={{ fontSize: 16 }}>
-              <FormattedMessage {...messages.leaguesLink} />
-            </Menu.Item>
-            <Menu.Item key="mcrvc" onClick={() => navigate(Routes.MCRVC)} style={{ fontSize: 16 }}>
-              <FormattedMessage {...messages.mcrvcLink} />
-            </Menu.Item>
-            <Menu.Item key="statistics" onClick={() => navigate(Routes.STATISTICS)} style={{ fontSize: 16 }}>
-              <FormattedMessage {...messages.statisticsLink} />
-            </Menu.Item>
-            <Menu.Item key="about" onClick={() => navigate(Routes.ABOUT_US)} style={{ fontSize: 16 }}>
-              <FormattedMessage {...messages.aboutUsLink} />
-            </Menu.Item>
-          </Menu>
+            items={[
+              {
+                key: 'leagues',
+                onClick: () => navigate(Routes.LEAGUE),
+                label: <FormattedMessage {...messages.leaguesLink} />,
+              },
+              {
+                key: 'mcrvc',
+                onClick: () => navigate(Routes.MCRVC),
+                label: <FormattedMessage {...messages.mcrvcLink} />,
+              },
+              {
+                key: 'statistics',
+                onClick: () => navigate(Routes.STATISTICS),
+                label: <FormattedMessage {...messages.statisticsLink} />,
+              },
+              {
+                key: 'about',
+                onClick: () => navigate(Routes.ABOUT_US),
+                label: <FormattedMessage {...messages.aboutUsLink} />,
+              },
+            ]}
+          />
         </S.MenuContainer>
         <S.RightSection>
           <S.HamburgerCont>
-            <S.MobileHamburger isOpen={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <S.MobileHamburger $isOpen={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               <span />
               <span />
               <span />

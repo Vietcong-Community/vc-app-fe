@@ -44,3 +44,16 @@ export const canUserManageMatch = (
     myTeamId: myTeamInSeason?.team?.team?.id,
   };
 };
+
+export const canUserJoinSeasonWithTeam = (userTeams: IMeTeams[], seasonTeams: ISeasonTeamItem[]): IMeTeams[] => {
+  if (userTeams.length === 0) {
+    return [];
+  }
+
+  const userIsCaptainInTeams = userTeams.filter((item) => item.userInTeam.role === TeamRole.OWNER);
+
+  return userIsCaptainInTeams.filter((item) => {
+    const team = seasonTeams.find((seasonTeam) => seasonTeam.team.team.id === item.team.id);
+    return !team;
+  });
+};

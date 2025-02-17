@@ -59,3 +59,17 @@ export const NoFinishedMatches = styled.div`
     font-size: 24px;
   }
 `;
+
+export const ActionButtons = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+      padding: 0.5rem 0;
+    `}
+  `};
+`;

@@ -75,7 +75,7 @@ export const FutureMatches: React.FC<IProps> = (props: IProps) => {
         <Space direction="vertical" style={{ width: '100%' }}>
           {!noUpcomingMatches &&
             futureMatches.data?.matches.map((item: IMatchListItem) => {
-              return <MatchRow match={item} />;
+              return <MatchRow key={item.id} match={item} />;
             })}
         </Space>
         <Gap defaultHeight={16} />

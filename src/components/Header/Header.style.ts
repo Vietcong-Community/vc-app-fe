@@ -87,7 +87,7 @@ export const HamburgerCont = styled.div`
   }
 `;
 
-export const MobileHamburger = styled.div<{ isOpen: boolean }>`
+export const MobileHamburger = styled.div<{ $isOpen: boolean }>`
   width: 28px;
   height: 22px;
   position: relative;
@@ -122,7 +122,7 @@ export const MobileHamburger = styled.div<{ isOpen: boolean }>`
   }
 
   ${(props) =>
-    props.isOpen &&
+    props.$isOpen &&
     css`
       span:nth-child(1) {
         top: 18px;

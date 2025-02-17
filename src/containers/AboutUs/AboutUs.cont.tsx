@@ -29,7 +29,7 @@ export const AboutUsCont: React.FC = () => {
                   liga: (chunks) => (
                     <S.Link>
                       <ForwardFilled />
-                      <a href={Routes.SEASON_DETAIL} rel="noopener noreferrer">
+                      <a href={Routes.LEAGUE} rel="noopener noreferrer">
                         {chunks}
                       </a>
                       <BackwardFilled />

@@ -1,3 +1,4 @@
+import { Tag } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../theme/theme';
@@ -16,10 +17,10 @@ export const Container = styled.div`
   gap: 0.5rem;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  position: relative;
 
   &:hover {
-    background-color: ${(props: IThemeProps) => props.theme.mainColors.accent};
-    color: ${(props: IThemeProps) => props.theme.mainColors.background};
+    background-color: ${(props: IThemeProps) => props.theme.mainColors.accent30};
     transform: scale(1.025);
   }
 
@@ -88,4 +89,85 @@ export const EloPoints = styled.span<IScoreProps>`
     css`
       color: ${props.theme.colors.red};
     `};
+`;
+
+export const LeftColumn = styled.div`
+  align-items: start;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: start;
+`;
+
+export const RightColumn = styled.div`
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+`;
+
+export const MatchTags = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+
+  svg {
+    color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: none;
+    `}
+  `};
+`;
+
+export const MatchStatusTag = styled(Tag)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.primary30};
+  border: none;
+  color: ${(props: IThemeProps) => props.theme.mainColors.text};
+`;
+
+export const LiveTag = styled(Tag)`
+  animation: blinker 2s linear infinite;
+  @keyframes blinker {
+    50% {
+      opacity: 0.25;
+    }
+  }
+`;
+
+export const LiveTagMobile = styled.div`
+  top: 0.5rem;
+  display: none;
+  position: absolute;
+  right: 0;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: flex;
+    `}
+  `};
+`;
+
+export const Comments = styled.div`
+  bottom: 0.5rem;
+  display: none;
+  position: absolute;
+  right: 0.5rem;
+
+  svg {
+    color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      display: flex;
+      gap: 4px;
+    `}
+  `};
 `;

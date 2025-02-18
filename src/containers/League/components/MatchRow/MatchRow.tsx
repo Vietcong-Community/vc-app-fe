@@ -56,7 +56,13 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
   const nowTime = dayjs();
   const startTime = dayjs(match.startDate);
   const endTime = dayjs(match.endDate);
-  const showLiveTag = !!match.startDate && !!match.endDate && nowTime.isAfter(startTime) && nowTime.isBefore(endTime);
+  const showLiveTag =
+    !!match.startDate &&
+    !!match.endDate &&
+    nowTime.isAfter(startTime) &&
+    nowTime.isBefore(endTime) &&
+    match.status !== MatchStatus.FINISHED &&
+    match.status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
 
   return (
     <S.Container onClick={onMatchClick}>

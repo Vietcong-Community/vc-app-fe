@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const AnimatedHeightContainer: React.FC<IProps> = (props) => {
-  const { children, isOpen, onExitComplete, transition = { duration: 0.3 } } = props;
+  const { children, isOpen, onExitComplete, transition = { duration: 0.2 } } = props;
 
   return (
     <AnimatePresence initial={false} onExitComplete={onExitComplete}>

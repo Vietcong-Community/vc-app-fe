@@ -34,6 +34,7 @@ import { SortRoundsModal } from './components/SortRoundsModal/SortRoundsModal';
 import { Team } from './components/Team/Team';
 import { UpdateMatchModal } from './components/UpdateMatchModal/UpdateMatchModal';
 import { messages } from './messages';
+import { getChallengerHosts, getOpponentHosts } from './utils';
 
 import * as S from './MatchDetail.style';
 
@@ -79,6 +80,10 @@ export const MatchDetail: React.FC = () => {
     navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };
 
+  const goToPlayerDetail = (id: string) => {
+    navigate(Routes.USER_PROFILE.replace(':id', id));
+  };
+
   const challengerEloAmountGreaterThanZero = (matchDetail.data?.challengerEloRowAmount ?? 0) > 0;
   const challengerEloAmountLowerThanZero = (matchDetail.data?.challengerEloRowAmount ?? 0) < 0;
   const opponentEloAmountGreaterThanZero = (matchDetail.data?.opponentEloRowAmount ?? 0) > 0;
@@ -95,6 +100,15 @@ export const MatchDetail: React.FC = () => {
     MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
   ].includes(matchDetail.data?.status as MatchStatus);
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
+
+  const challengerHosts = useMemo(
+    () => getChallengerHosts(matchDetail.data?.hostMatchPlayers, matchDetail.data?.rounds?.[0]),
+    [matchDetail.isFetching],
+  );
+  const opponentHosts = useMemo(
+    () => getOpponentHosts(matchDetail.data?.hostMatchPlayers, matchDetail.data?.rounds?.[0]),
+    [matchDetail.isFetching],
+  );
 
   return (
     <ContentLayout
@@ -243,17 +257,19 @@ export const MatchDetail: React.FC = () => {
                 <S.TeamsContainer>
                   <Team
                     eloPoints={matchIsNotFinished ? challengerSeasonTeam?.eloPoints : undefined}
+                    goToPlayerDetail={goToPlayerDetail}
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.challengerMap}
-                    players={matchDetail.data?.challengerMatchPlayers ?? []}
+                    players={[...(matchDetail.data?.challengerMatchPlayers ?? []), ...challengerHosts]}
                     showLineUp={showLineUp}
                     team={matchDetail.data?.challenger?.team}
                   />
                   <Team
                     eloPoints={matchIsNotFinished ? opponentSeasonTeam?.eloPoints : undefined}
+                    goToPlayerDetail={goToPlayerDetail}
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.opponentMap}
-                    players={matchDetail.data?.opponentMatchPlayers ?? []}
+                    players={[...(matchDetail.data?.opponentMatchPlayers ?? []), ...opponentHosts]}
                     showLineUp={showLineUp}
                     team={matchDetail.data?.opponent?.team}
                   />

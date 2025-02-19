@@ -16,7 +16,9 @@ import { UploadField } from '../../../../../components/Fields/UploadField/Upload
 import { Gap } from '../../../../../components/Gap/Gap';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
+import { useRouter } from '../../../../../hooks/RouterHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
+import { Routes } from '../../../../../routes/enums';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
 import { Matches } from '../Matches/Matches';
@@ -32,10 +34,12 @@ interface IProps {
 
 export const TeamInfo: React.FC<IProps> = (props: IProps) => {
   const { teamDetail, showAvatarUploadOption = false } = props;
-  const [showAvatarUpload, setShowAvatarUpload] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { showNotification } = useNotifications();
+  const { navigate } = useRouter();
+
+  const [showAvatarUpload, setShowAvatarUpload] = useState<boolean>(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const seasons = useTeamSeasons(teamDetail?.id ?? '');
   const logoUrl = useTeamAvatarUploadUrl(teamDetail?.id ?? '');
@@ -128,7 +132,9 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
           const isLast = index === seasons.data?.items.length - 1;
           return (
             <>
-              <div style={{ textAlign: 'start', width: '100%' }}>{season.name}</div>
+              <S.SeasonTitle onClick={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', season.id))}>
+                {season.name}
+              </S.SeasonTitle>
               <Gap defaultHeight={8} />
               <Matches teamId={teamDetail?.id ?? ''} seasonId={season.id} />
               {!isLast && <Gap defaultHeight={16} />}

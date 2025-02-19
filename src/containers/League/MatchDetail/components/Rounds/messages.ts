@@ -13,4 +13,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Rounds.title',
     defaultMessage: 'Výsledky po kolech',
   },
+  open: {
+    id: 'app.containers.League.MatchDetail.components.Rounds.open',
+    defaultMessage: 'Otevřít',
+  },
+  close: {
+    id: 'app.containers.League.MatchDetail.components.Rounds.close',
+    defaultMessage: 'Zavřít',
+  },
 });

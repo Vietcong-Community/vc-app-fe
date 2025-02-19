@@ -25,6 +25,14 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.lineup',
     defaultMessage: 'Sestava',
   },
+  open: {
+    id: 'app.containers.League.MatchDetail.open',
+    defaultMessage: 'Otevřít',
+  },
+  close: {
+    id: 'app.containers.League.MatchDetail.close',
+    defaultMessage: 'Zavřít',
+  },
   lineupEmpty: {
     id: 'app.containers.League.MatchDetail.lineupEmpty',
     defaultMessage:

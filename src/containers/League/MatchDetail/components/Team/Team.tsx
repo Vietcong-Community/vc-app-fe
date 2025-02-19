@@ -18,17 +18,22 @@ import { messages } from '../../messages';
 
 import * as S from './Team.style';
 
+export interface ITeamMatchPlayer extends IMatchPlayer {
+  isHost?: boolean;
+}
+
 interface IProps {
   eloPoints?: number;
+  goToPlayerDetail: (id: string) => void;
   goToTeamDetail: (id: string) => void;
   map?: IMap;
   showLineUp: boolean;
-  players: IMatchPlayer[];
+  players: ITeamMatchPlayer[];
   team?: ITeam;
 }
 
 export const Team: React.FC<IProps> = (props: IProps) => {
-  const { eloPoints, goToTeamDetail, map, players, showLineUp, team } = props;
+  const { eloPoints, goToPlayerDetail, goToTeamDetail, map, players, showLineUp, team } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const navigateToTeam = () => {
@@ -48,7 +53,7 @@ export const Team: React.FC<IProps> = (props: IProps) => {
   return (
     <Card style={{ textAlign: 'start' }}>
       <S.TeamInfo>
-        <div style={{ alignItems: 'center', display: 'flex', gap: 8, justifyContent: 'center' }}>
+        <div style={{ alignItems: 'center', cursor: 'pointer', display: 'flex', gap: 8, justifyContent: 'center' }}>
           <Avatar shape="square" size={48} icon={getTeamIcon()} style={{ minWidth: 48 }} />
           <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
         </div>
@@ -76,22 +81,53 @@ export const Team: React.FC<IProps> = (props: IProps) => {
             <div onClick={() => setIsOpen((val) => !val)}>
               <FormattedMessage {...messages.lineup} />
             </div>
-            <S.Icon onClick={() => setIsOpen((val) => !val)}>{isOpen ? <UpOutlined /> : <DownOutlined />}</S.Icon>
+            <div
+              onClick={() => setIsOpen((val) => !val)}
+              style={{ alignItems: 'center', display: 'flex', fontSize: 14, gap: 8, justifyContent: 'center' }}
+            >
+              {isOpen ? (
+                <>
+                  <FormattedMessage {...messages.close} />
+                  <S.Icon>
+                    <UpOutlined />
+                  </S.Icon>
+                </>
+              ) : (
+                <>
+                  <FormattedMessage {...messages.open} />
+                  <S.Icon>
+                    <DownOutlined />
+                  </S.Icon>
+                </>
+              )}
+            </div>
           </S.LineUpTitle>
           <AnimatedHeightContainer isOpen={isOpen}>
             <Gap defaultHeight={16} />
             {players.length === 0 && <FormattedMessage {...messages.lineupEmpty} />}
             {players.length > 0 && (
               <S.LineUp>
-                {players.map((player: IMatchPlayer) => {
+                {players.map((player: ITeamMatchPlayer) => {
                   return (
                     <S.Player>
-                      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-start', alignItems: 'center' }}>
+                      <div
+                        style={{
+                          cursor: 'pointer',
+                          display: 'flex',
+                          gap: 8,
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                        }}
+                        onClick={() => goToPlayerDetail(player.user.id)}
+                      >
                         <Avatar
                           size={24}
                           icon={player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />}
                         />
-                        <b>{player.user.nickname}</b>
+                        <b>
+                          {player.isHost ? '(H) ' : ''}
+                          {player.user.nickname}
+                        </b>
                       </div>
                       <Gap defaultHeight={8} />
                       <S.Statistics>

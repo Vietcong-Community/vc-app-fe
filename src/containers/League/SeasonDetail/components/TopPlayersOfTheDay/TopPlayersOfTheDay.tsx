@@ -89,6 +89,7 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
       <AnimatedHeightContainer isOpen={isOpen}>
         <Flex justify="flex-start">
           <DatePicker
+            allowClear={false}
             defaultValue={selectedDate}
             format={DEFAULT_USER_DATE_FORMAT}
             onChange={onChange}

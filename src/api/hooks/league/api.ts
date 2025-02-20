@@ -23,6 +23,7 @@ import {
   ISeasonTeamItem,
   ISetMatchScore,
   ISortRounds,
+  ITopPlayersOfTheDay,
   IUpdateMatch,
   IUpdateRound,
 } from './interfaces';
@@ -360,5 +361,19 @@ export const useJoinSeason = (seasonId: string) => {
       });
       return data;
     },
+  });
+};
+
+export const useTopPlayersOfTheDay = (seasonId: string, date?: string) => {
+  return useQuery({
+    queryKey: ['topPlayersOfTheDay', seasonId, date],
+    queryFn: async () => {
+      const { data } = await get<ITopPlayersOfTheDay>(LeagueEndpoints.TOP_PLAYERS_OF_DAY, {
+        seasonId,
+        date,
+      });
+      return data;
+    },
+    staleTime: Infinity,
   });
 };

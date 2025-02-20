@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Checkbox, Flex, Pagination, Radio, RadioChangeEvent, Spin } from 'antd';
 import some from 'lodash/some';
 import { Helmet } from 'react-helmet';
@@ -18,6 +20,7 @@ import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 
 import { ArticlePreview } from './components/ArticlePreview/ArticlePreview';
+import { FilterArticlesModal } from './components/FilterArticlesModal/FilterArticlesModal';
 import { messages } from './messages';
 
 import * as S from './Articles.style';
@@ -25,6 +28,7 @@ import * as S from './Articles.style';
 export const ArticlesOverview: React.FC = () => {
   const { navigate } = useRouter();
   const { formatMessage } = useIntl();
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState<number>(1);
   const [selectedCategory, setCategory] = useState<undefined | string>(undefined);
   const [showPublished, setShowPublished] = useState<boolean>(true);
@@ -65,81 +69,99 @@ export const ArticlesOverview: React.FC = () => {
   });
 
   return (
-    <ContentLayout breadcrumbItems={[{ key: 'bc-articles', title: <FormattedMessage {...messages.title} /> }]}>
-      <Helmet title={formatMessage(messages.title)} />
-      <Flex align="center" justify="space-between">
-        <H1>
-          <FormattedMessage {...messages.title} />
-        </H1>
-        {userCanManageArticles && (
-          <Button onClick={onCreateNewArticle} style={{ padding: '0.25rem 1rem' }}>
-            <PlusOutlined />
-            <FormattedMessage {...messages.newArticle} />
-          </Button>
-        )}
-      </Flex>
-      <Gap defaultHeight={16} />
-      <EaseInOutContainer isOpen={!articleCategories.isLoading}>
-        <S.Content>
-          <S.Categories>
-            <Radio.Group
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 8,
-              }}
-              onChange={onCategoryChange}
-              defaultValue={undefined}
-              options={[
-                { value: undefined, label: <FormattedMessage {...messages.allCategories} /> },
-                ...(articleCategories.data?.items.map((item) => ({ value: item.id, label: item.name })) ?? []),
-              ]}
-            ></Radio.Group>
-            {userCanManageArticles && (
-              <>
-                <Gap defaultHeight={4} />
-                <Checkbox defaultChecked={showPublished} onChange={() => setShowPublished((value) => !value)}>
-                  <FormattedMessage {...messages.published} />
-                </Checkbox>
-              </>
-            )}
-          </S.Categories>
-          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            {articles.isLoading && (
-              <>
-                <Gap defaultHeight={32} height={{ md: 16 }} />
-                <Spin size="large" style={{ margin: '0 auto', width: '100%' }} />
-                <Gap defaultHeight={32} height={{ md: 16 }} />
-              </>
-            )}
-            {articles.data?.total === 0 && !articles.isLoading && (
-              <S.NoArticles>
-                <Gap defaultHeight={32} height={{ md: 16 }} />
-                <FormattedMessage {...messages.noArticles} />
-              </S.NoArticles>
-            )}
-            <EaseInOutContainer isOpen={!articles.isLoading && !!articles.data}>
-              <S.ArticlesContainer>
-                {articlesData?.map((item) => <ArticlePreview article={item} />)}
-              </S.ArticlesContainer>
-              <Gap defaultHeight={32} />
-              <Pagination
-                align={'end'}
-                responsive
-                current={selectedPage}
-                defaultPageSize={10}
-                hideOnSinglePage
-                total={articles.data?.total ?? 0}
-                onChange={(value) => setSelectedPage(value)}
-                showQuickJumper
-                showSizeChanger={false}
-                style={{ width: '100%' }}
-              />
-            </EaseInOutContainer>
-          </div>
-        </S.Content>
-      </EaseInOutContainer>
-      <Gap defaultHeight={32} />
-    </ContentLayout>
+    <>
+      <ContentLayout breadcrumbItems={[{ key: 'bc-articles', title: <FormattedMessage {...messages.title} /> }]}>
+        <Helmet title={formatMessage(messages.title)} />
+        <Flex align="center" justify="space-between">
+          <H1>
+            <FormattedMessage {...messages.title} />
+          </H1>
+          {userCanManageArticles && (
+            <Button onClick={onCreateNewArticle} style={{ padding: '0.25rem 1rem' }}>
+              <PlusOutlined />
+              <FormattedMessage {...messages.newArticle} />
+            </Button>
+          )}
+        </Flex>
+        <Gap defaultHeight={16} />
+        <S.MobileCategories>
+          <S.FilterButton onClick={() => setIsFilterModalOpen(true)}>
+            <FontAwesomeIcon icon={faFilter} />
+            <FormattedMessage {...messages.filter} />
+          </S.FilterButton>
+          <Gap defaultHeight={16} />
+        </S.MobileCategories>
+        <EaseInOutContainer isOpen={!articleCategories.isLoading}>
+          <S.Content>
+            <S.Categories>
+              <Radio.Group
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                }}
+                onChange={onCategoryChange}
+                defaultValue={undefined}
+                options={[
+                  { value: undefined, label: <FormattedMessage {...messages.allCategories} /> },
+                  ...(articleCategories.data?.items.map((item) => ({ value: item.id, label: item.name })) ?? []),
+                ]}
+              ></Radio.Group>
+              {userCanManageArticles && (
+                <>
+                  <Gap defaultHeight={4} />
+                  <Checkbox defaultChecked={showPublished} onChange={() => setShowPublished((value) => !value)}>
+                    <FormattedMessage {...messages.published} />
+                  </Checkbox>
+                </>
+              )}
+            </S.Categories>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+              {articles.isLoading && (
+                <>
+                  <Gap defaultHeight={32} height={{ md: 16 }} />
+                  <Spin size="large" style={{ margin: '0 auto', width: '100%' }} />
+                  <Gap defaultHeight={32} height={{ md: 16 }} />
+                </>
+              )}
+              {articles.data?.total === 0 && !articles.isLoading && (
+                <S.NoArticles>
+                  <Gap defaultHeight={32} height={{ md: 16 }} />
+                  <FormattedMessage {...messages.noArticles} />
+                </S.NoArticles>
+              )}
+              <EaseInOutContainer isOpen={!articles.isLoading && !!articles.data}>
+                <S.ArticlesContainer>
+                  {articlesData?.map((item) => <ArticlePreview article={item} />)}
+                </S.ArticlesContainer>
+                <Gap defaultHeight={32} />
+                <Pagination
+                  align={'end'}
+                  responsive
+                  current={selectedPage}
+                  defaultPageSize={10}
+                  hideOnSinglePage
+                  total={articles.data?.total ?? 0}
+                  onChange={(value) => setSelectedPage(value)}
+                  showQuickJumper
+                  showSizeChanger={false}
+                  style={{ width: '100%' }}
+                />
+              </EaseInOutContainer>
+            </div>
+          </S.Content>
+        </EaseInOutContainer>
+        <Gap defaultHeight={32} />
+      </ContentLayout>
+      <FilterArticlesModal
+        articleCategories={articleCategories.data?.items ?? []}
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        setCategory={onCategoryChange}
+        setPublished={setShowPublished}
+        showPublished={showPublished}
+        userCanManageArticles={userCanManageArticles}
+      />
+    </>
   );
 };

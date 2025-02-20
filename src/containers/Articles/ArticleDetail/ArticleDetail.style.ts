@@ -27,8 +27,4 @@ export const Container = styled.div`
 export const AvatarIcon = styled(Avatar)`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
   cursor: pointer;
-
-  &:hover {
-    transform: scale(1.2);
-  }
 `;

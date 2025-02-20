@@ -22,4 +22,5 @@ export enum LeagueEndpoints {
   ROUND_BY_ID = '/match-rounds/{roundId}',
   RECALCULATE_PLAYER_STATS = '/matches/{matchId}/recalculate-match-player-stats',
   JOIN_SEASON = '/seasons/{seasonId}/join-team/{teamId}',
+  TOP_PLAYERS_OF_DAY = '/seasons/{seasonId}/top-players-of-the-day/{date}',
 }

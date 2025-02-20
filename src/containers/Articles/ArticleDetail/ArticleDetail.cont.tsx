@@ -14,7 +14,7 @@ import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
-import { H1 } from '../../../components/Titles/H1/H1';
+import { H2 } from '../../../components/Titles/H2/H2';
 import { Role } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
@@ -109,13 +109,18 @@ export const ArticleDetailCont: React.FC = () => {
         )}
         <EaseInOutContainer isOpen={!articleDetail.isLoading}>
           <S.Container>
-            <Flex align="center" justify="space-between">
-              <H1>{articleDetail.data?.title ?? ''}</H1>
-              {userCanManageArticles && (
-                <Dropdown menu={{ items: adminItems }} trigger={['click']}>
-                  <S.AvatarIcon shape="square" size={32} icon={<SettingOutlined />} />
-                </Dropdown>
-              )}
+            {userCanManageArticles && (
+              <>
+                <Flex align="center" justify="end">
+                  <Dropdown menu={{ items: adminItems }} trigger={['click']}>
+                    <S.AvatarIcon shape="square" size={32} icon={<SettingOutlined />} />
+                  </Dropdown>
+                </Flex>
+                <Gap defaultHeight={8} />
+              </>
+            )}
+            <Flex align="center" justify="start">
+              <H2>{articleDetail.data?.title ?? ''}</H2>
             </Flex>
             <Gap defaultHeight={8} />
             <Divider />

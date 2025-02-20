@@ -5,6 +5,10 @@ export const messages = defineMessages({
     id: 'app.containers.Articles.title',
     defaultMessage: 'Články',
   },
+  filter: {
+    id: 'app.containers.Articles.filter',
+    defaultMessage: 'Filtrovat',
+  },
   allCategories: {
     id: 'app.containers.Articles.allCategories',
     defaultMessage: 'Vše',

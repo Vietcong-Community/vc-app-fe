@@ -186,3 +186,18 @@ export interface ICreateRound {
 export interface ISortRounds {
   matchRoundsIds: string[];
 }
+
+export interface ITopPlayersOfTheDay {
+  kd: {
+    player: IUser;
+  };
+  kills: {
+    player: IUser;
+  };
+  flags: {
+    player: IUser;
+  };
+  deaths: {
+    player: IUser;
+  };
+}

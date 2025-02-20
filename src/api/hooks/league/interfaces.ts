@@ -190,14 +190,42 @@ export interface ISortRounds {
 export interface ITopPlayersOfTheDay {
   kd: {
     player: IUser;
+    deaths: number;
+    differencePlayer: number;
+    flags: number;
+    kd: number;
+    kills: number;
+    mapHandicap: number;
+    playerHandicap: number;
   };
   kills: {
     player: IUser;
+    deaths: number;
+    differencePlayer: number;
+    flags: number;
+    kd: number;
+    kills: number;
+    mapHandicap: number;
+    playerHandicap: number;
   };
   flags: {
     player: IUser;
+    deaths: number;
+    differencePlayer: number;
+    flags: number;
+    kd: number;
+    kills: number;
+    mapHandicap: number;
+    playerHandicap: number;
   };
   deaths: {
     player: IUser;
+    deaths: number;
+    differencePlayer: number;
+    flags: number;
+    kd: number;
+    kills: number;
+    mapHandicap: number;
+    playerHandicap: number;
   };
 }

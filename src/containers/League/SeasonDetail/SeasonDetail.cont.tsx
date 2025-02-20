@@ -40,6 +40,7 @@ import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { JoinSeasonModal } from './components/JoinSeasonModal/JoinSeasonModal';
+import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
 
 import * as S from './SeasonDetail.style';
@@ -52,9 +53,9 @@ export const SeasonDetailCont: React.FC = () => {
   const [isJoinSeasonModalOpen, setIsJoinSeasonModalOpen] = useState<boolean>(false);
 
   const userMe = useUserMe('always', [401]);
-  const myTeams = useMeTeams(undefined, [401]);
+  const myTeams = useMeTeams(undefined, [401], userMe.isSuccess);
   const season = useSeasonsDetail(query.seasonId);
-  const seasonTeams = useSeasonTeams(query.seasonId, [401]);
+  const seasonTeams = useSeasonTeams(query.seasonId, [401], 'always', userMe.isSuccess);
   const ladder = useSeasonLadder(query.seasonId);
   const finishedMatches = useSeasonMatchList(
     query.seasonId,
@@ -180,6 +181,8 @@ export const SeasonDetailCont: React.FC = () => {
             </div>
           </S.SeasonInfoContainer>
         </Card>
+        <Gap defaultHeight={16} />
+        <TopPlayersOfTheDay seasonId={query.seasonId} />
         <Gap defaultHeight={16} />
         {isSeasonActive && (
           <S.Matches>

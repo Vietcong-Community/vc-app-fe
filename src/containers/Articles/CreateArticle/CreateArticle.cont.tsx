@@ -41,7 +41,7 @@ export const CreateArticleCont: React.FC = () => {
       showNotification(messages.insufficientPrivileges, undefined, NotificationType.ERROR);
       navigate(Routes.ARTICLES);
     }
-  }, [userMe.data?.roles]);
+  }, [userMe.data?.roles, userMe.isError]);
 
   const onSubmit = async (values: IFormData) => {
     try {

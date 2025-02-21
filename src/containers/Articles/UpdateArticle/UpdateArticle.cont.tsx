@@ -45,7 +45,7 @@ export const UpdateArticleCont: React.FC = () => {
       showNotification(messages.insufficientPrivileges, undefined, NotificationType.ERROR);
       navigate(Routes.ARTICLES);
     }
-  }, [userMe.data?.roles]);
+  }, [userMe.data?.roles, userMe.isError]);
 
   useEffect(() => {
     if (!articleDetail.isLoading) {
@@ -96,7 +96,7 @@ export const UpdateArticleCont: React.FC = () => {
           <Spin size="large" />
         </>
       )}
-      {(!articleDetail.isLoading || !articleDetail.data) && (
+      {!articleDetail.isLoading && articleDetail.data && (
         <>
           <ArticleForm
             categories={articleCategories.data?.items ?? []}

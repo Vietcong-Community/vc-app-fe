@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
-import { SettingOutlined } from '@ant-design/icons';
-import { Dropdown, Flex, MenuProps, Spin } from 'antd';
+import { SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { Dropdown, Flex, MenuProps, Spin, Tag } from 'antd';
+import dayjs from 'dayjs';
+import { compact } from 'lodash';
 import some from 'lodash/some';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -11,6 +13,7 @@ import { useUserMe } from '../../../api/hooks/auth/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Divider } from '../../../components/Divider/Divider';
+import { DEFAULT_USER_DATE_FORMAT_WITH_TIME } from '../../../components/Fields/DatePickerField/DatePickerField';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
@@ -38,7 +41,7 @@ export const ArticleDetailCont: React.FC = () => {
 
   const publishArticle = async () => {
     try {
-      await updateArticle.mutateAsync({ published: true });
+      await updateArticle.mutateAsync({ isPublished: true });
       showNotification(messages.publishSuccessful);
     } catch {
       showNotification(messages.publishFailed, undefined, NotificationType.ERROR);
@@ -46,10 +49,16 @@ export const ArticleDetailCont: React.FC = () => {
   };
   const hideArticle = async () => {
     try {
-      await updateArticle.mutateAsync({ published: false });
+      await updateArticle.mutateAsync({ isPublished: false });
       showNotification(messages.hideArticleSuccess);
     } catch {
       showNotification(messages.hideArticleFailed, undefined, NotificationType.ERROR);
+    }
+  };
+
+  const goToAuthorDetail = () => {
+    if (articleDetail.data?.createdBy?.id) {
+      navigate(Routes.USER_PROFILE.replace(':id', articleDetail.data.createdBy.id));
     }
   };
 
@@ -63,13 +72,13 @@ export const ArticleDetailCont: React.FC = () => {
       label: <FormattedMessage {...messages.publishedArticle} />,
       key: '1',
       onClick: publishArticle,
-      disabled: articleDetail.data?.published,
+      disabled: articleDetail.data?.isPublished,
     },
     {
       label: <FormattedMessage {...messages.hideArticle} />,
-      key: '3',
+      key: '2',
       onClick: hideArticle,
-      disabled: !articleDetail.data?.published,
+      disabled: !articleDetail.data?.isPublished,
     },
     {
       label: <FormattedMessage {...messages.updateArticle} />,
@@ -80,7 +89,7 @@ export const ArticleDetailCont: React.FC = () => {
       label: <FormattedMessage {...messages.deleteArticle} />,
       key: '4',
       onClick: () => setRemoveModalIsOpen(true),
-      disabled: articleDetail.data?.published,
+      disabled: articleDetail.data?.isPublished,
     },
   ];
 
@@ -125,8 +134,66 @@ export const ArticleDetailCont: React.FC = () => {
             <Gap defaultHeight={8} />
             <Divider />
             <Gap defaultHeight={16} />
+            <Flex align="center" justify="flex-start" style={{ gap: 8 }}>
+              {articleDetail.data?.category && <Tag>{articleDetail.data?.category?.name}</Tag>}
+              {userCanManageArticles && !articleDetail.data?.isPublished && (
+                <Tag color="red">
+                  <FormattedMessage {...messages.notPublished} />
+                </Tag>
+              )}
+              {articleDetail.data?.updatedAt && (
+                <span style={{ fontSize: 12 }}>
+                  <FormattedMessage
+                    {...messages.lastUpdated}
+                    values={{ value: dayjs(articleDetail.data?.updatedAt).format(DEFAULT_USER_DATE_FORMAT_WITH_TIME) }}
+                  />
+                </span>
+              )}
+            </Flex>
+            <Gap defaultHeight={16} />
           </S.Container>
           <ReactQuillRenderer data={articleDetail.data?.content} />
+          {articleDetail.data?.createdBy && (
+            <S.Container>
+              <Divider />
+              <Gap defaultHeight={16} />
+              <S.AuthorContainer>
+                <div>
+                  <Gap defaultHeight={24} />
+                  <S.AvatarIcon
+                    onClick={goToAuthorDetail}
+                    size={64}
+                    icon={
+                      articleDetail.data?.createdBy?.image?.url ? (
+                        <img alt="" src={articleDetail.data?.createdBy?.image?.url} />
+                      ) : (
+                        <UserOutlined />
+                      )
+                    }
+                  />
+                </div>
+                <S.AuthorInfo>
+                  <span style={{ fontSize: 12 }}>
+                    <FormattedMessage {...messages.author} />
+                  </span>
+                  <Gap defaultHeight={4} />
+                  <S.AuthorName onClick={goToAuthorDetail}>
+                    {articleDetail.data?.createdBy?.nickname}{' '}
+                    <span style={{ fontSize: 12 }}>
+                      (
+                      {compact([
+                        articleDetail.data?.createdBy?.firstName,
+                        articleDetail.data?.createdBy?.lastName,
+                      ]).join(' ')}
+                      )
+                    </span>
+                  </S.AuthorName>
+                  <span style={{ fontSize: 14 }}>{articleDetail.data?.createdBy?.description}</span>
+                </S.AuthorInfo>
+              </S.AuthorContainer>
+              <Gap defaultHeight={32} />
+            </S.Container>
+          )}
         </EaseInOutContainer>
       </ContentLayout>
       <DeleteArticleModal

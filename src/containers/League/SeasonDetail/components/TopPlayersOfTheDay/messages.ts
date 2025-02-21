@@ -45,4 +45,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.components.TopPlayersOfTheDay.killDeathRatioDescription',
     defaultMessage: '(Nejlepší K/D)',
   },
+  nothingToShow: {
+    id: 'app.containers.League.SeasonDetail.components.TopPlayersOfTheDay.nothingToShow',
+    defaultMessage: 'Nic tu není, dne {value} ještě nikdo nepřevedl žádný výkon!',
+  },
 });

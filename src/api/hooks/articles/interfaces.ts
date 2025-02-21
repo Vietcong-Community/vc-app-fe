@@ -9,7 +9,7 @@ export interface IArticle {
   id: string;
   title: string;
   perex: string;
-  published: boolean;
+  isPublished: boolean;
   content: string;
   category: ICategory;
   createdAt: string;
@@ -34,7 +34,7 @@ export interface ICreateArticle {
 }
 
 export interface IUpdateArticle extends Partial<ICreateArticle> {
-  published: boolean;
+  isPublished?: boolean;
 }
 
 export interface IArticleListQuery {

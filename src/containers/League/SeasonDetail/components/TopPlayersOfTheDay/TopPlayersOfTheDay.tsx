@@ -115,19 +115,27 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
                 <FormattedMessage {...messages.flaggerDescription} />
               </S.ItemDescription>
               <Gap defaultHeight={16} />
-              <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.flags?.player?.id)}>
-                <Avatar
-                  size={32}
-                  icon={
-                    playersOfTheDay.data?.flags?.player?.image?.url ? (
-                      <img alt="" src={playersOfTheDay.data?.flags?.player?.image?.url} />
-                    ) : (
-                      <UserOutlined />
-                    )
-                  }
+              {!playersOfTheDay.data?.flags && (
+                <FormattedMessage
+                  {...messages.nothingToShow}
+                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
-                <b>{playersOfTheDay.data?.flags?.player?.nickname ?? ''}</b>
-              </S.Player>
+              )}
+              {playersOfTheDay.data?.flags && (
+                <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.flags?.player?.id)}>
+                  <Avatar
+                    size={32}
+                    icon={
+                      playersOfTheDay.data?.flags?.player?.image?.url ? (
+                        <img alt="" src={playersOfTheDay.data?.flags?.player?.image?.url} />
+                      ) : (
+                        <UserOutlined />
+                      )
+                    }
+                  />
+                  <b>{playersOfTheDay.data?.flags?.player?.nickname ?? ''}</b>
+                </S.Player>
+              )}
             </S.HighlightItem>
             <S.HighlightItem>
               <S.Count>{playersOfTheDay.data?.kills?.kills ?? 0}</S.Count>
@@ -139,19 +147,27 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
                 <FormattedMessage {...messages.killerDescription} />
               </S.ItemDescription>
               <Gap defaultHeight={16} />
-              <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.kills?.player?.id)}>
-                <Avatar
-                  size={32}
-                  icon={
-                    playersOfTheDay.data?.kills?.player?.image?.url ? (
-                      <img alt="" src={playersOfTheDay.data?.kills?.player?.image?.url} />
-                    ) : (
-                      <UserOutlined />
-                    )
-                  }
+              {!playersOfTheDay.data?.kills && (
+                <FormattedMessage
+                  {...messages.nothingToShow}
+                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
-                <b>{playersOfTheDay.data?.kills?.player?.nickname ?? ''}</b>
-              </S.Player>
+              )}
+              {playersOfTheDay.data?.kills && (
+                <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.kills?.player?.id)}>
+                  <Avatar
+                    size={32}
+                    icon={
+                      playersOfTheDay.data?.kills?.player?.image?.url ? (
+                        <img alt="" src={playersOfTheDay.data?.kills?.player?.image?.url} />
+                      ) : (
+                        <UserOutlined />
+                      )
+                    }
+                  />
+                  <b>{playersOfTheDay.data?.kills?.player?.nickname ?? ''}</b>
+                </S.Player>
+              )}
             </S.HighlightItem>
             <S.HighlightItem>
               <S.Count>{playersOfTheDay.data?.deaths?.deaths ?? 0}</S.Count>
@@ -163,19 +179,27 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
                 <FormattedMessage {...messages.deathsDescription} />
               </S.ItemDescription>
               <Gap defaultHeight={16} />
-              <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.deaths?.player?.id)}>
-                <Avatar
-                  size={32}
-                  icon={
-                    playersOfTheDay.data?.deaths?.player?.image?.url ? (
-                      <img alt="" src={playersOfTheDay.data?.deaths?.player?.image?.url} />
-                    ) : (
-                      <UserOutlined />
-                    )
-                  }
+              {!playersOfTheDay.data?.deaths && (
+                <FormattedMessage
+                  {...messages.nothingToShow}
+                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
-                <b>{playersOfTheDay.data?.deaths?.player?.nickname ?? ''}</b>
-              </S.Player>
+              )}
+              {playersOfTheDay.data?.deaths && (
+                <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.deaths?.player?.id)}>
+                  <Avatar
+                    size={32}
+                    icon={
+                      playersOfTheDay.data?.deaths?.player?.image?.url ? (
+                        <img alt="" src={playersOfTheDay.data?.deaths?.player?.image?.url} />
+                      ) : (
+                        <UserOutlined />
+                      )
+                    }
+                  />
+                  <b>{playersOfTheDay.data?.deaths?.player?.nickname ?? ''}</b>
+                </S.Player>
+              )}
             </S.HighlightItem>
             <S.HighlightItem>
               <S.Count>{playersOfTheDay.data?.kd?.kd ?? 0}</S.Count>
@@ -187,19 +211,27 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
                 <FormattedMessage {...messages.killDeathRatioDescription} />
               </S.ItemDescription>
               <Gap defaultHeight={16} />
-              <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.kd?.player?.id)}>
-                <Avatar
-                  size={32}
-                  icon={
-                    playersOfTheDay.data?.kd?.player?.image?.url ? (
-                      <img alt="" src={playersOfTheDay.data?.kd?.player?.image?.url} />
-                    ) : (
-                      <UserOutlined />
-                    )
-                  }
+              {!playersOfTheDay.data?.kd && (
+                <FormattedMessage
+                  {...messages.nothingToShow}
+                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
-                <b>{playersOfTheDay.data?.kd?.player?.nickname ?? ''}</b>
-              </S.Player>
+              )}
+              {playersOfTheDay.data?.kd && (
+                <S.Player onClick={() => goToPlayerDetail(playersOfTheDay.data?.kd?.player?.id)}>
+                  <Avatar
+                    size={32}
+                    icon={
+                      playersOfTheDay.data?.kd?.player?.image?.url ? (
+                        <img alt="" src={playersOfTheDay.data?.kd?.player?.image?.url} />
+                      ) : (
+                        <UserOutlined />
+                      )
+                    }
+                  />
+                  <b>{playersOfTheDay.data?.kd?.player?.nickname ?? ''}</b>
+                </S.Player>
+              )}
             </S.HighlightItem>
           </S.Content>
         </EaseInOutContainer>

@@ -32,7 +32,7 @@ export const Card: React.FC<IProps> = (props: IProps) => {
       $transparentBackground={transparentBackground}
       style={style}
       title={title}
-      styles={{ body: bodyStyle }}
+      styles={{ body: bodyStyle, header: { display: 'none' } }}
     >
       {children}
     </S.CardContainer>

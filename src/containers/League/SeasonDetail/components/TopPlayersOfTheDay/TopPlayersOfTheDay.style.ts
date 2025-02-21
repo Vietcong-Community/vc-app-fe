@@ -53,6 +53,7 @@ export const HighlightItem = styled.div`
   justify-content: center;
   padding: 1rem;
   position: relative;
+  text-align: start;
 `;
 
 export const ItemName = styled.div`

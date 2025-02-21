@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Flex, Spin } from 'antd';
 import some from 'lodash/some';
 import { Helmet } from 'react-helmet';
@@ -26,6 +27,7 @@ export const UpdateArticleCont: React.FC = () => {
   const { navigate, query } = useRouter<{ articleId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
+  const queryClient = useQueryClient();
 
   const userMe = useUserMe('always');
   const articleCategories = useArticleCategories();
@@ -58,8 +60,8 @@ export const UpdateArticleCont: React.FC = () => {
         perex: values.perex,
         categoryId: values.categoryId,
         content: articleContent,
-        published: articleDetail.data?.published ?? false,
       });
+      await queryClient.refetchQueries({ queryKey: ['articleById', query.articleId] });
       showNotification(messages.updateSuccess);
       navigate(Routes.ARTICLE_DETAIL.replace(':articleId', query.articleId));
     } catch {

@@ -4,6 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Checkbox, Flex, Pagination, Radio, RadioChangeEvent, Spin } from 'antd';
+import dayjs from 'dayjs';
 import some from 'lodash/some';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -60,13 +61,15 @@ export const ArticlesOverview: React.FC = () => {
 
   const onCreateNewArticle = () => navigate(Routes.NEW_ARTICLE);
 
-  const articlesData = articles.data?.articles?.filter((item) => {
-    if (userCanManageArticles) {
-      return true;
-    }
+  const articlesData = articles.data?.articles
+    ?.filter((item) => {
+      if (userCanManageArticles) {
+        return true;
+      }
 
-    return item.published;
-  });
+      return item.isPublished;
+    })
+    ?.sort((a, b) => (dayjs(a.createdAt).isBefore(dayjs(b.createdAt)) ? 1 : -1));
 
   return (
     <>
@@ -132,7 +135,9 @@ export const ArticlesOverview: React.FC = () => {
               )}
               <EaseInOutContainer isOpen={!articles.isLoading && !!articles.data}>
                 <S.ArticlesContainer>
-                  {articlesData?.map((item) => <ArticlePreview article={item} />)}
+                  {articlesData?.map((item) => (
+                    <ArticlePreview article={item} userCanManageArticles={userCanManageArticles} />
+                  ))}
                 </S.ArticlesContainer>
                 <Gap defaultHeight={32} />
                 <Pagination

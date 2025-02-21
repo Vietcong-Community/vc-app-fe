@@ -15,6 +15,6 @@ export const messages = defineMessages({
   },
   submit: {
     id: 'app.containers.Articles.components.ArticleForm.submit',
-    defaultMessage: 'Vytvořit',
+    defaultMessage: 'Uložit',
   },
 });

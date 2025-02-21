@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.Articles.ArticleDetail.articles',
     defaultMessage: 'Články',
   },
+  notPublished: {
+    id: 'app.containers.Articles.ArticleDetail.notPublished',
+    defaultMessage: 'Nepublikováno',
+  },
   updateArticle: {
     id: 'app.containers.Articles.ArticleDetail.updateArticle',
     defaultMessage: 'Upravit',
@@ -40,5 +44,13 @@ export const messages = defineMessages({
   hideArticleFailed: {
     id: 'app.containers.Articles.ArticleDetail.hideArticleFailed',
     defaultMessage: 'Článek se nepodařilo skrýt! Hlavně nepanikař!',
+  },
+  lastUpdated: {
+    id: 'app.containers.Articles.ArticleDetail.lastUpdated',
+    defaultMessage: 'Aktualizováno: {value}',
+  },
+  author: {
+    id: 'app.containers.Articles.ArticleDetail.author',
+    defaultMessage: 'Autor',
   },
 });

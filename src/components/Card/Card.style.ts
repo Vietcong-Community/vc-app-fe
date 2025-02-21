@@ -13,6 +13,14 @@ export const CardContainer = styled(Card)<ICardProps>`
     props.$transparentBackground ? 'transparent' : props.theme.mainColors.accent10};
   width: 100%;
 
+  .ant-card-body::before {
+    display: none;
+  }
+
+  .ant-card-body::after {
+    display: none;
+  }
+
   ${(props: ICardProps) =>
     props.$hoverScale &&
     css`

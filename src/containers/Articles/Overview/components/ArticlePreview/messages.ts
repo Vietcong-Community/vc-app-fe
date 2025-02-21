@@ -1,8 +1,8 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  detail: {
-    id: 'app.containers.Articles.detail',
-    defaultMessage: 'Detail článku',
+  notPublished: {
+    id: 'app.containers.Articles.Overview.components.ArticlePreview.notPublished',
+    defaultMessage: 'Nepublikováno',
   },
 });

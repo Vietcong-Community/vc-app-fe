@@ -6,6 +6,7 @@ import { makeMediaQuery } from '../../../utils/mediaQuery';
 export const Title = styled.h2`
   font-size: 28px;
   font-weight: 600;
+  line-height: 1.2;
   margin: 8px 0;
 
   ${() => makeMediaQuery(BreakPoints.md)`

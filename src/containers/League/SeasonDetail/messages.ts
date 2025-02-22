@@ -77,4 +77,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.joinSeason',
     defaultMessage: 'Zapojit se',
   },
+  openMapListModal: {
+    id: 'app.containers.League.SeasonDetail.openMapListModal',
+    defaultMessage: 'Seznam map',
+  },
 });

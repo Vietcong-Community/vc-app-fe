@@ -13,6 +13,7 @@ import {
   ICreateMatchChallenge,
   ICreateRound,
   IExpectedEloPointsItem,
+  IFileForMarchScoreList,
   ILadderItem,
   ILeagueDetail,
   IMatch,
@@ -63,14 +64,14 @@ export const useSeasonsDetail = (seasonId: string, refetchOnMount?: boolean | 'a
   });
 };
 
-export const useMapsInSeason = (seasonId?: string) => {
+export const useMapsInSeason = (seasonId?: string, enabled = true) => {
   return useQuery({
     queryKey: ['mapsInSeason', seasonId],
     queryFn: async () => {
       const { data } = await get<{ items: IMap[] }>(LeagueEndpoints.MAPS_IN_SEASON, { seasonId });
       return data;
     },
-    enabled: !!seasonId,
+    enabled: !!seasonId && enabled,
     staleTime: Infinity,
   });
 };
@@ -375,5 +376,23 @@ export const useTopPlayersOfTheDay = (seasonId: string, date?: string) => {
       return data;
     },
     staleTime: Infinity,
+  });
+};
+
+export const useFilesForMatchScoreList = (matchId: string, query?: IPagination, enabled = true) => {
+  return useQuery({
+    queryKey: ['filesForMatchScoreList', matchId, JSON.stringify(query ?? {})],
+    queryFn: async () => {
+      const { data } = await get<IFileForMarchScoreList>(
+        LeagueEndpoints.FILES_FOR_MATCH_SCORE_LIST,
+        {
+          matchId,
+        },
+        query,
+      );
+      return data;
+    },
+    staleTime: 0,
+    enabled,
   });
 };

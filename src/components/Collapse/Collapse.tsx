@@ -25,6 +25,7 @@ export const Collapse: React.FC<IProps> = (props: IProps) => {
         destroyInactivePanel={destroyInactivePanel}
         items={items}
         style={customStyle}
+        expandIconPosition="end"
       />
     </S.Container>
   );

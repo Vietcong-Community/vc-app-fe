@@ -85,8 +85,8 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
           )}
         </div>
       </Flex>
-      <Gap defaultHeight={8} />
       <AnimatedHeightContainer isOpen={isOpen}>
+        <Gap defaultHeight={8} />
         <Flex justify="flex-start">
           <DatePicker
             allowClear={false}

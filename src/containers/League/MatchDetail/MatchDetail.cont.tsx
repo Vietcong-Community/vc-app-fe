@@ -28,6 +28,7 @@ import { canUserManageMatch } from '../utils';
 
 import { Comments } from './components/Comments/Comments';
 import { CreateRoundModal } from './components/CreateRoundModal/CreateMatchModal';
+import { FilesForMatchScore } from './components/FilesForMatchScore/FilesForMatchScore';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
 import { Rounds } from './components/Rounds/Rounds';
 import { SortRoundsModal } from './components/SortRoundsModal/SortRoundsModal';
@@ -93,6 +94,12 @@ export const MatchDetail: React.FC = () => {
   const showUploadRoundImagesAlert =
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
     some(matchDetail.data?.rounds ?? [], (item: IMatchRound) => !item.screenshot);
+  const showFilesForMatchScore =
+    userIsAdmin &&
+    [MatchStatus.ACCEPTED, MatchStatus.CONFIRMED_SCORE_BY_SYSTEM, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].includes(
+      matchDetail.data?.status as MatchStatus,
+    ) &&
+    matchDetail.data?.rounds?.length !== 4;
 
   const showLineUp = [
     MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
@@ -287,6 +294,12 @@ export const MatchDetail: React.FC = () => {
             </S.ContentContainer>
           </>
         </S.MatchInformationContainer>
+        {showFilesForMatchScore && (
+          <>
+            <Gap defaultHeight={16} />
+            <FilesForMatchScore matchId={query.matchId} />
+          </>
+        )}
         <Gap defaultHeight={16} />
         {scoreExists && !!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
           <Rounds

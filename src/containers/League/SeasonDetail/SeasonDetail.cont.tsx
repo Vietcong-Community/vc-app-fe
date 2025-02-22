@@ -40,6 +40,7 @@ import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { JoinSeasonModal } from './components/JoinSeasonModal/JoinSeasonModal';
+import { MapListModal } from './components/MapListModal/MapListModal';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
 
@@ -50,6 +51,7 @@ export const SeasonDetailCont: React.FC = () => {
   const { width } = useWindowDimensions();
   const { formatMessage } = useIntl();
   const isSmallerThanMd = width < BreakPoints.md;
+  const [isMapListModalOpen, setIsMapListModalOpen] = useState<boolean>(false);
   const [isJoinSeasonModalOpen, setIsJoinSeasonModalOpen] = useState<boolean>(false);
 
   const userMe = useUserMe('always', [401]);
@@ -110,8 +112,6 @@ export const SeasonDetailCont: React.FC = () => {
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
   const teamsToJoinSeason = canUserJoinSeasonWithTeam(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
-  console.log(teamsToJoinSeason);
-
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -130,7 +130,9 @@ export const SeasonDetailCont: React.FC = () => {
         },
       ]}
     >
-      <Helmet title={`${formatMessage(messages.seasonDetailBreadcrumb)} - ${season.data?.name}`} />
+      <Helmet
+        title={`${formatMessage(messages.seasonDetailBreadcrumb)}${season.data?.name ? ` - ${season.data?.name}` : ''}`}
+      />
       <EaseInOutContainer isOpen={!season.isLoading}>
         <Flex align="center" justify="space-between">
           <H1>{season.data?.name}</H1>
@@ -243,8 +245,11 @@ export const SeasonDetailCont: React.FC = () => {
           </S.Matches>
         )}
         <Gap defaultHeight={16} />
-        <EaseInOutContainer isOpen={isSeasonActive && isPossibleToCreateMatch?.allowed}>
-          <Flex justify="flex-end">
+        <Flex justify="flex-end" style={{ gap: 8 }}>
+          <Button onClick={() => setIsMapListModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
+            <FormattedMessage {...messages.openMapListModal} />
+          </Button>
+          {isPossibleToCreateMatch?.allowed && (
             <Button
               onClick={onMatchCreateClick}
               variant={MainButtonVariant.PRIMARY}
@@ -252,8 +257,8 @@ export const SeasonDetailCont: React.FC = () => {
             >
               <FormattedMessage {...messages.createMatch} />
             </Button>
-          </Flex>
-        </EaseInOutContainer>
+          )}
+        </Flex>
         <Divider style={{ margin: '16px 0' }} />
         <Flex vertical align="flex-start">
           <H2>
@@ -291,6 +296,11 @@ export const SeasonDetailCont: React.FC = () => {
         </Flex>
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
+      <MapListModal
+        closeModal={() => setIsMapListModalOpen(false)}
+        isOpen={isMapListModalOpen}
+        seasonId={query.seasonId}
+      />
       <JoinSeasonModal
         closeModal={() => setIsJoinSeasonModalOpen(false)}
         isOpen={isJoinSeasonModalOpen}

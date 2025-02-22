@@ -229,3 +229,11 @@ export interface ITopPlayersOfTheDay {
     playerHandicap: number;
   };
 }
+
+export interface IFileForMarchScoreList {
+  total: number;
+  files: {
+    id: string;
+    url: string;
+  }[];
+}

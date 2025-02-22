@@ -23,4 +23,5 @@ export enum LeagueEndpoints {
   RECALCULATE_PLAYER_STATS = '/matches/{matchId}/recalculate-match-player-stats',
   JOIN_SEASON = '/seasons/{seasonId}/join-team/{teamId}',
   TOP_PLAYERS_OF_DAY = '/seasons/{seasonId}/top-players-of-the-day/{date}',
+  FILES_FOR_MATCH_SCORE_LIST = '/matches/{matchId}/show-score-files-available-for-match',
 }

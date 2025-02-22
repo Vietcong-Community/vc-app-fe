@@ -181,7 +181,7 @@ export const Header: React.FC = () => {
               </Button>
               {!isUserLoggedIn && (
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <Button onClick={() => navigate(Routes.LOGIN)} variant={MainButtonVariant.OUTLINED}>
+                  <Button onClick={() => navigate(Routes.LOGIN)} variant={MainButtonVariant.SECONDARY}>
                     <FormattedMessage {...messages.goToLogin} />
                   </Button>
                   <Button onClick={() => navigate(Routes.REGISTRATION)}>

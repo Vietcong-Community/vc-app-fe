@@ -32,4 +32,5 @@ export enum Routes {
   UPDATE_ARTICLE = '/uprava-clanku/:articleId',
   // ADMIN
   ADMIN_CREATE_MATCH = '/admin/vytvoreni-zapasu/:seasonId',
+  ADMIN_CREATE_MAP = '/admin/vytvoreni-mapy',
 }

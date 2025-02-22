@@ -3,6 +3,7 @@ import { ProfileCont } from 'src/containers/Users/Profile/Profile.cont';
 
 import { PageLayout } from '../components/PageLayout/PageLayout';
 import { AboutUsCont } from '../containers/AboutUs/AboutUs.cont';
+import { CreateMapCont } from '../containers/Admin/CreateMap/CreateMap.cont';
 import { CreateMatchCont as AdminCreateMatchCont } from '../containers/Admin/CreateMatch/CreateMatch.cont';
 import { ArticleDetailCont } from '../containers/Articles/ArticleDetail/ArticleDetail.cont';
 import { CreateArticleCont } from '../containers/Articles/CreateArticle/CreateArticle.cont';
@@ -53,6 +54,7 @@ export const routesObject: RouteObject[] = [
 
       // ADMIN ROUTES
       { element: <AdminCreateMatchCont />, path: Routes.ADMIN_CREATE_MATCH },
+      { element: <CreateMapCont />, path: Routes.ADMIN_CREATE_MAP },
 
       // ARTICLES
       { element: <ArticlesOverview />, path: Routes.ARTICLES },

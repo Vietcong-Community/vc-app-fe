@@ -85,6 +85,10 @@ export const messages = defineMessages({
     id: 'app.utils.teamplay',
     defaultMessage: 'Teamplay',
   },
+  twovstwo: {
+    id: 'app.utils.twovstwo',
+    defaultMessage: '2v2',
+  },
   teamRoleOwner: {
     id: 'app.utils.teamRoleOwner',
     defaultMessage: 'Kapitán',

@@ -8,7 +8,13 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
-import { useSeasonLadder, useSeasonMatchList, useSeasonsDetail, useSeasonTeams } from '../../../api/hooks/league/api';
+import {
+  useMapsInSeason,
+  useSeasonLadder,
+  useSeasonMatchList,
+  useSeasonsDetail,
+  useSeasonTeams,
+} from '../../../api/hooks/league/api';
 import { IMatchListItem } from '../../../api/hooks/league/interfaces';
 import { useMeTeams } from '../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
@@ -41,6 +47,7 @@ import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { JoinSeasonModal } from './components/JoinSeasonModal/JoinSeasonModal';
 import { MapListModal } from './components/MapListModal/MapListModal';
+import { SeasonMapsPickerModal } from './components/SeasonMapsPickerModal/SeasonMapsPickerModal';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
 
@@ -53,12 +60,14 @@ export const SeasonDetailCont: React.FC = () => {
   const isSmallerThanMd = width < BreakPoints.md;
   const [isMapListModalOpen, setIsMapListModalOpen] = useState<boolean>(false);
   const [isJoinSeasonModalOpen, setIsJoinSeasonModalOpen] = useState<boolean>(false);
+  const [isSeasonMapsPickerModalOpen, setIsSeasonMapsPickerModalOpen] = useState<boolean>(false);
 
   const userMe = useUserMe('always', [401]);
   const myTeams = useMeTeams(undefined, [401], userMe.isSuccess);
   const season = useSeasonsDetail(query.seasonId);
   const seasonTeams = useSeasonTeams(query.seasonId, [401], 'always', userMe.isSuccess);
   const ladder = useSeasonLadder(query.seasonId);
+  const maps = useMapsInSeason(query.seasonId);
   const finishedMatches = useSeasonMatchList(
     query.seasonId,
     {
@@ -137,7 +146,9 @@ export const SeasonDetailCont: React.FC = () => {
         <Flex align="center" justify="space-between">
           <H1>{season.data?.name}</H1>
           <S.ActionButtons>
-            {userIsAdmin && <AdminMenu seasonId={query.seasonId} />}
+            {userIsAdmin && (
+              <AdminMenu seasonId={query.seasonId} setOpenSeasonMapsModal={setIsSeasonMapsPickerModalOpen} />
+            )}
             {teamsToJoinSeason.length > 0 && (
               <Button onClick={() => setIsJoinSeasonModalOpen(true)} style={{ padding: '0.25rem 1rem' }}>
                 <FontAwesomeIcon icon={faArrowRightToBracket} />
@@ -249,7 +260,7 @@ export const SeasonDetailCont: React.FC = () => {
           <Button onClick={() => setIsMapListModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.openMapListModal} />
           </Button>
-          {isPossibleToCreateMatch?.allowed && (
+          {isPossibleToCreateMatch?.allowed && season.data?.status === SeasonStatus.ACTIVE && (
             <Button
               onClick={onMatchCreateClick}
               variant={MainButtonVariant.PRIMARY}
@@ -267,7 +278,7 @@ export const SeasonDetailCont: React.FC = () => {
           <Table
             columns={LADDER_COLUMNS(
               isSmallerThanMd,
-              isPossibleToCreateMatch?.allowed,
+              isPossibleToCreateMatch?.allowed && season.data?.status === SeasonStatus.ACTIVE,
               (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', query.seasonId)}?opponentId=${id}`),
               isPossibleToCreateMatch?.myTeamId,
             )}
@@ -286,7 +297,11 @@ export const SeasonDetailCont: React.FC = () => {
           />
         </Flex>
         <Divider style={{ margin: '16px 0' }} />
-        <AllMatches seasonLadder={ladder.data?.items ?? []} seasonId={query.seasonId} />
+        <AllMatches
+          seasonLadder={ladder.data?.items ?? []}
+          seasonMaps={maps.data?.items ?? []}
+          seasonId={query.seasonId}
+        />
         <Divider style={{ margin: '16px 0' }} />
         <Flex vertical align="flex-start">
           <H2>
@@ -306,6 +321,12 @@ export const SeasonDetailCont: React.FC = () => {
         isOpen={isJoinSeasonModalOpen}
         seasonId={query.seasonId}
         userTeams={teamsToJoinSeason}
+      />
+      <SeasonMapsPickerModal
+        closeModal={() => setIsSeasonMapsPickerModalOpen(false)}
+        isOpen={isSeasonMapsPickerModalOpen}
+        seasonMaps={maps.data?.items ?? []}
+        seasonId={query.seasonId}
       />
     </ContentLayout>
   );

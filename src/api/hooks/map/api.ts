@@ -15,13 +15,14 @@ export const useCreateMap = () => {
   });
 };
 
-export const useAllMaps = () => {
+export const useAllMaps = (enabled = true) => {
   return useQuery({
     queryKey: ['maps'],
     queryFn: async () => {
       const { data } = await get<{ items: IMap[] }>(MapEndpoints.MAPS);
       return data;
     },
+    enabled,
     staleTime: Infinity,
   });
 };

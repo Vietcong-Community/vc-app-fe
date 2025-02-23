@@ -22,6 +22,9 @@ export const Editor: React.FC<IProps> = (props: IProps) => {
       [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
       ['link'],
     ],
+    clipboard: {
+      matchVisual: false,
+    },
   };
 
   return (

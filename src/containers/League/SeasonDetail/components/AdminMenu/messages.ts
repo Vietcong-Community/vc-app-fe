@@ -9,4 +9,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.components.AdminMenu.createMatch',
     defaultMessage: 'Nový zápas',
   },
+  setSeasonMaps: {
+    id: 'app.containers.League.SeasonDetail.components.AdminMenu.setSeasonMaps',
+    defaultMessage: 'Nastavit mapy',
+  },
 });

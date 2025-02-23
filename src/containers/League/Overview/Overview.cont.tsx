@@ -12,8 +12,11 @@ import { ContentLayout } from '../../../components/Layouts/ContentLayout/Content
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 
+import { ActiveSeasonBox } from './components/ActiveSeasonBox/ActiveSeasonBox';
 import { LeaguePreview } from './components/LeaguePreview/LeaguePreview';
 import { messages } from './messages';
+
+import * as S from './Overview.style';
 
 export const OverviewCont: React.FC = () => {
   const { pathname } = useRouter();
@@ -43,18 +46,27 @@ export const OverviewCont: React.FC = () => {
         )}
         <EaseInOutContainer isOpen={!leagues.isLoading}>
           <>
+            <Gap defaultHeight={16} />
+            <Typography.Title level={2}>
+              <FormattedMessage {...messages.activeSeasons} />
+            </Typography.Title>
+            <S.ActiveSeasons>
+              {leagues.data?.items?.map((league) => (
+                <ActiveSeasonBox key={`${league.id}-active-season`} leagueDetail={league} />
+              ))}
+            </S.ActiveSeasons>
+            <Gap defaultHeight={36} />
             <Typography.Title level={2}>
               <FormattedMessage {...messages.leaguesTitle} />
             </Typography.Title>
             <Collapse
-              defaultActiveKey="collapse-league-1"
               destroyInactivePanel
               items={
                 leagues.data?.items.map((league, index) => {
                   return {
                     key: `collapse-league-${index + 1}`,
                     label: <div style={{ fontWeight: 600, textAlign: 'start' }}>{league.name}</div>,
-                    children: <LeaguePreview leagueDetail={league} />,
+                    children: <LeaguePreview key={`collapse-league-${index + 1}`} leagueDetail={league} />,
                   };
                 }) ?? []
               }

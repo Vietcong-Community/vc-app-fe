@@ -48,6 +48,8 @@ export const mapLeagueTypeToTranslation = (type?: LeagueType): ReactNode | undef
   switch (type) {
     case LeagueType.TEAMPLAY:
       return <FormattedMessage {...messages.teamplay} />;
+    case LeagueType.TWOVSTWO:
+      return <FormattedMessage {...messages.teamplay} />;
     default:
       return undefined;
   }

@@ -25,6 +25,14 @@ export const messages = defineMessages({
     id: 'app.containers.Articles.ArticleDetail.hideArticle',
     defaultMessage: 'Skrýt',
   },
+  uploadArticleImage: {
+    id: 'app.containers.Articles.ArticleDetail.uploadArticleImage',
+    defaultMessage: 'Nahrát obrázek',
+  },
+  deleteArticleImage: {
+    id: 'app.containers.Articles.ArticleDetail.deleteArticleImage',
+    defaultMessage: 'Smazat obrázek',
+  },
   deleteArticle: {
     id: 'app.containers.Articles.ArticleDetail.deleteArticle',
     defaultMessage: 'Smazat',

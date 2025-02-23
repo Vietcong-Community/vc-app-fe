@@ -23,7 +23,9 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
+import { DeleteArticleImageModal } from '../components/DeleteArticleImageModal/DeleteArticleImageModal';
 import { DeleteArticleModal } from '../components/DeleteArticleModal/DeleteArticleModal';
+import { UploadArticleImageModal } from '../components/UploadArticleImageModal/UploadArticleImageModal';
 
 import { messages } from './messages';
 
@@ -33,6 +35,8 @@ export const ArticleDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ articleId: string }>();
   const { formatMessage } = useIntl();
   const [removeModalIsOpen, setRemoveModalIsOpen] = useState<boolean>(false);
+  const [removeImageModalIsOpen, setRemoveImageModalIsOpen] = useState<boolean>(false);
+  const [uploadImageModalIsOpen, setUploadImageModalIsOpen] = useState<boolean>(false);
   const { showNotification } = useNotifications();
 
   const userMe = useUserMe('always', [401]);
@@ -86,8 +90,20 @@ export const ArticleDetailCont: React.FC = () => {
       onClick: () => navigate(Routes.UPDATE_ARTICLE.replace(':articleId', query.articleId)),
     },
     {
-      label: <FormattedMessage {...messages.deleteArticle} />,
+      label: <FormattedMessage {...messages.uploadArticleImage} />,
       key: '4',
+      onClick: () => setUploadImageModalIsOpen(true),
+      disabled: !!articleDetail.data?.image,
+    },
+    {
+      label: <FormattedMessage {...messages.deleteArticleImage} />,
+      key: '5',
+      onClick: () => setRemoveImageModalIsOpen(true),
+      disabled: !articleDetail.data?.image,
+    },
+    {
+      label: <FormattedMessage {...messages.deleteArticle} />,
+      key: '6',
       onClick: () => setRemoveModalIsOpen(true),
       disabled: articleDetail.data?.isPublished,
     },
@@ -202,6 +218,19 @@ export const ArticleDetailCont: React.FC = () => {
         onClose={() => setRemoveModalIsOpen(false)}
         title={articleDetail.data?.title ?? ''}
       />
+      <UploadArticleImageModal
+        articleId={query.articleId}
+        isOpen={uploadImageModalIsOpen}
+        onClose={() => setUploadImageModalIsOpen(false)}
+      />
+      {articleDetail.data?.image && (
+        <DeleteArticleImageModal
+          articleId={query.articleId}
+          image={articleDetail.data?.image}
+          isOpen={removeImageModalIsOpen}
+          onClose={() => setRemoveImageModalIsOpen(false)}
+        />
+      )}
     </>
   );
 };

@@ -76,3 +76,27 @@ export const useRemoveArticle = (articleId: string) => {
     },
   });
 };
+
+export const useArticleImageUploadUrl = (articleId: string) => {
+  return useMutation({
+    mutationFn: async (payload: { fileName: string }) => {
+      const { data } = await post<{ fileName: string }, { fileId: string; uploadUrl: string }>(
+        ArticlesEndpoints.UPLOAD_ARTICLE_IMAGE,
+        payload,
+        { articleId },
+      );
+      return data;
+    },
+  });
+};
+
+export const useRemoveArticleImage = (articleId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await del(ArticlesEndpoints.REMOVE_ARTICLE_IMAGE, {
+        articleId,
+      });
+      return data;
+    },
+  });
+};

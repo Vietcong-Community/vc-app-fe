@@ -40,7 +40,7 @@ export const CreateMapCont: React.FC = () => {
     try {
       await createMap.mutateAsync(values);
       showNotification(messages.createSuccess);
-      navigate(Routes.HOME);
+      allMaps.refetch();
     } catch (e) {
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
     }

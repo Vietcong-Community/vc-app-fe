@@ -43,7 +43,7 @@ export const messages = defineMessages({
   },
   leaguesLink: {
     id: 'app.components.Header.leaguesLink',
-    defaultMessage: 'Liga',
+    defaultMessage: 'Ligy',
   },
   statisticsLink: {
     id: 'app.components.Header.statisticsLink',
@@ -84,6 +84,10 @@ export const messages = defineMessages({
   aboutUsLink: {
     id: 'app.components.Header.aboutUsLink',
     defaultMessage: 'O nás',
+  },
+  articleLink: {
+    id: 'app.components.Header.articleLink',
+    defaultMessage: 'Články',
   },
   userNotLoggedIn: {
     id: 'app.components.Header.userNotLoggedIn',

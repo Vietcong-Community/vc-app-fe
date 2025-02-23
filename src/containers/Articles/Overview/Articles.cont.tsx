@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter';
@@ -47,17 +47,6 @@ export const ArticlesOverview: React.FC = () => {
     userMe.data?.roles ?? [],
     (item) => item === Role.ADMIN || item === Role.CONTENT_CREATOR,
   );
-
-  // REMOVE LATER
-  useEffect(() => {
-    if (
-      (userMe.data &&
-        !some(userMe.data?.roles ?? [], (item) => item === Role.ADMIN || item === Role.CONTENT_CREATOR)) ||
-      userMe.isError
-    ) {
-      navigate(Routes.HOME);
-    }
-  }, [userMe.data?.roles, userMe.isError]);
 
   const onCreateNewArticle = () => navigate(Routes.NEW_ARTICLE);
 

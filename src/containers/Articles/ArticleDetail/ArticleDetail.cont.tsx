@@ -157,18 +157,25 @@ export const ArticleDetailCont: React.FC = () => {
                   <FormattedMessage {...messages.notPublished} />
                 </Tag>
               )}
-              {articleDetail.data?.updatedAt && (
+              {articleDetail.data?.createdAt && articleDetail.data?.updatedAt && (
                 <span style={{ fontSize: 12 }}>
                   <FormattedMessage
                     {...messages.lastUpdated}
-                    values={{ value: dayjs(articleDetail.data?.updatedAt).format(DEFAULT_USER_DATE_FORMAT_WITH_TIME) }}
+                    values={{
+                      value: dayjs(articleDetail.data?.createdAt && articleDetail.data?.updatedAt).format(
+                        DEFAULT_USER_DATE_FORMAT_WITH_TIME,
+                      ),
+                    }}
                   />
                 </span>
               )}
             </Flex>
             <Gap defaultHeight={16} />
             {articleDetail.data?.image?.url && (
-              <img alt="" src={articleDetail.data?.image?.url} style={{ aspectRatio: '3/2', width: '100%' }} />
+              <>
+                <img alt="" src={articleDetail.data?.image?.url} style={{ aspectRatio: '3/2', width: '100%' }} />
+                <Gap defaultHeight={16} />
+              </>
             )}
           </S.Container>
           <ReactQuillRenderer data={articleDetail.data?.content} />

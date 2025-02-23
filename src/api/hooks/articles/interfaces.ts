@@ -14,6 +14,7 @@ export interface IArticle {
   category: ICategory;
   createdAt: string;
   createdBy: IUser;
+  editedBy: IUser;
   image: {
     id: string;
     url: string;

@@ -80,6 +80,10 @@ export const MobileMenu: React.FC<IProps> = (props) => {
           <FormattedMessage {...messages.statisticsLink} />
           <RightOutlined style={{ fontSize: 22 }} />
         </S.MenuItem>
+        <S.MenuItem onClick={() => onMenuItemClick(Routes.ARTICLES)}>
+          <FormattedMessage {...messages.articleLink} />
+          <RightOutlined style={{ fontSize: 22 }} />
+        </S.MenuItem>
         <S.MenuItem onClick={() => onMenuItemClick(Routes.ABOUT_US)}>
           <FormattedMessage {...messages.aboutUsLink} />
           <RightOutlined style={{ fontSize: 22 }} />

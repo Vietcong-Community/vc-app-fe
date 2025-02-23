@@ -6,7 +6,8 @@ import { Flex } from 'antd';
 import isEmpty from 'lodash/isEmpty';
 import { FormattedMessage } from 'react-intl';
 
-import { useMapsInSeason, useSeasonMatchList } from '../../../../../api/hooks/league/api';
+import { IMap } from '../../../../../api/hooks/interfaces';
+import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
 import { ILadderItem } from '../../../../../api/hooks/league/interfaces';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { TableWithPagination } from '../../../../../components/TableWithPagination/Table';
@@ -28,11 +29,12 @@ import * as S from './AllMatches.style';
 
 interface IProps {
   seasonLadder: ILadderItem[];
+  seasonMaps: IMap[];
   seasonId: string;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
-  const { seasonId, seasonLadder } = props;
+  const { seasonId, seasonMaps, seasonLadder } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
   const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
@@ -41,7 +43,6 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
 
   const isSmallerThanMd = width < BreakPoints.md;
 
-  const maps = useMapsInSeason(seasonId);
   const matches = useSeasonMatchList(
     seasonId,
     { page: selectedMatchPage, limit: 10, ...filterValues, status: filterValues.status?.join(',') },
@@ -83,7 +84,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
   };
 
   const onMatchPageChange = (pageNumber: number) => setSelectedMatchPage(pageNumber);
-  const filteredMap = maps.data?.items?.find((item) => item.id === filterValues.mapId);
+  const filteredMap = seasonMaps?.find((item) => item.id === filterValues.mapId);
   const filteredTeam = seasonLadder?.find((item) => item.team.id === filterValues.teamId);
 
   return (
@@ -146,7 +147,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         closeModal={() => setIsModalOpen(false)}
         isOpen={isModalOpen}
         isSubmitting={matches.isLoading || matches.isFetching}
-        maps={maps.data?.items ?? []}
+        maps={seasonMaps}
         onSubmit={onFilterSubmit}
         seasonLadder={seasonLadder}
       />

@@ -167,6 +167,9 @@ export const ArticleDetailCont: React.FC = () => {
               )}
             </Flex>
             <Gap defaultHeight={16} />
+            {articleDetail.data?.image?.url && (
+              <img alt="" src={articleDetail.data?.image?.url} style={{ aspectRatio: '3/2', width: '100%' }} />
+            )}
           </S.Container>
           <ReactQuillRenderer data={articleDetail.data?.content} />
           {articleDetail.data?.createdBy && (

@@ -23,6 +23,7 @@ import {
   ISeason,
   ISeasonTeamItem,
   ISetMatchScore,
+  ISetSeasonMaps,
   ISortRounds,
   ITopPlayersOfTheDay,
   IUpdateMatch,
@@ -394,5 +395,16 @@ export const useFilesForMatchScoreList = (matchId: string, query?: IPagination, 
     },
     staleTime: 0,
     enabled,
+  });
+};
+
+export const useSetSeasonMaps = (seasonId: string) => {
+  return useMutation({
+    mutationFn: async (payload: ISetSeasonMaps) => {
+      const { data } = await put<ISetSeasonMaps, undefined>(LeagueEndpoints.MAPS_IN_SEASON, payload, {
+        seasonId,
+      });
+      return data;
+    },
   });
 };

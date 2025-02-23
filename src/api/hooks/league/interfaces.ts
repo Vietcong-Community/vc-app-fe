@@ -237,3 +237,7 @@ export interface IFileForMarchScoreList {
     url: string;
   }[];
 }
+
+export interface ISetSeasonMaps {
+  mapsIds: string[];
+}

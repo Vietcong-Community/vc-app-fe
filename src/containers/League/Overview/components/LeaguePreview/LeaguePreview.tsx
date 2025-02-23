@@ -10,7 +10,7 @@ import { SeasonStatus } from '../../../../../constants/enums';
 import { mapSeasonStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
 import { SeasonPreview } from '../SeasonPreview/SeasonPreview';
 
-import * as S from './LeaugePreview.style';
+import * as S from './LeaguePreview.style';
 
 interface IProps {
   leagueDetail: ILeagueDetail;
@@ -40,7 +40,7 @@ export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
                 {season.name}
               </S.TabLabel>
             ),
-            children: <SeasonPreview seasonDetail={season} />,
+            children: <SeasonPreview key={`tab-season-${index + 1}`} seasonDetail={season} />,
           };
         })}
       />

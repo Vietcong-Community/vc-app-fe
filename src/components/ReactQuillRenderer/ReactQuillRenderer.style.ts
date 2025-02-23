@@ -27,4 +27,18 @@ export const Container = styled.div`
   .ql-align-right {
     text-align: right;
   }
+
+  h1 {
+    margin-bottom: 8px;
+    margin-top: 32px;
+  }
+
+  h2 {
+    margin-bottom: 8px;
+    margin-top: 32px;
+  }
+
+  p {
+    margin: 0;
+  }
 `;

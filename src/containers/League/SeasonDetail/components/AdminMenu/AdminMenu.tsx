@@ -9,11 +9,12 @@ import { Routes } from '../../../../../routes/enums';
 import { messages } from './messages';
 
 interface IProps {
+  setOpenSeasonMapsModal: (value: boolean) => void;
   seasonId: string;
 }
 
 export const AdminMenu: React.FC<IProps> = (props: IProps) => {
-  const { seasonId } = props;
+  const { seasonId, setOpenSeasonMapsModal } = props;
   const { navigate } = useRouter<{ id: string }>();
 
   const onConfirmMatch = async () => {
@@ -25,6 +26,11 @@ export const AdminMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.createMatch} />,
       key: '1',
       onClick: onConfirmMatch,
+    },
+    {
+      label: <FormattedMessage {...messages.setSeasonMaps} />,
+      key: '2',
+      onClick: () => setOpenSeasonMapsModal(true),
     },
   ];
 

@@ -20,6 +20,7 @@ import {
   IMatchComment,
   IMatchListItem,
   IMatchListQuery,
+  IRecalculateMatchScoreByFile,
   ISeason,
   ISeasonTeamItem,
   ISetMatchScore,
@@ -404,6 +405,21 @@ export const useSetSeasonMaps = (seasonId: string) => {
       const { data } = await put<ISetSeasonMaps, undefined>(LeagueEndpoints.MAPS_IN_SEASON, payload, {
         seasonId,
       });
+      return data;
+    },
+  });
+};
+
+export const useRecalculateMatchScoreByFileId = () => {
+  return useMutation({
+    mutationFn: async (payload: IRecalculateMatchScoreByFile) => {
+      const { data } = await post<{ matchId: string }, undefined>(
+        LeagueEndpoints.RECALCULATE_MATCH_SCORE_BY_FILE,
+        { matchId: payload.matchId },
+        {
+          fileId: payload.fileId,
+        },
+      );
       return data;
     },
   });

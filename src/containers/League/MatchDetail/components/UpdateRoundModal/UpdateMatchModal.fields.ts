@@ -21,12 +21,8 @@ export const fields: IFormFields<IFormData> = {
   },
   scoreChallenger: {
     name: 'scoreChallenger',
-    required: true,
-    rules: [isRequired],
   },
   scoreOpponent: {
     name: 'scoreOpponent',
-    required: true,
-    rules: [isRequired],
   },
 };

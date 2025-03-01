@@ -241,3 +241,8 @@ export interface IFileForMarchScoreList {
 export interface ISetSeasonMaps {
   mapsIds: string[];
 }
+
+export interface IRecalculateMatchScoreByFile {
+  fileId: string;
+  matchId: string;
+}

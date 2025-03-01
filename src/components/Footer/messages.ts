@@ -27,6 +27,10 @@ export const messages = defineMessages({
     id: 'app.components.Footer.statistics',
     defaultMessage: 'Statistiky',
   },
+  articles: {
+    id: 'app.components.Footer.articles',
+    defaultMessage: 'Články',
+  },
   mcrvcKarez: {
     id: 'app.components.Footer.mcrvcKarez',
     defaultMessage: 'MČRVC',

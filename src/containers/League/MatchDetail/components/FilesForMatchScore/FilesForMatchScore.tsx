@@ -9,9 +9,10 @@ import { AnimatedHeightContainer } from '../../../../../components/Animations/An
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { MPResultDetail } from '../MPResultDetail/MPResultDetail';
-import { messages } from '../Rounds/messages';
 
-import * as S from '../Rounds/Rounds.style';
+import { messages } from './messages';
+
+import * as S from './FilesForMatchScore.style';
 
 interface IProps {
   matchId: string;
@@ -65,7 +66,14 @@ export const FilesForMatchScore: React.FC<IProps> = (props: IProps) => {
             files.data?.files.map((item) => ({
               key: item.id,
               label: item.url.split('/')?.pop(),
-              children: <MPResultDetail isOpen={activeKey?.includes(item.id) ?? false} url={item.url} />,
+              children: (
+                <MPResultDetail
+                  id={item.id}
+                  isOpen={activeKey?.includes(item.id) ?? false}
+                  matchId={matchId}
+                  url={item.url}
+                />
+              ),
             })) ?? []
           }
           expandIconPosition="end"

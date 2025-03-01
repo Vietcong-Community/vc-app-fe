@@ -44,6 +44,9 @@ export const Footer: React.FC = () => {
             <S.Link onClick={() => navigate(Routes.MCRVC)}>
               <FormattedMessage {...messages.mcrvcKarez} />
             </S.Link>
+            <S.Link onClick={() => navigate(Routes.ARTICLES)}>
+              <FormattedMessage {...messages.articles} />
+            </S.Link>
           </S.Column>
           <S.Column>
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>

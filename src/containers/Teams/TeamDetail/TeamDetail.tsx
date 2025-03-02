@@ -20,7 +20,7 @@ import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { TeamRole } from '../../../constants/enums';
+import { Role, TeamRole } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
@@ -123,12 +123,14 @@ export const TeamDetailCont: React.FC = () => {
             </S.TeamInfo>
             <S.Members>
               <Players
+                currentUserId={userMe.data?.id}
                 goToPlayerDetail={goToPlayerDetail}
                 handleApproveRequest={handleApproveJoinRequest}
                 handleRejectRequest={handleRejectJoinRequest}
                 players={teamPlayers.data?.items ?? []}
                 teamId={query.id}
                 userIsOwner={userIsOwner}
+                userIsAdmin={userMe.data?.roles?.includes(Role.ADMIN)}
               />
             </S.Members>
           </S.Content>

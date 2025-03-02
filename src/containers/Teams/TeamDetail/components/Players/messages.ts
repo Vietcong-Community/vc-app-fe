@@ -13,12 +13,20 @@ export const messages = defineMessages({
     id: 'app.containers.Teams.TeamDetail.components.Players.removedPlayersTitle',
     defaultMessage: 'Bývalí členové týmu',
   },
+  changeRole: {
+    id: 'app.containers.Teams.TeamDetail.components.Players.changeRole',
+    defaultMessage: 'Změnit roli hráče',
+  },
   approveJoinRequest: {
     id: 'app.containers.Teams.TeamDetail.components.Players.approveJoinRequest',
-    defaultMessage: 'Schválit',
+    defaultMessage: 'Schválit hráče',
   },
   rejectJoinRequest: {
     id: 'app.containers.Teams.TeamDetail.components.Players.rejectJoinRequest',
-    defaultMessage: 'Zamítnout',
+    defaultMessage: 'Zamítnout hráče',
+  },
+  deletePlayer: {
+    id: 'app.containers.Teams.TeamDetail.components.Players.deletePlayer',
+    defaultMessage: 'Smazat hráče',
   },
 });

@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
 import { DeleteOutlined, SettingOutlined } from '@ant-design/icons';
-import { Dropdown, MenuProps } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
 import { compact } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,9 +12,11 @@ import { Button } from '../../../../../components/Button/Button';
 import { MainButtonVariant } from '../../../../../components/Button/enums';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
-import { MatchStatus, TeamMemberStatus, TeamRole } from '../../../../../constants/enums';
-import { Routes } from '../../../../../routes/enums';
+import { TeamMemberStatus, TeamRole } from '../../../../../constants/enums';
+import { useNotifications } from '../../../../../hooks/NotificationsHook';
+import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { mapTeamRoleToTranslation } from '../../../../../utils/mappingLabelUtils';
+import { showRemovePlayerIcon } from '../../utils';
 import { SetUserRoleModalForm } from '../SetUserRoleModal/SetUserRoleModal.form';
 
 import { messages } from './messages';
@@ -61,6 +63,8 @@ export const Players: React.FC<IProps> = (props: IProps) => {
     userIsAdmin = false,
   } = props;
   const [modalProps, setModalProps] = useState<IModalProps>({ isOpen: false });
+  const queryClient = useQueryClient();
+  const { showNotification } = useNotifications();
 
   const removePlayer = useRemoveUserFromTeam();
 
@@ -106,7 +110,13 @@ export const Players: React.FC<IProps> = (props: IProps) => {
 
   const handleRemovePlayerFromTeam = async (userInTeamId: string, event?: React.MouseEvent<HTMLElement>) => {
     event?.stopPropagation();
-    await removePlayer.mutateAsync({ teamId: teamId, userId: userInTeamId });
+    try {
+      await removePlayer.mutateAsync({ teamId: teamId, userId: userInTeamId });
+      await queryClient.refetchQueries({ queryKey: ['teamPlayers', teamId] });
+      showNotification(messages.leaveTeamSuccess, NotificationType.INFO);
+    } catch {
+      showNotification(messages.leaveTeamFailed, undefined, NotificationType.ERROR);
+    }
   };
 
   const handlePlayerRoleChange = (
@@ -119,8 +129,6 @@ export const Players: React.FC<IProps> = (props: IProps) => {
     setModalProps({ isOpen: true, userInTeamId, nickname, role });
   };
 
-  const showRemovePlayerIcon = userIsAdmin || userIsOwner;
-
   return (
     <>
       <Card>
@@ -130,22 +138,13 @@ export const Players: React.FC<IProps> = (props: IProps) => {
           </h3>
           {activePlayers.map((player, index) => {
             const realName = compact([player.firstName, player.lastName]).join(' ');
-
-            const playerItems: MenuProps['items'] = [
-              {
-                label: <FormattedMessage {...messages.changeRole} />,
-                key: `player-${index}-0`,
-                onClick: () => {},
-              },
-              {
-                label: <FormattedMessage {...messages.deletePlayer} />,
-                key: `player-${index}-1`,
-                onClick: (event?: React.MouseEvent<HTMLElement>) =>
-                  handleRemovePlayerFromTeam(player.userInTeamId, event),
-                disabled: !showRemovePlayerIcon,
-              },
-            ];
-
+            const showRemoveIcon = showRemovePlayerIcon(
+              userIsAdmin,
+              userIsOwner,
+              currentUserId,
+              player.userId,
+              players ?? [],
+            );
             return (
               <S.PlayerCard key={index} onClick={() => goToPlayerDetail(player.key)}>
                 <S.PlayerImage src={soldier} alt={`${player.nickname}`} />
@@ -154,22 +153,25 @@ export const Players: React.FC<IProps> = (props: IProps) => {
                   <S.PlayerName>{player.nickname}</S.PlayerName>
                   <S.PlayerRealName>{realName}</S.PlayerRealName>
                 </S.PlayerInfo>
-                {player.role !== TeamRole.OWNER && userIsOwner && (
-                  <Dropdown menu={{ items: playerItems }}>
-                    <S.GearIcon
+                <S.Icons>
+                  {(((player.role !== TeamRole.OWNER || currentUserId === player.userId) && userIsOwner) ||
+                    userIsAdmin) && (
+                    <S.Icon
                       icon={<SettingOutlined />}
-                      onClick={(event?: React.MouseEvent<HTMLElement>) => event?.stopPropagation()}
+                      onClick={(event?: React.MouseEvent<HTMLElement>) =>
+                        handlePlayerRoleChange(player.userInTeamId, player.nickname, player.role, event)
+                      }
                     />
-                  </Dropdown>
-                )}
-                {!userIsOwner && currentUserId === player.userId && (
-                  <S.GearIcon
-                    icon={<DeleteOutlined />}
-                    onClick={(event?: React.MouseEvent<HTMLElement>) =>
-                      handleRemovePlayerFromTeam(player.userInTeamId, event)
-                    }
-                  />
-                )}
+                  )}
+                  {showRemoveIcon && (
+                    <S.Icon
+                      icon={<DeleteOutlined />}
+                      onClick={(event?: React.MouseEvent<HTMLElement>) =>
+                        handleRemovePlayerFromTeam(player.userInTeamId, event)
+                      }
+                    />
+                  )}
+                </S.Icons>
               </S.PlayerCard>
             );
           })}

@@ -29,4 +29,12 @@ export const messages = defineMessages({
     id: 'app.containers.Teams.TeamDetail.components.Players.deletePlayer',
     defaultMessage: 'Smazat hráče',
   },
+  leaveTeamSuccess: {
+    id: 'app.containers.Teams.TeamDetail.components.Players.leaveTeamSuccess',
+    defaultMessage: 'Opuštění týmu proběhlo úspěšně',
+  },
+  leaveTeamFailed: {
+    id: 'app.containers.Teams.TeamDetail.components.Players.leaveTeamFailed',
+    defaultMessage: 'Opuštění se nezdařilo, kontaktujte prosím adminy.',
+  },
 });

@@ -14,6 +14,7 @@ import { NotificationType } from '../../../../../providers/NotificationsProvider
 import { messages } from './messages';
 
 interface IProps {
+  fetchMPResults: () => Promise<void>;
   id: string;
   isOpen: boolean;
   matchId: string;
@@ -21,7 +22,7 @@ interface IProps {
 }
 
 export const MPResultDetail: React.FC<IProps> = (props: IProps) => {
-  const { id, isOpen, matchId, url } = props;
+  const { fetchMPResults, id, isOpen, matchId, url } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [content, setContent] = useState<string[]>([]);
   const queryClient = useQueryClient();
@@ -33,6 +34,7 @@ export const MPResultDetail: React.FC<IProps> = (props: IProps) => {
     try {
       await createRoundFromFile.mutateAsync({ fileId: id, matchId });
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+      await fetchMPResults();
       showNotification(messages.createSuccess);
     } catch {
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);

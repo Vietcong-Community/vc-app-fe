@@ -42,3 +42,10 @@ export const AvatarIcon = styled(Avatar)`
     transform: scale(1.2);
   }
 `;
+
+export const ManageButtons = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+`;

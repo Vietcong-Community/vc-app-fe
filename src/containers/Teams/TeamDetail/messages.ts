@@ -37,6 +37,18 @@ export const messages = defineMessages({
     id: 'app.containers.Teams.TeamDetail.joinFailed',
     defaultMessage: 'Přihlášení se nezdařilo, kontaktujte prosím adminy.',
   },
+  leaveTeamButton: {
+    id: 'app.containers.Teams.TeamDetail.leaveTeamButton',
+    defaultMessage: 'Opustit',
+  },
+  leaveTeamSuccess: {
+    id: 'app.containers.Teams.TeamDetail.leaveTeamSuccess',
+    defaultMessage: 'Opuštění týmu proběhlo úspěšně',
+  },
+  leaveTeamFailed: {
+    id: 'app.containers.Teams.TeamDetail.leaveTeamFailed',
+    defaultMessage: 'Opuštění se nezdařilo, kontaktujte prosím adminy.',
+  },
   approveSuccess: {
     id: 'app.containers.Teams.TeamDetail.approveSuccess',
     defaultMessage: 'Voják byl přijat do týmu!',

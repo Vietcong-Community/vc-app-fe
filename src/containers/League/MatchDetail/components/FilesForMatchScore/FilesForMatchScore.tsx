@@ -25,6 +25,10 @@ export const FilesForMatchScore: React.FC<IProps> = (props: IProps) => {
   const [activeKey, setActiveKey] = useState<string | string[] | undefined>(undefined);
   const files = useFilesForMatchScoreList(matchId, { page: selectedPage }, isOpen);
 
+  const fetchMPResults = async () => {
+    await files.refetch();
+  };
+
   return (
     <Card>
       <S.SectionTitle>
@@ -68,6 +72,7 @@ export const FilesForMatchScore: React.FC<IProps> = (props: IProps) => {
               label: item.url.split('/')?.pop(),
               children: (
                 <MPResultDetail
+                  fetchMPResults={fetchMPResults}
                   id={item.id}
                   isOpen={activeKey?.includes(item.id) ?? false}
                   matchId={matchId}

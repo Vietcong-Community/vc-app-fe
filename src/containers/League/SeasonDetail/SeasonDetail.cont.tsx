@@ -48,6 +48,7 @@ import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { JoinSeasonModal } from './components/JoinSeasonModal/JoinSeasonModal';
 import { MapListModal } from './components/MapListModal/MapListModal';
 import { SeasonMapsPickerModal } from './components/SeasonMapsPickerModal/SeasonMapsPickerModal';
+import { Statistics } from './components/Statistics/Statistics';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
 
@@ -303,12 +304,15 @@ export const SeasonDetailCont: React.FC = () => {
           seasonId={query.seasonId}
         />
         <Divider style={{ margin: '16px 0' }} />
-        <Flex vertical align="flex-start">
-          <H2>
-            <FormattedMessage {...messages.statisticsTitle} />
-          </H2>
-          <FormattedMessage {...messages.statisticsDescription} />
-        </Flex>
+        {!userIsAdmin && (
+          <Flex vertical align="flex-start">
+            <H2>
+              <FormattedMessage {...messages.statisticsTitle} />
+            </H2>
+            <FormattedMessage {...messages.statisticsDescription} />
+          </Flex>
+        )}
+        {userIsAdmin && <Statistics seasonId={query.seasonId} />}
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
       <MapListModal

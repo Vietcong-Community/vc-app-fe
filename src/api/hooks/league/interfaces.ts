@@ -246,3 +246,23 @@ export interface IRecalculateMatchScoreByFile {
   fileId: string;
   matchId: string;
 }
+
+export interface ISeasonStatsListQuery extends IPagination {
+  teamId?: string;
+  mapId?: string;
+}
+
+export interface IStatisticsItem {
+  averageFlags?: number;
+  averageUsefulness?: number;
+  deaths: number;
+  differencePlayer: number;
+  flags: number;
+  id: string;
+  kd: number;
+  kills: number;
+  mapHandicap: number;
+  playerHandicap: number;
+  usefulness: number;
+  user: IUser;
+}

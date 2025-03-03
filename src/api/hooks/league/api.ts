@@ -22,10 +22,12 @@ import {
   IMatchListQuery,
   IRecalculateMatchScoreByFile,
   ISeason,
+  ISeasonStatsListQuery,
   ISeasonTeamItem,
   ISetMatchScore,
   ISetSeasonMaps,
   ISortRounds,
+  IStatisticsItem,
   ITopPlayersOfTheDay,
   IUpdateMatch,
   IUpdateRound,
@@ -422,5 +424,28 @@ export const useRecalculateMatchScoreByFileId = () => {
       );
       return data;
     },
+  });
+};
+
+export const useSeasonStatsList = (
+  seasonId: string,
+  query?: ISeasonStatsListQuery,
+  refetchOnMount?: boolean | 'always',
+  staleTime = STALE_TIME,
+) => {
+  return useQuery({
+    queryKey: ['seasonStatsList', seasonId, JSON.stringify(query ?? {})],
+    queryFn: async () => {
+      const { data } = await get<{ seasonPlayers: IStatisticsItem[]; total: number }>(
+        LeagueEndpoints.SEASON_STATS,
+        {
+          seasonId,
+        },
+        query,
+      );
+      return data;
+    },
+    staleTime,
+    refetchOnMount: refetchOnMount ?? true,
   });
 };

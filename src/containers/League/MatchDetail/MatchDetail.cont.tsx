@@ -60,7 +60,6 @@ export const MatchDetail: React.FC = () => {
     MatchStatus.FINISHED,
     MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,
     MatchStatus.CONFIRMED_SCORE_BY_SYSTEM,
-    MatchStatus.ACCEPTED,
   ].includes(matchDetail.data?.status as MatchStatus);
   const isPossibleToManageMatch = useMemo(() => {
     return canUserManageMatch(
@@ -301,7 +300,7 @@ export const MatchDetail: React.FC = () => {
           </>
         )}
         <Gap defaultHeight={16} />
-        {scoreExists && !!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
+        {!!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
           <Rounds
             allowUpload={
               (matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION ||

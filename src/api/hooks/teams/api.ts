@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { get, post, put } from '../../apiFactory';
+import { del, get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
@@ -8,11 +8,11 @@ import { ISeason } from '../league/interfaces';
 
 import { TeamEndpoints } from './endpoints';
 import {
-  ITeamPlayers,
-  ITeam,
-  IMeTeams,
   IAvatarUpload,
   ICreateTeam,
+  IMeTeams,
+  ITeam,
+  ITeamPlayers,
   IUpdateTeam,
   IUpdateUserInTeam,
 } from './interfaces';
@@ -157,6 +157,18 @@ export const useUpdateUserInTeam = (userInTeamId: string) => {
     mutationFn: async (payload: IUpdateUserInTeam) => {
       const { data } = await put<IUpdateUserInTeam, undefined>(TeamEndpoints.UPDATE_USER_IN_TEAM, payload, {
         userInTeamId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useRemoveUserFromTeam = () => {
+  return useMutation({
+    mutationFn: async (payload: { teamId: string; userId: string }) => {
+      const { data } = await del(TeamEndpoints.REMOVE_USER_FROM_TEAM, {
+        teamId: payload.teamId,
+        userId: payload.userId,
       });
       return data;
     },

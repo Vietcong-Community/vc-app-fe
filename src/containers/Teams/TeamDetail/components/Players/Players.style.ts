@@ -94,17 +94,23 @@ export const Buttons = styled.div`
   }
 `;
 
-export const GearIcon = styled(Avatar)`
+export const Icon = styled(Avatar)`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
   cursor: pointer;
-  position: absolute;
-  top: 0.5rem;
   filter: grayscale(80%); /* Obrázek bude šedý */
-  right: 0.5rem;
 
   &:hover {
     cursor: pointer;
     filter: grayscale(0%); /* Obrázek bude barevný při hoveru */
     transform: scale(1.2);
   }
+`;
+
+export const Icons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
 `;

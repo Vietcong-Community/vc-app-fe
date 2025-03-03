@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Flex, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -11,6 +11,7 @@ import {
   useHasAllowedToJoinTheTeam,
   useJoinTeam,
   useRejectJoinRequest,
+  useRemoveUserFromTeam,
   useTeamDetail,
   useTeamPlayers,
 } from '../../../api/hooks/teams/api';
@@ -20,7 +21,7 @@ import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { TeamRole } from '../../../constants/enums';
+import { Role, TeamRole } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
@@ -30,6 +31,7 @@ import { EditTeamModalForm } from './components/EditTeamModal/EditTeamModal.form
 import { Players } from './components/Players/Players';
 import { TeamInfo } from './components/TeamInfo/TeamInfo';
 import { messages } from './messages';
+import { isUserOnlyOwner } from './utils';
 
 import * as S from '../TeamDetail/TeamDetail.style';
 
@@ -44,14 +46,33 @@ export const TeamDetailCont: React.FC = () => {
   const joinTeam = useJoinTeam(query.id);
   const approveTeamJoin = useApproveJoinRequest(query.id);
   const rejectTeamJoin = useRejectJoinRequest(query.id);
+  const removePlayer = useRemoveUserFromTeam();
 
   const teamPlayers = useTeamPlayers(query.id);
   const hasAllowedJoinTeam = useHasAllowedToJoinTheTeam(query.id, [401]);
 
+  const userInCurrentTeam =
+    !!userMe.data?.id && teamPlayers.data?.items.find((item) => item.user.id === userMe.data?.id);
   const userCanJoinTeam = !!hasAllowedJoinTeam.data?.hasAllowedToJoin;
   const userIsOwner =
     !!userMe.data?.id &&
     teamPlayers.data?.items.find((item) => item.user.id === userMe.data?.id)?.role === TeamRole.OWNER;
+  const userCanLeaveTeam =
+    !!userInCurrentTeam && (!userIsOwner || !isUserOnlyOwner(userMe.data?.id, teamPlayers?.data?.items ?? []));
+
+  const handleLeaveTeam = async () => {
+    if (!userInCurrentTeam) {
+      return;
+    }
+
+    try {
+      await removePlayer.mutateAsync({ teamId: query.id, userId: userInCurrentTeam.id });
+      await teamPlayers.refetch();
+      showNotification(messages.leaveTeamSuccess, NotificationType.INFO);
+    } catch {
+      showNotification(messages.leaveTeamFailed, undefined, NotificationType.ERROR);
+    }
+  };
 
   const handleJoinTeam = async () => {
     try {
@@ -100,20 +121,28 @@ export const TeamDetailCont: React.FC = () => {
         <EaseInOutContainer isOpen={!showLoading}>
           <Flex align="center" justify="space-between" style={{ gap: 16, textAlign: 'start' }}>
             <H1>{team.data?.name}</H1>
-            {userIsOwner && (
-              <S.AvatarIcon
-                shape="square"
-                size={32}
-                icon={<EditOutlined />}
-                onClick={() => setUpdateModalIsOpen(true)}
-              />
-            )}
-            {userCanJoinTeam && (
-              <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
-                <PlusOutlined />
-                <FormattedMessage {...messages.joinBtn} />
-              </Button>
-            )}
+            <S.ManageButtons>
+              {userIsOwner && (
+                <S.AvatarIcon
+                  shape="square"
+                  size={32}
+                  icon={<EditOutlined />}
+                  onClick={() => setUpdateModalIsOpen(true)}
+                />
+              )}
+              {userCanJoinTeam && (
+                <Button onClick={handleJoinTeam} style={{ padding: '0.25rem 1rem' }}>
+                  <DeleteOutlined />
+                  <FormattedMessage {...messages.joinBtn} />
+                </Button>
+              )}
+              {userCanLeaveTeam && (
+                <Button onClick={handleLeaveTeam} style={{ padding: '0.25rem 1rem' }}>
+                  <PlusOutlined />
+                  <FormattedMessage {...messages.leaveTeamButton} />
+                </Button>
+              )}
+            </S.ManageButtons>
           </Flex>
           <Divider />
           <Gap defaultHeight={16} />
@@ -123,12 +152,14 @@ export const TeamDetailCont: React.FC = () => {
             </S.TeamInfo>
             <S.Members>
               <Players
+                currentUserId={userMe.data?.id}
                 goToPlayerDetail={goToPlayerDetail}
                 handleApproveRequest={handleApproveJoinRequest}
                 handleRejectRequest={handleRejectJoinRequest}
                 players={teamPlayers.data?.items ?? []}
                 teamId={query.id}
                 userIsOwner={userIsOwner}
+                userIsAdmin={userMe.data?.roles?.includes(Role.ADMIN)}
               />
             </S.Members>
           </S.Content>

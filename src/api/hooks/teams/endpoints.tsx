@@ -10,4 +10,5 @@ export enum TeamEndpoints {
   UPLOAD_TEAM_AVATAR = '/teams/{teamId}/avatar-upload-url',
   TEAM_SEASONS = '/teams/{teamId}/seasons',
   UPDATE_USER_IN_TEAM = '/user-in-team/{userInTeamId}',
+  REMOVE_USER_FROM_TEAM = '/teams/{teamId}/user/{userId}',
 }

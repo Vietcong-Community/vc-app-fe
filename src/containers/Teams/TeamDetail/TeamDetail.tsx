@@ -61,12 +61,12 @@ export const TeamDetailCont: React.FC = () => {
     !!userInCurrentTeam && (!userIsOwner || !isUserOnlyOwner(userMe.data?.id, teamPlayers?.data?.items ?? []));
 
   const handleLeaveTeam = async () => {
-    if (!userInCurrentTeam) {
+    if (!userMe.data?.id) {
       return;
     }
 
     try {
-      await removePlayer.mutateAsync({ teamId: query.id, userId: userInCurrentTeam.id });
+      await removePlayer.mutateAsync({ teamId: query.id, userId: userMe.data?.id });
       await teamPlayers.refetch();
       showNotification(messages.leaveTeamSuccess, NotificationType.INFO);
     } catch {

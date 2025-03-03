@@ -167,7 +167,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
                     <S.Icon
                       icon={<DeleteOutlined />}
                       onClick={(event?: React.MouseEvent<HTMLElement>) =>
-                        handleRemovePlayerFromTeam(player.userInTeamId, event)
+                        handleRemovePlayerFromTeam(player.userId, event)
                       }
                     />
                   )}

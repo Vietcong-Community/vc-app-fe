@@ -29,3 +29,15 @@ export const useUserTeams = (id: string, refetchOnMount?: boolean | 'always') =>
     refetchOnMount: refetchOnMount ?? 'always',
   });
 };
+
+export const useUserMatches = (enabled = true) => {
+  return useQuery({
+    queryKey: ['userMatches'],
+    queryFn: async () => {
+      const { data } = await get<{ items: IMeTeams[]; total: number }>(UsersEndpoints.MY_MATCHES);
+      return data;
+    },
+    staleTime: 0,
+    enabled,
+  });
+};

@@ -148,3 +148,23 @@ export const MobileHamburger = styled.div<{ $isOpen: boolean }>`
 export const DropdownLabel = styled.span`
   width: 100%;
 `;
+
+export const UserMatchesIconContainer = styled.div`
+  color: ${(props: IThemeProps) => props.theme.mainColors.accent};
+  cursor: pointer;
+  font-size: 22px;
+  position: relative;
+  margin-right: 16px;
+`;
+
+export const TotalMatchesCount = styled.div`
+  top: 0;
+  background-color: ${(props: IThemeProps) => props.theme.colors.red};
+  border-radius: 50%;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  font-size: 10px;
+  position: absolute;
+  right: -10px;
+  height: 16px;
+  width: 16px;
+`;

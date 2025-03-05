@@ -67,19 +67,19 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
     {
       label: <FormattedMessage {...messages.updateMatch} />,
-      key: '3',
+      key: '4',
       onClick: () => setIsUpdateMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },
     {
       label: <FormattedMessage {...messages.sortRounds} />,
-      key: '4',
+      key: '5',
       onClick: () => setIsSortRoundsModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },
     {
       label: <FormattedMessage {...messages.createRound} />,
-      key: '5',
+      key: '6',
       onClick: () => setIsCreateRoundModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },

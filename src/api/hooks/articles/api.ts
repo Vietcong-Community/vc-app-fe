@@ -2,10 +2,18 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { del, get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
-import { IIdentifiedEntity } from '../interfaces';
+import { IIdentifiedEntity, IPagination } from '../interfaces';
 
 import { ArticlesEndpoints } from './endpoints';
-import { IArticle, IArticleList, IArticleListQuery, ICategory, ICreateArticle, IUpdateArticle } from './interfaces';
+import {
+  IArticle,
+  IArticleComment,
+  IArticleList,
+  IArticleListQuery,
+  ICategory,
+  ICreateArticle,
+  IUpdateArticle,
+} from './interfaces';
 
 export const useArticleCategories = () => {
   return useQuery({
@@ -94,6 +102,33 @@ export const useRemoveArticleImage = (articleId: string) => {
   return useMutation({
     mutationFn: async () => {
       const { data } = await del(ArticlesEndpoints.REMOVE_ARTICLE_IMAGE, {
+        articleId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useArticleComment = (articleId: string, query?: IPagination, refetchOnMount?: boolean | 'always') => {
+  return useQuery({
+    queryKey: ['articleComment', articleId, JSON.stringify(query)],
+    queryFn: async () => {
+      const { data } = await get<{ comments: IArticleComment[]; total: number }>(
+        ArticlesEndpoints.ARTICLE_COMMENT,
+        { articleId },
+        query,
+      );
+      return data;
+    },
+    staleTime: Infinity,
+    refetchOnMount: refetchOnMount ?? 'always',
+  });
+};
+
+export const useAddArticleComment = (articleId: string) => {
+  return useMutation({
+    mutationFn: async (payload: { comment: string }) => {
+      const { data } = await post<{ comment: string }, IIdentifiedEntity>(ArticlesEndpoints.ARTICLE_COMMENT, payload, {
         articleId,
       });
       return data;

@@ -44,3 +44,10 @@ export interface IArticleListQuery {
   page?: number;
   limit?: number;
 }
+
+export interface IArticleComment {
+  id: string;
+  author: IUser;
+  createdAt: string;
+  comment: string;
+}

@@ -4,4 +4,5 @@ export enum ArticlesEndpoints {
   ARTICLE_BY_ID = '/articles/{articleId}',
   UPLOAD_ARTICLE_IMAGE = '/articles/{articleId}/image-upload-url',
   REMOVE_ARTICLE_IMAGE = '/articles/{articleId}/remove-image',
+  ARTICLE_COMMENT = '/articles/{articleId}/comments',
 }

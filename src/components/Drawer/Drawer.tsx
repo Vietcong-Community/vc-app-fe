@@ -1,12 +1,10 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion, useAnimation } from 'motion/react';
 
 import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
-import { BreakPoints } from '../../theme/theme';
 
 import * as S from './Drawer.style';
 
@@ -25,7 +23,6 @@ export const Drawer: React.FC<IProps> = (props) => {
   const [withAnimation, setWithAnimation] = useState(false);
 
   const { width } = useWindowDimensions();
-  const isMobile = width < BreakPoints.md;
 
   const animation = useAnimation();
 

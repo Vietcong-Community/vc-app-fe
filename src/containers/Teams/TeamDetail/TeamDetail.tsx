@@ -11,7 +11,6 @@ import {
   useHasAllowedToJoinTheTeam,
   useJoinTeam,
   useRejectJoinRequest,
-  useRemoveUserFromTeam,
   useTeamDetail,
   useTeamPlayers,
 } from '../../../api/hooks/teams/api';
@@ -29,6 +28,7 @@ import { Routes } from '../../../routes/enums';
 
 import { EditTeamModalForm } from './components/EditTeamModal/EditTeamModal.form';
 import { Players } from './components/Players/Players';
+import { RemovePlayerModal } from './components/RemovePlayerModal/RemovePlayerModal';
 import { TeamInfo } from './components/TeamInfo/TeamInfo';
 import { messages } from './messages';
 import { isUserOnlyOwner } from './utils';
@@ -40,13 +40,13 @@ export const TeamDetailCont: React.FC = () => {
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const [updateModalIsOpen, setUpdateModalIsOpen] = useState<boolean>(false);
+  const [removePlayerModalIsOpen, setRemovePlayerModalIsOpen] = useState<boolean>(false);
 
   const team = useTeamDetail(query.id);
   const userMe = useUserMe(false, [401]);
   const joinTeam = useJoinTeam(query.id);
   const approveTeamJoin = useApproveJoinRequest(query.id);
   const rejectTeamJoin = useRejectJoinRequest(query.id);
-  const removePlayer = useRemoveUserFromTeam();
 
   const teamPlayers = useTeamPlayers(query.id);
   const hasAllowedJoinTeam = useHasAllowedToJoinTheTeam(query.id, [401]);
@@ -65,13 +65,7 @@ export const TeamDetailCont: React.FC = () => {
       return;
     }
 
-    try {
-      await removePlayer.mutateAsync({ teamId: query.id, userId: userMe.data?.id });
-      await teamPlayers.refetch();
-      showNotification(messages.leaveTeamSuccess, NotificationType.INFO);
-    } catch {
-      showNotification(messages.leaveTeamFailed, undefined, NotificationType.ERROR);
-    }
+    setRemovePlayerModalIsOpen(true);
   };
 
   const handleJoinTeam = async () => {
@@ -171,6 +165,13 @@ export const TeamDetailCont: React.FC = () => {
         onClose={() => setUpdateModalIsOpen(false)}
         initialValues={{ name: team.data?.name, tag: team.data?.tag, description: team.data?.description }}
         teamId={query.id}
+      />
+      <RemovePlayerModal
+        teamId={query.id}
+        isOpen={removePlayerModalIsOpen}
+        nickname={userMe.data?.nickname ?? ''}
+        onClose={() => setRemovePlayerModalIsOpen(false)}
+        userId={userMe.data?.id ?? ''}
       />
     </>
   );

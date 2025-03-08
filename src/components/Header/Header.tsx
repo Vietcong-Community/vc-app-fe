@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
-import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
+import { faPersonRifle } from '@fortawesome/free-solid-svg-icons/faPersonRifle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, Dropdown, Menu } from 'antd';
@@ -21,9 +21,9 @@ import { BreakPoints } from '../../theme/theme';
 import { USER_AUTHENTICATION_STORAGE_KEY } from '../../utils/storageUtils';
 import { Button } from '../Button/Button';
 import { MainButtonVariant } from '../Button/enums';
-import { Drawer } from '../Drawer/Drawer';
 
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
+import { MyMatches } from './components/MyMatches/MyMatches';
 import { messages } from './messages';
 
 import * as S from './Header.style';
@@ -32,10 +32,10 @@ export const Header: React.FC = () => {
   const { navigate } = useRouter();
   const [matchesDrawerOpen, setMatchesDrawerOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [selectedPage, setSelectedPage] = useState<number>(1);
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();
   const isSmallerThanLg = width <= BreakPoints.lg;
-  const isSmallerThanMd = width <= BreakPoints.md;
 
   const { selectedTheme, toggleTheme } = useContext(ThemeContext);
   const { selectedLanguage, toggleLanguage } = useContext(LanguageContext);
@@ -43,7 +43,7 @@ export const Header: React.FC = () => {
   const userMe = useUserMe('always', [401]);
   const isUserLoggedIn = userMe.isSuccess;
 
-  const userMatches = useUserMatches(isUserLoggedIn);
+  const userMatches = useUserMatches(isUserLoggedIn, { page: selectedPage });
 
   const handleLogout = async () => {
     localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
@@ -184,8 +184,10 @@ export const Header: React.FC = () => {
             </Button>
             {isUserLoggedIn && (
               <S.UserMatchesIconContainer onClick={() => setMatchesDrawerOpen(true)}>
-                <FontAwesomeIcon icon={faBell} />
-                {(userMatches.data?.total ?? 0) > 0 && <S.TotalMatchesCount>2</S.TotalMatchesCount>}
+                <FontAwesomeIcon icon={faPersonRifle} />
+                {(userMatches.data?.total ?? 0) > 0 && (
+                  <S.TotalMatchesCount>{userMatches.data?.total}</S.TotalMatchesCount>
+                )}
               </S.UserMatchesIconContainer>
             )}
             <S.HamburgerCont>
@@ -232,13 +234,14 @@ export const Header: React.FC = () => {
           userId={userMe.data?.id}
         />
       </S.Container>
-      <Drawer
-        drawerWidth={isSmallerThanMd ? width : 600}
+      <MyMatches
         isOpen={matchesDrawerOpen}
+        matches={userMatches.data?.matches ?? []}
         onClose={() => setMatchesDrawerOpen(false)}
-      >
-        <div>test</div>
-      </Drawer>
+        onPageChange={setSelectedPage}
+        page={selectedPage}
+        total={userMatches.data?.total ?? 0}
+      />
     </>
   );
 };

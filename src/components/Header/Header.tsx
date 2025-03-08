@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
+import { faPersonRifle } from '@fortawesome/free-solid-svg-icons/faPersonRifle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, Dropdown, Menu } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useUserMe } from '../../api/hooks/auth/api';
+import { useUserMatches } from '../../api/hooks/users/api';
 import logo from '../../assets/vclogo-removebg-preview.png';
 import { useRouter } from '../../hooks/RouterHook';
 import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
@@ -20,13 +23,16 @@ import { Button } from '../Button/Button';
 import { MainButtonVariant } from '../Button/enums';
 
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
+import { MyMatches } from './components/MyMatches/MyMatches';
 import { messages } from './messages';
 
 import * as S from './Header.style';
 
 export const Header: React.FC = () => {
   const { navigate } = useRouter();
+  const [matchesDrawerOpen, setMatchesDrawerOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [selectedPage, setSelectedPage] = useState<number>(1);
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();
   const isSmallerThanLg = width <= BreakPoints.lg;
@@ -35,8 +41,9 @@ export const Header: React.FC = () => {
   const { selectedLanguage, toggleLanguage } = useContext(LanguageContext);
 
   const userMe = useUserMe('always', [401]);
-
   const isUserLoggedIn = userMe.isSuccess;
+
+  const userMatches = useUserMatches(isUserLoggedIn, { page: selectedPage });
 
   const handleLogout = async () => {
     localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
@@ -123,100 +130,118 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <S.Container>
-      <S.Content>
-        <S.LeftSection>
-          <S.Logo onClick={() => navigate(Routes.HOME)}>
-            <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
-          </S.Logo>
-        </S.LeftSection>
-        <S.MenuContainer>
-          <Menu
-            mode="horizontal"
-            selectable={false}
-            style={{ borderBottom: 'none', display: 'flex', justifyContent: 'center', width: '100%' }}
-            items={[
-              {
-                key: 'leagues',
-                onClick: () => navigate(Routes.LEAGUE),
-                label: <FormattedMessage {...messages.leaguesLink} />,
-              },
-              {
-                key: 'mcrvc',
-                onClick: () => navigate(Routes.MCRVC),
-                label: <FormattedMessage {...messages.mcrvcLink} />,
-              },
-              {
-                key: 'statistics',
-                onClick: () => navigate(Routes.STATISTICS),
-                label: <FormattedMessage {...messages.statisticsLink} />,
-              },
-              {
-                key: 'articles',
-                onClick: () => navigate(Routes.ARTICLES),
-                label: <FormattedMessage {...messages.articleLink} />,
-              },
-              {
-                key: 'about',
-                onClick: () => navigate(Routes.ABOUT_US),
-                label: <FormattedMessage {...messages.aboutUsLink} />,
-              },
-            ]}
-          />
-        </S.MenuContainer>
-        <S.RightSection>
-          <S.HamburgerCont>
-            <S.MobileHamburger $isOpen={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              <span />
-              <span />
-              <span />
-              <span />
-            </S.MobileHamburger>
-          </S.HamburgerCont>
-          {!isSmallerThanLg && (
-            <>
-              <Button
-                onClick={toggleLanguage}
-                style={{ padding: '0.25rem', marginRight: 8 }}
-                variant={MainButtonVariant.OUTLINED}
-              >
-                <FormattedMessage
-                  {...(selectedLanguage === PreferredLanguage.CS ? messages.desktopEnglish : messages.desktopCzech)}
-                />
-              </Button>
-              {!isUserLoggedIn && (
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <Button onClick={() => navigate(Routes.LOGIN)} variant={MainButtonVariant.SECONDARY}>
-                    <FormattedMessage {...messages.goToLogin} />
-                  </Button>
-                  <Button onClick={() => navigate(Routes.REGISTRATION)}>
-                    <FormattedMessage {...messages.goToRegistration} />
-                  </Button>
-                </div>
-              )}
-              {isUserLoggedIn && (
-                <Dropdown menu={{ items: isUserLoggedIn ? loggedUserMenu : anonymousUserMenu }} trigger={['click']}>
-                  <S.UserMenu>
-                    <Avatar size={32} icon={getUserIcon()} />
-                    <span style={{ fontSize: '14px' }}>
-                      {isUserLoggedIn ? userMe.data?.nickname : <FormattedMessage {...messages.userNotLoggedIn} />}
-                    </span>
-                  </S.UserMenu>
-                </Dropdown>
-              )}
-            </>
-          )}
-        </S.RightSection>
-      </S.Content>
-      <MobileMenu
-        handleLogout={handleLogout}
-        isOpen={isMobileMenuOpen}
-        onCloseButtonClick={() => setIsMobileMenuOpen(false)}
-        isUserLoggedIn={isUserLoggedIn}
-        nickname={userMe.data?.nickname}
-        userAvatarUrl={userMe.data?.image?.url}
-        userId={userMe.data?.id}
+    <>
+      <S.Container>
+        <S.Content>
+          <S.LeftSection>
+            <S.Logo onClick={() => navigate(Routes.HOME)}>
+              <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
+            </S.Logo>
+          </S.LeftSection>
+          <S.MenuContainer>
+            <Menu
+              mode="horizontal"
+              selectable={false}
+              style={{ borderBottom: 'none', display: 'flex', justifyContent: 'center', width: '100%' }}
+              items={[
+                {
+                  key: 'leagues',
+                  onClick: () => navigate(Routes.LEAGUE),
+                  label: <FormattedMessage {...messages.leaguesLink} />,
+                },
+                {
+                  key: 'mcrvc',
+                  onClick: () => navigate(Routes.MCRVC),
+                  label: <FormattedMessage {...messages.mcrvcLink} />,
+                },
+                {
+                  key: 'statistics',
+                  onClick: () => navigate(Routes.STATISTICS),
+                  label: <FormattedMessage {...messages.statisticsLink} />,
+                },
+                {
+                  key: 'articles',
+                  onClick: () => navigate(Routes.ARTICLES),
+                  label: <FormattedMessage {...messages.articleLink} />,
+                },
+                {
+                  key: 'about',
+                  onClick: () => navigate(Routes.ABOUT_US),
+                  label: <FormattedMessage {...messages.aboutUsLink} />,
+                },
+              ]}
+            />
+          </S.MenuContainer>
+          <S.RightSection>
+            <Button
+              onClick={toggleLanguage}
+              style={{ padding: '0.25rem', marginRight: 16 }}
+              variant={MainButtonVariant.OUTLINED}
+            >
+              <FormattedMessage
+                {...(selectedLanguage === PreferredLanguage.CS ? messages.desktopEnglish : messages.desktopCzech)}
+              />
+            </Button>
+            {isUserLoggedIn && (
+              <S.UserMatchesIconContainer onClick={() => setMatchesDrawerOpen(true)}>
+                <FontAwesomeIcon icon={faPersonRifle} />
+                {(userMatches.data?.total ?? 0) > 0 && (
+                  <S.TotalMatchesCount>{userMatches.data?.total}</S.TotalMatchesCount>
+                )}
+              </S.UserMatchesIconContainer>
+            )}
+            <S.HamburgerCont>
+              <S.MobileHamburger $isOpen={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                <span />
+                <span />
+                <span />
+                <span />
+              </S.MobileHamburger>
+            </S.HamburgerCont>
+            {!isSmallerThanLg && (
+              <>
+                {!isUserLoggedIn && (
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <Button onClick={() => navigate(Routes.LOGIN)} variant={MainButtonVariant.SECONDARY}>
+                      <FormattedMessage {...messages.goToLogin} />
+                    </Button>
+                    <Button onClick={() => navigate(Routes.REGISTRATION)}>
+                      <FormattedMessage {...messages.goToRegistration} />
+                    </Button>
+                  </div>
+                )}
+                {isUserLoggedIn && (
+                  <Dropdown menu={{ items: isUserLoggedIn ? loggedUserMenu : anonymousUserMenu }} trigger={['click']}>
+                    <S.UserMenu>
+                      <Avatar size={32} icon={getUserIcon()} />
+                      <span style={{ fontSize: '14px' }}>
+                        {isUserLoggedIn ? userMe.data?.nickname : <FormattedMessage {...messages.userNotLoggedIn} />}
+                      </span>
+                    </S.UserMenu>
+                  </Dropdown>
+                )}
+              </>
+            )}
+          </S.RightSection>
+        </S.Content>
+        <MobileMenu
+          handleLogout={handleLogout}
+          isOpen={isMobileMenuOpen}
+          onCloseButtonClick={() => setIsMobileMenuOpen(false)}
+          isUserLoggedIn={isUserLoggedIn}
+          nickname={userMe.data?.nickname}
+          userAvatarUrl={userMe.data?.image?.url}
+          userId={userMe.data?.id}
+        />
+      </S.Container>
+      <MyMatches
+        isOpen={matchesDrawerOpen}
+        matches={userMatches.data?.matches ?? []}
+        onClose={() => setMatchesDrawerOpen(false)}
+        onPageChange={setSelectedPage}
+        page={selectedPage}
+        total={userMatches.data?.total ?? 0}
       />
-    </S.Container>
+    </>
   );
 };

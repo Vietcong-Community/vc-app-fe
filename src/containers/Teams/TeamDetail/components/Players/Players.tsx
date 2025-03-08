@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
 import { DeleteOutlined, SettingOutlined } from '@ant-design/icons';
-import { useQueryClient } from '@tanstack/react-query';
 import { compact } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { useRemoveUserFromTeam } from '../../../../../api/hooks/teams/api';
 import { ITeamPlayers } from '../../../../../api/hooks/teams/interfaces';
 import soldier from '../../../../../assets/teamDetail/soldier.webp';
 import { Button } from '../../../../../components/Button/Button';
@@ -13,10 +11,9 @@ import { MainButtonVariant } from '../../../../../components/Button/enums';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { TeamMemberStatus, TeamRole } from '../../../../../constants/enums';
-import { useNotifications } from '../../../../../hooks/NotificationsHook';
-import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { mapTeamRoleToTranslation } from '../../../../../utils/mappingLabelUtils';
 import { showRemovePlayerIcon } from '../../utils';
+import { RemovePlayerModal } from '../RemovePlayerModal/RemovePlayerModal';
 import { SetUserRoleModalForm } from '../SetUserRoleModal/SetUserRoleModal.form';
 
 import { messages } from './messages';
@@ -38,6 +35,12 @@ interface IModalProps {
   nickname?: string;
   role?: string;
   userInTeamId?: string;
+}
+
+interface IRemovePlayerModalProps {
+  isOpen: boolean;
+  nickname?: string;
+  userId?: string;
 }
 
 interface IProps {
@@ -63,10 +66,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
     userIsAdmin = false,
   } = props;
   const [modalProps, setModalProps] = useState<IModalProps>({ isOpen: false });
-  const queryClient = useQueryClient();
-  const { showNotification } = useNotifications();
-
-  const removePlayer = useRemoveUserFromTeam();
+  const [removePlayerModalProps, setRemovePlayerModalProps] = useState<IRemovePlayerModalProps>({ isOpen: false });
 
   const activeMembers = players.filter((item) => item.status === TeamMemberStatus.ACTIVE);
   const awaitingMembers = players.filter((item) => item.status === TeamMemberStatus.AWAITING);
@@ -108,15 +108,13 @@ export const Players: React.FC<IProps> = (props: IProps) => {
   const showAwaitingPlayers = awaitingMembers.length > 0 && (userIsOwner || userIsAdmin);
   const showRemovedPlayers = removedMembers.length > 0;
 
-  const handleRemovePlayerFromTeam = async (userInTeamId: string, event?: React.MouseEvent<HTMLElement>) => {
+  const handleRemovePlayerFromTeam = async (
+    userId: string,
+    nickname: string,
+    event?: React.MouseEvent<HTMLElement>,
+  ) => {
     event?.stopPropagation();
-    try {
-      await removePlayer.mutateAsync({ teamId: teamId, userId: userInTeamId });
-      await queryClient.refetchQueries({ queryKey: ['teamPlayers', teamId] });
-      showNotification(messages.leaveTeamSuccess, NotificationType.INFO);
-    } catch {
-      showNotification(messages.leaveTeamFailed, undefined, NotificationType.ERROR);
-    }
+    setRemovePlayerModalProps({ isOpen: true, nickname, userId });
   };
 
   const handlePlayerRoleChange = (
@@ -167,7 +165,7 @@ export const Players: React.FC<IProps> = (props: IProps) => {
                     <S.Icon
                       icon={<DeleteOutlined />}
                       onClick={(event?: React.MouseEvent<HTMLElement>) =>
-                        handleRemovePlayerFromTeam(player.userId, event)
+                        handleRemovePlayerFromTeam(player.userId, player.nickname, event)
                       }
                     />
                   )}
@@ -235,6 +233,13 @@ export const Players: React.FC<IProps> = (props: IProps) => {
         onClose={() => setModalProps({ isOpen: false })}
         teamId={teamId}
         userInTeamId={modalProps.userInTeamId}
+      />
+      <RemovePlayerModal
+        isOpen={removePlayerModalProps.isOpen}
+        onClose={() => setRemovePlayerModalProps({ isOpen: false })}
+        nickname={removePlayerModalProps.nickname ?? ''}
+        teamId={teamId}
+        userId={removePlayerModalProps.userId ?? ''}
       />
     </>
   );

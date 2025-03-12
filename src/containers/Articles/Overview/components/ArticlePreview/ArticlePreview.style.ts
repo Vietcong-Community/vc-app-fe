@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
 import { makeMediaQuery } from '../../../../../utils/mediaQuery';
 
 export const Title = styled.div`
@@ -32,4 +32,15 @@ export const MetaInfoRow = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+`;
+
+export const CommentCount = styled.div`
+  align-items: center;
+  display: inline;
+  justify-content: left;
+  gap: 4px;
+
+  svg {
+    color: ${(props: IThemeProps) => props.theme.mainColors.primary};
+  }
 `;

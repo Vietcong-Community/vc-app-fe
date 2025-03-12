@@ -15,6 +15,7 @@ export interface IArticle {
   createdAt: string;
   createdBy: IUser;
   editedBy: IUser;
+  commentsCount: 2;
   image: {
     id: string;
     url: string;
@@ -43,4 +44,11 @@ export interface IArticleListQuery {
   categoryId?: string;
   page?: number;
   limit?: number;
+}
+
+export interface IArticleComment {
+  id: string;
+  author: IUser;
+  createdAt: string;
+  comment: string;
 }

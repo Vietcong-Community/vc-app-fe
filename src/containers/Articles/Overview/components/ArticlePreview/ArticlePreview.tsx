@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { faComment } from '@fortawesome/free-solid-svg-icons/faComment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tag } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -41,7 +43,10 @@ export const ArticlePreview: React.FC<IProps> = (props: IProps) => {
         <Gap defaultHeight={16} />
       </div>
       <S.MetaInfoRow>
-        {formatDateForUser(article.createdAt)}
+        <S.CommentCount>
+          {formatDateForUser(article.createdAt)} &nbsp;
+          <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {article.commentsCount ?? 0}
+        </S.CommentCount>
         <div>
           {userCanManageArticles && !article.isPublished && (
             <Tag color="red">

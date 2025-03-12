@@ -23,7 +23,7 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
-import { ArtComments } from '../components/Comments/Comments';
+import { Comments } from '../components/Comments/Comments';
 import { DeleteArticleImageModal } from '../components/DeleteArticleImageModal/DeleteArticleImageModal';
 import { DeleteArticleModal } from '../components/DeleteArticleModal/DeleteArticleModal';
 import { UploadArticleImageModal } from '../components/UploadArticleImageModal/UploadArticleImageModal';
@@ -222,7 +222,7 @@ export const ArticleDetailCont: React.FC = () => {
             </S.Container>
           )}
         </EaseInOutContainer>
-        <ArtComments articleId={query.articleId} />
+        <Comments articleId={query.articleId} />
         <Gap defaultHeight={32} />
       </ContentLayout>
       <DeleteArticleModal

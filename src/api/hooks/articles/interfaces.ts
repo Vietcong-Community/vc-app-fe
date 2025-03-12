@@ -15,6 +15,7 @@ export interface IArticle {
   createdAt: string;
   createdBy: IUser;
   editedBy: IUser;
+  commentsCount: 2;
   image: {
     id: string;
     url: string;

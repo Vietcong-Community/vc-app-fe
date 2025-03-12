@@ -25,7 +25,7 @@ interface IProps {
   articleId: string;
 }
 
-export const ArtComments: React.FC<IProps> = (props: IProps) => {
+export const Comments: React.FC<IProps> = (props: IProps) => {
   const { articleId } = props;
   const { navigate } = useRouter();
   const { showNotification } = useNotifications();

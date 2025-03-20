@@ -24,6 +24,7 @@ import { Routes } from '../../../../routes/enums';
 import { theme } from '../../../../theme/theme';
 import { Gap } from '../../../Gap/Gap';
 import { messages } from '../../messages';
+import { GlobalSearch } from '../GlobalSearch/GlobalSearch';
 
 import * as S from './MobileMenu.style';
 
@@ -144,6 +145,8 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                     <Divider
                       style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}
                     />
+                    <GlobalSearch hideOverflow isOpen onClose={onCloseButtonClick} showCloseIcon={false} />
+                    <Divider style={{ backgroundColor: theme.mainColors.borderColor, margin: 0 }} />
                     {renderGeneralLinks()}
                     <Divider
                       style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}
@@ -213,6 +216,10 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                         <FormattedMessage {...messages.userNotLoggedIn} />
                       </span>
                     </S.UserName>
+                    <Divider
+                      style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}
+                    />
+                    <GlobalSearch hideOverflow isOpen onClose={onCloseButtonClick} showCloseIcon={false} />
                     <Divider
                       style={{ backgroundColor: theme.mainColors.borderColor, marginBottom: 0, marginTop: 12 }}
                     />

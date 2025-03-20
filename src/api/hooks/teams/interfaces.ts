@@ -1,5 +1,5 @@
 import { TeamMemberStatus, TeamRole } from '../../../constants/enums';
-import { IUser } from '../interfaces';
+import { IPagination, IUser } from '../interfaces';
 
 export interface ITeamPlayers {
   id: string;
@@ -41,4 +41,9 @@ export interface IUpdateTeam extends ICreateTeam {
 
 export interface IUpdateUserInTeam {
   role: TeamRole;
+}
+
+export interface ITeamListQuery extends IPagination {
+  name?: string;
+  tag?: string;
 }

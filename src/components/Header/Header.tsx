@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
 import { faPersonRifle } from '@fortawesome/free-solid-svg-icons/faPersonRifle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,9 +20,11 @@ import { ThemeType } from '../../providers/ThemeProvider/constants';
 import { Routes } from '../../routes/enums';
 import { BreakPoints } from '../../theme/theme';
 import { USER_AUTHENTICATION_STORAGE_KEY } from '../../utils/storageUtils';
+import { AnimatedWidthContainer } from '../Animations/AnimatedWidthContainer/AnimatedHeightContainer';
 import { Button } from '../Button/Button';
 import { MainButtonVariant } from '../Button/enums';
 
+import { GlobalSearch } from './components/GlobalSearch/GlobalSearch';
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
 import { MyMatches } from './components/MyMatches/MyMatches';
 import { messages } from './messages';
@@ -32,7 +35,10 @@ export const Header: React.FC = () => {
   const { navigate } = useRouter();
   const [matchesDrawerOpen, setMatchesDrawerOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isMainMenuOpen, setIsMainMenuOpen] = useState<boolean>(true);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [selectedPage, setSelectedPage] = useState<number>(1);
+
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();
   const isSmallerThanLg = width <= BreakPoints.lg;
@@ -44,6 +50,11 @@ export const Header: React.FC = () => {
   const isUserLoggedIn = userMe.isSuccess;
 
   const userMatches = useUserMatches(isUserLoggedIn, { page: selectedPage });
+
+  const onMyMatchesOpen = () => {
+    userMatches.refetch();
+    setMatchesDrawerOpen(true);
+  };
 
   const handleLogout = async () => {
     localStorage.removeItem(USER_AUTHENTICATION_STORAGE_KEY);
@@ -137,41 +148,55 @@ export const Header: React.FC = () => {
             <S.Logo onClick={() => navigate(Routes.HOME)}>
               <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
             </S.Logo>
+            <S.MenuContainer>
+              {!isSearchOpen && (
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  onClick={() => setIsMainMenuOpen(false)}
+                  style={{ cursor: 'pointer', margin: 8, fontSize: 24 }}
+                />
+              )}
+              <GlobalSearch
+                isOpen={isSearchOpen}
+                onClose={() => setIsSearchOpen(false)}
+                onExitComplete={() => setIsMainMenuOpen(true)}
+              />
+              <AnimatedWidthContainer isOpen={isMainMenuOpen} onExitComplete={() => setIsSearchOpen(true)}>
+                <Menu
+                  mode="horizontal"
+                  selectable={false}
+                  style={{ borderBottom: 'none', width: '100%' }}
+                  items={[
+                    {
+                      key: 'leagues',
+                      onClick: () => navigate(Routes.LEAGUE),
+                      label: <FormattedMessage {...messages.leaguesLink} />,
+                    },
+                    {
+                      key: 'mcrvc',
+                      onClick: () => navigate(Routes.MCRVC),
+                      label: <FormattedMessage {...messages.mcrvcLink} />,
+                    },
+                    {
+                      key: 'statistics',
+                      onClick: () => navigate(Routes.STATISTICS),
+                      label: <FormattedMessage {...messages.statisticsLink} />,
+                    },
+                    {
+                      key: 'articles',
+                      onClick: () => navigate(Routes.ARTICLES),
+                      label: <FormattedMessage {...messages.articleLink} />,
+                    },
+                    {
+                      key: 'about',
+                      onClick: () => navigate(Routes.ABOUT_US),
+                      label: <FormattedMessage {...messages.aboutUsLink} />,
+                    },
+                  ]}
+                />
+              </AnimatedWidthContainer>
+            </S.MenuContainer>
           </S.LeftSection>
-          <S.MenuContainer>
-            <Menu
-              mode="horizontal"
-              selectable={false}
-              style={{ borderBottom: 'none', display: 'flex', justifyContent: 'center', width: '100%' }}
-              items={[
-                {
-                  key: 'leagues',
-                  onClick: () => navigate(Routes.LEAGUE),
-                  label: <FormattedMessage {...messages.leaguesLink} />,
-                },
-                {
-                  key: 'mcrvc',
-                  onClick: () => navigate(Routes.MCRVC),
-                  label: <FormattedMessage {...messages.mcrvcLink} />,
-                },
-                {
-                  key: 'statistics',
-                  onClick: () => navigate(Routes.STATISTICS),
-                  label: <FormattedMessage {...messages.statisticsLink} />,
-                },
-                {
-                  key: 'articles',
-                  onClick: () => navigate(Routes.ARTICLES),
-                  label: <FormattedMessage {...messages.articleLink} />,
-                },
-                {
-                  key: 'about',
-                  onClick: () => navigate(Routes.ABOUT_US),
-                  label: <FormattedMessage {...messages.aboutUsLink} />,
-                },
-              ]}
-            />
-          </S.MenuContainer>
           <S.RightSection>
             <Button
               onClick={toggleLanguage}
@@ -183,7 +208,7 @@ export const Header: React.FC = () => {
               />
             </Button>
             {isUserLoggedIn && (
-              <S.UserMatchesIconContainer onClick={() => setMatchesDrawerOpen(true)}>
+              <S.UserMatchesIconContainer onClick={onMyMatchesOpen}>
                 <FontAwesomeIcon icon={faPersonRifle} />
                 {(userMatches.data?.total ?? 0) > 0 && (
                   <S.TotalMatchesCount>{userMatches.data?.total}</S.TotalMatchesCount>

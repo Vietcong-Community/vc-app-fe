@@ -12,6 +12,8 @@ import { messages } from './messages';
 
 import * as S from './Mcrvc.style';
 
+const SPRING_FB_LINK = 'https://www.facebook.com/events/645052631336457/';
+
 export const McrvcCont: React.FC = () => {
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-mcrvc', title: <FormattedMessage {...messages.title} /> }]}>
@@ -22,7 +24,7 @@ export const McrvcCont: React.FC = () => {
         <S.Content>
           <FormattedMessage {...messages.description} />
           <Gap defaultHeight={32} />
-          <S.Dates>
+          <S.Dates onClick={() => window.open(SPRING_FB_LINK, '_blank')} style={{ cursor: 'pointer' }}>
             <S.DateBox>
               <b>
                 <FormattedMessage {...messages.spring} />

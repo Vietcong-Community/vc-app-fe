@@ -6,7 +6,7 @@ import { IPagination, IUser } from '../interfaces';
 import { IMeTeams } from '../teams/interfaces';
 
 import { UsersEndpoints } from './endpoints';
-import { IMeMatch } from './interfaces';
+import { IMeMatch, IUserListQuery } from './interfaces';
 
 export const useUserDetail = (id: string) => {
   return useQuery({
@@ -40,5 +40,17 @@ export const useUserMatches = (enabled = true, query?: IPagination) => {
     },
     staleTime: 0,
     enabled,
+  });
+};
+
+export const useUserList = (query?: IUserListQuery, refetchOnMount?: boolean | 'always', enabled = true) => {
+  return useQuery({
+    queryKey: ['users', JSON.stringify(query ?? {})],
+    queryFn: async () => {
+      const { data } = await get<{ users: IUser[]; total: number }>(UsersEndpoints.USERS, undefined, query);
+      return data;
+    },
+    enabled,
+    refetchOnMount: refetchOnMount ?? true,
   });
 };

@@ -9,7 +9,7 @@ interface IProps<T> {
   initialValues?: Partial<T>;
   layout?: 'horizontal' | 'inline' | 'vertical';
   requiredMark?: boolean;
-  onSubmit: (values: T) => void;
+  onSubmit?: (values: T) => void;
   scrollToFirstError?: boolean;
   validateTrigger?: string | string[] | false;
 }

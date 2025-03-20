@@ -33,24 +33,29 @@ export const Content = styled.div`
 
 export const LeftSection = styled.div`
   align-items: center;
+  box-sizing: border-box;
   display: flex;
-  flex: 1;
   height: 100%;
   justify-content: flex-start; /* Ujistí se, že logo bude vlevo */
+  padding-right: 1rem;
+  width: 100%;
 `;
 
 export const Logo = styled.div`
   cursor: pointer;
   height: 100%;
   display: flex;
+  margin-right: 32px;
   align-items: center;
 `;
 
 export const MenuContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 2;
+  width: 100%;
+
+  svg {
+    color: ${(props: IThemeProps) => props.theme.mainColors.accent};
+  }
 
   .ant-menu-horizontal {
     background-color: ${(props: IThemeProps) => props.theme.mainColors.background} !important;
@@ -66,7 +71,6 @@ export const MenuContainer = styled.div`
 export const RightSection = styled.div`
   align-items: center;
   display: flex;
-  flex: 1;
   justify-content: flex-end; /* Ujistí se, že prvky vpravo budou na pravé straně */
 `;
 

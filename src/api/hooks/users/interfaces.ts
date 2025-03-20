@@ -1,4 +1,5 @@
 import { MatchStatus } from '../../../constants/enums';
+import { IPagination } from '../interfaces';
 import { ILadderItem } from '../league/interfaces';
 
 export interface IMeMatch {
@@ -14,4 +15,8 @@ export interface IMeMatch {
   opponentScore?: number;
   startDate: string;
   status: MatchStatus;
+}
+
+export interface IUserListQuery extends IPagination {
+  nickname?: string;
 }

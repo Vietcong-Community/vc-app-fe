@@ -1,5 +1,5 @@
 export enum TeamEndpoints {
-  CREATE_TEAM = '/teams',
+  TEAMS = '/teams',
   TEAM_BY_ID = '/teams/{id}',
   TEAM_PLAYERS = '/teams/{id}/users',
   REQUEST_TO_JOIN_TEAM = '/teams/{teamId}/join',

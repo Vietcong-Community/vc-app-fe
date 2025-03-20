@@ -22,6 +22,8 @@
   "app.components.Header.aboutUsLink": "O nás",
   "app.components.Header.articleLink": "Články",
   "app.components.Header.changePasswordLink": "Změna hesla",
+  "app.components.Header.components.GlobalSearch.players": "Hráči",
+  "app.components.Header.components.GlobalSearch.teams": "Týmy",
   "app.components.Header.components.MyMatches.noMatches": "Nemáš naplánovaný žádný špíl.",
   "app.components.Header.components.MyMatches.title": "Mé zápasy",
   "app.components.Header.czech": "CZ",

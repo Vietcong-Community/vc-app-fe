@@ -12,6 +12,7 @@ import {
   ICreateTeam,
   IMeTeams,
   ITeam,
+  ITeamListQuery,
   ITeamPlayers,
   IUpdateTeam,
   IUpdateUserInTeam,
@@ -137,7 +138,7 @@ export const useTeamSeasons = (teamId: string, refetchOnMount?: boolean | 'alway
 export const useCreateTeam = () => {
   return useMutation({
     mutationFn: async (payload: ICreateTeam) => {
-      const { data } = await post<ICreateTeam, IIdentifiedEntity>(TeamEndpoints.CREATE_TEAM, payload);
+      const { data } = await post<ICreateTeam, IIdentifiedEntity>(TeamEndpoints.TEAMS, payload);
       return data;
     },
   });
@@ -172,5 +173,17 @@ export const useRemoveUserFromTeam = () => {
       });
       return data;
     },
+  });
+};
+
+export const useTeamsList = (query?: ITeamListQuery, refetchOnMount?: boolean | 'always', enabled = true) => {
+  return useQuery({
+    queryKey: ['teams', JSON.stringify(query ?? {})],
+    queryFn: async () => {
+      const { data } = await get<{ teams: ITeam[]; total: number }>(TeamEndpoints.TEAMS, undefined, query);
+      return data;
+    },
+    enabled,
+    refetchOnMount: refetchOnMount ?? true,
   });
 };

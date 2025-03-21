@@ -219,11 +219,11 @@ export const ArticleDetailCont: React.FC = () => {
                 </S.AuthorInfo>
               </S.AuthorContainer>
               <Gap defaultHeight={32} />
+              <Comments articleId={query.articleId} />
+              <Gap defaultHeight={32} />
             </S.Container>
           )}
         </EaseInOutContainer>
-        <Comments articleId={query.articleId} />
-        <Gap defaultHeight={32} />
       </ContentLayout>
       <DeleteArticleModal
         articleId={query.articleId}

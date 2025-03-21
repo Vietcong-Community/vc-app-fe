@@ -4,7 +4,7 @@ import { BreakPoints, IThemeProps } from '../../../../theme/theme';
 import { makeMediaQuery } from '../../../../utils/mediaQuery';
 
 export const Card = styled.div`
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
 `;
 

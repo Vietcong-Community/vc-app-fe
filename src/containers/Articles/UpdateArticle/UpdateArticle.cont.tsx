@@ -60,6 +60,7 @@ export const UpdateArticleCont: React.FC = () => {
         perex: values.perex,
         categoryId: values.categoryId,
         content: articleContent,
+        isPublished: articleDetail.data?.isPublished,
       });
       await queryClient.refetchQueries({ queryKey: ['articleById', query.articleId] });
       showNotification(messages.updateSuccess);

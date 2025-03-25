@@ -28,6 +28,10 @@ export const Container = styled.div`
     text-align: right;
   }
 
+  .ql-align-justify {
+    text-align: justify;
+  }
+
   h1 {
     margin-bottom: 8px;
     margin-top: 32px;

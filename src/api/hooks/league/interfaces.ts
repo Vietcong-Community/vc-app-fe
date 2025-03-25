@@ -266,3 +266,11 @@ export interface IStatisticsItem {
   usefulness: number;
   user: IUser;
 }
+
+export interface ICreatePlayerRoundStats {
+  nation: Nation;
+  flags: number;
+  kills: number;
+  deaths: number;
+  playerInMatchId: string;
+}

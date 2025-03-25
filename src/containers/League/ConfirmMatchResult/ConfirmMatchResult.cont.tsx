@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
-import { useConfirmMatchScore, useMatchDetail } from '../../../api/hooks/league/api';
+import { useConfirmMatchScore, useMatchDetail, useRecalculatePlayerStats } from '../../../api/hooks/league/api';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -24,9 +24,11 @@ export const ConfirmMatchResultCont: React.FC = () => {
 
   const matchDetail = useMatchDetail(query.matchId);
   const confirmMatchResult = useConfirmMatchScore(query.matchId);
+  const recalculatePlayerStats = useRecalculatePlayerStats(query.matchId);
 
   const onSubmit = async () => {
     try {
+      await recalculatePlayerStats.mutateAsync();
       await confirmMatchResult.mutateAsync();
       showNotification(messages.confirmSuccess);
       navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));

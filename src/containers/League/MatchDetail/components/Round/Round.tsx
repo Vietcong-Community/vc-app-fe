@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
@@ -27,8 +27,10 @@ import { NotificationType } from '../../../../../providers/NotificationsProvider
 import { Routes } from '../../../../../routes/enums';
 import { theme } from '../../../../../theme/theme';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
+import { AddPlayerStatsForRoundModal } from '../AddPlayerStatsForRoundModal/AddPlayerStatsForRoundModal';
 import { MPResultModal } from '../MPResultModal/MPResultModal';
 import { RemoveRoundModal } from '../RemoveRoundModal/RemoveRoundModal';
+import { RemoveRoundStatsModal } from '../RemoveRoundStatsModal/RemoveRoundStatsModal';
 import { UpdateRoundModal } from '../UpdateRoundModal/UpdateMatchModal';
 
 import { messages } from './messages';
@@ -66,6 +68,8 @@ export const Round: React.FC<IProps> = (props: IProps) => {
     showStatistics,
     userIsAdmin,
   } = props;
+  const [addPlayerStatsModalIsOpen, setAddPlayerStatsModalIsOpen] = useState<boolean>(false);
+  const [removePlayerStatsModalIsOpen, setRemovePlayerStatsModalIsOpen] = useState<boolean>(false);
   const [updateRoundModalIsOpen, setUpdateRoundModalIsOpen] = useState<boolean>(false);
   const [removeRoundModalIsOpen, setRemoveRoundModalIsOpen] = useState<boolean>(false);
   const [isMpResultModalOpen, setIsMpResultModalOpen] = useState<boolean>(false);
@@ -171,6 +175,63 @@ export const Round: React.FC<IProps> = (props: IProps) => {
       return { ...item, nickname: player?.user.nickname, playerId: player?.user.id };
     });
 
+  const addPlayerStatsOptions = useMemo(() => {
+    const challengerPlayersOptions =
+      challengerMatchPlayers.map((player) => {
+        return { id: player.id, value: player.id, label: player?.user?.nickname };
+      }) ?? [];
+    const opponentMatchPlayersOptions =
+      opponentMatchPlayers.map((player) => {
+        return { id: player.id, value: player.id, label: player?.user?.nickname };
+      }) ?? [];
+    const hostMatchPlayersOptions =
+      hostMatchPlayers.map((player) => {
+        return { id: player.id, value: player.id, label: player?.user?.nickname };
+      }) ?? [];
+
+    const result = [...challengerPlayersOptions, ...opponentMatchPlayersOptions, ...hostMatchPlayersOptions];
+
+    return result.filter((item) => {
+      const statsExists = round.playersRoundStats.find((stats) => stats.playerInMatchId === item.id);
+      return !statsExists;
+    });
+  }, [
+    JSON.stringify(challengerMatchPlayers),
+    JSON.stringify(hostMatchPlayers),
+    JSON.stringify(opponentMatchPlayers),
+    JSON.stringify(round.playersRoundStats),
+  ]);
+
+  const removePlayerStatsOptions = useMemo(() => {
+    return (
+      round.playersRoundStats
+        .map((item) => {
+          const challengerPlayer = challengerMatchPlayers.find((challenger) => challenger.id === item.playerInMatchId);
+          if (challengerPlayer) {
+            return { id: item.id, value: item.id, label: challengerPlayer.user.nickname };
+          }
+
+          const opponentPlayer = opponentMatchPlayers.find((opponent) => opponent.id === item.playerInMatchId);
+          if (opponentPlayer) {
+            return { id: item.id, value: item.id, label: opponentPlayer.user.nickname };
+          }
+
+          const hostPlayer = hostMatchPlayers.find((host) => host.id === item.playerInMatchId);
+          if (hostPlayer) {
+            return { id: item.id, value: item.id, label: hostPlayer.user.nickname };
+          }
+
+          return undefined;
+        })
+        .filter((item) => !!item) ?? []
+    );
+  }, [
+    JSON.stringify(challengerMatchPlayers),
+    JSON.stringify(hostMatchPlayers),
+    JSON.stringify(opponentMatchPlayers),
+    JSON.stringify(round.playersRoundStats),
+  ]);
+
   const adminItems: MenuProps['items'] = [
     {
       label: <FormattedMessage {...messages.roundUpdate} />,
@@ -181,6 +242,18 @@ export const Round: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.roundDelete} />,
       key: '2',
       onClick: () => setRemoveRoundModalIsOpen(true),
+    },
+    {
+      label: <FormattedMessage {...messages.addStats} />,
+      key: '3',
+      onClick: () => setAddPlayerStatsModalIsOpen(true),
+      disabled: addPlayerStatsOptions.length === 0,
+    },
+    {
+      label: <FormattedMessage {...messages.removeStats} />,
+      key: '4',
+      onClick: () => setRemovePlayerStatsModalIsOpen(true),
+      disabled: removePlayerStatsOptions.length === 0,
     },
   ];
 
@@ -357,6 +430,19 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         onClose={() => setIsMpResultModalOpen(false)}
         showFileUrl={userIsAdmin}
         url={round.scoreFile?.url}
+      />
+      <AddPlayerStatsForRoundModal
+        isOpen={addPlayerStatsModalIsOpen}
+        onClose={() => setAddPlayerStatsModalIsOpen(false)}
+        matchId={matchId}
+        matchRoundId={round.id}
+        playerOptions={addPlayerStatsOptions}
+      />
+      <RemoveRoundStatsModal
+        isOpen={removePlayerStatsModalIsOpen}
+        onClose={() => setRemovePlayerStatsModalIsOpen(false)}
+        matchId={matchId}
+        roundStatsOptions={removePlayerStatsOptions}
       />
     </>
   );

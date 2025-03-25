@@ -37,6 +37,14 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.Round.roundDelete',
     defaultMessage: 'Smazat kolo',
   },
+  addStats: {
+    id: 'app.containers.League.MatchDetail.components.Round.addStats',
+    defaultMessage: 'Přidat statistiky hráče',
+  },
+  removeStats: {
+    id: 'app.containers.League.MatchDetail.components.Round.removeStats',
+    defaultMessage: 'Odstranit statistiky hráče',
+  },
   statisticsByFile: {
     id: 'app.containers.League.MatchDetail.components.Round.statisticsByFile',
     defaultMessage: 'MP result',

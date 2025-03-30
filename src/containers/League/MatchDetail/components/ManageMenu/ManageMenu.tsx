@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
@@ -18,6 +19,7 @@ interface IProps {
   canEnterResult?: boolean;
   matchId: string;
   seasonId?: string;
+  setIsAddPlayerToMatchModalOpen: (value: boolean) => void;
   setIsCreateRoundModalOpen: (value: boolean) => void;
   setIsSortRoundsModalOpen: (value: boolean) => void;
   setIsUpdateMatchModalOpen: (value: boolean) => void;
@@ -32,6 +34,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     canConfirmResult = false,
     matchId,
     seasonId,
+    setIsAddPlayerToMatchModalOpen,
     setIsCreateRoundModalOpen,
     setIsSortRoundsModalOpen,
     setIsUpdateMatchModalOpen,
@@ -41,11 +44,17 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const [isMatchStatusModalOpen, setIsMatchStatusModalOpen] = useState<boolean>(false);
   const [isDeleteMatchModalOpen, setIsDeleteMatchModalOpen] = useState<boolean>(false);
   const { navigate } = useRouter<{ id: string }>();
+  const queryClient = useQueryClient();
 
   const recalculatePlayerStats = useRecalculatePlayerStats(matchId);
 
   const onConfirmMatch = async () => {
     navigate(Routes.MATCH_CHALLENGE.replace(':matchId', matchId));
+  };
+
+  const recalculateStats = async () => {
+    await recalculatePlayerStats.mutateAsync();
+    await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
   };
 
   const adminItems: MenuProps['items'] = [
@@ -63,7 +72,8 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.recalculatePlayerStats} />,
       key: '3',
-      onClick: () => recalculatePlayerStats.mutateAsync(),
+      onClick: recalculateStats,
+      disabled: status === MatchStatus.FINISHED,
     },
     {
       label: <FormattedMessage {...messages.updateMatch} />,
@@ -81,6 +91,12 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.createRound} />,
       key: '6',
       onClick: () => setIsCreateRoundModalOpen(true),
+      disabled: status === MatchStatus.FINISHED,
+    },
+    {
+      label: <FormattedMessage {...messages.addPlayer} />,
+      key: '7',
+      onClick: () => setIsAddPlayerToMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
     },
   ];

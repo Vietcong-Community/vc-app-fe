@@ -15,6 +15,7 @@ import { AnimatedHeightContainer } from '../../../../../components/Animations/An
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { messages } from '../../messages';
+import { RemovePlayerFromMatchModal } from '../RemovePlayerFromMatchModal/RemovePlayerFromMatchModal';
 
 import * as S from './Team.style';
 
@@ -27,13 +28,15 @@ interface IProps {
   goToPlayerDetail: (id: string) => void;
   goToTeamDetail: (id: string) => void;
   map?: IMap;
+  matchId: string;
   showLineUp: boolean;
   players: ITeamMatchPlayer[];
   team?: ITeam;
 }
 
 export const Team: React.FC<IProps> = (props: IProps) => {
-  const { eloPoints, goToPlayerDetail, goToTeamDetail, map, players, showLineUp, team } = props;
+  const { eloPoints, goToPlayerDetail, goToTeamDetail, map, matchId, players, showLineUp, team } = props;
+  const [isRemovePlayerFromMatchModalOpen, setIsRemovePlayerFromMatchModalOpen] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const navigateToTeam = () => {
@@ -51,108 +54,118 @@ export const Team: React.FC<IProps> = (props: IProps) => {
   };
 
   return (
-    <Card style={{ textAlign: 'start' }}>
-      <S.TeamInfo>
-        <div style={{ alignItems: 'center', cursor: 'pointer', display: 'flex', gap: 8, justifyContent: 'center' }}>
-          <Avatar shape="square" size={48} icon={getTeamIcon()} style={{ minWidth: 48 }} />
-          <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
-        </div>
-        <S.TeamTag>{team?.tag ?? ''}</S.TeamTag>
-      </S.TeamInfo>
-      {eloPoints && (
-        <>
-          <Gap defaultHeight={8} />
-          <S.ELO>
-            <FormattedMessage {...messages.eloTitle} />
-            <span>{eloPoints}</span>
-          </S.ELO>
-        </>
-      )}
-      <Gap defaultHeight={8} />
+    <>
+      <Card style={{ textAlign: 'start' }}>
+        <S.TeamInfo>
+          <div style={{ alignItems: 'center', cursor: 'pointer', display: 'flex', gap: 8, justifyContent: 'center' }}>
+            <Avatar shape="square" size={48} icon={getTeamIcon()} style={{ minWidth: 48 }} />
+            <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
+          </div>
+          <S.TeamTag>{team?.tag ?? ''}</S.TeamTag>
+        </S.TeamInfo>
+        {eloPoints && (
+          <>
+            <Gap defaultHeight={8} />
+            <S.ELO>
+              <FormattedMessage {...messages.eloTitle} />
+              <span>{eloPoints}</span>
+            </S.ELO>
+          </>
+        )}
+        <Gap defaultHeight={8} />
 
-      <S.ELO>
-        <FormattedMessage {...messages.map} />
-        <span>{map?.name ?? ''}</span>
-      </S.ELO>
-      {showLineUp && (
-        <>
-          <Gap defaultHeight={8} />
-          <S.LineUpTitle>
-            <div onClick={() => setIsOpen((val) => !val)}>
-              <FormattedMessage {...messages.lineup} />
-            </div>
-            <div
-              onClick={() => setIsOpen((val) => !val)}
-              style={{ alignItems: 'center', display: 'flex', fontSize: 14, gap: 8, justifyContent: 'center' }}
-            >
-              {isOpen ? (
-                <>
-                  <FormattedMessage {...messages.close} />
-                  <S.Icon>
-                    <UpOutlined />
-                  </S.Icon>
-                </>
-              ) : (
-                <>
-                  <FormattedMessage {...messages.open} />
-                  <S.Icon>
-                    <DownOutlined />
-                  </S.Icon>
-                </>
+        <S.ELO>
+          <FormattedMessage {...messages.map} />
+          <span>{map?.name ?? ''}</span>
+        </S.ELO>
+        {showLineUp && (
+          <>
+            <Gap defaultHeight={8} />
+            <S.LineUpTitle>
+              <div onClick={() => setIsOpen((val) => !val)}>
+                <FormattedMessage {...messages.lineup} />
+              </div>
+              <div
+                onClick={() => setIsOpen((val) => !val)}
+                style={{ alignItems: 'center', display: 'flex', fontSize: 14, gap: 8, justifyContent: 'center' }}
+              >
+                {isOpen ? (
+                  <>
+                    <FormattedMessage {...messages.close} />
+                    <S.Icon>
+                      <UpOutlined />
+                    </S.Icon>
+                  </>
+                ) : (
+                  <>
+                    <FormattedMessage {...messages.open} />
+                    <S.Icon>
+                      <DownOutlined />
+                    </S.Icon>
+                  </>
+                )}
+              </div>
+            </S.LineUpTitle>
+            <AnimatedHeightContainer isOpen={isOpen}>
+              <Gap defaultHeight={16} />
+              {players.length === 0 && <FormattedMessage {...messages.lineupEmpty} />}
+              {players.length > 0 && (
+                <S.LineUp>
+                  {players.map((player: ITeamMatchPlayer) => {
+                    return (
+                      <S.Player>
+                        <div
+                          style={{
+                            cursor: 'pointer',
+                            display: 'flex',
+                            gap: 8,
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                          }}
+                          onClick={() => goToPlayerDetail(player.user.id)}
+                        >
+                          <Avatar
+                            size={24}
+                            icon={
+                              player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />
+                            }
+                          />
+                          <b>
+                            {player.isHost ? '(H) ' : ''}
+                            {player.user.nickname}
+                          </b>
+                        </div>
+                        <Gap defaultHeight={8} />
+                        <S.Statistics>
+                          <div>
+                            <FontAwesomeIcon icon={faFlag} /> {player.flags}
+                          </div>
+                          <div>
+                            <FontAwesomeIcon icon={faSkull} /> {player.kills}
+                          </div>
+                          <div>
+                            <FontAwesomeIcon icon={faCross} /> {player.deaths}
+                          </div>
+                        </S.Statistics>
+                      </S.Player>
+                    );
+                  })}
+                </S.LineUp>
               )}
-            </div>
-          </S.LineUpTitle>
-          <AnimatedHeightContainer isOpen={isOpen}>
-            <Gap defaultHeight={16} />
-            {players.length === 0 && <FormattedMessage {...messages.lineupEmpty} />}
-            {players.length > 0 && (
-              <S.LineUp>
-                {players.map((player: ITeamMatchPlayer) => {
-                  return (
-                    <S.Player>
-                      <div
-                        style={{
-                          cursor: 'pointer',
-                          display: 'flex',
-                          gap: 8,
-                          justifyContent: 'flex-start',
-                          alignItems: 'center',
-                        }}
-                        onClick={() => goToPlayerDetail(player.user.id)}
-                      >
-                        <Avatar
-                          size={24}
-                          icon={player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />}
-                        />
-                        <b>
-                          {player.isHost ? '(H) ' : ''}
-                          {player.user.nickname}
-                        </b>
-                      </div>
-                      <Gap defaultHeight={8} />
-                      <S.Statistics>
-                        <div>
-                          <FontAwesomeIcon icon={faFlag} /> {player.flags}
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={faSkull} /> {player.kills}
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={faCross} /> {player.deaths}
-                        </div>
-                      </S.Statistics>
-                    </S.Player>
-                  );
-                })}
-              </S.LineUp>
-            )}
-          </AnimatedHeightContainer>
-        </>
-      )}
-      <Gap defaultHeight={32} />
-      <S.LinkButton onClick={navigateToTeam}>
-        <FormattedMessage {...messages.goToTeamDetail} />
-      </S.LinkButton>
-    </Card>
+            </AnimatedHeightContainer>
+          </>
+        )}
+        <Gap defaultHeight={32} />
+        <S.LinkButton onClick={navigateToTeam}>
+          <FormattedMessage {...messages.goToTeamDetail} />
+        </S.LinkButton>
+      </Card>
+      <RemovePlayerFromMatchModal
+        isOpen={isRemovePlayerFromMatchModalOpen}
+        onClose={() => setIsRemovePlayerFromMatchModalOpen(false)}
+        matchId={matchId}
+        playerId={''} // TODO REMOVE
+      />
+    </>
   );
 };

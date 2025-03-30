@@ -11,6 +11,7 @@ import { LeagueEndpoints } from './endpoints';
 import {
   IAcceptMatchChallenge,
   ICreateMatchChallenge,
+  ICreatePlayerRoundStats,
   ICreateRound,
   IExpectedEloPointsItem,
   IFileForMarchScoreList,
@@ -447,5 +448,39 @@ export const useSeasonStatsList = (
     },
     staleTime,
     refetchOnMount: refetchOnMount ?? true,
+  });
+};
+
+export const useAddPlayerToMatch = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (userId: string) => {
+      const { data } = await post<undefined, undefined>(LeagueEndpoints.ADD_PLAYER_TO_MATCH, undefined, {
+        matchId,
+        userId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useCreatePlayerRoundStats = (matchRoundId: string) => {
+  return useMutation({
+    mutationFn: async (payload: ICreatePlayerRoundStats) => {
+      const { data } = await post<ICreatePlayerRoundStats, undefined>(LeagueEndpoints.CREATE_ROUND_STATS, payload, {
+        matchRoundId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useRemovePlayerRoundStats = () => {
+  return useMutation({
+    mutationFn: async (roundStatsId: string) => {
+      const { data } = await del(LeagueEndpoints.REMOVE_PLAYER_ROUND_STATS, {
+        roundStatsId,
+      });
+      return data;
+    },
   });
 };

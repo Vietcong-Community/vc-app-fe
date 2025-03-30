@@ -30,13 +30,14 @@ export const useTeamDetail = (id: string, refetchOnMount?: boolean | 'always') =
   });
 };
 
-export const useTeamPlayers = (id: string, refetchOnMount?: boolean | 'always') => {
+export const useTeamPlayers = (id?: string, refetchOnMount?: boolean | 'always', enabled = true) => {
   return useQuery({
     queryKey: ['teamPlayers', id],
     queryFn: async () => {
       const { data } = await get<{ items: ITeamPlayers[] }>(TeamEndpoints.TEAM_PLAYERS, { id });
       return data;
     },
+    enabled: enabled && !!id,
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? 'always',
   });

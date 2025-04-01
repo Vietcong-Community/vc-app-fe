@@ -38,7 +38,7 @@ export const AboutUsCont: React.FC = () => {
                   mcrvc: (chunks) => (
                     <S.Link>
                       <ForwardFilled />
-                      <a href={Routes.MCRVC} rel="noopener noreferrer">
+                      <a href={Routes.CHAMPIONSHIP} rel="noopener noreferrer">
                         {chunks}
                       </a>
                       <BackwardFilled />

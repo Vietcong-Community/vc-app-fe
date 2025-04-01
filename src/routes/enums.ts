@@ -10,7 +10,6 @@ export enum Routes {
   PUBLIC_CHANGE_PASSWORD = '/zapomenute-heslo/:token',
   NOT_FOUND = '/stranka-nenalezena',
   // USER ROUTES
-  MCRVC = '/mcrvc',
   USER_PROFILE = '/uzivatel/:id',
   PRIVATE_CHANGE_PASSWORD = '/zmena-hesla',
   EDIT_PROFILE = '/uprava-uzivatele/:id',
@@ -25,6 +24,11 @@ export enum Routes {
   SET_MATCH_SCORE = '/zadani-vysledku-zapasu/:matchId',
   CONFIRM_MATCH_SCORE = '/potvrzeni-vysledku-zapasu/:matchId',
   MATCH_DETAIL = '/detail-zapasu/:matchId',
+  // TOURNAMENTS
+  CHAMPIONSHIP = '/mistrovstvi-cr',
+  CHAMPIONSHIP_DETAIL = '/mistrovstvi-cr/:id',
+  CHAMPIONSHIP_MATCH_DETAIL = '/mistrovstvi-cr/zapas/:matchId',
+  TOURNAMENT_MAP_PICK = '/skrtani-map/:matchId',
   // ARTICLES
   ARTICLES = '/clanky',
   ARTICLE_DETAIL = '/clanek/:articleId',

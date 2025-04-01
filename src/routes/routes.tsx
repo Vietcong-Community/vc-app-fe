@@ -9,6 +9,9 @@ import { ArticleDetailCont } from '../containers/Articles/ArticleDetail/ArticleD
 import { CreateArticleCont } from '../containers/Articles/CreateArticle/CreateArticle.cont';
 import { ArticlesOverview } from '../containers/Articles/Overview/Articles.cont';
 import { UpdateArticleCont } from '../containers/Articles/UpdateArticle/UpdateArticle.cont';
+import { ChampionshipDetailCont } from '../containers/Championship/Detail/Detail.cont';
+import { ChampionshipMatchDetailCont } from '../containers/Championship/MatchDetail/MatchDetail.cont';
+import { ChampionshipOverview } from '../containers/Championship/Overview/Overview.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
@@ -17,7 +20,6 @@ import { MatchDetail } from '../containers/League/MatchDetail/MatchDetail.cont';
 import { OverviewCont } from '../containers/League/Overview/Overview.cont';
 import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail.cont';
 import { SetMatchScoreCont } from '../containers/League/SetMatchResult/SetMatchResult.cont';
-import { McrvcCont } from '../containers/Mcrvc/Mcrvc.cont';
 import { NotFoundPage } from '../containers/NotFoundPage/NotFoundPage';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
@@ -45,6 +47,10 @@ export const routesObject: RouteObject[] = [
       // LEAGUE
       { element: <OverviewCont />, path: Routes.LEAGUE },
       { element: <SeasonDetailCont />, path: Routes.SEASON_DETAIL },
+      // CHAMPIONSHIP
+      { element: <ChampionshipOverview />, path: Routes.CHAMPIONSHIP },
+      { element: <ChampionshipDetailCont />, path: Routes.CHAMPIONSHIP_DETAIL },
+      { element: <ChampionshipMatchDetailCont />, path: Routes.CHAMPIONSHIP_MATCH_DETAIL },
       // MATCHES
       { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
       { element: <CreateMatchCont />, path: Routes.MATCH_CREATE },
@@ -70,7 +76,6 @@ export const routesObject: RouteObject[] = [
       { element: <ChangePasswordCont />, path: Routes.PUBLIC_CHANGE_PASSWORD },
       { element: <StatisticsCont />, path: Routes.STATISTICS },
       { element: <AboutUsCont />, path: Routes.ABOUT_US },
-      { element: <McrvcCont />, path: Routes.MCRVC },
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
 
       { element: <NotFoundPage />, path: Routes.NOT_FOUND },

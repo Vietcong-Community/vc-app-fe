@@ -18,10 +18,10 @@ import { useRouter } from '../../../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
 import { BreakPoints } from '../../../../../theme/theme';
+import { canUserManageMatch } from '../../../../../utils/matchUtils';
 import { FutureMatches } from '../../../SeasonDetail/components/FutureMatches/FutureMatches';
 import { MatchRow } from '../../../components/MatchRow/MatchRow';
 import { ILadderTableRow, LADDER_COLUMNS } from '../../../types';
-import { canUserManageMatch } from '../../../utils';
 
 import { messages } from './messages';
 

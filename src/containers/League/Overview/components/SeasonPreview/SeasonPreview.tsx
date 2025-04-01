@@ -66,9 +66,9 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
       };
     }) ?? [];
 
+  const isSeasonActive = seasonDetail.status === SeasonStatus.ACTIVE;
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
   const noFinishedMatches = finishedMatches.data?.total === 0;
-  const isSeasonActive = seasonDetail.status === SeasonStatus.ACTIVE;
 
   return (
     <Flex vertical>
@@ -127,7 +127,7 @@ export const SeasonPreview: React.FC<IProps> = (props) => {
         <Table
           columns={LADDER_COLUMNS(
             isSmallerThanLg,
-            isPossibleToCreateMatch?.allowed,
+            isPossibleToCreateMatch?.allowed && isSeasonActive,
             (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', seasonDetail?.id)}?opponentId=${id}`),
             isPossibleToCreateMatch?.myTeamId,
           )}

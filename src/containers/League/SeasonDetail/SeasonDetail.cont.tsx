@@ -201,7 +201,7 @@ export const SeasonDetailCont: React.FC = () => {
         {isSeasonActive && (
           <S.Matches>
             <FutureMatches
-              canCreateNewMatch={isPossibleToCreateMatch?.allowed}
+              canCreateNewMatch={isPossibleToCreateMatch?.allowed && isSeasonActive}
               onMatchCreateClick={onMatchCreateClick}
               seasonId={query.seasonId}
             />
@@ -218,7 +218,7 @@ export const SeasonDetailCont: React.FC = () => {
                     <Gap defaultHeight={16} />
                     <FormattedMessage {...messages.noFinishedMatches} />
                     <Gap defaultHeight={8} />
-                    {isPossibleToCreateMatch?.allowed && (
+                    {isPossibleToCreateMatch?.allowed && isSeasonActive && (
                       <div>
                         <FormattedMessage
                           {...messages.createMatchLink}
@@ -261,7 +261,7 @@ export const SeasonDetailCont: React.FC = () => {
           <Button onClick={() => setIsMapListModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.openMapListModal} />
           </Button>
-          {isPossibleToCreateMatch?.allowed && season.data?.status === SeasonStatus.ACTIVE && (
+          {isPossibleToCreateMatch?.allowed && isSeasonActive && (
             <Button
               onClick={onMatchCreateClick}
               variant={MainButtonVariant.PRIMARY}
@@ -279,7 +279,7 @@ export const SeasonDetailCont: React.FC = () => {
           <Table
             columns={LADDER_COLUMNS(
               isSmallerThanMd,
-              isPossibleToCreateMatch?.allowed && season.data?.status === SeasonStatus.ACTIVE,
+              isPossibleToCreateMatch?.allowed && isSeasonActive,
               (id: string) => navigate(`${Routes.MATCH_CREATE.replace(':seasonId', query.seasonId)}?opponentId=${id}`),
               isPossibleToCreateMatch?.myTeamId,
             )}

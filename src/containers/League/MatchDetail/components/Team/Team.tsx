@@ -4,6 +4,8 @@ import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
 import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
 import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
+import { faUserCheck } from '@fortawesome/free-solid-svg-icons/faUserCheck';
+import { faUserXmark } from '@fortawesome/free-solid-svg-icons/faUserXmark';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from 'antd';
 import { FormattedMessage } from 'react-intl';
@@ -14,6 +16,8 @@ import { ITeam } from '../../../../../api/hooks/teams/interfaces';
 import { AnimatedHeightContainer } from '../../../../../components/Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { MatchStatus } from '../../../../../constants/enums';
+import { theme } from '../../../../../theme/theme';
 import { messages } from '../../messages';
 import { RemovePlayerFromMatchModal } from '../RemovePlayerFromMatchModal/RemovePlayerFromMatchModal';
 
@@ -29,13 +33,26 @@ interface IProps {
   goToTeamDetail: (id: string) => void;
   map?: IMap;
   matchId: string;
+  matchStatus?: MatchStatus;
   showLineUp: boolean;
   players: ITeamMatchPlayer[];
+  playerInMatchIdsAddedToSeasonStatistics: string[];
   team?: ITeam;
 }
 
 export const Team: React.FC<IProps> = (props: IProps) => {
-  const { eloPoints, goToPlayerDetail, goToTeamDetail, map, matchId, players, showLineUp, team } = props;
+  const {
+    eloPoints,
+    goToPlayerDetail,
+    goToTeamDetail,
+    map,
+    matchId,
+    matchStatus,
+    players,
+    playerInMatchIdsAddedToSeasonStatistics,
+    showLineUp,
+    team,
+  } = props;
   const [isRemovePlayerFromMatchModalOpen, setIsRemovePlayerFromMatchModalOpen] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -112,6 +129,10 @@ export const Team: React.FC<IProps> = (props: IProps) => {
               {players.length > 0 && (
                 <S.LineUp>
                   {players.map((player: ITeamMatchPlayer) => {
+                    const playerStatsSynced = !!playerInMatchIdsAddedToSeasonStatistics.find(
+                      (item) => item === player.id,
+                    );
+
                     return (
                       <S.Player>
                         <div
@@ -134,6 +155,10 @@ export const Team: React.FC<IProps> = (props: IProps) => {
                             {player.isHost ? '(H) ' : ''}
                             {player.user.nickname}
                           </b>
+                          <FontAwesomeIcon
+                            icon={playerStatsSynced ? faUserCheck : faUserXmark}
+                            style={{ color: playerStatsSynced ? theme.colors.green : theme.colors.red }}
+                          />
                         </div>
                         <Gap defaultHeight={8} />
                         <S.Statistics>
@@ -150,6 +175,19 @@ export const Team: React.FC<IProps> = (props: IProps) => {
                       </S.Player>
                     );
                   })}
+                  {(matchStatus === MatchStatus.FINISHED ||
+                    matchStatus === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION) && (
+                    <S.StatisticsHint>
+                      <div>
+                        <FontAwesomeIcon icon={faUserCheck} style={{ color: theme.colors.green, marginRight: 4 }} />
+                        <FormattedMessage {...messages.statisticsSynced} />
+                      </div>
+                      <div>
+                        <FontAwesomeIcon icon={faUserXmark} style={{ color: theme.colors.red, marginRight: 4 }} />
+                        <FormattedMessage {...messages.statisticsNotSynced} />
+                      </div>
+                    </S.StatisticsHint>
+                  )}
                 </S.LineUp>
               )}
             </AnimatedHeightContainer>

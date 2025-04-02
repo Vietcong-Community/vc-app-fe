@@ -309,6 +309,16 @@ export const useUpdateMatch = (matchId: string) => {
   });
 };
 
+export const useAddMatchStatsToOverallStats = (matchId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await post<undefined, undefined>(LeagueEndpoints.ADD_MATCH_STATS_TO_OVERALL_STATS, undefined, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
 export const useRecalculatePlayerStats = (matchId: string) => {
   return useMutation({
     mutationFn: async () => {

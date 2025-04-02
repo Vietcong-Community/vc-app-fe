@@ -1,6 +1,7 @@
 export enum Role {
   ADMIN = 'ADMIN',
   CONTENT_CREATOR = 'CONTENT_CREATOR',
+  STATS_ADMIN = 'STATS_ADMIN',
 }
 
 export enum Nation {

@@ -57,6 +57,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.ManageMenu.addPlayer',
     defaultMessage: 'Přidat hráče k zápasu',
   },
+  updateOverallStatistics: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.updateOverallStatistics',
+    defaultMessage: 'Aktualizovat celkové statistiky',
+  },
   deleteMatch: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteMatch',
     defaultMessage: 'Smazat zápas',

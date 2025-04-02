@@ -142,3 +142,11 @@ export const Statistics = styled.div`
     width: 35px;
   }
 `;
+
+export const StatisticsHint = styled.div`
+  align-items: start;
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  flex-direction: column;
+`;

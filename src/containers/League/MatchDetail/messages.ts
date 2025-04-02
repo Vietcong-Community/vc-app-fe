@@ -75,4 +75,12 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.uploadScreensForAllRoundsAlert',
     defaultMessage: 'Pro potvrzení zápasu je nutné nahrát screeny všech kol.',
   },
+  statisticsSynced: {
+    id: 'app.containers.League.MatchDetail.statisticsSynced',
+    defaultMessage: 'Statistiky byly započítány do celkového součtu.',
+  },
+  statisticsNotSynced: {
+    id: 'app.containers.League.MatchDetail.statisticsNotSynced',
+    defaultMessage: 'Statistiky ještě nebyly připsány.',
+  },
 });

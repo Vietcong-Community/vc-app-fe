@@ -57,6 +57,7 @@ export const MatchDetail: React.FC = () => {
   const seasonTeams = useSeasonTeams(matchDetail.data?.season?.id ?? '', [401], 'always', matchIsNotFinished);
   const ladder = useSeasonLadder(matchDetail.data?.season?.id);
 
+  const userIsStatisticsAdmin = !!userMe.data?.roles.includes(Role.STATS_ADMIN);
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
   const scoreExists = [
     MatchStatus.FINISHED,
@@ -162,6 +163,7 @@ export const MatchDetail: React.FC = () => {
             setIsUpdateMatchModalOpen={setIsUpdateMatchModalOpen}
             status={matchDetail.data?.status}
             userIsAdmin={userIsAdmin}
+            userIsStatisticsAdmin={userIsStatisticsAdmin}
           />
         )}
       </Flex>
@@ -270,6 +272,10 @@ export const MatchDetail: React.FC = () => {
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.challengerMap}
                     matchId={query.matchId}
+                    matchStatus={matchDetail.data?.status}
+                    playerInMatchIdsAddedToSeasonStatistics={
+                      matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
+                    }
                     players={[...(matchDetail.data?.challengerMatchPlayers ?? []), ...challengerHosts]}
                     showLineUp={showLineUp}
                     team={matchDetail.data?.challenger?.team}
@@ -280,6 +286,10 @@ export const MatchDetail: React.FC = () => {
                     goToTeamDetail={goToTeamDetail}
                     map={matchDetail.data?.opponentMap}
                     matchId={query.matchId}
+                    matchStatus={matchDetail.data?.status}
+                    playerInMatchIdsAddedToSeasonStatistics={
+                      matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
+                    }
                     players={[...(matchDetail.data?.opponentMatchPlayers ?? []), ...opponentHosts]}
                     showLineUp={showLineUp}
                     team={matchDetail.data?.opponent?.team}

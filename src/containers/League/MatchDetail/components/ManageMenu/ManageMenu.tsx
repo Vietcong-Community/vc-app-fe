@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
+import { useAddMatchStatsToOverallStats, useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
 import { MatchStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { Routes } from '../../../../../routes/enums';
@@ -24,6 +24,7 @@ interface IProps {
   setIsSortRoundsModalOpen: (value: boolean) => void;
   setIsUpdateMatchModalOpen: (value: boolean) => void;
   status?: MatchStatus;
+  userIsStatisticsAdmin: boolean;
   userIsAdmin: boolean;
 }
 
@@ -40,12 +41,14 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     setIsUpdateMatchModalOpen,
     status,
     userIsAdmin,
+    userIsStatisticsAdmin,
   } = props;
   const [isMatchStatusModalOpen, setIsMatchStatusModalOpen] = useState<boolean>(false);
   const [isDeleteMatchModalOpen, setIsDeleteMatchModalOpen] = useState<boolean>(false);
   const { navigate } = useRouter<{ id: string }>();
   const queryClient = useQueryClient();
 
+  const addMatchStatsToOverallStats = useAddMatchStatsToOverallStats(matchId);
   const recalculatePlayerStats = useRecalculatePlayerStats(matchId);
 
   const onConfirmMatch = async () => {
@@ -98,6 +101,15 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       key: '7',
       onClick: () => setIsAddPlayerToMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED,
+    },
+    {
+      label: <FormattedMessage {...messages.updateOverallStatistics} />,
+      key: '8',
+      onClick: () => addMatchStatsToOverallStats.mutateAsync(),
+      disabled: !(
+        (userIsAdmin || userIsStatisticsAdmin) &&
+        [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].includes(status as MatchStatus)
+      ),
     },
   ];
 

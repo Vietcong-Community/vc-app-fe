@@ -117,6 +117,7 @@ export const SeasonDetailCont: React.FC = () => {
   };
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
+  const userIsStatisticsAdmin = !!userMe.data?.roles.includes(Role.STATS_ADMIN);
   const noFinishedMatches = finishedMatches.data?.total === 0;
   const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
@@ -304,7 +305,7 @@ export const SeasonDetailCont: React.FC = () => {
           seasonId={query.seasonId}
         />
         <Divider style={{ margin: '16px 0' }} />
-        {!userIsAdmin && (
+        {!userIsAdmin && !userIsStatisticsAdmin && (
           <Flex vertical align="flex-start">
             <H2>
               <FormattedMessage {...messages.statisticsTitle} />
@@ -312,7 +313,7 @@ export const SeasonDetailCont: React.FC = () => {
             <FormattedMessage {...messages.statisticsDescription} />
           </Flex>
         )}
-        {userIsAdmin && <Statistics seasonId={query.seasonId} />}
+        {(userIsAdmin || userIsStatisticsAdmin) && <Statistics seasonId={query.seasonId} />}
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
       <MapListModal

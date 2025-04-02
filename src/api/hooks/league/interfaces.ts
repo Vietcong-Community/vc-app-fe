@@ -111,6 +111,7 @@ export interface IMatch {
   hostMatchPlayers?: IMatchPlayer[];
   challengerMatchPlayers?: IMatchPlayer[];
   opponentMatchPlayers?: IMatchPlayer[];
+  playerInMatchIdsAddedToSeasonStatistics: string[];
   rounds: IMatchRound[];
 }
 

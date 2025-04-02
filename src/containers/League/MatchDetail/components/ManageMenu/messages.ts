@@ -61,6 +61,18 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.components.ManageMenu.updateOverallStatistics',
     defaultMessage: 'Aktualizovat celkové statistiky',
   },
+  updateStatsSuccess: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.updateStatsSuccess',
+    defaultMessage: 'Statistiky hráčů aktualizovány',
+  },
+  updateStatsFailed: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.updateStatsFailed',
+    defaultMessage: 'Něco se při přičítání vlajek a zabití posralo.',
+  },
+  updateStatsFailedDescription: {
+    id: 'app.containers.League.MatchDetail.components.ManageMenu.updateStatsFailedDescription',
+    defaultMessage: 'Asi záporné skóre? Hlaš chybu hhackerovi!',
+  },
   deleteMatch: {
     id: 'app.containers.League.MatchDetail.components.ManageMenu.deleteMatch',
     defaultMessage: 'Smazat zápas',

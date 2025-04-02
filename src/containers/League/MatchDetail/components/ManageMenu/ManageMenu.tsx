@@ -6,7 +6,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { useAddMatchStatsToOverallStats, useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
 import { MatchStatus } from '../../../../../constants/enums';
+import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { useRouter } from '../../../../../hooks/RouterHook';
+import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../../../routes/enums';
 import { DeleteMatchModal } from '../DeleteMatchModal/DeleteMatchModal';
 import { MatchStatusModal } from '../MatchStatusModal/MatchStatusModal';
@@ -47,6 +49,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const [isDeleteMatchModalOpen, setIsDeleteMatchModalOpen] = useState<boolean>(false);
   const { navigate } = useRouter<{ id: string }>();
   const queryClient = useQueryClient();
+  const { showNotification } = useNotifications();
 
   const addMatchStatsToOverallStats = useAddMatchStatsToOverallStats(matchId);
   const recalculatePlayerStats = useRecalculatePlayerStats(matchId);
@@ -58,6 +61,16 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const recalculateStats = async () => {
     await recalculatePlayerStats.mutateAsync();
     await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+  };
+
+  const updateOverallStats = async () => {
+    try {
+      await addMatchStatsToOverallStats.mutateAsync();
+      await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+      showNotification(messages.updateStatsSuccess, undefined, NotificationType.INFO);
+    } catch {
+      showNotification(messages.updateStatsFailed, messages.updateStatsFailedDescription, NotificationType.ERROR);
+    }
   };
 
   const adminItems: MenuProps['items'] = [
@@ -105,7 +118,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.updateOverallStatistics} />,
       key: '8',
-      onClick: () => addMatchStatsToOverallStats.mutateAsync(),
+      onClick: updateOverallStats,
       disabled: !(
         (userIsAdmin || userIsStatisticsAdmin) &&
         [MatchStatus.FINISHED, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].includes(status as MatchStatus)

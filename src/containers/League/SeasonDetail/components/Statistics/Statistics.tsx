@@ -28,14 +28,18 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
   const statsBySeason = useSeasonStatsList(seasonId, { page: selectedMatchPage, limit: 10 }, 'always');
 
   const tableData: IStatisticTableRow[] =
-    statsBySeason.data?.seasonPlayers?.map((player) => ({
+    statsBySeason.data?.seasonPlayers?.map((player, index) => ({
       id: player.user.id,
+      position: index + 1 + 10 * (selectedMatchPage - 1),
       nickname: player.user.nickname,
+      totalMatches: player.totalMatches,
       flags: player.flags,
       kills: player.kills,
       deaths: player.deaths,
       kd: player.kd,
       usefulness: player.usefulness,
+      averageFlags: player.averageFlags,
+      averageUsefulness: player.averageUsefulness,
     })) ?? [];
 
   const onMatchPageChange = (pageNumber: number) => setSelectedMatchPage(pageNumber);
@@ -51,7 +55,6 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
         loading={statsBySeason.isLoading}
         onPageChange={onMatchPageChange}
         onRow={(item) => {
-          console.log(item.id);
           const onClick = () => navigate(Routes.USER_PROFILE.replace(':id', item.id));
 
           return {

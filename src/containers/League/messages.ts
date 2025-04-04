@@ -21,17 +21,25 @@ export const messages = defineMessages({
     id: 'app.containers.League.wins',
     defaultMessage: 'Výhry',
   },
+  winsShortcut: {
+    id: 'app.containers.League.winsShortcut',
+    defaultMessage: 'V',
+  },
   draws: {
     id: 'app.containers.League.draws',
     defaultMessage: 'Remízy',
+  },
+  drawsShortcut: {
+    id: 'app.containers.League.drawsShortcut',
+    defaultMessage: 'R',
   },
   loses: {
     id: 'app.containers.League.loses',
     defaultMessage: 'Prohry',
   },
-  winRate: {
-    id: 'app.containers.League.winRate',
-    defaultMessage: 'Win-rate ',
+  losesShortcut: {
+    id: 'app.containers.League.losesShortcut',
+    defaultMessage: 'P',
   },
   points: {
     id: 'app.containers.League.points',

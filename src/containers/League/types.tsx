@@ -138,7 +138,6 @@ export interface ILadderTableRow {
   wins: number;
   draws: number;
   loses: number;
-  winRate: string;
   eloPoints: number;
   seasonTeamId: string;
 }
@@ -165,7 +164,25 @@ export const LADDER_COLUMNS = (
           <>
             <b>{item?.name}</b>
             <br />
-            <FormattedMessage {...messages.points} />: <b>{item.eloPoints}</b>
+            <S.LadderTableLabel>
+              <FormattedMessage {...messages.points} />:{' '}
+            </S.LadderTableLabel>
+            <S.LadderTableValue>{item.eloPoints}</S.LadderTableValue>
+            <br />
+            <S.LadderTableLabel>
+              <FormattedMessage {...messages.wins} />:{' '}
+            </S.LadderTableLabel>
+            <S.LadderTableValue>{item.wins}</S.LadderTableValue>
+            <br />
+            <S.LadderTableLabel>
+              <FormattedMessage {...messages.draws} />:{' '}
+            </S.LadderTableLabel>
+            <S.LadderTableValue>{item.draws}</S.LadderTableValue>
+            <br />
+            <S.LadderTableLabel>
+              <FormattedMessage {...messages.loses} />:{' '}
+            </S.LadderTableLabel>
+            <S.LadderTableValue>{item.loses}</S.LadderTableValue>
           </>
         );
       },
@@ -180,7 +197,7 @@ export const LADDER_COLUMNS = (
       sorter: (a, b) => b.countOfMatches - a.countOfMatches,
     },
     {
-      title: <FormattedMessage {...messages.wins} />,
+      title: <FormattedMessage {...messages.winsShortcut} />,
       dataIndex: 'wins',
       key: '3',
       align: 'center',
@@ -188,7 +205,7 @@ export const LADDER_COLUMNS = (
       sorter: (a, b) => b.wins - a.wins,
     },
     {
-      title: <FormattedMessage {...messages.draws} />,
+      title: <FormattedMessage {...messages.drawsShortcut} />,
       dataIndex: 'draws',
       align: 'center',
       key: '4',
@@ -197,22 +214,12 @@ export const LADDER_COLUMNS = (
       responsive: ['md'],
     },
     {
-      title: <FormattedMessage {...messages.loses} />,
+      title: <FormattedMessage {...messages.losesShortcut} />,
       dataIndex: 'loses',
       align: 'center',
       key: '5',
       hidden: showShortLabels,
       sorter: (a, b) => b.loses - a.loses,
-    },
-    {
-      title: <FormattedMessage {...messages.winRate} />,
-      dataIndex: 'winRate',
-      key: '6',
-      align: 'center',
-      hidden: showShortLabels,
-      sorter: (a, b) => {
-        return Number(b.winRate.replace(' %', '')) - Number(a.winRate.replace(' %', ''));
-      },
     },
     {
       title: <FormattedMessage {...messages.points} />,

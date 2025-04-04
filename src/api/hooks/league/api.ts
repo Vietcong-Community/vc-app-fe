@@ -390,6 +390,7 @@ export const useTopPlayersOfTheDay = (seasonId: string, date?: string) => {
       });
       return data;
     },
+    enabled: !!date,
     staleTime: Infinity,
   });
 };

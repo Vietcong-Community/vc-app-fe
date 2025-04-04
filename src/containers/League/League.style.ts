@@ -34,3 +34,13 @@ export const EloPoints = styled.span<IScoreProps>`
       color: ${props.theme.colors.red};
     `};
 `;
+
+export const LadderTableLabel = styled.span`
+  font-size: 13px;
+  font-weight: 400;
+`;
+
+export const LadderTableValue = styled.span`
+  color: ${(props: IThemeProps) => props.theme.mainColors.accent};
+  font-weight: 600;
+`;

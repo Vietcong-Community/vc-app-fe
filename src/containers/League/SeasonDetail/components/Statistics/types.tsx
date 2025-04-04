@@ -1,16 +1,25 @@
-import { TableColumnsType } from 'antd';
+import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
+import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
+import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TableColumnsType, Tooltip } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { messages } from './messages';
 
+import * as S from './Statistics.style';
+
 export interface IStatisticTableRow {
   id: string;
   nickname: string;
+  totalMatches: number;
   flags: number;
   kills: number;
   deaths: number;
   kd: number;
   usefulness: number;
+  averageFlags?: number;
+  averageUsefulness?: number;
 }
 
 export const STATISTICS_COLUMNS = (isMobile: boolean): TableColumnsType<IStatisticTableRow> => {
@@ -30,44 +39,72 @@ export const STATISTICS_COLUMNS = (isMobile: boolean): TableColumnsType<IStatist
       dataIndex: 'nickname',
     },
     {
-      title: <FormattedMessage {...messages.flags} />,
-      dataIndex: 'flags',
+      title: <FormattedMessage {...messages.totalMatches} />,
+      dataIndex: 'totalMatches',
       key: '2',
       align: 'center',
       hidden: isMobile,
-      sorter: (a, b) => b.flags - a.flags,
     },
     {
-      title: <FormattedMessage {...messages.kills} />,
-      dataIndex: 'kills',
+      title: (
+        <Tooltip title={<FormattedMessage {...messages.flags} />}>
+          <FontAwesomeIcon icon={faFlag} />
+        </Tooltip>
+      ),
+      dataIndex: 'flags',
       key: '3',
       align: 'center',
       hidden: isMobile,
-      sorter: (a, b) => b.kills - a.kills,
     },
     {
-      title: <FormattedMessage {...messages.deaths} />,
+      title: (
+        <Tooltip title={<FormattedMessage {...messages.kills} />}>
+          <FontAwesomeIcon icon={faSkull} />
+        </Tooltip>
+      ),
+      dataIndex: 'kills',
+      key: '4',
+      align: 'center',
+      hidden: isMobile,
+    },
+    {
+      title: (
+        <Tooltip title={<FormattedMessage {...messages.deaths} />}>
+          <FontAwesomeIcon icon={faCross} />
+        </Tooltip>
+      ),
       dataIndex: 'deaths',
       align: 'center',
-      key: '4',
+      key: '5',
       hidden: isMobile,
-      sorter: (a, b) => b.deaths - a.deaths,
     },
     {
       title: <FormattedMessage {...messages.kd} />,
       align: 'center',
-      key: '5',
+      key: '6',
       hidden: isMobile,
       render: (_, item) => item.kd.toFixed(2),
-      sorter: (a, b) => b.kd - a.kd,
+    },
+    {
+      title: <FormattedMessage {...messages.flagsDiameter} />,
+      align: 'center',
+      key: '7',
+      hidden: isMobile,
+      render: (_, item) => item.averageFlags?.toFixed(2) ?? 0,
     },
     {
       title: <FormattedMessage {...messages.usefulness} />,
       dataIndex: 'usefulness',
       align: 'center',
-      key: '6',
+      key: '8',
       hidden: isMobile,
-      sorter: (a, b) => b.usefulness - a.usefulness,
+    },
+    {
+      title: <FormattedMessage {...messages.usefulnessDiameter} />,
+      align: 'center',
+      key: '9',
+      hidden: isMobile,
+      render: (_, item) => item.averageUsefulness?.toFixed(2) ?? 0,
     },
     {
       title: <FormattedMessage {...messages.nickname} />,
@@ -77,15 +114,57 @@ export const STATISTICS_COLUMNS = (isMobile: boolean): TableColumnsType<IStatist
           <>
             <b>{item?.nickname}</b>
             <br />
-            {item.flags}
+            <span>
+              <S.ValueLabel>
+                <FormattedMessage {...messages.totalMatches} />:
+              </S.ValueLabel>
+              <S.Value> {item.totalMatches}</S.Value>
+            </span>
             <br />
-            {item.kills}
+            <span>
+              <Tooltip title={<FormattedMessage {...messages.flags} />}>
+                <FontAwesomeIcon icon={faFlag} style={{ marginRight: 4 }} />
+              </Tooltip>
+              <S.Value> {item.flags}</S.Value>
+
+              <Tooltip title={<FormattedMessage {...messages.kills} />}>
+                <FontAwesomeIcon icon={faSkull} style={{ marginLeft: 8, marginRight: 4 }} />
+              </Tooltip>
+              <S.Value> {item.kills}</S.Value>
+
+              <Tooltip title={<FormattedMessage {...messages.deaths} />}>
+                <FontAwesomeIcon icon={faCross} style={{ marginLeft: 8, marginRight: 4 }} />
+              </Tooltip>
+              <S.Value> {item.deaths}</S.Value>
+            </span>
             <br />
-            {item.deaths}
+            <span>
+              <S.ValueLabel>
+                <FormattedMessage {...messages.kd} />:
+              </S.ValueLabel>
+              <S.Value> {item.kd.toFixed(2)}</S.Value>
+            </span>
             <br />
-            {item.kd.toFixed(2)}
+            <span>
+              <S.ValueLabel>
+                <FormattedMessage {...messages.flagsDiameter} />:
+              </S.ValueLabel>
+              <S.Value> {item.averageFlags?.toFixed(2) ?? 0}</S.Value>
+            </span>
             <br />
-            {item.usefulness}
+            <span>
+              <S.ValueLabel>
+                <FormattedMessage {...messages.usefulness} />:
+              </S.ValueLabel>
+              <S.Value> {item.usefulness}</S.Value>
+            </span>
+            <br />
+            <span>
+              <S.ValueLabel>
+                <FormattedMessage {...messages.usefulnessDiameter} />:
+              </S.ValueLabel>
+              <S.Value> {item.averageUsefulness?.toFixed(2) ?? 0}</S.Value>
+            </span>
           </>
         );
       },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
 import { faCrown } from '@fortawesome/free-solid-svg-icons/faCrown';
@@ -7,7 +7,7 @@ import { faGhost } from '@fortawesome/free-solid-svg-icons/faGhost';
 import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, DatePicker, DatePickerProps, Flex, Spin } from 'antd';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 
 import { useTopPlayersOfTheDay } from '../../../../../api/hooks/league/api';
@@ -37,9 +37,18 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
   const { navigate } = useRouter();
   const { width } = useWindowDimensions();
   const [isOpen, setIsOpen] = useState<boolean>(width >= BreakPoints.md);
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(undefined);
 
-  const playersOfTheDay = useTopPlayersOfTheDay(seasonId, selectedDate.format(DEFAULT_SYSTEM_DATE_FORMAT));
+  useEffect(() => {
+    const actualDateTime = dayjs();
+    if (actualDateTime.get('h') <= 20) {
+      setSelectedDate(actualDateTime.subtract(1, 'days'));
+    } else {
+      setSelectedDate(actualDateTime);
+    }
+  }, []);
+
+  const playersOfTheDay = useTopPlayersOfTheDay(seasonId, selectedDate?.format(DEFAULT_SYSTEM_DATE_FORMAT));
 
   const goToPlayerDetail = (id?: string) => {
     if (id) {
@@ -95,6 +104,7 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
             onChange={onChange}
             minDate={dayjs('2025-01-01', DEFAULT_SYSTEM_DATE_FORMAT)}
             maxDate={dayjs()}
+            value={selectedDate}
           />
         </Flex>
         <Gap defaultHeight={16} />
@@ -118,7 +128,7 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
               {!playersOfTheDay.data?.flags && (
                 <FormattedMessage
                   {...messages.nothingToShow}
-                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
+                  values={{ value: selectedDate?.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
               )}
               {playersOfTheDay.data?.flags && (
@@ -150,7 +160,7 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
               {!playersOfTheDay.data?.kills && (
                 <FormattedMessage
                   {...messages.nothingToShow}
-                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
+                  values={{ value: selectedDate?.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
               )}
               {playersOfTheDay.data?.kills && (
@@ -182,7 +192,7 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
               {!playersOfTheDay.data?.deaths && (
                 <FormattedMessage
                   {...messages.nothingToShow}
-                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
+                  values={{ value: selectedDate?.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
               )}
               {playersOfTheDay.data?.deaths && (
@@ -214,7 +224,7 @@ export const TopPlayersOfTheDay: React.FC<IProps> = (props: IProps) => {
               {!playersOfTheDay.data?.kd && (
                 <FormattedMessage
                   {...messages.nothingToShow}
-                  values={{ value: selectedDate.format(DEFAULT_USER_DATE_FORMAT) }}
+                  values={{ value: selectedDate?.format(DEFAULT_USER_DATE_FORMAT) }}
                 />
               )}
               {playersOfTheDay.data?.kd && (

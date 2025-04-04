@@ -262,6 +262,7 @@ export interface IStatisticsItem {
   id: string;
   kd: number;
   kills: number;
+  totalMatches: number;
   mapHandicap: number;
   playerHandicap: number;
   usefulness: number;

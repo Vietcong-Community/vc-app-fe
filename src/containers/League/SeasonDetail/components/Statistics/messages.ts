@@ -13,9 +13,17 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.components.Statistics.nickname',
     defaultMessage: 'Hráč',
   },
+  totalMatches: {
+    id: 'app.containers.League.SeasonDetail.components.Statistics.totalMatches',
+    defaultMessage: 'Počet zápasů',
+  },
   flags: {
     id: 'app.containers.League.SeasonDetail.components.Statistics.flags',
     defaultMessage: 'Vlajky',
+  },
+  flagsDiameter: {
+    id: 'app.containers.League.SeasonDetail.components.Statistics.flagsDiameter',
+    defaultMessage: 'Vlajky ⌀',
   },
   kills: {
     id: 'app.containers.League.SeasonDetail.components.Statistics.kills',
@@ -32,5 +40,9 @@ export const messages = defineMessages({
   usefulness: {
     id: 'app.containers.League.SeasonDetail.components.Statistics.usefulness',
     defaultMessage: 'Užitečnost',
+  },
+  usefulnessDiameter: {
+    id: 'app.containers.League.SeasonDetail.components.Statistics.usefulnessDiameter',
+    defaultMessage: 'Užitečnost ⌀',
   },
 });

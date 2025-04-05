@@ -38,6 +38,7 @@ export const CreateRoundModal: React.FC<IProps> = (props: IProps) => {
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       showNotification(messages.createSuccess);
       onClose();
+      form.resetFields();
     } catch {
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
     }

@@ -435,6 +435,7 @@ export const Round: React.FC<IProps> = (props: IProps) => {
         isOpen={addPlayerStatsModalIsOpen}
         onClose={() => setAddPlayerStatsModalIsOpen(false)}
         matchId={matchId}
+        key={round.id}
         matchRoundId={round.id}
         playerOptions={addPlayerStatsOptions}
       />

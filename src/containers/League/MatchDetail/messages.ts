@@ -73,7 +73,7 @@ export const messages = defineMessages({
   },
   uploadScreensForAllRoundsAlert: {
     id: 'app.containers.League.MatchDetail.uploadScreensForAllRoundsAlert',
-    defaultMessage: 'Pro potvrzení zápasu je nutné nahrát screeny všech kol.',
+    defaultMessage: 'Pro potvrzení zápasu je nutné nahrát screeny všech kol, která nejsou vygenerována systémem.',
   },
   statisticsSynced: {
     id: 'app.containers.League.MatchDetail.statisticsSynced',

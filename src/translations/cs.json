@@ -326,7 +326,7 @@
   "app.containers.League.MatchDetail.statisticsSynced": "Statistiky byly započítány do celkového součtu.",
   "app.containers.League.MatchDetail.status": "Stav",
   "app.containers.League.MatchDetail.title": "Detail zápasu",
-  "app.containers.League.MatchDetail.uploadScreensForAllRoundsAlert": "Pro potvrzení zápasu je nutné nahrát screeny všech kol.",
+  "app.containers.League.MatchDetail.uploadScreensForAllRoundsAlert": "Pro potvrzení zápasu je nutné nahrát screeny všech kol, která nejsou vygenerována systémem.",
   "app.containers.League.Overview.activeSeasons": "Probíhající sezóny",
   "app.containers.League.Overview.component.SeasonPreview.allMatches": "Přejít na všechny zápasy",
   "app.containers.League.Overview.component.SeasonPreview.goToDetail": "Detail sezóny",

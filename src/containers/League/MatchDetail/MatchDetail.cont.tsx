@@ -95,7 +95,7 @@ export const MatchDetail: React.FC = () => {
   const opponentSeasonTeam = ladder.data?.items.find((item) => item.id === matchDetail.data?.opponent?.id);
   const showUploadRoundImagesAlert =
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
-    some(matchDetail.data?.rounds ?? [], (item: IMatchRound) => !item.screenshot || !item.scoreFile);
+    some(matchDetail.data?.rounds ?? [], (item: IMatchRound) => !item.screenshot && !item.scoreFile);
   const showFilesForMatchScore =
     userIsAdmin &&
     [MatchStatus.ACCEPTED, MatchStatus.CONFIRMED_SCORE_BY_SYSTEM, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].includes(

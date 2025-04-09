@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { MatchType } from '../../../../../constants/enums';
 import { MatchCard } from '../MatchCard/MatchCard';
 
 import { messages } from './messages';
@@ -13,12 +14,12 @@ import * as S from './MatchRoundsTab.style';
 
 interface IProps {
   id: string;
-  roundOrder: number;
+  round: number;
 }
 
 export const MatchRoundsTabs: React.FC<IProps> = (props: IProps) => {
-  const { id, roundOrder } = props;
-  const matches = useSeasonMatchList(id, { page: roundOrder, limit: 10 }, 'always');
+  const { id, round } = props;
+  const matches = useSeasonMatchList(id, { page: 1, limit: 50, round, types: MatchType.GROUP }, 'always');
 
   return (
     <S.Container>

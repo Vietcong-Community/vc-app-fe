@@ -22,7 +22,7 @@ export const GroupMatches: React.FC<IProps> = (props: IProps) => {
     return {
       label: <FormattedMessage {...messages.roundName} values={{ value: roundId }} />,
       key: roundId.toString(),
-      children: <MatchRoundsTabs id={championshipId} roundOrder={roundId} />,
+      children: <MatchRoundsTabs id={championshipId} round={roundId} />,
     };
   });
 

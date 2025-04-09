@@ -135,6 +135,8 @@ export interface IMatchListQuery extends IPagination {
   startDateFrom?: string;
   startDateTo?: string;
   status?: string;
+  round?: number;
+  types?: string;
 }
 
 export interface ISetMatchScore {

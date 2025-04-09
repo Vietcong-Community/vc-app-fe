@@ -49,7 +49,6 @@ export const ChampionshipDetailCont: React.FC = () => {
   const maps = useMapsInSeason(query.id);
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
-  // const isSeasonActive = season.data?.status === SeasonStatus.ACTIVE;
 
   const ladderTableData: ILadderTableRow[] =
     ladder.data?.items?.map((item, index) => {

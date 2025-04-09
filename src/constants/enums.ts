@@ -27,7 +27,7 @@ export enum MatchResult {
 
 export enum LeagueType {
   TEAMPLAY = 'TEAMPLAY',
-  CHAMPIONSHIP = 'CHAMPIONSHIP',
+  TOURNAMENT = 'TOURNAMENT',
   TWOVSTWO = 'TWOVSTWO',
 }
 
@@ -48,6 +48,13 @@ export enum MatchStatus {
   CONFIRMED_SCORE_BY_SYSTEM = 'CONFIRMED_SCORE_BY_SYSTEM',
   COMPLAINT = 'COMPLAINT',
   FINISHED = 'FINISHED',
+}
+
+export enum MatchType {
+  GROUP = 'GROUP',
+  PLAYOFF = 'PLAYOFF',
+  PLAYOFF_FINAL = 'PLAYOFF_FINAL',
+  PLAYOFF_SMALL_FINAL = 'PLAYOFF_SMALL_FINAL',
 }
 
 export enum TeamRole {

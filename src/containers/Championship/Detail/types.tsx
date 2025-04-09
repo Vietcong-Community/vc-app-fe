@@ -89,7 +89,7 @@ export const LADDER_COLUMNS = (showShortLabels: boolean): TableColumnsType<ILadd
     },
     {
       title: <FormattedMessage {...messages.points} />,
-      dataIndex: 'eloPoints',
+      dataIndex: 'points',
       align: 'center',
       key: '7',
       hidden: showShortLabels,

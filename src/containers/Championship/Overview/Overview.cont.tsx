@@ -23,7 +23,7 @@ export const ChampionshipOverview: React.FC = () => {
   const leagues = useLeagueList();
 
   const userMe = useUserMe(false, [401]);
-  const championshipLeagues = leagues.data?.items.filter((item) => item.type === LeagueType.TEAMPLAY) ?? [];
+  const championshipLeagues = leagues.data?.items.filter((item) => item.type === LeagueType.TOURNAMENT) ?? [];
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
   return (

@@ -27,6 +27,7 @@ export enum MatchResult {
 
 export enum LeagueType {
   TEAMPLAY = 'TEAMPLAY',
+  CHAMPIONSHIP = 'CHAMPIONSHIP',
   TWOVSTWO = 'TWOVSTWO',
 }
 

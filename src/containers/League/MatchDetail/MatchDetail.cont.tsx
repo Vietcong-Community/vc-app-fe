@@ -17,26 +17,25 @@ import { MainButtonVariant } from '../../../components/Button/enums';
 import { Card } from '../../../components/Card/Card';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { Comments } from '../../../components/Match/Comments/Comments';
+import { FilesForMatchScore } from '../../../components/Match/FilesForMatchScore/FilesForMatchScore';
+import { Rounds } from '../../../components/Match/Rounds/Rounds';
+import { Team } from '../../../components/Match/Team/Team';
+import { AddPlayerToMatchModal } from '../../../components/Modals/AddPlayerToMatchModal/AddPlayerToMatchModal';
+import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/CreateMatchModal';
+import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
+import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { MatchStatus, Role } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { canUserManageMatch, getChallengerHosts, getOpponentHosts } from '../../../utils/matchUtils';
 import { ExpectedEloPointsModal } from '../components/ExpectedEloPointsModal/ExpectedEloPointsModal';
-import { canUserManageMatch } from '../utils';
 
-import { AddPlayerToMatchModal } from './components/AddPlayerToMatchModal/AddPlayerToMatchModal';
-import { Comments } from './components/Comments/Comments';
-import { CreateRoundModal } from './components/CreateRoundModal/CreateMatchModal';
-import { FilesForMatchScore } from './components/FilesForMatchScore/FilesForMatchScore';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
-import { Rounds } from './components/Rounds/Rounds';
-import { SortRoundsModal } from './components/SortRoundsModal/SortRoundsModal';
-import { Team } from './components/Team/Team';
-import { UpdateMatchModal } from './components/UpdateMatchModal/UpdateMatchModal';
 import { messages } from './messages';
-import { getChallengerHosts, getOpponentHosts } from './utils';
 
 import * as S from './MatchDetail.style';
 
@@ -182,60 +181,19 @@ export const MatchDetail: React.FC = () => {
           </>
         )}
         <S.MatchInformationContainer>
-          <>
-            <S.ContentContainer>
-              <Card>
-                <Flex justify="space-between">
-                  <div style={{ flex: 1, textAlign: 'start' }}>
-                    <S.InformationLabel>
-                      <FormattedMessage {...messages.date} />
-                    </S.InformationLabel>
-                    <br />
-                    <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
-                  </div>
-                  <S.MiddleContent>
-                    <FormattedMessage {...messages.result} />
-                    <S.DesktopScore>
-                      {scoreExists ? (
-                        <>
-                          {matchDetail.data?.status === MatchStatus.FINISHED && (
-                            <S.EloPoints
-                              $isWinning={challengerEloAmountGreaterThanZero}
-                              $isLosing={challengerEloAmountLowerThanZero}
-                            >
-                              ({challengerEloAmountGreaterThanZero && '+'}
-                              {matchDetail.data?.challengerEloRowAmount})
-                            </S.EloPoints>
-                          )}
-                          {`${matchDetail.data?.challengerScore ?? '?'} : ${matchDetail.data?.opponentScore ?? '?'}`}
-
-                          {matchDetail.data?.status === MatchStatus.FINISHED && (
-                            <S.EloPoints
-                              $isWinning={opponentEloAmountGreaterThanZero}
-                              $isLosing={opponentEloAmountLowerThanZero}
-                            >
-                              ({opponentEloAmountGreaterThanZero && '+'}
-                              {matchDetail.data?.opponentEloRowAmount})
-                            </S.EloPoints>
-                          )}
-                        </>
-                      ) : (
-                        '? : ?'
-                      )}
-                    </S.DesktopScore>
-                  </S.MiddleContent>
-                  <div style={{ flex: 1, textAlign: 'end' }}>
-                    <S.InformationLabel>
-                      <FormattedMessage {...messages.status} />
-                    </S.InformationLabel>
-                    <br />
-                    <S.InformationValue>{mapMatchStatusToTranslation(matchDetail.data?.status)}</S.InformationValue>
-                  </div>
-                </Flex>
-                <br />
-                <S.MobileResultContent>
+          <S.ContentContainer>
+            <Card>
+              <Flex justify="space-between">
+                <div style={{ flex: 1, textAlign: 'start' }}>
+                  <S.InformationLabel>
+                    <FormattedMessage {...messages.date} />
+                  </S.InformationLabel>
+                  <br />
+                  <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
+                </div>
+                <S.MiddleContent>
                   <FormattedMessage {...messages.result} />
-                  <S.MobileScore>
+                  <S.DesktopScore>
                     {scoreExists ? (
                       <>
                         {matchDetail.data?.status === MatchStatus.FINISHED && (
@@ -247,7 +205,7 @@ export const MatchDetail: React.FC = () => {
                             {matchDetail.data?.challengerEloRowAmount})
                           </S.EloPoints>
                         )}
-                        {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
+                        {`${matchDetail.data?.challengerScore ?? '?'} : ${matchDetail.data?.opponentScore ?? '?'}`}
 
                         {matchDetail.data?.status === MatchStatus.FINISHED && (
                           <S.EloPoints
@@ -260,53 +218,92 @@ export const MatchDetail: React.FC = () => {
                         )}
                       </>
                     ) : (
-                      ' ? : ?'
+                      '? : ?'
                     )}
-                  </S.MobileScore>
-                </S.MobileResultContent>
-                <Gap defaultHeight={0} height={{ md: 16 }} />
-                <S.TeamsContainer>
-                  <Team
-                    eloPoints={matchIsNotFinished ? challengerSeasonTeam?.eloPoints : undefined}
-                    goToPlayerDetail={goToPlayerDetail}
-                    goToTeamDetail={goToTeamDetail}
-                    map={matchDetail.data?.challengerMap}
-                    matchId={query.matchId}
-                    matchStatus={matchDetail.data?.status}
-                    playerInMatchIdsAddedToSeasonStatistics={
-                      matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
-                    }
-                    players={[...(matchDetail.data?.challengerMatchPlayers ?? []), ...challengerHosts]}
-                    showLineUp={showLineUp}
-                    team={matchDetail.data?.challenger?.team}
-                  />
-                  <Team
-                    eloPoints={matchIsNotFinished ? opponentSeasonTeam?.eloPoints : undefined}
-                    goToPlayerDetail={goToPlayerDetail}
-                    goToTeamDetail={goToTeamDetail}
-                    map={matchDetail.data?.opponentMap}
-                    matchId={query.matchId}
-                    matchStatus={matchDetail.data?.status}
-                    playerInMatchIdsAddedToSeasonStatistics={
-                      matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
-                    }
-                    players={[...(matchDetail.data?.opponentMatchPlayers ?? []), ...opponentHosts]}
-                    showLineUp={showLineUp}
-                    team={matchDetail.data?.opponent?.team}
-                  />
-                </S.TeamsContainer>
+                  </S.DesktopScore>
+                </S.MiddleContent>
+                <div style={{ flex: 1, textAlign: 'end' }}>
+                  <S.InformationLabel>
+                    <FormattedMessage {...messages.status} />
+                  </S.InformationLabel>
+                  <br />
+                  <S.InformationValue>{mapMatchStatusToTranslation(matchDetail.data?.status)}</S.InformationValue>
+                </div>
+              </Flex>
+              <br />
+              <S.MobileResultContent>
+                <FormattedMessage {...messages.result} />
+                <S.MobileScore>
+                  {scoreExists ? (
+                    <>
+                      {matchDetail.data?.status === MatchStatus.FINISHED && (
+                        <S.EloPoints
+                          $isWinning={challengerEloAmountGreaterThanZero}
+                          $isLosing={challengerEloAmountLowerThanZero}
+                        >
+                          ({challengerEloAmountGreaterThanZero && '+'}
+                          {matchDetail.data?.challengerEloRowAmount})
+                        </S.EloPoints>
+                      )}
+                      {`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}
 
-                <EaseInOutContainer isOpen={matchIsNotFinished}>
-                  <Gap defaultHeight={16} />
-                  <Flex justify="end">
-                    <Button onClick={() => setIsEloModalOpen(true)} variant={MainButtonVariant.OUTLINED}>
-                      <FormattedMessage {...messages.expectedEloPoints} />
-                    </Button>
-                  </Flex>
-                </EaseInOutContainer>
-              </Card>
-            </S.ContentContainer>
-          </>
+                      {matchDetail.data?.status === MatchStatus.FINISHED && (
+                        <S.EloPoints
+                          $isWinning={opponentEloAmountGreaterThanZero}
+                          $isLosing={opponentEloAmountLowerThanZero}
+                        >
+                          ({opponentEloAmountGreaterThanZero && '+'}
+                          {matchDetail.data?.opponentEloRowAmount})
+                        </S.EloPoints>
+                      )}
+                    </>
+                  ) : (
+                    ' ? : ?'
+                  )}
+                </S.MobileScore>
+              </S.MobileResultContent>
+              <Gap defaultHeight={0} height={{ md: 16 }} />
+              <S.TeamsContainer>
+                <Team
+                  eloPoints={matchIsNotFinished ? challengerSeasonTeam?.eloPoints : undefined}
+                  goToPlayerDetail={goToPlayerDetail}
+                  goToTeamDetail={goToTeamDetail}
+                  map={matchDetail.data?.challengerMap}
+                  matchId={query.matchId}
+                  matchStatus={matchDetail.data?.status}
+                  playerInMatchIdsAddedToSeasonStatistics={
+                    matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
+                  }
+                  players={[...(matchDetail.data?.challengerMatchPlayers ?? []), ...challengerHosts]}
+                  showLineUp={showLineUp}
+                  team={matchDetail.data?.challenger?.team}
+                />
+                <Team
+                  eloPoints={matchIsNotFinished ? opponentSeasonTeam?.eloPoints : undefined}
+                  goToPlayerDetail={goToPlayerDetail}
+                  goToTeamDetail={goToTeamDetail}
+                  map={matchDetail.data?.opponentMap}
+                  matchId={query.matchId}
+                  matchStatus={matchDetail.data?.status}
+                  playerInMatchIdsAddedToSeasonStatistics={
+                    matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
+                  }
+                  players={[...(matchDetail.data?.opponentMatchPlayers ?? []), ...opponentHosts]}
+                  showLineUp={showLineUp}
+                  team={matchDetail.data?.opponent?.team}
+                />
+              </S.TeamsContainer>
+
+              <EaseInOutContainer isOpen={matchIsNotFinished}>
+                <Gap defaultHeight={16} />
+                <Flex justify="end">
+                  <Button onClick={() => setIsEloModalOpen(true)} variant={MainButtonVariant.OUTLINED}>
+                    <FormattedMessage {...messages.expectedEloPoints} />
+                  </Button>
+                </Flex>
+              </EaseInOutContainer>
+            </Card>
+          </S.ContentContainer>
         </S.MatchInformationContainer>
         {showFilesForMatchScore && (
           <>
@@ -335,9 +332,9 @@ export const MatchDetail: React.FC = () => {
             userIsAdmin={userIsAdmin}
           />
         )}
+        <Gap defaultHeight={16} />
+        <Comments matchId={query.matchId} />
       </EaseInOutContainer>
-      <Gap defaultHeight={16} />
-      <Comments matchId={query.matchId} />
       <Gap defaultHeight={48} />
       <ExpectedEloPointsModal
         closeModal={() => setIsEloModalOpen(false)}

@@ -174,7 +174,7 @@ export const Header: React.FC = () => {
                     },
                     {
                       key: 'mcrvc',
-                      onClick: () => navigate(Routes.MCRVC),
+                      onClick: () => navigate(Routes.CHAMPIONSHIP),
                       label: <FormattedMessage {...messages.mcrvcLink} />,
                     },
                     {

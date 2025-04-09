@@ -25,12 +25,24 @@ export const ContentContainer = styled.div`
 export const InformationLabel = styled.span`
   font-size: 14px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.normal};
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      font-size: 12px;
+    `}
+  `};
 `;
 
 export const InformationValue = styled.span`
   color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   font-size: 18px;
   font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      font-size: 14px;
+    `}
+  `};
 `;
 
 export const MiddleContent = styled.div`

@@ -162,7 +162,7 @@ export interface IMatchComment {
 
 export interface IUpdateMatch {
   challengerMapId: string;
-  opponentMapId: string;
+  opponentMapId?: string;
   startDate: string;
   endDate: string;
   challengerScore?: number;

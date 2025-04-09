@@ -16,7 +16,7 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
-import { canUserManageMatch } from '../utils';
+import { canUserManageMatch } from '../../../utils/matchUtils';
 
 import { IFormData } from './CreateMatch.fields';
 import { CreateMatchForm } from './CreateMatch.form';

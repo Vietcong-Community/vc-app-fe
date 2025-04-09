@@ -9,6 +9,7 @@ import { useLeagueList } from '../../../api/hooks/league/api';
 import { Collapse } from '../../../components/Collapse/Collapse';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { LeagueType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 
@@ -22,6 +23,9 @@ export const OverviewCont: React.FC = () => {
   const { pathname } = useRouter();
   const leagues = useLeagueList();
   const { formatMessage } = useIntl();
+
+  const leaguesWithoutTournaments =
+    leagues.data?.items?.filter((item) => item.type === LeagueType.TEAMPLAY || item.type === LeagueType.TWOVSTWO) ?? [];
 
   return (
     <ContentLayout
@@ -51,7 +55,7 @@ export const OverviewCont: React.FC = () => {
               <FormattedMessage {...messages.activeSeasons} />
             </Typography.Title>
             <S.ActiveSeasons>
-              {leagues.data?.items?.map((league) => (
+              {leaguesWithoutTournaments.map((league) => (
                 <ActiveSeasonBox key={`${league.id}-active-season`} leagueDetail={league} />
               ))}
             </S.ActiveSeasons>
@@ -62,7 +66,7 @@ export const OverviewCont: React.FC = () => {
             <Collapse
               destroyInactivePanel
               items={
-                leagues.data?.items.map((league, index) => {
+                leaguesWithoutTournaments.map((league, index) => {
                   return {
                     key: `collapse-league-${index + 1}`,
                     label: <div style={{ fontWeight: 600, textAlign: 'start' }}>{league.name}</div>,

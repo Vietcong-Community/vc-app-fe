@@ -5,13 +5,13 @@ import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useAddMatchStatsToOverallStats, useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
+import { DeleteMatchModal } from '../../../../../components/Modals/DeleteMatchModal/DeleteMatchModal';
+import { MatchStatusModal } from '../../../../../components/Modals/MatchStatusModal/MatchStatusModal';
 import { MatchStatus } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../../../routes/enums';
-import { DeleteMatchModal } from '../DeleteMatchModal/DeleteMatchModal';
-import { MatchStatusModal } from '../MatchStatusModal/MatchStatusModal';
 
 import { messages } from './messages';
 
@@ -78,42 +78,43 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.matchStatusUpdate} />,
       key: '1',
       onClick: () => setIsMatchStatusModalOpen(true),
+      disabled: !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.deleteMatch} />,
       key: '2',
       onClick: () => setIsDeleteMatchModalOpen(true),
-      disabled: status === MatchStatus.FINISHED,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.recalculatePlayerStats} />,
       key: '3',
       onClick: recalculateStats,
-      disabled: status === MatchStatus.FINISHED,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.updateMatch} />,
       key: '4',
       onClick: () => setIsUpdateMatchModalOpen(true),
-      disabled: status === MatchStatus.FINISHED,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.sortRounds} />,
       key: '5',
       onClick: () => setIsSortRoundsModalOpen(true),
-      disabled: status === MatchStatus.FINISHED,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.createRound} />,
       key: '6',
       onClick: () => setIsCreateRoundModalOpen(true),
-      disabled: status === MatchStatus.FINISHED,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.addPlayer} />,
       key: '7',
       onClick: () => setIsAddPlayerToMatchModalOpen(true),
-      disabled: status === MatchStatus.FINISHED,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.updateOverallStatistics} />,

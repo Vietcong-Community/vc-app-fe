@@ -27,6 +27,9 @@ import { DEFAULT_USER_DATE_FORMAT } from '../../../components/Fields/DatePickerF
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
+import { JoinSeasonModal } from '../../../components/Modals/JoinSeasonModal/JoinSeasonModal';
+import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModal/SeasonMapListModal';
+import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
@@ -37,17 +40,14 @@ import { Routes } from '../../../routes/enums';
 import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { canUserJoinSeasonWithTeam, canUserManageMatch } from '../../../utils/matchUtils';
 import { removeURLParameter } from '../../../utils/urlUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, LADDER_COLUMNS } from '../types';
-import { canUserJoinSeasonWithTeam, canUserManageMatch } from '../utils';
 
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
-import { JoinSeasonModal } from './components/JoinSeasonModal/JoinSeasonModal';
-import { MapListModal } from './components/MapListModal/MapListModal';
-import { SeasonMapsPickerModal } from './components/SeasonMapsPickerModal/SeasonMapsPickerModal';
 import { Statistics } from './components/Statistics/Statistics';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
@@ -150,12 +150,13 @@ export const SeasonDetailCont: React.FC = () => {
             {userIsAdmin && (
               <AdminMenu seasonId={query.seasonId} setOpenSeasonMapsModal={setIsSeasonMapsPickerModalOpen} />
             )}
-            {teamsToJoinSeason.length > 0 && (
-              <Button onClick={() => setIsJoinSeasonModalOpen(true)} style={{ padding: '0.25rem 1rem' }}>
-                <FontAwesomeIcon icon={faArrowRightToBracket} />
-                <FormattedMessage {...messages.joinSeason} />
-              </Button>
-            )}
+            {teamsToJoinSeason.length > 0 &&
+              (season.data?.status === SeasonStatus.ACTIVE || season.data?.status === SeasonStatus.NEW) && (
+                <Button onClick={() => setIsJoinSeasonModalOpen(true)} style={{ padding: '0.25rem 1rem' }}>
+                  <FontAwesomeIcon icon={faArrowRightToBracket} />
+                  <FormattedMessage {...messages.joinSeason} />
+                </Button>
+              )}
           </S.ActionButtons>
         </Flex>
         <Divider style={{ marginBottom: 16 }} />
@@ -315,7 +316,7 @@ export const SeasonDetailCont: React.FC = () => {
         {(userIsAdmin || userIsStatisticsAdmin) && <Statistics seasonId={query.seasonId} />}
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
-      <MapListModal
+      <SeasonMapListModal
         closeModal={() => setIsMapListModalOpen(false)}
         isOpen={isMapListModalOpen}
         seasonId={query.seasonId}

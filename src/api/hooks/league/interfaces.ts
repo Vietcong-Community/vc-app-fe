@@ -1,4 +1,4 @@
-import { LeagueType, MatchStatus, Nation, SeasonStatus } from '../../../constants/enums';
+import { LeagueType, MatchStatus, Nation, SeasonStatus, SeasonType } from '../../../constants/enums';
 import { IMap, IPagination, IUser } from '../interfaces';
 import { ITeam } from '../teams/interfaces';
 
@@ -15,6 +15,7 @@ export interface ISeason {
   status: SeasonStatus;
   startDate?: string;
   endDate?: string;
+  type: SeasonType;
 }
 
 export interface ILadderItem {

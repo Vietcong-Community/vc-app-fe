@@ -31,6 +31,11 @@ export enum LeagueType {
   TWOVSTWO = 'TWOVSTWO',
 }
 
+export enum SeasonType {
+  SEASON = 'SEASON',
+  TOURNAMENT = 'TOURNAMENT',
+}
+
 export enum SeasonStatus {
   NEW = 'NEW',
   ACTIVE = 'ACTIVE',

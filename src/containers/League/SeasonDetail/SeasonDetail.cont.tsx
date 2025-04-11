@@ -33,7 +33,7 @@ import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPick
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
-import { MatchStatus, Role, SeasonStatus } from '../../../constants/enums';
+import { MatchStatus, Role, SeasonStatus, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
@@ -69,6 +69,13 @@ export const SeasonDetailCont: React.FC = () => {
   const seasonTeams = useSeasonTeams(query.seasonId, [401], 'always', userMe.isSuccess);
   const ladder = useSeasonLadder(query.seasonId);
   const maps = useMapsInSeason(query.seasonId);
+
+  useEffect(() => {
+    if (season.data?.type && season.data?.type !== SeasonType.SEASON) {
+      navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', query.seasonId));
+    }
+  }, [season.data?.type]);
+
   const finishedMatches = useSeasonMatchList(
     query.seasonId,
     {

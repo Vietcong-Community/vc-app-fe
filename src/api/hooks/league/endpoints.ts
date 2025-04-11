@@ -30,4 +30,5 @@ export enum LeagueEndpoints {
   FILES_FOR_MATCH_SCORE_LIST = '/matches/{matchId}/show-score-files-available-for-match',
   RECALCULATE_MATCH_SCORE_BY_FILE = '/matches/files/{fileId}/recalculate-round-match-score',
   SEASON_STATS = '/seasons/{seasonId}/players-match-stats',
+  LEAGUE_DETAIL_BY_SEASON_ID = '/seasons/{seasonId}/league',
 }

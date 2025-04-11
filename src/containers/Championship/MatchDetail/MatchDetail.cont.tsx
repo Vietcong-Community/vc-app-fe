@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
 import dayjs from 'dayjs';
@@ -24,7 +24,7 @@ import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/Cr
 import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { MatchStatus, Role } from '../../../constants/enums';
+import { MatchStatus, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
@@ -73,6 +73,13 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
     matchDetail.data?.challenger.team?.id,
     matchDetail.data?.opponent.team?.id,
   ]);
+
+  useEffect(() => {
+    if (matchDetail.data?.season.type && matchDetail.data?.season.type !== SeasonType.TOURNAMENT) {
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
+    }
+  }, [matchDetail.data?.season.type]);
+
   const goToTeamDetail = (id: string) => {
     navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };

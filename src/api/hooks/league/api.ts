@@ -495,3 +495,16 @@ export const useRemovePlayerRoundStats = () => {
     },
   });
 };
+
+export const useLeagueDetailBySeasonId = (seasonId: string, staleTime = STALE_TIME) => {
+  return useQuery({
+    queryKey: ['leagueDetailBySeasonId', seasonId],
+    queryFn: async () => {
+      const { data } = await get<ILeagueDetail>(LeagueEndpoints.LEAGUE_DETAIL_BY_SEASON_ID, {
+        seasonId,
+      });
+      return data;
+    },
+    staleTime,
+  });
+};

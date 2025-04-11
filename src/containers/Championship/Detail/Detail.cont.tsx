@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Flex } from 'antd';
 import { Helmet } from 'react-helmet';
@@ -20,7 +20,7 @@ import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPick
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
-import { Role } from '../../../constants/enums';
+import { Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
@@ -30,6 +30,8 @@ import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { GroupMatches } from './components/GroupMatches/GroupMatches';
+import { PlayOff } from './components/PlayOff/PlayOff';
+import { Statistics } from './components/Statistics/Statistics';
 import { messages } from './messages';
 import { LADDER_COLUMNS, ILadderTableRow } from './types';
 
@@ -47,6 +49,12 @@ export const ChampionshipDetailCont: React.FC = () => {
   const season = useSeasonsDetail(query.id);
   const ladder = useSeasonLadder(query.id);
   const maps = useMapsInSeason(query.id);
+
+  useEffect(() => {
+    if (season.data?.type && season.data?.type !== SeasonType.TOURNAMENT) {
+      navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.id));
+    }
+  }, [season.data?.type]);
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
@@ -159,6 +167,10 @@ export const ChampionshipDetailCont: React.FC = () => {
         </Flex>
         <Divider style={{ margin: '16px 0' }} />
         {!!ladder.data && <GroupMatches championshipId={query.id} roundsCount={ladder.data?.items?.length - 1} />}
+        <Divider style={{ margin: '16px 0' }} />
+        <PlayOff seasonId={query.id} />
+        <Divider style={{ margin: '16px 0' }} />
+        <Statistics seasonId={query.id} />
         <Gap defaultHeight={64} height={{ sm: 32 }} />
       </EaseInOutContainer>
       <SeasonMapsPickerModal

@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, Flex, Spin } from 'antd';
 import dayjs from 'dayjs';
 import { compact, some } from 'lodash';
+import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
@@ -24,7 +25,7 @@ import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/Cr
 import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { MatchStatus, Role, SeasonType } from '../../../constants/enums';
+import { MatchStatus, MatchType, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
@@ -105,6 +106,34 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
   ].includes(matchDetail.data?.status as MatchStatus);
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
 
+  const showMapLabel = matchDetail.data?.challengerMap?.name !== 'Neurčena';
+
+  const getMatchTypeTitle = () => {
+    if (matchDetail.data?.type === MatchType.GROUP) {
+      return <FormattedMessage {...messages.groupRound} values={{ value: matchDetail.data?.round ?? '' }} />;
+    }
+
+    if (matchDetail.data?.type === MatchType.PLAYOFF_FINAL) {
+      return <FormattedMessage {...messages.playOffFinal} />;
+    }
+
+    if (matchDetail.data?.type === MatchType.PLAYOFF_SMALL_FINAL) {
+      return <FormattedMessage {...messages.playOffSmallFinal} />;
+    }
+
+    if (matchDetail.data?.type === MatchType.PLAYOFF && matchDetail.data?.round === 1) {
+      return <FormattedMessage {...messages.preRound} />;
+    }
+
+    if (matchDetail.data?.type === MatchType.PLAYOFF && matchDetail.data?.round === 2) {
+      return <FormattedMessage {...messages.quarterFinal} />;
+    }
+
+    if (matchDetail.data?.type === MatchType.PLAYOFF && matchDetail.data?.round === 3) {
+      return <FormattedMessage {...messages.semifinal} />;
+    }
+  };
+
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -132,6 +161,7 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
         },
       ]}
     >
+      <Helmet title={formatMessage(messages.title)} />
       <Flex align="center" justify="space-between">
         <H1>
           <FormattedMessage {...messages.title} />
@@ -140,12 +170,19 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
           <ManageMenu
             canEnterResult={isPossibleToManageMatch?.allowed}
             canConfirmResult={isPossibleToManageMatch?.allowed && !showUploadRoundImagesAlert}
+            canMapPick={
+              (isPossibleToManageMatch?.allowed || userIsAdmin) &&
+              [MatchType.PLAYOFF, MatchType.PLAYOFF_SMALL_FINAL, MatchType.PLAYOFF_FINAL].includes(
+                matchDetail.data?.type as MatchType,
+              )
+            }
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             setIsAddPlayerToMatchModalOpen={setIsAddPlayerToMatchModalOpen}
             setIsCreateRoundModalOpen={setIsCreateRoundModalOpen}
             setIsSortRoundsModalOpen={setIsSortRoundsModalOpen}
             setIsUpdateMatchModalOpen={setIsUpdateMatchModalOpen}
+            startDate={matchDetail.data?.startDate}
             status={matchDetail.data?.status}
             userIsAdmin={userIsAdmin}
             userIsStatisticsAdmin={userIsStatisticsAdmin}
@@ -178,11 +215,8 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
                   <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
                 </div>
                 <S.MiddleContent>
-                  {matchDetail.data?.challengerMap ? (
-                    matchDetail.data?.challengerMap?.name
-                  ) : (
-                    <FormattedMessage {...messages.result} />
-                  )}
+                  {getMatchTypeTitle()}
+                  {showMapLabel && <S.InformationValue>{matchDetail.data?.challengerMap?.name}</S.InformationValue>}
                   <S.DesktopScore>
                     {scoreExists ? (
                       <>{`${matchDetail.data?.challengerScore ?? '?'} : ${matchDetail.data?.opponentScore ?? '?'}`}</>
@@ -201,11 +235,8 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
               </Flex>
               <Gap defaultHeight={8} />
               <S.MobileResultContent>
-                {matchDetail.data?.challengerMap ? (
-                  matchDetail.data?.challengerMap?.name
-                ) : (
-                  <FormattedMessage {...messages.result} />
-                )}
+                {getMatchTypeTitle()}
+                {showMapLabel && <S.InformationValue>{matchDetail.data?.challengerMap?.name}</S.InformationValue>}
                 <S.MobileScore>
                   {scoreExists ? (
                     <>{`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}</>

@@ -37,4 +37,28 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.MatchDetail.status',
     defaultMessage: 'Stav',
   },
+  playOffFinal: {
+    id: 'app.containers.Championship.MatchDetail.playOffFinal',
+    defaultMessage: 'Finále',
+  },
+  playOffSmallFinal: {
+    id: 'app.containers.Championship.MatchDetail.playOffSmallFinal',
+    defaultMessage: 'Zápas o bronz',
+  },
+  semifinal: {
+    id: 'app.containers.Championship.MatchDetail.semifinal',
+    defaultMessage: 'Semifinále',
+  },
+  quarterFinal: {
+    id: 'app.containers.Championship.MatchDetail.quarterFinal',
+    defaultMessage: 'Čtvrtfinále',
+  },
+  preRound: {
+    id: 'app.containers.Championship.MatchDetail.preRound',
+    defaultMessage: 'Předkolo',
+  },
+  groupRound: {
+    id: 'app.containers.Championship.MatchDetail.groupRound',
+    defaultMessage: 'Skupina - kolo {value}',
+  },
 });

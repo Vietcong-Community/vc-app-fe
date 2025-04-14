@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
+import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 
 import { useAddMatchStatsToOverallStats, useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
@@ -18,12 +19,14 @@ import { messages } from './messages';
 interface IProps {
   canConfirmResult?: boolean;
   canEnterResult?: boolean;
+  canMapPick?: boolean;
   matchId: string;
   seasonId?: string;
   setIsAddPlayerToMatchModalOpen: (value: boolean) => void;
   setIsCreateRoundModalOpen: (value: boolean) => void;
   setIsSortRoundsModalOpen: (value: boolean) => void;
   setIsUpdateMatchModalOpen: (value: boolean) => void;
+  startDate?: string;
   status?: MatchStatus;
   userIsStatisticsAdmin: boolean;
   userIsAdmin: boolean;
@@ -33,12 +36,14 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const {
     canEnterResult = false,
     canConfirmResult = false,
+    canMapPick = false,
     matchId,
     seasonId,
     setIsAddPlayerToMatchModalOpen,
     setIsCreateRoundModalOpen,
     setIsSortRoundsModalOpen,
     setIsUpdateMatchModalOpen,
+    startDate,
     status,
     userIsAdmin,
     userIsStatisticsAdmin,
@@ -49,8 +54,12 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
 
+  const nowDate = dayjs();
+  const matchStarted = nowDate.isAfter(dayjs(startDate));
   const addMatchStatsToOverallStats = useAddMatchStatsToOverallStats(matchId);
   const recalculatePlayerStats = useRecalculatePlayerStats(matchId);
+  console.log(nowDate);
+  console.log(dayjs(startDate));
 
   const recalculateStats = async () => {
     await recalculatePlayerStats.mutateAsync();
@@ -120,18 +129,26 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
   ];
 
+  console.log(matchStarted);
   const items: MenuProps['items'] = [
     {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '1',
       onClick: () => navigate(Routes.SET_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled: status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
+      disabled: !matchStarted || status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '2',
       onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
+      disabled:
+        !matchStarted || status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
+    },
+    {
+      label: <FormattedMessage {...messages.mapRemoving} />,
+      key: '2',
+      onClick: () => navigate(Routes.TOURNAMENT_MAP_PICK.replace(':matchId', matchId)),
+      disabled: !(canMapPick && status === MatchStatus.ACCEPTED),
     },
   ];
 

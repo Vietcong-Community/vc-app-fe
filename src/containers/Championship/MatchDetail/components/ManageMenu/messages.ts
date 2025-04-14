@@ -21,6 +21,10 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.MatchDetail.components.ManageMenu.confirmTheResult',
     defaultMessage: 'Potvrdit výsledek',
   },
+  mapRemoving: {
+    id: 'app.containers.Championship.MatchDetail.components.ManageMenu.mapRemoving',
+    defaultMessage: 'Škrtání map',
+  },
   confirmMatchSuccess: {
     id: 'app.containers.Championship.MatchDetail.components.ManageMenu.confirmMatchSuccess',
     defaultMessage: 'Potvrzení bylo úspěšné',

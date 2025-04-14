@@ -178,13 +178,14 @@ export const useRejectMatchChallenge = (matchId: string) => {
   });
 };
 
-export const useMatchDetail = (matchId: string, refetchOnMount?: boolean | 'always') => {
+export const useMatchDetail = (matchId?: string, refetchOnMount?: boolean | 'always') => {
   return useQuery({
     queryKey: ['matchDetail', matchId],
     queryFn: async () => {
       const { data } = await get<IMatch>(LeagueEndpoints.MATCH_BY_ID, { matchId });
       return data;
     },
+    enabled: !!matchId,
     staleTime: Infinity,
     refetchOnMount: refetchOnMount ?? 'always',
   });

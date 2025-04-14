@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, Flex, Spin } from 'antd';
 import dayjs from 'dayjs';
 import { compact, some } from 'lodash';
+import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
@@ -151,6 +152,7 @@ export const MatchDetail: React.FC = () => {
         },
       ]}
     >
+      <Helmet title={formatMessage(messages.title)} />
       <Flex align="center" justify="space-between">
         <H1>
           <FormattedMessage {...messages.title} />

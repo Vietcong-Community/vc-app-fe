@@ -1,4 +1,4 @@
-import { LeagueType, MatchStatus, Nation, SeasonStatus, SeasonType } from '../../../constants/enums';
+import { LeagueType, MatchStatus, MatchType, Nation, SeasonStatus, SeasonType } from '../../../constants/enums';
 import { IMap, IPagination, IUser } from '../interfaces';
 import { ITeam } from '../teams/interfaces';
 
@@ -114,6 +114,8 @@ export interface IMatch {
   opponentMatchPlayers?: IMatchPlayer[];
   playerInMatchIdsAddedToSeasonStatistics: string[];
   rounds: IMatchRound[];
+  round?: number;
+  type: MatchType;
 }
 
 export interface IMatchListItem {
@@ -128,6 +130,8 @@ export interface IMatchListItem {
   challengerEloRowAmount?: number;
   opponentEloRowAmount?: number;
   commentsCount?: number;
+  round?: number;
+  type: MatchType;
 }
 
 export interface IMatchListQuery extends IPagination {

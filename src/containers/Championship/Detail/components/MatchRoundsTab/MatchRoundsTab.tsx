@@ -3,7 +3,7 @@ import React from 'react';
 import { Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
+import { useMatchDetail, useSeasonMatchList } from '../../../../../api/hooks/league/api';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { MatchType } from '../../../../../constants/enums';
 import { MatchCard } from '../MatchCard/MatchCard';
@@ -21,9 +21,17 @@ export const MatchRoundsTabs: React.FC<IProps> = (props: IProps) => {
   const { id, round } = props;
   const matches = useSeasonMatchList(id, { page: 1, limit: 50, round, types: MatchType.GROUP }, 'always');
 
+  const firstMatch = useMatchDetail(matches.data?.matches?.[0]?.id);
+
   return (
     <S.Container>
-      <FormattedMessage {...messages.map} tagName="span" values={{ value: 'NVABase' }} />
+      <FormattedMessage
+        {...messages.map}
+        tagName="span"
+        values={{
+          value: firstMatch.isLoading ? <Spin style={{ marginLeft: 8 }} /> : firstMatch.data?.challengerMap?.name,
+        }}
+      />
       <S.MatchContainer>
         {matches.isLoading && (
           <>

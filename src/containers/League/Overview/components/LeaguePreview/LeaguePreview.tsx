@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Tabs, Typography } from 'antd';
 
-import { useSeasonsInLeague } from '../../../../../api/hooks/league/api';
 import { ILeagueDetail, ISeason } from '../../../../../api/hooks/league/interfaces';
 import { Divider } from '../../../../../components/Divider/Divider';
 import { Gap } from '../../../../../components/Gap/Gap';
@@ -14,11 +13,11 @@ import * as S from './LeaguePreview.style';
 
 interface IProps {
   leagueDetail: ILeagueDetail;
+  seasons: ISeason[];
 }
 
 export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
-  const { leagueDetail } = props;
-  const seasons = useSeasonsInLeague(leagueDetail.id);
+  const { leagueDetail, seasons } = props;
 
   return (
     <S.Container>
@@ -29,7 +28,7 @@ export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
       <Tabs
         defaultActiveKey="tab-season-1"
         destroyInactiveTabPane
-        items={seasons.data?.items.map((season: ISeason, index: number) => {
+        items={seasons.map((season: ISeason, index: number) => {
           return {
             key: `tab-season-${index + 1}`,
             label: (

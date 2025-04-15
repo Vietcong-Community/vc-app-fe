@@ -5,11 +5,11 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { EaseInOutContainer } from 'src/components/Animations/EaseInOutContainer/EaseInOutContainer';
 
-import { useLeagueList } from '../../../api/hooks/league/api';
+import { useLeaguesWithSeasonsList } from '../../../api/hooks/league/api';
 import { Collapse } from '../../../components/Collapse/Collapse';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
-import { LeagueType } from '../../../constants/enums';
+import { SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 
@@ -21,11 +21,8 @@ import * as S from './Overview.style';
 
 export const OverviewCont: React.FC = () => {
   const { pathname } = useRouter();
-  const leagues = useLeagueList();
+  const leaguesWithSeasons = useLeaguesWithSeasonsList(SeasonType.SEASON);
   const { formatMessage } = useIntl();
-
-  const leaguesWithoutTournaments =
-    leagues.data?.items?.filter((item) => item.type === LeagueType.TEAMPLAY || item.type === LeagueType.TWOVSTWO) ?? [];
 
   return (
     <ContentLayout
@@ -41,22 +38,21 @@ export const OverviewCont: React.FC = () => {
         <Typography.Text style={{ maxWidth: 800 }}>
           <FormattedMessage {...messages.description} />
         </Typography.Text>
-
-        {leagues.isLoading && (
+        {leaguesWithSeasons.isLoading && (
           <>
             <Gap defaultHeight={36} />
             <Spin size="large" />
           </>
         )}
-        <EaseInOutContainer isOpen={!leagues.isLoading}>
+        <EaseInOutContainer isOpen={!leaguesWithSeasons.isLoading}>
           <>
             <Gap defaultHeight={16} />
             <Typography.Title level={2}>
               <FormattedMessage {...messages.activeSeasons} />
             </Typography.Title>
             <S.ActiveSeasons>
-              {leaguesWithoutTournaments.map((league) => (
-                <ActiveSeasonBox key={`${league.id}-active-season`} leagueDetail={league} />
+              {leaguesWithSeasons.data?.map((league) => (
+                <ActiveSeasonBox key={`${league.league.id}-active-season`} leagueDetail={league.league} />
               ))}
             </S.ActiveSeasons>
             <Gap defaultHeight={36} />
@@ -66,11 +62,17 @@ export const OverviewCont: React.FC = () => {
             <Collapse
               destroyInactivePanel
               items={
-                leaguesWithoutTournaments.map((league, index) => {
+                leaguesWithSeasons.data?.map((league, index) => {
                   return {
                     key: `collapse-league-${index + 1}`,
-                    label: <div style={{ fontWeight: 600, textAlign: 'start' }}>{league.name}</div>,
-                    children: <LeaguePreview key={`collapse-league-${index + 1}`} leagueDetail={league} />,
+                    label: <div style={{ fontWeight: 600, textAlign: 'start' }}>{league.league.name}</div>,
+                    children: (
+                      <LeaguePreview
+                        key={`collapse-league-${index + 1}`}
+                        leagueDetail={league.league}
+                        seasons={league.seasons}
+                      />
+                    ),
                   };
                 }) ?? []
               }

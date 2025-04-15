@@ -27,7 +27,7 @@ export const messages = defineMessages({
   },
   matchStatusWaitingForConfirmation: {
     id: 'app.utils.matchStatusWaitingForConfirmation',
-    defaultMessage: 'Čeká na potvrzení',
+    defaultMessage: 'Potvrzení výzvy',
   },
   matchStatusWaitingForScoreConfirmation: {
     id: 'app.utils.matchStatusWaitingForScoreConfirmation',

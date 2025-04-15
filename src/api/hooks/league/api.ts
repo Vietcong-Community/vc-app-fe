@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { MatchStatus } from '../../../constants/enums';
+import { MatchStatus, SeasonType } from '../../../constants/enums';
 import { del, get, post, put } from '../../apiFactory';
 import { STALE_TIME } from '../../constants';
 import { IgnoredErrorCodes } from '../../types';
@@ -40,6 +40,34 @@ export const useLeagueList = () => {
     queryFn: async () => {
       const { data } = await get<{ items: ILeagueDetail[] }>(LeagueEndpoints.LEAGUES);
       return data;
+    },
+    staleTime: Infinity,
+  });
+};
+
+export const useLeaguesWithSeasonsList = (seasonType?: SeasonType) => {
+  return useQuery({
+    queryKey: ['leagueWithSeasons', seasonType],
+    queryFn: async () => {
+      const { data } = await get<{ items: ILeagueDetail[] }>(LeagueEndpoints.LEAGUES);
+
+      const result: { league: ILeagueDetail; seasons: ISeason[] }[] = [];
+
+      for (const item of data.items) {
+        const seasons = await get<{ items: ISeason[] }>(LeagueEndpoints.LEAGUE_SEASONS, { id: item.id });
+
+        if (seasonType) {
+          const filteredSeasons = seasons.data?.items.filter((item) => item.type === seasonType);
+
+          if (filteredSeasons.length > 0) {
+            result.push({ league: item, seasons: filteredSeasons });
+          }
+        } else {
+          result.push({ league: item, seasons: seasons.data.items ?? [] });
+        }
+      }
+
+      return result;
     },
     staleTime: Infinity,
   });

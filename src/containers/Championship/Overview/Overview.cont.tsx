@@ -5,11 +5,11 @@ import { Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
-import { useLeagueList } from '../../../api/hooks/league/api';
+import { useLeagueList, useLeaguesWithSeasonsList } from '../../../api/hooks/league/api';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { LeagueType, Role } from '../../../constants/enums';
+import { Role, SeasonType } from '../../../constants/enums';
 import { EXTERNAL_LINKS } from '../../../constants/externalLinks';
 
 import { LeaguePreview } from './components/LeaguePreview/LeaguePreview';
@@ -23,7 +23,7 @@ export const ChampionshipOverview: React.FC = () => {
   const leagues = useLeagueList();
 
   const userMe = useUserMe(false, [401]);
-  const championshipLeagues = leagues.data?.items.filter((item) => item.type === LeagueType.TOURNAMENT) ?? [];
+  const leaguesWithSeasons = useLeaguesWithSeasonsList(SeasonType.TOURNAMENT);
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
   return (
@@ -67,11 +67,11 @@ export const ChampionshipOverview: React.FC = () => {
               <Spin size="large" />
             </>
           )}
-          {championshipLeagues.map((item, index) => {
-            const isLast = index === championshipLeagues.length - 1;
+          {leaguesWithSeasons.data?.map((item, index) => {
+            const isLast = index === leaguesWithSeasons.data?.length - 1;
             return (
               <>
-                <LeaguePreview leagueDetail={item} />
+                <LeaguePreview leagueDetail={item.league} seasons={item.seasons} />
                 {!isLast && <Gap defaultHeight={32} />}
               </>
             );

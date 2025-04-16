@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Flex } from 'antd';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { useSeasonLadder } from '../../../../../api/hooks/league/api';
 import { ISeason } from '../../../../../api/hooks/league/interfaces';
@@ -9,6 +10,7 @@ import { Button } from '../../../../../components/Button/Button';
 import { Card } from '../../../../../components/Card/Card';
 import { Divider } from '../../../../../components/Divider/Divider';
 import { DEFAULT_USER_DATE_FORMAT } from '../../../../../components/Fields/DatePickerField/DatePickerField';
+import { Gap } from '../../../../../components/Gap/Gap';
 import { Table } from '../../../../../components/Table/Table';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 import { useRouter } from '../../../../../hooks/RouterHook';
@@ -54,10 +56,13 @@ export const ChampionshipPreview: React.FC<IProps> = (props: IProps) => {
     <Card>
       <Flex justify="space-between">
         <H2>{seasonDetail.name}</H2>
-        <Button onClick={() => navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', seasonDetail.id))}>
-          <FormattedMessage {...messages.goToDetail} />
-        </Button>
+        <Link to={Routes.CHAMPIONSHIP_DETAIL.replace(':id', seasonDetail.id)}>
+          <Button>
+            <FormattedMessage {...messages.goToDetail} />
+          </Button>
+        </Link>
       </Flex>
+      <Gap defaultHeight={0} height={{ md: 16 }} />
       <Card style={{ flex: 0.5 }} bodyStyle={{ padding: '8px 24px' }}>
         <S.SeasonInfoContainer>
           <div>

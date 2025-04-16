@@ -28,6 +28,8 @@ export enum Routes {
   CHAMPIONSHIP = '/mistrovstvi-cr',
   CHAMPIONSHIP_DETAIL = '/mistrovstvi-cr/:id',
   CHAMPIONSHIP_MATCH_DETAIL = '/mistrovstvi-cr/zapas/:matchId',
+  SET_CHAMPIONSHIP_MATCH_DETAIL = '/mistrovstvi-cr/zadani-vysledku-zapasu/:matchId',
+  CONFIRM_CHAMPIONSHIP_MATCH_DETAIL = '/mistrovstvi-cr/potvrzeni-vysledku-zapasu/:matchId',
   TOURNAMENT_MAP_PICK = '/skrtani-map/:matchId',
   // ARTICLES
   ARTICLES = '/clanky',

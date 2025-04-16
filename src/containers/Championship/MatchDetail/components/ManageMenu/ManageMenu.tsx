@@ -34,8 +34,6 @@ interface IProps {
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const {
-    canEnterResult = false,
-    canConfirmResult = false,
     canMapPick = false,
     matchId,
     seasonId,
@@ -129,20 +127,18 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
   ];
 
-  console.log(matchStarted);
   const items: MenuProps['items'] = [
     {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '1',
-      onClick: () => navigate(Routes.SET_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled: !matchStarted || status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
+      onClick: () => navigate(Routes.SET_CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', matchId)),
+      disabled: !matchStarted || status !== MatchStatus.ACCEPTED || !userIsAdmin, //(!canEnterResult && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '2',
       onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled:
-        !matchStarted || status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
+      // disabled: !matchStarted || status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || !userIsAdmin, //(!canConfirmResult && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.mapRemoving} />,

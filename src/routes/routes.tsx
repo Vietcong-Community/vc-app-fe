@@ -9,9 +9,11 @@ import { ArticleDetailCont } from '../containers/Articles/ArticleDetail/ArticleD
 import { CreateArticleCont } from '../containers/Articles/CreateArticle/CreateArticle.cont';
 import { ArticlesOverview } from '../containers/Articles/Overview/Articles.cont';
 import { UpdateArticleCont } from '../containers/Articles/UpdateArticle/UpdateArticle.cont';
+import { ConfirmChampionshipMatchResultCont } from '../containers/Championship/ConfirmMatchResult/ConfirmMatchResult.cont';
 import { ChampionshipDetailCont } from '../containers/Championship/Detail/Detail.cont';
 import { ChampionshipMatchDetailCont } from '../containers/Championship/MatchDetail/MatchDetail.cont';
 import { ChampionshipOverview } from '../containers/Championship/Overview/Overview.cont';
+import { SetChampionshipMatchScoreCont } from '../containers/Championship/SetMatchResult/SetMatchResult.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
@@ -51,6 +53,8 @@ export const routesObject: RouteObject[] = [
       { element: <ChampionshipOverview />, path: Routes.CHAMPIONSHIP },
       { element: <ChampionshipDetailCont />, path: Routes.CHAMPIONSHIP_DETAIL },
       { element: <ChampionshipMatchDetailCont />, path: Routes.CHAMPIONSHIP_MATCH_DETAIL },
+      { element: <SetChampionshipMatchScoreCont />, path: Routes.SET_CHAMPIONSHIP_MATCH_DETAIL },
+      { element: <ConfirmChampionshipMatchResultCont />, path: Routes.CONFIRM_CHAMPIONSHIP_MATCH_DETAIL },
       // MATCHES
       { element: <MatchDetail />, path: Routes.MATCH_DETAIL },
       { element: <CreateMatchCont />, path: Routes.MATCH_CREATE },

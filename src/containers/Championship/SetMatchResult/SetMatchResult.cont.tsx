@@ -21,7 +21,7 @@ import { IFormData } from './SetMatchResult.fields';
 import { SetMatchResultForm } from './SetMatchResult.form';
 import { messages } from './messages';
 
-export const SetMatchScoreCont: React.FC = () => {
+export const SetChampionshipMatchScoreCont: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
@@ -33,7 +33,7 @@ export const SetMatchScoreCont: React.FC = () => {
     try {
       await setMatchResult.mutateAsync(values);
       showNotification(messages.saveSuccess);
-      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
+      navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId));
     } catch (e) {
       showNotification(messages.saveFailed, undefined, NotificationType.ERROR);
     }
@@ -42,7 +42,7 @@ export const SetMatchScoreCont: React.FC = () => {
   useEffect(() => {
     if (matchDetail.isError) {
       showNotification(messages.matchFetchError, undefined, NotificationType.ERROR);
-      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
+      navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId));
     }
   }, [matchDetail.isError]);
 
@@ -50,8 +50,6 @@ export const SetMatchScoreCont: React.FC = () => {
     rounds: [
       { mapId: matchDetail.data?.challengerMap.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.US },
       { mapId: matchDetail.data?.challengerMap.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.VC },
-      { mapId: matchDetail.data?.opponentMap?.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.US },
-      { mapId: matchDetail.data?.opponentMap?.id, scoreChallenger: 0, scoreOpponent: 0, challengerNation: Nation.VC },
     ],
   };
 
@@ -61,17 +59,17 @@ export const SetMatchScoreCont: React.FC = () => {
     <ContentLayout
       breadcrumbItems={[
         {
-          key: 'bc-league',
-          onClick: () => navigate(Routes.LEAGUE),
+          key: 'bc-championship',
+          onClick: () => navigate(Routes.CHAMPIONSHIP),
           title: (
             <BreadcrumbItem>
-              <FormattedMessage {...messages.leaguesBreadcrumb} />
+              <FormattedMessage {...messages.championshipBreadcrumb} />
             </BreadcrumbItem>
           ),
         },
         {
           key: 'bc-season',
-          onClick: () => navigate(Routes.SEASON_DETAIL.replace(':seasonId', matchDetail.data?.season.id ?? '')),
+          onClick: () => navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', matchDetail.data?.season.id ?? '')),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.seasonDetailBreadcrumb} />
@@ -80,7 +78,7 @@ export const SetMatchScoreCont: React.FC = () => {
         },
         {
           key: 'bc-match',
-          onClick: () => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId)),
+          onClick: () => navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId)),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.matchDetailBreadcrumb} />
@@ -111,9 +109,8 @@ export const SetMatchScoreCont: React.FC = () => {
           challengerMap={matchDetail.data?.challengerMap}
           initialValues={initialValues as IFormData}
           isSubmitting={setMatchResult.isPending}
-          opponentMap={matchDetail.data?.opponentMap}
           opponentTeam={matchDetail.data?.opponent?.team}
-          onCancel={() => navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId))}
+          onCancel={() => navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId))}
           onSubmit={onSubmit}
         />
       </EaseInOutContainer>

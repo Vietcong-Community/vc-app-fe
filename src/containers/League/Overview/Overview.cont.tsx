@@ -52,7 +52,11 @@ export const OverviewCont: React.FC = () => {
             </Typography.Title>
             <S.ActiveSeasons>
               {leaguesWithSeasons.data?.map((league) => (
-                <ActiveSeasonBox key={`${league.league.id}-active-season`} leagueDetail={league.league} />
+                <ActiveSeasonBox
+                  key={`${league.league.id}-active-season`}
+                  leagueDetail={league.league}
+                  seasons={league.seasons}
+                />
               ))}
             </S.ActiveSeasons>
             <Gap defaultHeight={36} />

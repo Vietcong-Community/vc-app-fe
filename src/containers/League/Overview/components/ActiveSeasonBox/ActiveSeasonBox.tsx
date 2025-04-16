@@ -5,10 +5,9 @@ import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
 import { faPerson } from '@fortawesome/free-solid-svg-icons/faPerson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useSeasonsInLeague } from '../../../../../api/hooks/league/api';
-import { ILeagueDetail } from '../../../../../api/hooks/league/interfaces';
+import { ILeagueDetail, ISeason } from '../../../../../api/hooks/league/interfaces';
 import { Gap } from '../../../../../components/Gap/Gap';
-import { LeagueType, SeasonStatus } from '../../../../../constants/enums';
+import { LeagueType, SeasonStatus, SeasonType } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
 import { Routes } from '../../../../../routes/enums';
 import { mapLeagueTypeToTranslation } from '../../../../../utils/mappingLabelUtils';
@@ -17,15 +16,16 @@ import * as S from './ActiveSeasonBox.style';
 
 interface IProps {
   leagueDetail: ILeagueDetail;
+  seasons: ISeason[];
 }
 
 export const ActiveSeasonBox: React.FC<IProps> = (props: IProps) => {
-  const { leagueDetail } = props;
+  const { leagueDetail, seasons } = props;
   const { navigate } = useRouter();
-  const seasons = useSeasonsInLeague(leagueDetail.id);
 
-  const activeSeason = seasons.data?.items?.find(
-    (item) => item.status === SeasonStatus.ACTIVE || item.status === SeasonStatus.NEW,
+  const activeSeason = seasons.find(
+    (item) =>
+      (item.status === SeasonStatus.ACTIVE || item.status === SeasonStatus.NEW) && item.type === SeasonType.SEASON,
   );
 
   if (!activeSeason) {

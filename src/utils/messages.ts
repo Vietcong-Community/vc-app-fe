@@ -117,4 +117,32 @@ export const messages = defineMessages({
     id: 'app.utils.matchResultDefeat',
     defaultMessage: 'Prohra',
   },
+  statisticsSortTypeFlags: {
+    id: 'app.utils.statisticsSortTypeFlags',
+    defaultMessage: 'Vlajky',
+  },
+  statisticsSortTypeKills: {
+    id: 'app.utils.statisticsSortTypeKills',
+    defaultMessage: 'Zabití',
+  },
+  statisticsSortTypeDeaths: {
+    id: 'app.utils.statisticsSortTypeDeaths',
+    defaultMessage: 'Smrti',
+  },
+  statisticsSortTypeKD: {
+    id: 'app.utils.statisticsSortTypeKD',
+    defaultMessage: 'K/D',
+  },
+  statisticsSortTypeUsage: {
+    id: 'app.utils.statisticsSortTypeUsage',
+    defaultMessage: 'Užitečnost',
+  },
+  statisticsSortTypeAvgKD: {
+    id: 'app.utils.statisticsSortTypeAvgKD',
+    defaultMessage: 'Průměrné K/D',
+  },
+  statisticsSortTypeAvgUsage: {
+    id: 'app.utils.statisticsSortTypeAvgUsage',
+    defaultMessage: 'Průměrná užitečnost',
+  },
 });

@@ -2,7 +2,16 @@ import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { LeagueType, MatchResult, MatchStatus, Nation, PlayersCount, SeasonStatus, TeamRole } from '../constants/enums';
+import {
+  LeagueType,
+  MatchResult,
+  MatchStatus,
+  Nation,
+  PlayersCount,
+  SeasonStatus,
+  StatisticsSortType,
+  TeamRole,
+} from '../constants/enums';
 
 import { messages } from './messages';
 
@@ -158,3 +167,24 @@ export const MATCH_STATUS_SELECT_OPTIONS = [
     label: <FormattedMessage {...messages.matchStatusFinished} />,
   },
 ];
+
+export const mapStatisticsSortTypeToTranslation = (statisticsSortType?: StatisticsSortType): ReactNode | undefined => {
+  switch (statisticsSortType) {
+    case StatisticsSortType.FLAGS:
+      return <FormattedMessage {...messages.statisticsSortTypeFlags} />;
+    case StatisticsSortType.KILLS:
+      return <FormattedMessage {...messages.statisticsSortTypeKills} />;
+    case StatisticsSortType.DEATHS:
+      return <FormattedMessage {...messages.statisticsSortTypeDeaths} />;
+    case StatisticsSortType.KD:
+      return <FormattedMessage {...messages.statisticsSortTypeKD} />;
+    case StatisticsSortType.USAGE:
+      return <FormattedMessage {...messages.statisticsSortTypeUsage} />;
+    case StatisticsSortType.AVG_KD:
+      return <FormattedMessage {...messages.statisticsSortTypeAvgKD} />;
+    case StatisticsSortType.AVG_USAGE:
+      return <FormattedMessage {...messages.statisticsSortTypeAvgUsage} />;
+    default:
+      return undefined;
+  }
+};

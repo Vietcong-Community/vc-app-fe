@@ -1,4 +1,12 @@
-import { LeagueType, MatchStatus, MatchType, Nation, SeasonStatus, SeasonType } from '../../../constants/enums';
+import {
+  LeagueType,
+  MatchStatus,
+  MatchType,
+  Nation,
+  SeasonStatus,
+  SeasonType,
+  StatisticsSortType,
+} from '../../../constants/enums';
 import { IMap, IPagination, IUser } from '../interfaces';
 import { ITeam } from '../teams/interfaces';
 
@@ -256,8 +264,10 @@ export interface IRecalculateMatchScoreByFile {
 }
 
 export interface ISeasonStatsListQuery extends IPagination {
-  teamId?: string;
+  playerIds?: string;
+  teamIds?: string;
   mapId?: string;
+  sort?: StatisticsSortType;
 }
 
 export interface IStatisticsItem {

@@ -45,4 +45,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.SeasonDetail.components.Statistics.usefulnessDiameter',
     defaultMessage: 'Užitečnost ⌀',
   },
+  sort: {
+    id: 'app.containers.League.SeasonDetail.components.Statistics.sort',
+    defaultMessage: 'Řazení: {value}',
+  },
 });

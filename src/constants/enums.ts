@@ -74,3 +74,14 @@ export enum TeamMemberStatus {
   ACTIVE = 'ACTIVE',
   REMOVED = 'REMOVED',
 }
+
+export enum StatisticsSortType {
+  FLAGS = 'flags',
+  KILLS = 'kills',
+  DEATHS = 'deaths',
+  KD = 'kd',
+  USAGE = 'usage',
+  AVG_USEFULNESS = 'avg_usefulness',
+  AVG_KD = 'avg_kd',
+  AVG_USAGE = 'avg_usage',
+}

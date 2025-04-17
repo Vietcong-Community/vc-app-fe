@@ -320,7 +320,9 @@ export const SeasonDetailCont: React.FC = () => {
             <FormattedMessage {...messages.statisticsDescription} />
           </Flex>
         )}
-        {(userIsAdmin || userIsStatisticsAdmin) && <Statistics seasonId={query.seasonId} />}
+        {(userIsAdmin || userIsStatisticsAdmin) && (
+          <Statistics teams={ladder.data?.items ?? []} seasonId={query.seasonId} />
+        )}
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
       <SeasonMapListModal

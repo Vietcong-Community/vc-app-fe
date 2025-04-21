@@ -1,5 +1,6 @@
 import React from 'react';
 
+import 'quill-color-picker-enhance/dist/index.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -21,6 +22,7 @@ export const Editor: React.FC<IProps> = (props: IProps) => {
       [{ list: 'ordered' }, { list: 'bullet' }],
       [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
       ['link'],
+      [{ color: [] }],
     ],
     clipboard: {
       matchVisual: false,

@@ -30,5 +30,7 @@ export enum LeagueEndpoints {
   FILES_FOR_MATCH_SCORE_LIST = '/matches/{matchId}/show-score-files-available-for-match',
   RECALCULATE_MATCH_SCORE_BY_FILE = '/matches/files/{fileId}/recalculate-round-match-score',
   SEASON_STATS = '/seasons/{seasonId}/players-match-stats',
-  LEAGUE_DETAIL_BY_SEASON_ID = '/seasons/{seasonId}/league',
+  ELIMINATED_MAPS = '/matches/{matchId}/playoff-eliminated-map-list',
+  ELIMINATE_PLAYOFF_MAP = '/matches/{matchId}/eliminate-playoff-map',
+  REVERT_PLAYOFF_MAP_ELIMINATION = '/matches/{matchId}/revert-playoff-elimination',
 }

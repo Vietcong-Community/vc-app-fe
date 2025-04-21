@@ -13,6 +13,7 @@ import {
   ICreateMatchChallenge,
   ICreatePlayerRoundStats,
   ICreateRound,
+  IEliminatedMap,
   IExpectedEloPointsItem,
   IFileForMarchScoreList,
   ILadderItem,
@@ -525,15 +526,37 @@ export const useRemovePlayerRoundStats = () => {
   });
 };
 
-export const useLeagueDetailBySeasonId = (seasonId: string, staleTime = STALE_TIME) => {
+export const useEliminatedMaps = (matchId: string, enabled = true) => {
   return useQuery({
-    queryKey: ['leagueDetailBySeasonId', seasonId],
+    queryKey: ['eliminatedMaps', matchId],
     queryFn: async () => {
-      const { data } = await get<ILeagueDetail>(LeagueEndpoints.LEAGUE_DETAIL_BY_SEASON_ID, {
-        seasonId,
+      const { data } = await get<{ items: IEliminatedMap[] }>(LeagueEndpoints.ELIMINATED_MAPS, {
+        matchId,
       });
       return data;
     },
-    staleTime,
+    enabled,
+  });
+};
+
+export const useEliminateMap = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (values: { mapId: string }) => {
+      const { data } = await post<{ mapId: string }, undefined>(LeagueEndpoints.ELIMINATE_PLAYOFF_MAP, values, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useRevertMapElimination = (matchId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await post<undefined, undefined>(LeagueEndpoints.REVERT_PLAYOFF_MAP_ELIMINATION, undefined, {
+        matchId,
+      });
+      return data;
+    },
   });
 };

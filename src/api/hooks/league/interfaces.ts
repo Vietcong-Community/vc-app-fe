@@ -293,3 +293,8 @@ export interface ICreatePlayerRoundStats {
   deaths: number;
   playerInMatchId: string;
 }
+
+export interface IEliminatedMap {
+  mapId: string;
+  pickedBy: string;
+}

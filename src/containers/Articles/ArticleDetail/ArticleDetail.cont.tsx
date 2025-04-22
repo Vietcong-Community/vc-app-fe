@@ -126,7 +126,9 @@ export const ArticleDetailCont: React.FC = () => {
           { key: 'bc-articles', title: <FormattedMessage {...messages.title} /> },
         ]}
       >
-        <Helmet title={formatMessage(messages.title)} />
+        <Helmet title={articleDetail.data?.title ?? formatMessage(messages.title)}>
+          <meta property="og:title" key="og:title" content={articleDetail.data?.title} />
+        </Helmet>
         {articleDetail.isLoading && (
           <>
             <Gap defaultHeight={32} />

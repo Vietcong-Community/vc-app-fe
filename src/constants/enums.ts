@@ -81,7 +81,5 @@ export enum StatisticsSortType {
   DEATHS = 'deaths',
   KD = 'kd',
   USAGE = 'usage',
-  AVG_USEFULNESS = 'avg_usefulness',
-  AVG_KD = 'avg_kd',
   AVG_USAGE = 'avg_usage',
 }

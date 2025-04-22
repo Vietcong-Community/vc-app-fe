@@ -42,6 +42,7 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
     selectedMatchPage: number;
   }>({ selectedMatchPage: 1 });
   const [selectedSortType, setSelectedSortType] = useState<StatisticsSortType | undefined>(undefined);
+  const [pageSize, setPageSize] = useState<number>(10);
   const { width } = useWindowDimensions();
   const isSmallerThanMd = width < BreakPoints.md;
 
@@ -49,7 +50,7 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
     seasonId,
     {
       page: statisticsQuery.selectedMatchPage,
-      limit: 10,
+      limit: pageSize,
       sort: selectedSortType,
       playerIds: !isEmpty(statisticsQuery?.playerIds)
         ? statisticsQuery.playerIds?.map((item) => item.id).join(',')
@@ -86,19 +87,18 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
       onClick: () => setSelectedSortType(StatisticsSortType.USAGE),
     },
     {
-      label: <FormattedMessage {...enumTranslationMessages.statisticsSortTypeAvgKD} />,
-      key: '6',
-      onClick: () => setSelectedSortType(StatisticsSortType.AVG_KD),
-    },
-    {
       label: <FormattedMessage {...enumTranslationMessages.statisticsSortTypeAvgUsage} />,
-      key: '7',
+      key: '6',
       onClick: () => setSelectedSortType(StatisticsSortType.AVG_USAGE),
     },
   ];
 
   const handleModalSubmit = (values: { players?: IUser[]; teamIds?: string[] }) => {
-    setStatisticsQuery({ playerIds: values.players, teamIds: values.teamIds, selectedMatchPage: 1 });
+    setStatisticsQuery({
+      playerIds: values.players,
+      teamIds: values.teamIds,
+      selectedMatchPage: 1,
+    });
   };
 
   const tableData: IStatisticTableRow[] =
@@ -118,6 +118,11 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
 
   const onMatchPageChange = (pageNumber: number) =>
     setStatisticsQuery({ ...statisticsQuery, selectedMatchPage: pageNumber });
+
+  const onPageSizeChange = (pageSize: number) => {
+    setPageSize(pageSize);
+    setStatisticsQuery({ ...statisticsQuery, selectedMatchPage: 1 });
+  };
 
   return (
     <>
@@ -195,6 +200,8 @@ export const Statistics: React.FC<IProps> = (props: IProps) => {
             };
           }}
           selectedPage={statisticsQuery.selectedMatchPage}
+          showSizeChanger
+          setPageSize={onPageSizeChange}
           totalItems={statsBySeason.data?.total ?? 0}
         />
       </Flex>

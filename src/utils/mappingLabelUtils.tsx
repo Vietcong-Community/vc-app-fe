@@ -180,8 +180,6 @@ export const mapStatisticsSortTypeToTranslation = (statisticsSortType?: Statisti
       return <FormattedMessage {...messages.statisticsSortTypeKD} />;
     case StatisticsSortType.USAGE:
       return <FormattedMessage {...messages.statisticsSortTypeUsage} />;
-    case StatisticsSortType.AVG_KD:
-      return <FormattedMessage {...messages.statisticsSortTypeAvgKD} />;
     case StatisticsSortType.AVG_USAGE:
       return <FormattedMessage {...messages.statisticsSortTypeAvgUsage} />;
     default:

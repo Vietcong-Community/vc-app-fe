@@ -137,10 +137,6 @@ export const messages = defineMessages({
     id: 'app.utils.statisticsSortTypeUsage',
     defaultMessage: 'Užitečnost',
   },
-  statisticsSortTypeAvgKD: {
-    id: 'app.utils.statisticsSortTypeAvgKD',
-    defaultMessage: 'Průměrné K/D',
-  },
   statisticsSortTypeAvgUsage: {
     id: 'app.utils.statisticsSortTypeAvgUsage',
     defaultMessage: 'Průměrná užitečnost',

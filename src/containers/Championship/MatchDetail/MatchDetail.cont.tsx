@@ -25,6 +25,7 @@ import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/Cr
 import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
 import { H1 } from '../../../components/Titles/H1/H1';
+import { UNSET_MAP_NAME } from '../../../constants/constants';
 import { MatchStatus, MatchType, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
@@ -106,7 +107,7 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
   ].includes(matchDetail.data?.status as MatchStatus);
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
 
-  const showMapLabel = matchDetail.data?.challengerMap?.name !== 'Neurčena';
+  const showMapLabel = matchDetail.data?.challengerMap?.name !== UNSET_MAP_NAME;
 
   const getMatchTypeTitle = () => {
     if (matchDetail.data?.type === MatchType.GROUP) {

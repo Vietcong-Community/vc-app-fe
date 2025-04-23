@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import { Divider, Dropdown, Flex, MenuProps, Spin } from 'antd';
+import { Button as AntButton, Divider, Dropdown, Flex, MenuProps, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -209,9 +209,9 @@ export const MapPickCont: React.FC = () => {
         </H1>
         {userIsAdmin && (
           <Dropdown menu={{ items: adminItems }}>
-            <Button>
+            <AntButton>
               <FormattedMessage {...messages.admin} />
-            </Button>
+            </AntButton>
           </Dropdown>
         )}
       </Flex>

@@ -9,7 +9,7 @@ export const MatchContainer = styled.div`
   gap: 16px;
   width: 100%;
 
-  > div {
+  > a {
     width: calc(100% / 3 - 12px);
 
     ${() => makeMediaQuery(BreakPoints.lg)`

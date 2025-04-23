@@ -18,6 +18,7 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 0.5rem 1rem;
   position: relative;
+  color: ${(props: IThemeProps) => props.theme.mainColors.text};
 
   &:hover {
     background-color: ${(props: IThemeProps) => props.theme.mainColors.accent30};

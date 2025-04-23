@@ -1,14 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import { Button, Divider, Dropdown, Flex, MenuProps, Spin } from 'antd';
+import { Divider, Dropdown, Flex, MenuProps, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useEliminatedMaps, useMapsInSeason, useMatchDetail, useSeasonTeams } from '../../../api/hooks/league/api';
 import { useMeTeams, useTeamPlayers } from '../../../api/hooks/teams/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
+import { Button } from '../../../components/Button/Button';
 import { Card } from '../../../components/Card/Card';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -228,6 +230,7 @@ export const MapPickCont: React.FC = () => {
               </div>
               <div style={{ flex: 1, textAlign: 'end' }}>
                 <S.MatchType>{getMatchTypeTitle()}</S.MatchType>
+                <Gap defaultHeight={8} />
                 <Button onClick={refreshPage}>
                   <FormattedMessage {...messages.refreshPage} />
                 </Button>
@@ -331,6 +334,14 @@ export const MapPickCont: React.FC = () => {
             </Flex>
           </Card>
         </S.Container>
+        <Gap defaultHeight={16} />
+        <Flex justify="flex-end">
+          <Link to={Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId)}>
+            <Button>
+              <FormattedMessage {...messages.backToMatch} />
+            </Button>
+          </Link>
+        </Flex>
       </EaseInOutContainer>
       <ResetMapPickModal isOpen={isResetModalOpen} onClose={() => setIsResetModalOpen(false)} matchId={query.matchId} />
       <EliminateMapModal

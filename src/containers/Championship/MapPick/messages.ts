@@ -81,4 +81,8 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.MapPick.nothingPickedYet',
     defaultMessage: 'Zatím nebyly vybrané žádné mapy..',
   },
+  backToMatch: {
+    id: 'app.containers.Championship.MapPick.backToMatch',
+    defaultMessage: 'Zpět na zápas',
+  },
 });

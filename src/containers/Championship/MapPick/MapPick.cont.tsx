@@ -30,7 +30,7 @@ import { messages } from './messages';
 
 import * as S from './MapPick.style';
 
-const POLLING_INTERVAL = 15_000;
+const POLLING_INTERVAL = 5_000;
 const INITAL_MODAL_STATE = { isOpen: false, id: '', name: '' };
 
 export const MapPickCont: React.FC = () => {

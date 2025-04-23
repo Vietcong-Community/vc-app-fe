@@ -284,24 +284,27 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
           </>
         )}
         {!!matchDetail.data?.rounds && matchDetail.data?.rounds.length > 0 && (
-          <Rounds
-            allowUpload={
-              (matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION ||
-                matchDetail.data?.status === MatchStatus.CONFIRMED_SCORE_BY_SYSTEM) &&
-              (isPossibleToManageMatch.allowed || userIsAdmin)
-            }
-            hostMatchPlayers={matchDetail.data?.hostMatchPlayers ?? []}
-            challengerMatchPlayers={matchDetail.data?.challengerMatchPlayers ?? []}
-            challengerTag={matchDetail.data?.challenger.team.tag}
-            opponentTag={matchDetail.data?.opponent.team.tag}
-            opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
-            matchId={query.matchId}
-            matchMaps={matchMaps}
-            matchStatus={matchDetail.data?.status}
-            rounds={matchDetail.data?.rounds}
-            seasonId={matchDetail.data?.season?.id}
-            userIsAdmin={userIsAdmin}
-          />
+          <>
+            <Gap defaultHeight={16} />
+            <Rounds
+              allowUpload={
+                (matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION ||
+                  matchDetail.data?.status === MatchStatus.CONFIRMED_SCORE_BY_SYSTEM) &&
+                (isPossibleToManageMatch.allowed || userIsAdmin)
+              }
+              hostMatchPlayers={matchDetail.data?.hostMatchPlayers ?? []}
+              challengerMatchPlayers={matchDetail.data?.challengerMatchPlayers ?? []}
+              challengerTag={matchDetail.data?.challenger.team.tag}
+              opponentTag={matchDetail.data?.opponent.team.tag}
+              opponentMatchPlayers={matchDetail.data?.opponentMatchPlayers ?? []}
+              matchId={query.matchId}
+              matchMaps={matchMaps}
+              matchStatus={matchDetail.data?.status}
+              rounds={matchDetail.data?.rounds}
+              seasonId={matchDetail.data?.season?.id}
+              userIsAdmin={userIsAdmin}
+            />
+          </>
         )}
         <Gap defaultHeight={16} />
         <Comments matchId={query.matchId} />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, MenuProps } from 'antd';
+import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 
 import { useAddMatchStatsToOverallStats, useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
@@ -33,6 +34,8 @@ interface IProps {
 
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const {
+    canConfirmResult = false,
+    canEnterResult = false,
     canMapPick = false,
     matchId,
     seasonId,
@@ -40,6 +43,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     setIsCreateRoundModalOpen,
     setIsSortRoundsModalOpen,
     setIsUpdateMatchModalOpen,
+    startDate,
     status,
     userIsAdmin,
     userIsStatisticsAdmin,
@@ -50,8 +54,8 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
 
-  // const nowDate = dayjs();
-  // const matchStarted = nowDate.isAfter(dayjs(startDate));
+  const nowDate = dayjs();
+  const matchStarted = nowDate.isAfter(dayjs(startDate));
   const addMatchStatsToOverallStats = useAddMatchStatsToOverallStats(matchId);
   const recalculatePlayerStats = useRecalculatePlayerStats(matchId);
 
@@ -128,21 +132,20 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.enterTheResult} />,
       key: '1',
       onClick: () => navigate(Routes.SET_CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', matchId)),
-      // disabled: !matchStarted || status !== MatchStatus.ACCEPTED || !userIsAdmin, //(!canEnterResult && !userIsAdmin),
-      disabled: status !== MatchStatus.ACCEPTED || !userIsAdmin, //(!canEnterResult && !userIsAdmin),
+      disabled: !matchStarted || status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '2',
       onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
-      // disabled: !matchStarted || status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || !userIsAdmin, //(!canConfirmResult && !userIsAdmin),
-      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || !userIsAdmin,
+      disabled:
+        !matchStarted || status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.mapRemoving} />,
       key: '3',
       onClick: () => navigate(Routes.TOURNAMENT_MAP_PICK.replace(':matchId', matchId)),
-      disabled: !(canMapPick && status === MatchStatus.ACCEPTED),
+      disabled: !canMapPick,
     },
   ];
 

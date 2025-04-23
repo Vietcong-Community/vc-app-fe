@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.MapPick.championshipBreadcrumb',
     defaultMessage: 'Mistrovství ČR',
   },
+  chosenMap: {
+    id: 'app.containers.Championship.MapPick.chosenMap',
+    defaultMessage: 'Zvolená mapa',
+  },
   tournamentBreadcrumb: {
     id: 'app.containers.Championship.MapPick.tournamentBreadcrumb',
     defaultMessage: 'Turnaj',

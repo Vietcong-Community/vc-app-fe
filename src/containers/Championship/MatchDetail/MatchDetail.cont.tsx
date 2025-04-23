@@ -171,12 +171,9 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
           <ManageMenu
             canEnterResult={isPossibleToManageMatch?.allowed}
             canConfirmResult={isPossibleToManageMatch?.allowed && !showUploadRoundImagesAlert}
-            canMapPick={
-              (isPossibleToManageMatch?.allowed || userIsAdmin) &&
-              [MatchType.PLAYOFF, MatchType.PLAYOFF_SMALL_FINAL, MatchType.PLAYOFF_FINAL].includes(
-                matchDetail.data?.type as MatchType,
-              )
-            }
+            canMapPick={[MatchType.PLAYOFF, MatchType.PLAYOFF_SMALL_FINAL, MatchType.PLAYOFF_FINAL].includes(
+              matchDetail.data?.type as MatchType,
+            )}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             setIsAddPlayerToMatchModalOpen={setIsAddPlayerToMatchModalOpen}

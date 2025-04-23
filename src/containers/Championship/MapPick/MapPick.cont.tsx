@@ -68,11 +68,7 @@ export const MapPickCont: React.FC = () => {
   ]);
 
   useEffect(() => {
-    if (
-      matchDetail.data?.type === MatchType.GROUP ||
-      (matchDetail.data?.status && matchDetail.data?.status !== MatchStatus.ACCEPTED) ||
-      (matchDetail.data?.challengerMap && matchDetail.data?.challengerMap?.name !== UNSET_MAP_NAME)
-    ) {
+    if (matchDetail.data?.type === MatchType.GROUP) {
       navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId));
     }
   }, [matchDetail.data?.type, matchDetail.data?.status]);
@@ -238,42 +234,59 @@ export const MapPickCont: React.FC = () => {
               </div>
             </Flex>
             <Gap defaultHeight={32} />
-            <S.InformationLabel>
-              <FormattedMessage {...messages.pickingTurn} />
-            </S.InformationLabel>
-            <br />
-            <S.InformationValue
-              style={{ color: canLoggedUserPickMapNow ? theme.colors.green : theme.colors.red, fontSize: 30 }}
-            >
-              {challengerEliminationTurn && matchDetail.data?.challenger?.team?.name}
-              {opponentEliminationTurn && matchDetail.data?.opponent?.team?.name}
-            </S.InformationValue>
+            {filteredMaps.length === 1 && (
+              <>
+                <S.InformationLabel>
+                  <FormattedMessage {...messages.chosenMap} />
+                </S.InformationLabel>
+                <br />
+                <S.InformationValue style={{ fontSize: 30 }}>{filteredMaps?.[0]?.name}</S.InformationValue>
+              </>
+            )}
+            {(challengerEliminationTurn || opponentEliminationTurn) && (
+              <>
+                <S.InformationLabel>
+                  <FormattedMessage {...messages.pickingTurn} />
+                </S.InformationLabel>
+                <br />
+                <S.InformationValue
+                  style={{ color: canLoggedUserPickMapNow ? theme.colors.green : theme.colors.red, fontSize: 30 }}
+                >
+                  {challengerEliminationTurn && matchDetail.data?.challenger?.team?.name}
+                  {opponentEliminationTurn && matchDetail.data?.opponent?.team?.name}
+                </S.InformationValue>
+              </>
+            )}
             <Gap defaultHeight={16} />
-            <Flex align="flex-start" vertical>
-              <S.Subtitle>
-                <FormattedMessage {...messages.mapsToEliminate} />
-              </S.Subtitle>
-              <Gap defaultHeight={16} height={{ md: 8 }} />
-              <S.MapTags>
-                {filteredMaps.map((item) => {
-                  return (
-                    <S.Tag
-                      style={{
-                        cursor: canLoggedUserPickMapNow ? 'pointer' : 'not-allowed',
-                      }}
-                      onClick={() => {
-                        if (canLoggedUserPickMapNow) {
-                          setPickMapModalState({ isOpen: true, id: item.id, name: item.name });
-                        }
-                      }}
-                    >
-                      {item.name}
-                    </S.Tag>
-                  );
-                })}
-              </S.MapTags>
-            </Flex>
-            <Gap defaultHeight={32} />
+            {filteredMaps.length > 1 && (
+              <>
+                <Flex align="flex-start" vertical>
+                  <S.Subtitle>
+                    <FormattedMessage {...messages.mapsToEliminate} />
+                  </S.Subtitle>
+                  <Gap defaultHeight={16} height={{ md: 8 }} />
+                  <S.MapTags>
+                    {filteredMaps.map((item) => {
+                      return (
+                        <S.Tag
+                          style={{
+                            cursor: canLoggedUserPickMapNow ? 'pointer' : 'not-allowed',
+                          }}
+                          onClick={() => {
+                            if (canLoggedUserPickMapNow) {
+                              setPickMapModalState({ isOpen: true, id: item.id, name: item.name });
+                            }
+                          }}
+                        >
+                          {item.name}
+                        </S.Tag>
+                      );
+                    })}
+                  </S.MapTags>
+                </Flex>
+                <Gap defaultHeight={32} />
+              </>
+            )}
             <Flex align="flex-start" vertical>
               <S.Subtitle>
                 <FormattedMessage

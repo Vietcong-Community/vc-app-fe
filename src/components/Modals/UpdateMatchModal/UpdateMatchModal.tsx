@@ -22,11 +22,12 @@ interface IProps {
   onClose: () => void;
   matchId: string;
   seasonId?: string;
+  showDate?: boolean;
   showOpponentMap?: boolean;
 }
 
 export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
-  const { initialValues, isOpen, onClose, matchId, seasonId, showOpponentMap = true } = props;
+  const { initialValues, isOpen, onClose, matchId, seasonId, showDate = true, showOpponentMap = true } = props;
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
@@ -37,8 +38,12 @@ export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
 
   const onSubmit = async (values: IFormData) => {
     try {
-      const endDate = dayjs(values.startDate).add(1, 'hour').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
-      await updateMatch.mutateAsync({ ...values, endDate });
+      if (showDate) {
+        const endDate = dayjs(values.startDate).add(1, 'hour').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
+        await updateMatch.mutateAsync({ ...values, endDate });
+      } else {
+        await updateMatch.mutateAsync(values);
+      }
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       showNotification(messages.updateSuccess);
       onClose();
@@ -72,12 +77,14 @@ export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
             options={mapsOptions}
           />
         )}
-        <DatePickerField
-          {...fields.startDate}
-          label={<FormattedMessage {...messages.startDate} />}
-          placeholder={formatMessage(messages.startDate)}
-          showTime
-        />
+        {showDate && (
+          <DatePickerField
+            {...fields.startDate}
+            label={<FormattedMessage {...messages.startDate} />}
+            placeholder={formatMessage(messages.startDate)}
+            showTime
+          />
+        )}
         <InputNumberField {...fields.challengerScore} label={<FormattedMessage {...messages.challengerScore} />} />
         <InputNumberField {...fields.opponentScore} label={<FormattedMessage {...messages.opponentScore} />} />
       </FormComponent>

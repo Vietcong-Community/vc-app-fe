@@ -342,6 +342,7 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
         onClose={() => setIsUpdateMatchModalOpen(false)}
         matchId={query.matchId}
         seasonId={matchDetail.data?.season?.id}
+        showDate={false}
         showOpponentMap={false}
       />
     </ContentLayout>

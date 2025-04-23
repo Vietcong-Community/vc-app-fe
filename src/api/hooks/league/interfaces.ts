@@ -178,8 +178,8 @@ export interface IMatchComment {
 export interface IUpdateMatch {
   challengerMapId: string;
   opponentMapId?: string;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   challengerScore?: number;
   opponentScore?: number;
 }

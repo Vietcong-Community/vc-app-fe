@@ -140,7 +140,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
     {
       label: <FormattedMessage {...messages.mapRemoving} />,
-      key: '2',
+      key: '3',
       onClick: () => navigate(Routes.TOURNAMENT_MAP_PICK.replace(':matchId', matchId)),
       disabled: !(canMapPick && status === MatchStatus.ACCEPTED),
     },

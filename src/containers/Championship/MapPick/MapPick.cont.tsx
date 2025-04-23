@@ -51,7 +51,7 @@ export const MapPickCont: React.FC = () => {
   const seasonMaps = useMapsInSeason(matchDetail.data?.season?.id ?? '', matchIsAccepted);
   const eliminatedMaps = useEliminatedMaps(query.matchId, matchIsAccepted);
 
-  const showLoading = matchDetail.isLoading;
+  const showLoading = matchDetail.isLoading || eliminatedMaps.isLoading;
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
   const isPossibleToManageMatch = useMemo(() => {
     return canUserManageMatch(
@@ -71,7 +71,7 @@ export const MapPickCont: React.FC = () => {
     if (
       matchDetail.data?.type === MatchType.GROUP ||
       (matchDetail.data?.status && matchDetail.data?.status !== MatchStatus.ACCEPTED) ||
-      matchDetail.data?.challengerMap?.name !== UNSET_MAP_NAME
+      (matchDetail.data?.challengerMap && matchDetail.data?.challengerMap?.name !== UNSET_MAP_NAME)
     ) {
       navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId));
     }
@@ -242,7 +242,9 @@ export const MapPickCont: React.FC = () => {
               <FormattedMessage {...messages.pickingTurn} />
             </S.InformationLabel>
             <br />
-            <S.InformationValue>
+            <S.InformationValue
+              style={{ color: canLoggedUserPickMapNow ? theme.colors.green : theme.colors.red, fontSize: 30 }}
+            >
               {challengerEliminationTurn && matchDetail.data?.challenger?.team?.name}
               {opponentEliminationTurn && matchDetail.data?.opponent?.team?.name}
             </S.InformationValue>
@@ -257,7 +259,7 @@ export const MapPickCont: React.FC = () => {
                   return (
                     <S.Tag
                       style={{
-                        cursor: canLoggedUserPickMapNow ? 'pointer' : 'initial',
+                        cursor: canLoggedUserPickMapNow ? 'pointer' : 'not-allowed',
                       }}
                       onClick={() => {
                         if (canLoggedUserPickMapNow) {
@@ -283,7 +285,10 @@ export const MapPickCont: React.FC = () => {
               <S.MapTags>
                 {challengerPickedMaps.length === 0 && <FormattedMessage {...messages.nothingPickedYet} />}
                 {challengerPickedMaps.map((item) => {
+                  console.log(item);
                   const map = seasonMaps.data?.items?.find((map) => map.id === item.mapId);
+                  console.log(map);
+                  console.log(seasonMaps.data);
                   if (!map) {
                     return null;
                   }

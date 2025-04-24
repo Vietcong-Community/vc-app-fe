@@ -4,6 +4,7 @@ import { Modal, Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useMapsInSeason } from '../../../api/hooks/league/api';
+import { UNSET_MAP_NAME } from '../../../constants/constants';
 import { Gap } from '../../Gap/Gap';
 
 import { messages } from './messages';
@@ -18,6 +19,8 @@ export const SeasonMapListModal: React.FC<IProps> = (props: IProps) => {
   const { closeModal, isOpen, seasonId } = props;
 
   const seasonMaps = useMapsInSeason(seasonId, isOpen);
+
+  const maps = seasonMaps.data?.items?.filter((item) => item.name !== UNSET_MAP_NAME);
 
   return (
     <Modal
@@ -34,7 +37,7 @@ export const SeasonMapListModal: React.FC<IProps> = (props: IProps) => {
           <Spin />
         </>
       )}
-      {seasonMaps.data?.items?.map((item, index) => {
+      {maps?.map((item, index) => {
         const isLast = index + 1 === seasonMaps.data?.items?.length;
 
         return (

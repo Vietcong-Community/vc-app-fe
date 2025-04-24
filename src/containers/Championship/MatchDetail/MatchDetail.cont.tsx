@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { Divider, Flex, Spin } from 'antd';
-import dayjs from 'dayjs';
 import { compact, some } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
-import { useMatchDetail, useSeasonTeams } from '../../../api/hooks/league/api';
+import { useMatchDetail, useSeasonLadder, useSeasonTeams } from '../../../api/hooks/league/api';
 import { IMatchRound } from '../../../api/hooks/league/interfaces';
 import { useMeTeams } from '../../../api/hooks/teams/api';
 import { Alert } from '../../../components/Alert/Alert';
@@ -52,6 +51,7 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
   const userMe = useUserMe('always', [401], matchIsNotFinished);
   const myTeams = useMeTeams(undefined, [401], matchIsNotFinished);
   const seasonTeams = useSeasonTeams(matchDetail.data?.season?.id ?? '', [401], 'always', matchIsNotFinished);
+  const ladder = useSeasonLadder(matchDetail.data?.season?.id);
 
   const showLoading = matchDetail.isLoading;
   const userIsStatisticsAdmin = !!userMe.data?.roles.includes(Role.STATS_ADMIN);
@@ -134,6 +134,9 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
       return <FormattedMessage {...messages.semifinal} />;
     }
   };
+
+  const challengerTeamIsUnknown = !ladder.data?.items?.find((item) => item.id === matchDetail.data?.challenger?.id);
+  const opponentTeamIsUnknown = !ladder.data?.items?.find((item) => item.id === matchDetail.data?.challenger?.id);
 
   return (
     <ContentLayout
@@ -332,16 +335,19 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
         rounds={matchDetail.data?.rounds ?? []}
       />
       <UpdateMatchModal
+        disableTeamChange={false}
         isOpen={isUpdateMatchModalOpen}
         initialValues={{
+          challengerSeasonId: challengerTeamIsUnknown ? undefined : matchDetail.data?.challenger?.id,
+          opponentSeasonId: opponentTeamIsUnknown ? undefined : matchDetail.data?.opponent?.id,
           challengerMapId: matchDetail.data?.challengerMap?.id,
-          startDate: dayjs(matchDetail.data?.startDate) as unknown as string,
           challengerScore: matchDetail.data?.challengerScore,
           opponentScore: matchDetail.data?.opponentScore,
         }}
         onClose={() => setIsUpdateMatchModalOpen(false)}
         matchId={query.matchId}
         seasonId={matchDetail.data?.season?.id}
+        seasonTeams={ladder.data?.items ?? []}
         showDate={false}
         showOpponentMap={false}
       />

@@ -170,7 +170,7 @@ export const ChampionshipDetailCont: React.FC = () => {
         <Divider style={{ margin: '16px 0' }} />
         <PlayOff seasonId={query.id} />
         <Divider style={{ margin: '16px 0' }} />
-        <Statistics seasonId={query.id} />
+        <Statistics seasonId={query.id} teams={ladder.data?.items ?? []} />
         <Gap defaultHeight={64} height={{ sm: 32 }} />
       </EaseInOutContainer>
       <SeasonMapsPickerModal

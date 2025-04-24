@@ -13,6 +13,14 @@ export const messages = defineMessages({
     id: 'app.components.Modals.UpdateMatchModal.cancel',
     defaultMessage: 'Zrušit',
   },
+  challenger: {
+    id: 'app.components.Modals.UpdateMatchModal.challenger',
+    defaultMessage: 'Vyzyvatel',
+  },
+  opponent: {
+    id: 'app.components.Modals.UpdateMatchModal.opponent',
+    defaultMessage: 'Oponent',
+  },
   challengerMap: {
     id: 'app.components.Modals.UpdateMatchModal.challengerMap',
     defaultMessage: 'Mapa vyzyvatel',

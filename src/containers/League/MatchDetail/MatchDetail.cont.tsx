@@ -357,6 +357,8 @@ export const MatchDetail: React.FC = () => {
       <UpdateMatchModal
         isOpen={isUpdateMatchModalOpen}
         initialValues={{
+          challengerSeasonId: matchDetail.data?.challenger?.id,
+          opponentSeasonId: matchDetail.data?.opponent?.id,
           challengerMapId: matchDetail.data?.challengerMap?.id,
           opponentMapId: matchDetail.data?.opponentMap?.id,
           startDate: dayjs(matchDetail.data?.startDate) as unknown as string,
@@ -366,6 +368,7 @@ export const MatchDetail: React.FC = () => {
         onClose={() => setIsUpdateMatchModalOpen(false)}
         matchId={query.matchId}
         seasonId={matchDetail.data?.season?.id}
+        seasonTeams={ladder.data?.items ?? []}
       />
       <SortRoundsModal
         challengerTag={matchDetail.data?.challenger.team.tag}

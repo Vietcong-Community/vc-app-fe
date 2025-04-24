@@ -3,7 +3,9 @@ import { isRequired } from '../../../utils/validations/validations';
 
 export interface IFormData {
   challengerMapId: string;
+  challengerSeasonId?: string;
   opponentMapId?: string;
+  opponentSeasonId?: string;
   startDate: string;
   challengerScore?: number;
   opponentScore?: number;
@@ -15,8 +17,18 @@ export const fields: IFormFields<IFormData> = {
     required: true,
     rules: [isRequired],
   },
+  challengerSeasonId: {
+    name: 'challengerSeasonId',
+    required: true,
+    rules: [isRequired],
+  },
   opponentMapId: {
     name: 'opponentMapId',
+    required: true,
+    rules: [isRequired],
+  },
+  opponentSeasonId: {
+    name: 'opponentSeasonId',
     required: true,
     rules: [isRequired],
   },

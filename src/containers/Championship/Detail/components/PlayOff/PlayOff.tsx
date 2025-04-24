@@ -44,40 +44,60 @@ export const PlayOff: React.FC<IProps> = (props: IProps) => {
           <Spin size="large" />
         </>
       )}
-      <FormattedMessage {...messages.preRound} />
-      <S.MatchContainer>
-        {preRound.map((item) => {
-          return <MatchCard key={item.id} match={item} />;
-        })}
-      </S.MatchContainer>
-      <Gap defaultHeight={32} />
-      <FormattedMessage {...messages.quarterFinal} />
-      <S.MatchContainer>
-        {quarterFinal.map((item) => {
-          return <MatchCard key={item.id} match={item} />;
-        })}
-      </S.MatchContainer>
-      <Gap defaultHeight={32} />
-      <FormattedMessage {...messages.semifinal} />
-      <S.MatchContainer>
-        {semiFinal.map((item) => {
-          return <MatchCard key={item.id} match={item} />;
-        })}
-      </S.MatchContainer>
-      <Gap defaultHeight={32} />
-      <FormattedMessage {...messages.playOffSmallFinal} />
-      <S.MatchContainer>
-        {smallFinal.map((item) => {
-          return <MatchCard key={item.id} match={item} />;
-        })}
-      </S.MatchContainer>
-      <Gap defaultHeight={32} />
-      <FormattedMessage {...messages.playOffFinal} />
-      <S.MatchContainer>
-        {final.map((item) => {
-          return <MatchCard key={item.id} match={item} />;
-        })}
-      </S.MatchContainer>
+      {preRound.length > 0 && (
+        <>
+          <FormattedMessage {...messages.preRound} />
+          <S.MatchContainer>
+            {preRound.map((item) => {
+              return <MatchCard key={item.id} match={item} />;
+            })}
+          </S.MatchContainer>
+        </>
+      )}
+      {quarterFinal.length > 0 && (
+        <>
+          <Gap defaultHeight={32} />
+          <FormattedMessage {...messages.quarterFinal} />
+          <S.MatchContainer>
+            {quarterFinal.map((item) => {
+              return <MatchCard key={item.id} match={item} />;
+            })}
+          </S.MatchContainer>
+        </>
+      )}
+      {semiFinal.length > 0 && (
+        <>
+          <Gap defaultHeight={32} />
+          <FormattedMessage {...messages.semifinal} />
+          <S.MatchContainer>
+            {semiFinal.map((item) => {
+              return <MatchCard key={item.id} match={item} />;
+            })}
+          </S.MatchContainer>
+        </>
+      )}
+      {smallFinal.length > 0 && (
+        <>
+          <Gap defaultHeight={32} />
+          <FormattedMessage {...messages.playOffSmallFinal} />
+          <S.MatchContainer>
+            {smallFinal.map((item) => {
+              return <MatchCard key={item.id} match={item} />;
+            })}
+          </S.MatchContainer>
+        </>
+      )}
+      {final.length > 0 && (
+        <>
+          <Gap defaultHeight={32} />
+          <FormattedMessage {...messages.playOffFinal} />
+          <S.MatchContainer>
+            {final.map((item) => {
+              return <MatchCard key={item.id} match={item} />;
+            })}
+          </S.MatchContainer>
+        </>
+      )}
     </Flex>
   );
 };

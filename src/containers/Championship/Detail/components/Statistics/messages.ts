@@ -33,4 +33,8 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.components.Statistics.kd',
     defaultMessage: 'K/D',
   },
+  sort: {
+    id: 'app.containers.Championship.components.Statistics.sort',
+    defaultMessage: 'Řazení: {value}',
+  },
 });

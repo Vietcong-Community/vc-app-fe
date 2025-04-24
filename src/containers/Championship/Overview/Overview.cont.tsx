@@ -4,12 +4,11 @@ import { FacebookFilled } from '@ant-design/icons';
 import { Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useUserMe } from '../../../api/hooks/auth/api';
 import { useLeagueList, useLeaguesWithSeasonsList } from '../../../api/hooks/league/api';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { Role, SeasonType } from '../../../constants/enums';
+import { SeasonType } from '../../../constants/enums';
 import { EXTERNAL_LINKS } from '../../../constants/externalLinks';
 
 import { LeaguePreview } from './components/LeaguePreview/LeaguePreview';
@@ -22,9 +21,7 @@ const SPRING_FB_LINK = 'https://www.facebook.com/events/645052631336457/';
 export const ChampionshipOverview: React.FC = () => {
   const leagues = useLeagueList();
 
-  const userMe = useUserMe(false, [401]);
   const leaguesWithSeasons = useLeaguesWithSeasonsList(SeasonType.TOURNAMENT);
-  const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-championship', title: <FormattedMessage {...messages.title} /> }]}>
@@ -59,25 +56,21 @@ export const ChampionshipOverview: React.FC = () => {
           </S.FacebookLink>
         </S.Content>
       </S.Container>
-      {userIsAdmin && (
+      {leagues.isLoading && (
         <>
-          {leagues.isLoading && (
-            <>
-              <Gap defaultHeight={36} />
-              <Spin size="large" />
-            </>
-          )}
-          {leaguesWithSeasons.data?.map((item, index) => {
-            const isLast = index === leaguesWithSeasons.data?.length - 1;
-            return (
-              <>
-                <LeaguePreview leagueDetail={item.league} seasons={item.seasons} />
-                {!isLast && <Gap defaultHeight={32} />}
-              </>
-            );
-          })}
+          <Gap defaultHeight={36} />
+          <Spin size="large" />
         </>
       )}
+      {leaguesWithSeasons.data?.map((item, index) => {
+        const isLast = index === leaguesWithSeasons.data?.length - 1;
+        return (
+          <>
+            <LeaguePreview leagueDetail={item.league} seasons={item.seasons} />
+            {!isLast && <Gap defaultHeight={32} />}
+          </>
+        );
+      })}
       <Gap defaultHeight={32} />
     </ContentLayout>
   );

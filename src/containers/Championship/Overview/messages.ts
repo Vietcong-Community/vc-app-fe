@@ -8,7 +8,7 @@ export const messages = defineMessages({
   description: {
     id: 'app.containers.Championship.description',
     defaultMessage:
-      'Mistrovství české republiky ve Vietcongu, aka MČRVC se pořádá již od roku 2010. Kromě pár výpadků se ' +
+      'Mistrovství České republiky ve Vietcongu, aka MČRVC se pořádá již od roku 2010. Kromě pár výpadků se ' +
       'koná pravidelně poslední víkend září. V průběhu let se začalo pořádat také v jarním termínu, na konci ' +
       'března/dubna. Tento rok není vyjímkou, a další akce jsou již naplánované v obou termínech. Zarezervujte ' +
       'si následující termíny!',

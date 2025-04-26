@@ -138,8 +138,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '2',
       onClick: () => navigate(Routes.CONFIRM_MATCH_SCORE.replace(':matchId', matchId)),
-      disabled:
-        !matchStarted || status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
+      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canConfirmResult && !userIsAdmin),
     },
     {
       label: <FormattedMessage {...messages.mapRemoving} />,

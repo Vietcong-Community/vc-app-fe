@@ -16,6 +16,7 @@ import { Card } from '../../../components/Card/Card';
 import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
@@ -116,7 +117,13 @@ export const ProfileCont: React.FC = () => {
           </S.PlayerInfo>
           <Gap defaultHeight={32} height={{ md: 16 }} />
           <S.Description>
-            <Card>{userDetail.data?.description ?? <FormattedMessage {...messages.description} />}</Card>
+            <Card>
+              {userDetail.data?.description ? (
+                <ReactQuillRenderer data={userDetail.data.description} style={{ width: '100%' }} />
+              ) : (
+                <FormattedMessage {...messages.description} />
+              )}
+            </Card>
           </S.Description>
         </S.Container>
       </EaseInOutContainer>

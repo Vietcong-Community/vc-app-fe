@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import 'quill-color-picker-enhance/dist/index.css';
 import ReactQuill from 'react-quill';
@@ -9,12 +9,13 @@ import { ReactQuillRenderer } from '../ReactQuillRenderer/ReactQuillRenderer';
 import * as S from './Editor.style';
 
 interface IProps {
+  rendererCustomStyle?: CSSProperties;
   setValue: (value: string) => void;
   value: string;
 }
 
 export const Editor: React.FC<IProps> = (props: IProps) => {
-  const { setValue, value } = props;
+  const { rendererCustomStyle, setValue, value } = props;
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -34,7 +35,7 @@ export const Editor: React.FC<IProps> = (props: IProps) => {
       <S.EditorContainer>
         <ReactQuill theme="snow" modules={modules} value={value} onChange={setValue} />
       </S.EditorContainer>
-      <ReactQuillRenderer data={value ?? ''} />
+      <ReactQuillRenderer data={value ?? ''} style={rendererCustomStyle} />
     </>
   );
 };

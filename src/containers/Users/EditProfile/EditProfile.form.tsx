@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Tabs, Row, Col, Form, UploadFile } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button } from '../../../components/Button/Button';
-import { InputAreaField } from '../../../components/Fields/InputAreaField/InputAreaField';
+import { Editor } from '../../../components/Editor/Editor';
 import { InputField } from '../../../components/Fields/InputField/InputField';
 import { UploadField } from '../../../components/Fields/UploadField/UploadField';
 import { FormComponent } from '../../../components/Form/FormComponent';
@@ -26,10 +26,15 @@ interface IProps {
 export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
   const { fileList, initialValues, isSubmitting, onSubmit, setFileList } = props;
   const { formatMessage } = useIntl();
+  const [descriptionContent, setDescriptionContent] = useState<string>(initialValues?.description ?? '');
   const [form] = Form.useForm<IFormData>();
 
+  const handleSubmit = (values: IFormData) => {
+    onSubmit({ ...values, description: descriptionContent });
+  };
+
   return (
-    <FormComponent form={form} initialValues={initialValues} onSubmit={onSubmit}>
+    <FormComponent form={form} initialValues={initialValues} onSubmit={handleSubmit}>
       <H2>
         <FormattedMessage {...messages.title} />
       </H2>
@@ -50,7 +55,7 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
           <Gap defaultHeight={32} height={{ sm: 12 }} />
         </Col>
         {/* Right Side - Tabs and Form */}
-        <Col xs={24} md={10} lg={8}>
+        <Col xs={24} lg={12}>
           <Tabs
             defaultActiveKey="edit-profile-tab-1"
             items={[
@@ -109,10 +114,10 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
               {
                 children: (
                   <>
-                    <InputAreaField
-                      {...fields.description}
-                      label={<FormattedMessage {...messages.descriptionLabel} />}
-                      placeholder={formatMessage(messages.descriptionLabel)}
+                    <Editor
+                      setValue={setDescriptionContent}
+                      value={descriptionContent}
+                      rendererCustomStyle={{ width: '100%' }}
                     />
                   </>
                 ),

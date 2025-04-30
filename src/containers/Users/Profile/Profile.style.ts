@@ -37,6 +37,11 @@ export const Description = styled.div`
   width: 100%;
   white-space: pre-wrap;
 
+  h1:first-of-type,
+  h2:first-of-type {
+    margin-top: 0;
+  }
+
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
       align-items: center;

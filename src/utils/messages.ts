@@ -99,7 +99,7 @@ export const messages = defineMessages({
   },
   teamRoleMatchManager: {
     id: 'app.utils.teamRoleMatchManager',
-    defaultMessage: 'Manager zápasů',
+    defaultMessage: 'Manažer zápasů',
   },
   teamRoleMember: {
     id: 'app.utils.teamRoleMember',

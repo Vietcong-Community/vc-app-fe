@@ -14,9 +14,7 @@ import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { useRouter } from '../../../hooks/RouterHook';
-import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
-import { BreakPoints } from '../../../theme/theme';
 import { CreateTeamModalForm } from '../components/CreateTeamModal/CreateTeamModal.form';
 import { MyTeam } from '../components/MyTeam/MyTeam';
 
@@ -28,8 +26,6 @@ export const MyTeams: React.FC = () => {
   const { navigate } = useRouter();
   const { formatMessage } = useIntl();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { width } = useWindowDimensions();
-  const isSmallerThanMd = width < BreakPoints.md;
 
   const userMe = useUserMe();
   const myTeams = useMeTeams();
@@ -38,7 +34,6 @@ export const MyTeams: React.FC = () => {
     navigate(Routes.TEAM_DETAIL.replace(':id', id));
   };
 
-  console.log(isSmallerThanMd);
   return (
     <ContentLayout
       breadcrumbItems={[

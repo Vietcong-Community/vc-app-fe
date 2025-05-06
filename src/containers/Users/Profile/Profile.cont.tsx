@@ -66,11 +66,6 @@ export const ProfileCont: React.FC = () => {
 
   const showRealName = userDetail.data?.firstName || userDetail.data?.lastName;
 
-  const userDescription =
-    query.id === '41293b6d-c341-465d-b2a1-0804cd2f7e50'
-      ? userDetail.data?.description?.replaceAll('MVP', 'MFP')
-      : userDetail.data?.description;
-
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-profile', title: <FormattedMessage {...messages.title} /> }]}>
       <Helmet title={formatMessage(messages.title)} />
@@ -123,8 +118,8 @@ export const ProfileCont: React.FC = () => {
           <Gap defaultHeight={32} height={{ md: 16 }} />
           <S.Description>
             <Card>
-              {userDescription ? (
-                <ReactQuillRenderer data={userDescription} style={{ width: '100%' }} />
+              {userDetail.data?.description ? (
+                <ReactQuillRenderer data={userDetail.data?.description} style={{ width: '100%' }} />
               ) : (
                 <FormattedMessage {...messages.description} />
               )}

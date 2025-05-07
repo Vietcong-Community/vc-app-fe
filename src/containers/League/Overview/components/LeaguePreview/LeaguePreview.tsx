@@ -19,6 +19,8 @@ interface IProps {
 export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
   const { leagueDetail, seasons } = props;
 
+  const activeSeasonIndex = seasons.findIndex((item) => item.status === SeasonStatus.ACTIVE);
+
   return (
     <S.Container>
       <Typography.Text>{leagueDetail.description}</Typography.Text>
@@ -26,7 +28,7 @@ export const LeaguePreview: React.FC<IProps> = (props: IProps) => {
       <Divider />
       <Gap defaultHeight={16} />
       <Tabs
-        defaultActiveKey="tab-season-1"
+        defaultActiveKey={`tab-season-${activeSeasonIndex + 1}`}
         destroyInactiveTabPane
         items={seasons.map((season: ISeason, index: number) => {
           return {

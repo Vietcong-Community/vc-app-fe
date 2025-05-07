@@ -5,4 +5,8 @@ export const messages = defineMessages({
     id: 'app.containers.Home.components.Articles.title',
     defaultMessage: 'Nejnovější články',
   },
+  goToAllArticles: {
+    id: 'app.containers.Home.components.Articles.goToAllArticles',
+    defaultMessage: 'Zobrazit všechny články {value}',
+  },
 });

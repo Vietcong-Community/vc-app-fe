@@ -23,7 +23,6 @@ export const ActiveLeagues: React.FC = () => {
           <Spin size="large" />
         </>
       )}
-      <Gap defaultHeight={16} />
       <Typography.Title level={3}>
         <FormattedMessage {...messages.title} />
       </Typography.Title>

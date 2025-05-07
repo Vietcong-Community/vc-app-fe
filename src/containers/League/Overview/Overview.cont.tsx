@@ -49,6 +49,7 @@ export const OverviewCont: React.FC = () => {
             </Typography.Title>
             <Collapse
               destroyInactivePanel
+              defaultActiveKey={'collapse-league-1'}
               items={
                 leaguesWithSeasons.data?.map((league, index) => {
                   return {

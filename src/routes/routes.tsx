@@ -16,6 +16,7 @@ import { ChampionshipMatchDetailCont } from '../containers/Championship/MatchDet
 import { ChampionshipOverview } from '../containers/Championship/Overview/Overview.cont';
 import { SetChampionshipMatchScoreCont } from '../containers/Championship/SetMatchResult/SetMatchResult.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
+import { HomeCont } from '../containers/Home/Home.cont';
 import { AcceptMatchChallengeCont } from '../containers/League/AcceptMatchChallenge/AcceptMatchChallenge.cont';
 import { ConfirmMatchResultCont } from '../containers/League/ConfirmMatchResult/ConfirmMatchResult.cont';
 import { CreateMatchCont } from '../containers/League/CreateMatch/CreateMatch.cont';
@@ -75,7 +76,7 @@ export const routesObject: RouteObject[] = [
       { element: <ArticleDetailCont />, path: Routes.ARTICLE_DETAIL },
 
       // GENERAL ROUTES
-      { element: <OverviewCont />, path: Routes.HOME }, // TODO Create homepage
+      { element: <HomeCont />, path: Routes.HOME },
       { element: <LoginCont />, path: Routes.LOGIN },
       { element: <RegistrationCont />, path: Routes.REGISTRATION },
       { element: <ForgottenPasswordCont />, path: Routes.FORGOTTEN_PASSWORD },

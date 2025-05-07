@@ -13,11 +13,8 @@ import { SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 
-import { ActiveSeasonBox } from './components/ActiveSeasonBox/ActiveSeasonBox';
 import { LeaguePreview } from './components/LeaguePreview/LeaguePreview';
 import { messages } from './messages';
-
-import * as S from './Overview.style';
 
 export const OverviewCont: React.FC = () => {
   const { pathname } = useRouter();
@@ -46,19 +43,6 @@ export const OverviewCont: React.FC = () => {
         )}
         <EaseInOutContainer isOpen={!leaguesWithSeasons.isLoading}>
           <>
-            <Gap defaultHeight={16} />
-            <Typography.Title level={2}>
-              <FormattedMessage {...messages.activeSeasons} />
-            </Typography.Title>
-            <S.ActiveSeasons>
-              {leaguesWithSeasons.data?.map((league) => (
-                <ActiveSeasonBox
-                  key={`${league.league.id}-active-season`}
-                  leagueDetail={league.league}
-                  seasons={league.seasons}
-                />
-              ))}
-            </S.ActiveSeasons>
             <Gap defaultHeight={36} />
             <Typography.Title level={2}>
               <FormattedMessage {...messages.leaguesTitle} />

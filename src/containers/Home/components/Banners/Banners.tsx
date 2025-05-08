@@ -38,7 +38,7 @@ export const Banners: React.FC = () => {
           </li>
         </ul>
         <Link to={Routes.LEAGUE}>
-          <Button variant={MainButtonVariant.OUTLINED}>
+          <Button variant={MainButtonVariant.OUTLINED} style={{ fontSize: 16, fontWeight: 600 }}>
             <FormattedMessage {...messages.leaguesLink} />
           </Button>
         </Link>
@@ -63,7 +63,7 @@ export const Banners: React.FC = () => {
           <FormattedMessage {...messages.otherLANSubTitle} />
           <Gap defaultHeight={16} />
           <Link to={Routes.CHAMPIONSHIP}>
-            <Button variant={MainButtonVariant.OUTLINED}>
+            <Button variant={MainButtonVariant.OUTLINED} style={{ fontSize: 16, fontWeight: 600 }}>
               <FormattedMessage {...messages.championshipLink} />
             </Button>
           </Link>
@@ -73,7 +73,7 @@ export const Banners: React.FC = () => {
             <FormattedMessage {...messages.joinHubTitle} />
           </H2>
           <div style={{ fontWeight: 500 }}>
-            <FormattedMessage {...messages.joinHub} />
+            <FormattedMessage {...messages.joinHub} values={{ br: <br /> }} />
           </div>
           <ul>
             <li>
@@ -87,7 +87,7 @@ export const Banners: React.FC = () => {
             </li>
           </ul>
           <Link to={Routes.REGISTRATION}>
-            <Button variant={MainButtonVariant.OUTLINED}>
+            <Button variant={MainButtonVariant.OUTLINED} style={{ fontSize: 16, fontWeight: 600 }}>
               <FormattedMessage {...messages.joinHubLink} />
             </Button>
           </Link>

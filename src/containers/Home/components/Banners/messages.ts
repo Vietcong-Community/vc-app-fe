@@ -7,7 +7,7 @@ export const messages = defineMessages({
   },
   joinHub: {
     id: 'app.containers.Home.components.Banners.joinHub',
-    defaultMessage: 'Přidej se do VietcongHUB. Je to zadarmo. Ale návykový.',
+    defaultMessage: 'Přidej se do VietcongHUB.{br}Je to zadarmo. Ale návykový.',
   },
   joinHubFastRegistration: {
     id: 'app.containers.Home.components.Banners.joinHubFastRegistration',
@@ -23,7 +23,7 @@ export const messages = defineMessages({
   },
   joinHubLink: {
     id: 'app.containers.Home.components.Banners.joinHubLink',
-    defaultMessage: 'REGISTRUJ SE',
+    defaultMessage: 'CHCI HRÁT',
   },
   leaguesTitle: {
     id: 'app.containers.Home.components.Banners.leaguesTitle',
@@ -55,7 +55,7 @@ export const messages = defineMessages({
   },
   leaguesLink: {
     id: 'app.containers.Home.components.Banners.leaguesLink',
-    defaultMessage: 'AKTIVNÍ LIGY',
+    defaultMessage: 'PROZKOUMEJ LIGY',
   },
   championshipTitle: {
     id: 'app.containers.Home.components.Banners.championshipTitle',
@@ -79,7 +79,7 @@ export const messages = defineMessages({
   },
   championshipLink: {
     id: 'app.containers.Home.components.Banners.championshipLink',
-    defaultMessage: 'MČRVC',
+    defaultMessage: 'MRKNI NA MČRVC',
   },
   discordTitle: {
     id: 'app.containers.Home.components.Banners.discordTitle',

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints } from '../../../theme/theme';
-import { makeMediaQuery } from '../../../utils/mediaQuery';
+import { BreakPoints } from '../../../../theme/theme';
+import { makeMediaQuery } from '../../../../utils/mediaQuery';
 
 export const ActiveSeasons = styled.div`
   display: flex;

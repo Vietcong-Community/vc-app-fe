@@ -5,12 +5,12 @@ import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
 import { faPerson } from '@fortawesome/free-solid-svg-icons/faPerson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ILeagueDetail, ISeason } from '../../../../../api/hooks/league/interfaces';
-import { Gap } from '../../../../../components/Gap/Gap';
-import { LeagueType, SeasonStatus, SeasonType } from '../../../../../constants/enums';
-import { useRouter } from '../../../../../hooks/RouterHook';
-import { Routes } from '../../../../../routes/enums';
-import { mapLeagueTypeToTranslation } from '../../../../../utils/mappingLabelUtils';
+import { ILeagueDetail, ISeason } from '../../../../api/hooks/league/interfaces';
+import { Gap } from '../../../../components/Gap/Gap';
+import { LeagueType, SeasonStatus, SeasonType } from '../../../../constants/enums';
+import { useRouter } from '../../../../hooks/RouterHook';
+import { Routes } from '../../../../routes/enums';
+import { mapLeagueTypeToTranslation } from '../../../../utils/mappingLabelUtils';
 
 import * as S from './ActiveSeasonBox.style';
 

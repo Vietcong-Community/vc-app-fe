@@ -7,7 +7,7 @@ export const messages = defineMessages({
   },
   joinHub: {
     id: 'app.containers.Home.components.Banners.joinHub',
-    defaultMessage: 'Přidej se do VietcongHUB.{br}Je to zadarmo. Ale návykový.',
+    defaultMessage: 'Přidej se do VietcongHUB.{br}Je to zadarmo, ale návykový.',
   },
   joinHubFastRegistration: {
     id: 'app.containers.Home.components.Banners.joinHubFastRegistration',
@@ -32,10 +32,9 @@ export const messages = defineMessages({
   leagues: {
     id: 'app.containers.Home.components.Banners.leagues',
     defaultMessage:
-      'Starý dobrý CTF mód je ve Vietcongu roky. Stejně tak se v průběhu let střídaly dominantní týmy, které ' +
-      'vládly scéně a nikdo proti nim nechtěl hrát. Zde je vše jinak! Hráče rozřazujeme podle výkonnostních' +
-      ' košů, skládáme vyrovnané týmy, které si navzájem konkurují a nikdy není dopředu jisté, kdo koho porazí. ' +
-      'Chceš nalézt nové přátelé, zahrát si na úrovni a učit se od nejlepších? Prozkoumej naše ligy a zapoj se!',
+      'CTF mód je ve Vietcongu stálicí. Ale doby, kdy scéně vládly nedotknutelné týmy a nováčci jen paběrkovali, ' +
+      'jsou pryč. <b>Na VietcongHUB to hrajeme jinak.</b> Hráče rozřazujeme do' +
+      ' <b>výkonnostních košů</b> a sestavujeme vyrovnané týmy, které si to mezi sebou rozdají férově.',
   },
   leaguesPlayers: {
     id: 'app.containers.Home.components.Banners.leaguesPlayers',

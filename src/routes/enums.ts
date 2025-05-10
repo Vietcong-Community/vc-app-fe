@@ -6,6 +6,7 @@ export enum Routes {
   REGISTRATION = '/registrace',
   ABOUT_US = '/o-nas',
   HALLOFFAME = '/sin-slavy',
+  HOW_TO_PLAY = '/jak-zprovoznit-vietcong',
   FORGOTTEN_PASSWORD = '/obnoveni-hesla',
   PUBLIC_CHANGE_PASSWORD = '/zapomenute-heslo/:token',
   NOT_FOUND = '/stranka-nenalezena',

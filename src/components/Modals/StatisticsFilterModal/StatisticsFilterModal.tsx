@@ -20,11 +20,23 @@ interface IProps {
   isOpen: boolean;
   isSubmitting?: boolean;
   onSubmit: (values: { players?: IUser[]; teamIds?: string[] }) => void;
-  teams: ILadderItem[];
+  teams?: ILadderItem[];
+  showPlayersFilter?: boolean;
+  showTeamFilter?: boolean;
 }
 
 export const StatisticsFilterModal: React.FC<IProps> = (props: IProps) => {
-  const { closeModal, initialTeams = [], initialPlayers = [], isOpen, isSubmitting = false, onSubmit, teams } = props;
+  const {
+    closeModal,
+    initialTeams = [],
+    initialPlayers = [],
+    isOpen,
+    isSubmitting = false,
+    onSubmit,
+    teams,
+    showPlayersFilter = true,
+    showTeamFilter = true,
+  } = props;
   const [playersQuery, setPlayersQuery] = useState<{ nickname?: string }>({});
   const [players, setPlayers] = useState<IUser[]>(initialPlayers);
   const [form] = Form.useForm<IFormData>();
@@ -33,9 +45,10 @@ export const StatisticsFilterModal: React.FC<IProps> = (props: IProps) => {
 
   const users = useUserList(playersQuery, true, !!playersQuery?.nickname && playersQuery.nickname.length >= 3);
 
-  const teamOptions = teams.map((item) => {
-    return { id: item.team.id, value: item.team.id, label: item.team.name };
-  });
+  const teamOptions =
+    teams?.map((item) => {
+      return { id: item.team.id, value: item.team.id, label: item.team.name };
+    }) ?? [];
 
   console.log(initialTeams);
   useEffect(() => {
@@ -83,25 +96,29 @@ export const StatisticsFilterModal: React.FC<IProps> = (props: IProps) => {
       confirmLoading={isSubmitting}
     >
       <FormComponent id="statistics-filter" form={form} initialValues={{ teams: initialTeams }} onSubmit={handleSubmit}>
-        <SelectField
-          {...fields.teams}
-          label={<FormattedMessage {...messages.teams} />}
-          placeholder={formatMessage(messages.findTeams)}
-          options={teamOptions}
-          mode="multiple"
-        />
-        <Form.Item
-          name={fields.players.name}
-          label={<FormattedMessage {...messages.players} />}
-          style={{ marginBottom: 0, width: '100%' }}
-        >
-          <AutoComplete
-            allowClear
-            placeholder={formatMessage(messages.findPlayers)}
-            options={getPlayerOptions()}
-            onSelect={handleOnPlayerClick}
+        {showTeamFilter && (
+          <SelectField
+            {...fields.teams}
+            label={<FormattedMessage {...messages.teams} />}
+            placeholder={formatMessage(messages.findTeams)}
+            options={teamOptions}
+            mode="multiple"
           />
-        </Form.Item>
+        )}
+        {showPlayersFilter && (
+          <Form.Item
+            name={fields.players.name}
+            label={<FormattedMessage {...messages.players} />}
+            style={{ marginBottom: 0, width: '100%' }}
+          >
+            <AutoComplete
+              allowClear
+              placeholder={formatMessage(messages.findPlayers)}
+              options={getPlayerOptions()}
+              onSelect={handleOnPlayerClick}
+            />
+          </Form.Item>
+        )}
         <Gap defaultHeight={16} />
         {players.map((item) => {
           return (

@@ -11,13 +11,13 @@ export const Title = styled.h2`
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      font-size: 22px;
+      font-size: 24px;
     `}
   `};
 
   ${() => makeMediaQuery(BreakPoints.sm)`
     ${css`
-      font-size: 18px;
+      font-size: 20px;
     `}
   `};
 `;

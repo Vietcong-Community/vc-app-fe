@@ -88,14 +88,3 @@ export const InfoCard = styled.div`
     color: ${(props: IThemeProps) => props.theme.mainColors.accent};
   }
 `;
-
-export const SeasonTitle = styled.div`
-  cursor: pointer;
-  font-weight: 500;
-  text-align: start;
-  width: 100%;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;

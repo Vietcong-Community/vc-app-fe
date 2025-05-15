@@ -5,14 +5,15 @@ import * as S from './H2.style';
 interface IProps {
   children?: React.ReactNode;
   id?: string;
+  onClick?: () => void;
   style?: CSSProperties;
 }
 
 export const H2: React.FC<IProps> = (props: IProps) => {
-  const { children, id, style } = props;
+  const { children, id, onClick, style } = props;
 
   return (
-    <S.Title id={id} style={style}>
+    <S.Title id={id} onClick={onClick} style={style}>
       {children}
     </S.Title>
   );

@@ -48,6 +48,7 @@ import { ILadderTableRow, LADDER_COLUMNS } from '../types';
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
+import { SeasonWinners } from './components/SeasonWinners/SeasonWinners';
 import { Statistics } from './components/Statistics/Statistics';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
@@ -128,6 +129,10 @@ export const SeasonDetailCont: React.FC = () => {
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
   const teamsToJoinSeason = canUserJoinSeasonWithTeam(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
+  const topThreeTeams = ladder.data?.items?.slice(0, 3) ?? [];
+  const seasonIsArchived = season.data?.status === SeasonStatus.ARCHIVED;
+  const hasTopThreeTeams = topThreeTeams.length === 3;
+
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -202,6 +207,15 @@ export const SeasonDetailCont: React.FC = () => {
             </div>
           </S.SeasonInfoContainer>
         </Card>
+        <Gap defaultHeight={16} />
+        {seasonIsArchived && hasTopThreeTeams && (
+          <SeasonWinners
+            firstTeamId={topThreeTeams[0]?.team.id ?? ''}
+            secondTeamId={topThreeTeams[1]?.team.id ?? ''}
+            thirdTeamId={topThreeTeams[2]?.team.id ?? ''}
+            seasonId={query.seasonId}
+          />
+        )}
         <Gap defaultHeight={16} />
         <TopPlayersOfTheDay seasonId={query.seasonId} />
         <Gap defaultHeight={16} />

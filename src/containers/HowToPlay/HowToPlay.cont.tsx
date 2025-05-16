@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { Image } from 'antd';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import discordLogo from '../../assets/HomePage/discord.svg';
+import hostsFileEdit from '../../assets/HowToPlay/hosts-file-edit.webp';
+import hostsFileLocation from '../../assets/HowToPlay/hosts-file.webp';
 import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../components/Titles/H1/H1';
@@ -32,14 +35,26 @@ export const HowToPlayCont: React.FC = () => {
       <Gap defaultHeight={16} />
       <S.Content>
         <FormattedMessage {...messages.description} />
+        <Gap defaultHeight={32} />
+        <iframe src={EXTERNAL_LINKS.VIETCONG_INSTALLATION_GUIDE} />
       </S.Content>
+
       <Gap defaultHeight={32} />
       <H2>
         <FormattedMessage {...messages.firstStepTitle} />
       </H2>
       <Gap defaultHeight={16} />
       <S.Content style={{ textAlign: 'start' }}>
-        <FormattedMessage {...messages.firstStep} />
+        <FormattedMessage
+          {...messages.firstStep}
+          values={{
+            link: (msg) => (
+              <a href={EXTERNAL_LINKS.VIETCONG_ARCHIVE} target="_blank">
+                {msg}
+              </a>
+            ),
+          }}
+        />
         <br />
         <FormattedMessage
           {...messages.unzip}
@@ -107,6 +122,11 @@ export const HowToPlayCont: React.FC = () => {
           values={{ i: (msg) => <span style={{ fontStyle: 'italic', fontWeight: 500 }}>{msg}</span> }}
         />
       </S.Content>
+      <Gap defaultHeight={16} />
+      <S.Images>
+        <Image src={hostsFileLocation} />
+        <Image src={hostsFileEdit} />
+      </S.Images>
       <Gap defaultHeight={32} />
       <H2>
         <FormattedMessage {...messages.fifthStepTitle} />

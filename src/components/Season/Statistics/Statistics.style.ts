@@ -1,7 +1,7 @@
 import { Avatar, Tag as AntDTag } from 'antd';
 import styled from 'styled-components';
 
-import { IThemeProps } from '../../../../../theme/theme';
+import { IThemeProps } from '../../../theme/theme';
 
 export const ValueLabel = styled.span`
   font-size: 12px;

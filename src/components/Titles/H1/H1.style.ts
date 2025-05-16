@@ -17,7 +17,7 @@ export const Title = styled.h1`
 
   ${() => makeMediaQuery(BreakPoints.sm)`
     ${css`
-      font-size: 20px;
+      font-size: 22px;
     `}
   `};
 `;

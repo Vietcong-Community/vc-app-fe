@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { IThemeProps } from '../../theme/theme';
+import { BreakPoints, IThemeProps } from '../../theme/theme';
+import { makeMediaQuery } from '../../utils/mediaQuery';
 
 export const BoldColoredText = styled.b`
   color: ${(props: IThemeProps) => props.theme.mainColors.accent};
@@ -15,4 +16,34 @@ export const Content = styled.div`
   a {
     color: ${(props: IThemeProps) => props.theme.mainColors.text};
   }
+
+  iframe {
+    aspect-ratio: 3/2;
+    width: 50%;
+
+    ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      width: 100%;
+    `}
+  `};
+  }
+`;
+
+export const Images = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: auto;
+  max-width: 800px;
+  width: 100%;
+
+  div {
+    width: 100%;
+  }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+    `}
+  `};
 `;

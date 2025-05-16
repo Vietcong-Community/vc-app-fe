@@ -25,7 +25,7 @@ import { messages as enumTranslationMessages } from '../../../../../utils/messag
 import { messages } from './messages';
 import { IStatisticTableRow, STATISTICS_COLUMNS } from './types';
 
-import * as S from '../../../../League/SeasonDetail/components/Statistics/Statistics.style';
+import * as S from '../../../../../components/Season/Statistics/Statistics.style';
 
 interface IProps {
   seasonId: string;

@@ -30,6 +30,7 @@ import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { JoinSeasonModal } from '../../../components/Modals/JoinSeasonModal/JoinSeasonModal';
 import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModal/SeasonMapListModal';
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
+import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
@@ -48,7 +49,6 @@ import { ILadderTableRow, LADDER_COLUMNS } from '../types';
 import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
-import { Statistics } from './components/Statistics/Statistics';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';
 

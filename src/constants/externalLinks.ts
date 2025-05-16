@@ -8,4 +8,6 @@ export const EXTERNAL_LINKS = {
   MCRVC_FACEBOOK: 'https://www.facebook.com/mcrvietcong',
   STATS_BY_ILE:
     'https://docs.google.com/spreadsheets/d/1YND5sUX0ltcE44oQVv83XGhyBhyLHO-kZhtH2fGD5So/edit?gid=296093699#gid=296093699',
+  VIETCONG_ARCHIVE: 'https://drive.google.com/file/d/14wGVsU_wjmAJ7GIkMIia4z8EcqftfNkc/view?usp=drive_link',
+  VIETCONG_INSTALLATION_GUIDE: 'https://www.youtube.com/watch?v=zDJj1oJzlyY',
 };

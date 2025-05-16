@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { Spin, UploadFile } from 'antd';
+import { UploadFile } from 'antd';
 import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import teamImg from 'src/assets/heli-footer-light-design.webp';
 
 import { useConfirmImageUploadUrl } from '../../../../../api/hooks/files/api';
-import { useTeamAvatarUploadUrl, useTeamSeasons } from '../../../../../api/hooks/teams/api';
+import { useTeamAvatarUploadUrl } from '../../../../../api/hooks/teams/api';
 import { ITeam } from '../../../../../api/hooks/teams/interfaces';
-import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Button } from '../../../../../components/Button/Button';
-import { Divider } from '../../../../../components/Divider/Divider';
 import { UploadField } from '../../../../../components/Fields/UploadField/UploadField';
 import { Gap } from '../../../../../components/Gap/Gap';
-import { H2 } from '../../../../../components/Titles/H2/H2';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
-import { useRouter } from '../../../../../hooks/RouterHook';
 import { NotificationType } from '../../../../../providers/NotificationsProvider/enums';
-import { Routes } from '../../../../../routes/enums';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { uploadFileWithPresignedUrl } from '../../../../../utils/fileUtils';
-import { Matches } from '../Matches/Matches';
+import { SeasonTabs } from '../SeasonTabs/SeasonTabs';
 
 import { messages } from './messages';
 
@@ -36,12 +31,10 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
   const { teamDetail, showAvatarUploadOption = false } = props;
   const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
-  const { navigate } = useRouter();
 
   const [showAvatarUpload, setShowAvatarUpload] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  const seasons = useTeamSeasons(teamDetail?.id ?? '');
   const logoUrl = useTeamAvatarUploadUrl(teamDetail?.id ?? '');
   const confirmUpload = useConfirmImageUploadUrl();
 
@@ -121,27 +114,7 @@ export const TeamInfo: React.FC<IProps> = (props: IProps) => {
         </S.InfoDiv>
       </S.Content>
       <Gap defaultHeight={32} height={{ md: 16 }} />
-      <Divider />
-      {seasons.isLoading && <Spin size="large" />}
-      <EaseInOutContainer isOpen={!seasons.isLoading && (seasons.data?.items?.length ?? 0) > 0 && !!teamDetail?.id}>
-        <H2 style={{ textAlign: 'start' }}>
-          <FormattedMessage {...messages.seasonsMatches} />
-        </H2>
-        <Gap defaultHeight={16} />
-        {seasons.data?.items.map((season, index) => {
-          const isLast = index === seasons.data?.items.length - 1;
-          return (
-            <>
-              <S.SeasonTitle onClick={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', season.id))}>
-                {season.name}
-              </S.SeasonTitle>
-              <Gap defaultHeight={8} />
-              <Matches teamId={teamDetail?.id ?? ''} seasonId={season.id} />
-              {!isLast && <Gap defaultHeight={16} />}
-            </>
-          );
-        })}
-      </EaseInOutContainer>
+      {teamDetail?.id && <SeasonTabs teamId={teamDetail.id} />}
     </>
   );
 };

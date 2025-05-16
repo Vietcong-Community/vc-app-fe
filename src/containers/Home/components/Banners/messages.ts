@@ -96,4 +96,8 @@ export const messages = defineMessages({
     id: 'app.containers.Home.components.Banners.discordLink',
     defaultMessage: 'Naskoč k nám na Discord a nic ti neuteče!',
   },
+  howToPlayLink: {
+    id: 'app.containers.Home.components.Banners.howToPlayLink',
+    defaultMessage: 'Pokud potřebuješ poradit se <b>zprozovněním hry</b>, návod najdeš <link>zde</link>.',
+  },
 });

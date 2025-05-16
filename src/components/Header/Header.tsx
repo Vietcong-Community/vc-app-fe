@@ -188,6 +188,11 @@ export const Header: React.FC = () => {
                       label: <FormattedMessage {...messages.articleLink} />,
                     },
                     {
+                      key: 'how-to-play',
+                      onClick: () => navigate(Routes.HOW_TO_PLAY),
+                      label: <FormattedMessage {...messages.howToPlay} />,
+                    },
+                    {
                       key: 'about',
                       onClick: () => navigate(Routes.ABOUT_US),
                       label: <FormattedMessage {...messages.aboutUsLink} />,

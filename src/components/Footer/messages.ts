@@ -31,6 +31,10 @@ export const messages = defineMessages({
     id: 'app.components.Footer.articles',
     defaultMessage: 'Články',
   },
+  howToPlay: {
+    id: 'app.components.Footer.howToPlay',
+    defaultMessage: 'Jak zprovoznit VC',
+  },
   mcrvcKarez: {
     id: 'app.components.Footer.mcrvcKarez',
     defaultMessage: 'MČRVC',

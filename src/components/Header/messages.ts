@@ -49,6 +49,10 @@ export const messages = defineMessages({
     id: 'app.components.Header.statisticsLink',
     defaultMessage: 'Statistiky',
   },
+  howToPlay: {
+    id: 'app.components.Header.howToPlay',
+    defaultMessage: 'Jak zprovoznit VC',
+  },
   themeTitle: {
     id: 'app.components.Header.themeTitle',
     defaultMessage: 'Design',

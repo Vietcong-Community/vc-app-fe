@@ -104,13 +104,6 @@ export const MenuItem = styled.div`
   font-size: 16px;
 `;
 
-export const MenuLink = styled.div`
-  border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.mainColors.borderColor};
-  font-size: 16px;
-  padding: 0.5rem;
-`;
-
 export const UserName = styled.div`
   align-items: center;
   cursor: pointer;

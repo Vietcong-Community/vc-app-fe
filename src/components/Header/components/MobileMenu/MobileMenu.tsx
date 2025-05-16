@@ -85,6 +85,10 @@ export const MobileMenu: React.FC<IProps> = (props) => {
           <FormattedMessage {...messages.articleLink} />
           <RightOutlined style={{ fontSize: 22 }} />
         </S.MenuItem>
+        <S.MenuItem onClick={() => onMenuItemClick(Routes.HOW_TO_PLAY)}>
+          <FormattedMessage {...messages.howToPlay} />
+          <RightOutlined style={{ fontSize: 22 }} />
+        </S.MenuItem>
         <S.MenuItem onClick={() => onMenuItemClick(Routes.ABOUT_US)}>
           <FormattedMessage {...messages.aboutUsLink} />
           <RightOutlined style={{ fontSize: 22 }} />
@@ -210,7 +214,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                 )}
                 {!isUserLoggedIn && (
                   <>
-                    <S.UserName>
+                    <S.UserName onClick={() => onMenuItemClick(Routes.LOGIN)}>
                       <Avatar size={42} icon={<UserOutlined />} />
                       <span style={{ fontSize: '20px' }}>
                         <FormattedMessage {...messages.userNotLoggedIn} />
@@ -241,7 +245,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                       </div>
                       <RightOutlined style={{ fontSize: 22 }} />
                     </S.MenuItem>
-                    <Space size="large">
+                    <Space size="large" style={{ marginBottom: 32 }}>
                       <S.SwitchContainer>
                         <FormattedMessage {...messages.themeTitle} />
                         <Switch
@@ -260,6 +264,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
                           onChange={toggleLanguage}
                         />
                       </S.SwitchContainer>
+                      <Gap defaultHeight={16} />
                     </Space>
                   </>
                 )}

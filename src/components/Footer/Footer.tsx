@@ -47,12 +47,15 @@ export const Footer: React.FC = () => {
             <S.Link onClick={() => navigate(Routes.ARTICLES)}>
               <FormattedMessage {...messages.articles} />
             </S.Link>
+            <S.Link onClick={() => navigate(Routes.HOW_TO_PLAY)}>
+              <FormattedMessage {...messages.howToPlay} />
+            </S.Link>
           </S.Column>
-          <S.Column>
-            <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
-              <FormattedMessage {...messages.sponsors} />
-            </h4>
-            {/*
+          {/*<S.Column>*/}
+          {/*<h4 style={{ marginTop: '1rem', marginBottom: 0 }}>*/}
+          {/*  <FormattedMessage {...messages.sponsors} />*/}
+          {/*</h4>*/}
+          {/*
             <S.Link>
               <a href={EXTERNAL_LINKS.XS_STORE} target={'_blank'}>
                 <FormattedMessage {...messages.xsStore} />
@@ -64,7 +67,7 @@ export const Footer: React.FC = () => {
               </a>
             </S.Link>
             */}
-          </S.Column>
+          {/*</S.Column>*/}
 
           <S.Column>
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>

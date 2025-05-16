@@ -103,6 +103,18 @@ export const Banners: React.FC = () => {
           <FormattedMessage {...messages.discordPromo} />
         </div>
         <Gap defaultHeight={16} />
+        <FormattedMessage
+          {...messages.howToPlayLink}
+          tagName="span"
+          values={{
+            link: (msg) => (
+              <Link to={Routes.HOW_TO_PLAY}>
+                <b>{msg}</b>
+              </Link>
+            ),
+          }}
+        />
+        <Gap defaultHeight={16} />
         <a href={EXTERNAL_LINKS.DISCORD} target={'_blank'}>
           <b>
             <FormattedMessage {...messages.discordLink} />

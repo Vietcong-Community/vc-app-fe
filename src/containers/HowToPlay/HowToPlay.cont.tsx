@@ -20,7 +20,7 @@ import * as S from './HowToPlay.style';
 export const HowToPlayCont: React.FC = () => {
   const { formatMessage } = useIntl();
   return (
-    <ContentLayout>
+    <ContentLayout breadcrumbItems={[{ key: 'bc-how-to-play', title: <FormattedMessage {...messages.title} /> }]}>
       <Helmet title={formatMessage(messages.title)} />
       <Gap defaultHeight={16} />
       <H1>

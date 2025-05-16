@@ -15,7 +15,7 @@ export const messages = defineMessages({
       'Pokud si chceš zahrát Vietcong s plně funkčním multiplayerem, včetně možnosti vidět servery  doporučujeme ' +
       'stáhnout předpřipravený balíček Vietcong – Gold Edition s nástrojem VC Starter 1.7 beta, který vše ' +
       'výrazně zjednodušuje. Celý návod je zahrnuto do 5 kroků. Pokud by Ti z návodu nebylo něco jasné, doporučujeme' +
-      ' postupovat podle videonávodu od hráče <b>Peldovitch</b>',
+      ' postupovat podle videonávodu od hráče <b>Peldovitch</b>.',
   },
   videoGuide: {
     id: 'app.containers.HowToPlay.videoGuide',

@@ -41,6 +41,10 @@ export const messages = defineMessages({
     id: 'app.components.Header.mcrvcLink',
     defaultMessage: 'MČRVC',
   },
+  donateLink: {
+    id: 'app.components.Header.donateLink',
+    defaultMessage: 'Chci podpořit',
+  },
   leaguesLink: {
     id: 'app.components.Header.leaguesLink',
     defaultMessage: 'Ligy',

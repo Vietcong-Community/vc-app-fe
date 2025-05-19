@@ -9,7 +9,7 @@ export enum Routes {
   HOW_TO_PLAY = '/jak-zprovoznit-vietcong',
   FORGOTTEN_PASSWORD = '/obnoveni-hesla',
   PUBLIC_CHANGE_PASSWORD = '/zapomenute-heslo/:token',
-  DONATE_PAGE = '/prispevky-a-dary',
+  DONATE_PAGE = '/chci-podporit-vietconghub',
   NOT_FOUND = '/stranka-nenalezena',
   // USER ROUTES
   USER_PROFILE = '/uzivatel/:id',

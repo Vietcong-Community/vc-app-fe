@@ -178,10 +178,15 @@ export const Header: React.FC = () => {
                       label: <FormattedMessage {...messages.mcrvcLink} />,
                     },
                     {
-                      key: 'statistics',
-                      onClick: () => navigate(Routes.STATISTICS),
-                      label: <FormattedMessage {...messages.statisticsLink} />,
+                      key: 'donate',
+                      onClick: () => navigate(Routes.DONATE_PAGE),
+                      label: <FormattedMessage {...messages.donateLink} />,
                     },
+                    // {
+                    //   key: 'statistics',
+                    //   onClick: () => navigate(Routes.STATISTICS),
+                    //   label: <FormattedMessage {...messages.statisticsLink} />,
+                    // },
                     {
                       key: 'articles',
                       onClick: () => navigate(Routes.ARTICLES),

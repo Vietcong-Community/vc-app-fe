@@ -32,6 +32,7 @@
   "app.components.Header.darkTheme": "Dark",
   "app.components.Header.desktopCzech": "CZ",
   "app.components.Header.desktopEnglish": "EN",
+  "app.components.Header.donateLink": "",
   "app.components.Header.english": "EN",
   "app.components.Header.goToHomePage": "Home",
   "app.components.Header.goToLogin": "Login",

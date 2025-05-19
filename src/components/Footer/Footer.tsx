@@ -38,9 +38,9 @@ export const Footer: React.FC = () => {
             <S.Link onClick={() => navigate(Routes.LEAGUE)}>
               <FormattedMessage {...messages.leaguesOverview} />
             </S.Link>
-            <S.Link onClick={() => navigate(Routes.STATISTICS)}>
-              <FormattedMessage {...messages.statistics} />
-            </S.Link>
+            {/*<S.Link onClick={() => navigate(Routes.STATISTICS)}>*/}
+            {/*  <FormattedMessage {...messages.statistics} />*/}
+            {/*</S.Link>*/}
             <S.Link onClick={() => navigate(Routes.CHAMPIONSHIP)}>
               <FormattedMessage {...messages.mcrvcKarez} />
             </S.Link>

@@ -9,7 +9,7 @@ export const messages = defineMessages({
     id: 'app.containers.Donate.description',
     defaultMessage:
       'VietcongHUB není firma. Ani startup. A rozhodně to není projekt, který by měl vydělávat. Je to ' +
-      '<b>komunitní srdcovka</b>. Místo, které vytvořili sami hráči a které stojí i padá právě s nimi.. Všechno, ' +
+      '<b>komunitní srdcovka</b>. Místo, které vytvořili sami hráči a které stojí i padá právě s nimi. Všechno, ' +
       'co na VietcongHUBu vidíš: od ligy, přes web a servery až po offline akce je postavené na ' +
       '<b>dobrovolnosti</b>. Ne proto, že by někdo musel. Ale protože se vždycky najde někdo, kdo chce.\n' +
       '{br}A pokud to dává smysl i tobě, můžeš přiložit ruku k dílu.',

@@ -27,6 +27,10 @@ export const messages = defineMessages({
     id: 'app.components.Footer.statistics',
     defaultMessage: 'Statistiky',
   },
+  donatePage: {
+    id: 'app.components.Footer.donatePage',
+    defaultMessage: 'Chci podpořit',
+  },
   articles: {
     id: 'app.components.Footer.articles',
     defaultMessage: 'Články',
@@ -49,7 +53,7 @@ export const messages = defineMessages({
   },
   sponsors: {
     id: 'app.components.Footer.sponsors',
-    defaultMessage: 'Sponzoři',
+    defaultMessage: 'Sponzoři a dárci',
   },
   xsStore: {
     id: 'app.components.Footer.xsStore',

@@ -18,7 +18,7 @@ export const Content = styled.div`
   }
 
   iframe {
-    aspect-ratio: 3/2;
+    aspect-ratio: 5.5/3;
     width: 70%;
 
     ${() => makeMediaQuery(BreakPoints.md)`

@@ -15,6 +15,7 @@ import { MapPickCont } from '../containers/Championship/MapPick/MapPick.cont';
 import { ChampionshipMatchDetailCont } from '../containers/Championship/MatchDetail/MatchDetail.cont';
 import { ChampionshipOverview } from '../containers/Championship/Overview/Overview.cont';
 import { SetChampionshipMatchScoreCont } from '../containers/Championship/SetMatchResult/SetMatchResult.cont';
+import { DonateCont } from '../containers/Donate/Donate.cont';
 import { HallOfFameCont } from '../containers/HallOfFame/HallOfFame.cont';
 import { HomeCont } from '../containers/Home/Home.cont';
 import { HowToPlayCont } from '../containers/HowToPlay/HowToPlay.cont';
@@ -86,6 +87,7 @@ export const routesObject: RouteObject[] = [
       { element: <AboutUsCont />, path: Routes.ABOUT_US },
       { element: <HallOfFameCont />, path: Routes.HALLOFFAME },
       { element: <HowToPlayCont />, path: Routes.HOW_TO_PLAY },
+      { element: <DonateCont />, path: Routes.DONATE_PAGE },
 
       { element: <NotFoundPage />, path: Routes.NOT_FOUND },
       { element: <NotFoundPage />, path: '*' },

@@ -51,23 +51,14 @@ export const Footer: React.FC = () => {
               <FormattedMessage {...messages.howToPlay} />
             </S.Link>
           </S.Column>
-          {/*<S.Column>*/}
-          {/*<h4 style={{ marginTop: '1rem', marginBottom: 0 }}>*/}
-          {/*  <FormattedMessage {...messages.sponsors} />*/}
-          {/*</h4>*/}
-          {/*
-            <S.Link>
-              <a href={EXTERNAL_LINKS.XS_STORE} target={'_blank'}>
-                <FormattedMessage {...messages.xsStore} />
-              </a>
+          <S.Column>
+            <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>
+              <FormattedMessage {...messages.sponsors} />
+            </h4>
+            <S.Link onClick={() => navigate(Routes.DONATE_PAGE)}>
+              <FormattedMessage {...messages.donatePage} />
             </S.Link>
-            <S.Link>
-              <a href={EXTERNAL_LINKS.ELECTRA_DRIVE} target={'_blank'}>
-                <FormattedMessage {...messages.electraDrive} />
-              </a>
-            </S.Link>
-            */}
-          {/*</S.Column>*/}
+          </S.Column>
 
           <S.Column>
             <h4 style={{ marginTop: '1rem', marginBottom: 0 }}>

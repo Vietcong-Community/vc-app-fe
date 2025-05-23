@@ -27,6 +27,8 @@ interface IProps {
   seasonTeams?: ILadderItem[];
   showDate?: boolean;
   showOpponentMap?: boolean;
+  showChallengerField?: boolean;
+  showOpponentField?: boolean;
 }
 
 export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
@@ -40,6 +42,8 @@ export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
     seasonTeams,
     showDate = true,
     showOpponentMap = true,
+    showChallengerField = true,
+    showOpponentField = true,
   } = props;
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
@@ -83,20 +87,24 @@ export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
       open={isOpen}
     >
       <FormComponent form={form} id="update-match" initialValues={initialValues} onSubmit={onSubmit}>
-        <SelectField
-          {...fields.challengerSeasonId}
-          disabled={disableTeamChange}
-          label={<FormattedMessage {...messages.challenger} />}
-          placeholder={formatMessage(messages.challenger)}
-          options={teamOptions}
-        />
-        <SelectField
-          {...fields.opponentSeasonId}
-          disabled={disableTeamChange}
-          label={<FormattedMessage {...messages.opponent} />}
-          placeholder={formatMessage(messages.opponent)}
-          options={teamOptions}
-        />
+        {showChallengerField && (
+          <SelectField
+            {...fields.challengerSeasonId}
+            disabled={disableTeamChange}
+            label={<FormattedMessage {...messages.challenger} />}
+            placeholder={formatMessage(messages.challenger)}
+            options={teamOptions}
+          />
+        )}
+        {showOpponentField && (
+          <SelectField
+            {...fields.opponentSeasonId}
+            disabled={disableTeamChange}
+            label={<FormattedMessage {...messages.opponent} />}
+            placeholder={formatMessage(messages.opponent)}
+            options={teamOptions}
+          />
+        )}
         <SelectField
           {...fields.challengerMapId}
           label={<FormattedMessage {...messages.challengerMap} />}

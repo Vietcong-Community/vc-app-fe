@@ -27,13 +27,14 @@ export enum MatchResult {
 
 export enum LeagueType {
   TEAMPLAY = 'TEAMPLAY',
-  TOURNAMENT = 'TOURNAMENT',
+  FACEIT = 'FACEIT',
   TWOVSTWO = 'TWOVSTWO',
 }
 
 export enum SeasonType {
   SEASON = 'SEASON',
   TOURNAMENT = 'TOURNAMENT',
+  RANKED = 'RANKED',
 }
 
 export enum SeasonStatus {

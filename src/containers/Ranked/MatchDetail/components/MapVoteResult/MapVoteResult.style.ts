@@ -14,12 +14,6 @@ export const Subtitle = styled.h3`
       font-size: 18px;
     `}
   `};
-
-  ${() => makeMediaQuery(BreakPoints.sm)`
-    ${css`
-      font-size: 16px;
-    `}
-  `};
 `;
 
 export const MapVotes = styled.div`

@@ -25,10 +25,20 @@ interface IProps {
   onClose: () => void;
   opponentTeamId?: string;
   matchId: string;
+  showChallengerTeamPlayers?: boolean;
+  showOpponentTeamPlayers?: boolean;
 }
 
 export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
-  const { challengerTeamId, isOpen, onClose, opponentTeamId, matchId } = props;
+  const {
+    challengerTeamId,
+    isOpen,
+    onClose,
+    opponentTeamId,
+    matchId,
+    showChallengerTeamPlayers = true,
+    showOpponentTeamPlayers = true,
+  } = props;
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const [userQuery, setUserQuery] = useState<{ nickname?: string }>({});
@@ -121,20 +131,24 @@ export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
       )}
       {!isLoading && (
         <FormComponent form={form} id="create-match" onSubmit={onSubmit}>
-          <SelectField
-            {...fields.challengerUserIds}
-            label={<FormattedMessage {...messages.challengerUserId} />}
-            placeholder={formatMessage(messages.challengerUserId)}
-            options={challengerPlayersOptions}
-            mode="multiple"
-          />
-          <SelectField
-            {...fields.opponentUserIds}
-            label={<FormattedMessage {...messages.opponentUserId} />}
-            placeholder={formatMessage(messages.opponentUserId)}
-            options={opponentPlayersOptions}
-            mode="multiple"
-          />
+          {showChallengerTeamPlayers && (
+            <SelectField
+              {...fields.challengerUserIds}
+              label={<FormattedMessage {...messages.challengerUserId} />}
+              placeholder={formatMessage(messages.challengerUserId)}
+              options={challengerPlayersOptions}
+              mode="multiple"
+            />
+          )}
+          {showOpponentTeamPlayers && (
+            <SelectField
+              {...fields.opponentUserIds}
+              label={<FormattedMessage {...messages.opponentUserId} />}
+              placeholder={formatMessage(messages.opponentUserId)}
+              options={opponentPlayersOptions}
+              mode="multiple"
+            />
+          )}
           <Form.Item
             name={fields.hostPlayer.name}
             label={<FormattedMessage {...messages.allPlayers} />}

@@ -15,12 +15,6 @@ export const Subtitle = styled.h3`
       font-size: 18px;
     `}
   `};
-
-  ${() => makeMediaQuery(BreakPoints.sm)`
-    ${css`
-      font-size: 16px;
-    `}
-  `};
 `;
 
 export const PlayerTags = styled.div`
@@ -31,13 +25,20 @@ export const PlayerTags = styled.div`
 `;
 
 export const Tag = styled(AntDTag)`
+  align-items: center;
   background-color: ${(props: IThemeProps) => props.theme.mainColors.accent70};
   border: none;
   border-radius: 8px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
+  display: flex;
+  justify-content: center;
   font-size: 14px;
   margin: 0;
   padding: 0.25rem 0.5rem;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`

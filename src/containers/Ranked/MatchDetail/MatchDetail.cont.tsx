@@ -196,7 +196,10 @@ export const MatchDetail: React.FC = () => {
               </S.MobileResultContent>
               <Gap defaultHeight={0} height={{ md: 16 }} />
               <S.TeamsContainer>
-                <LoggedPlayers players={matchDetail.data?.hostMatchPlayers ?? []} />
+                <LoggedPlayers
+                  matchOwner={matchDetail.data?.createdBy}
+                  players={matchDetail.data?.hostMatchPlayers ?? []}
+                />
               </S.TeamsContainer>
               <Gap defaultHeight={32} height={{ md: 16 }} />
               <MapVoteResult maps={maps.data?.items ?? []} mapVotes={votedMaps.data?.items ?? []} />
@@ -296,6 +299,8 @@ export const MatchDetail: React.FC = () => {
         onClose={() => setIsAddPlayerToMatchModalOpen(false)}
         opponentTeamId={matchDetail.data?.opponent?.team?.id}
         matchId={query.matchId}
+        showChallengerTeamPlayers={false}
+        showOpponentTeamPlayers={false}
       />
       {userMe.data?.id && (
         <JoinRankedMatchModal

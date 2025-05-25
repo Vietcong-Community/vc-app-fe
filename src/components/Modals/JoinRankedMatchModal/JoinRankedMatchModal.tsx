@@ -44,6 +44,7 @@ export const JoinRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       await voteForMap.mutateAsync({ mapId: values.secondMapId, matchId });
       showNotification(messages.joinSuccess, messages.joinSuccessDescription);
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+      await queryClient.refetchQueries({ queryKey: ['mapVoteState', matchId] });
       onClose();
       form.resetFields();
     } catch {

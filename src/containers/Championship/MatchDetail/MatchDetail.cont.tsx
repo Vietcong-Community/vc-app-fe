@@ -77,7 +77,10 @@ export const ChampionshipMatchDetailCont: React.FC = () => {
   ]);
 
   useEffect(() => {
-    if (matchDetail.data?.season.type && matchDetail.data?.season.type !== SeasonType.TOURNAMENT) {
+    if (matchDetail.data?.season?.type && matchDetail.data?.season.type === SeasonType.FACEIT) {
+      navigate(Routes.RANKED_MATCH_DETAIL.replace(':matchId', query.matchId));
+    }
+    if (matchDetail.data?.season?.type && matchDetail.data?.season.type === SeasonType.SEASON) {
       navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     }
   }, [matchDetail.data?.season.type]);

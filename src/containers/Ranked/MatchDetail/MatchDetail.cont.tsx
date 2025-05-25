@@ -70,8 +70,11 @@ export const MatchDetail: React.FC = () => {
   const showLoading = matchDetail.isLoading;
 
   useEffect(() => {
-    if (matchDetail.data?.season?.type && matchDetail.data?.season.type !== SeasonType.SEASON) {
+    if (matchDetail.data?.season?.type && matchDetail.data?.season.type === SeasonType.TOURNAMENT) {
       navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId));
+    }
+    if (matchDetail.data?.season?.type && matchDetail.data?.season.type === SeasonType.SEASON) {
+      navigate(Routes.MATCH_DETAIL.replace(':matchId', query.matchId));
     }
   }, [matchDetail.data?.season?.type]);
 
@@ -92,7 +95,6 @@ export const MatchDetail: React.FC = () => {
     matchDetail.data?.rounds?.length !== 4;
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
 
-  console.log(votedMaps.data);
   return (
     <ContentLayout
       breadcrumbItems={[
@@ -202,7 +204,11 @@ export const MatchDetail: React.FC = () => {
                 />
               </S.TeamsContainer>
               <Gap defaultHeight={32} height={{ md: 16 }} />
-              <MapVoteResult maps={maps.data?.items ?? []} mapVotes={votedMaps.data?.items ?? []} />
+              <MapVoteResult
+                maps={maps.data?.items ?? []}
+                mapVotes={votedMaps.data?.items ?? []}
+                totalVotes={votedMaps.data?.total ?? 0}
+              />
             </Card>
           </S.ContentContainer>
         </S.MatchInformationContainer>

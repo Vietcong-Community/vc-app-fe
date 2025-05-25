@@ -7,5 +7,4 @@ export interface IVoteItem {
   count: number;
   mapId: string;
   percentage: number;
-  total: number;
 }

@@ -47,7 +47,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
 
   useEffect(() => {
     if (season.data?.type && season.data?.type === SeasonType.SEASON) {
-      // navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId));
+      navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId));
     }
     if (season.data?.type && season.data?.type === SeasonType.TOURNAMENT) {
       navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', query.seasonId));

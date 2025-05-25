@@ -14,10 +14,11 @@ import * as S from './MapVoteResult.style';
 interface IProps {
   maps: IMap[];
   mapVotes: IVoteItem[];
+  totalVotes: number;
 }
 
 export const MapVoteResult: React.FC<IProps> = (props: IProps) => {
-  const { maps, mapVotes } = props;
+  const { maps, mapVotes, totalVotes } = props;
 
   return (
     <>
@@ -32,7 +33,7 @@ export const MapVoteResult: React.FC<IProps> = (props: IProps) => {
 
             return (
               <S.MapVote>
-                {mapById?.name ?? ''} ({item.count}/{item.total})
+                {mapById?.name ?? ''} ({item.count}/{totalVotes})
                 <Progress
                   percent={Number(item.percentage)}
                   percentPosition={{ align: 'end', type: 'inner' }}

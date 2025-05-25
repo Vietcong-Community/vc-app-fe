@@ -34,7 +34,7 @@ export enum LeagueType {
 export enum SeasonType {
   SEASON = 'SEASON',
   TOURNAMENT = 'TOURNAMENT',
-  RANKED = 'RANKED',
+  FACEIT = 'FACEIT',
 }
 
 export enum SeasonStatus {

@@ -744,6 +744,7 @@
   "app.containers.Ranked.MatchDetail.close": "Zavřít",
   "app.containers.Ranked.MatchDetail.competitiveDetailBreadcrumb": "Kompetetivní mód",
   "app.containers.Ranked.MatchDetail.components.LoggedPlayers.players": "Přihlášení hráči",
+  "app.containers.Ranked.MatchDetail.components.MapVoteResult.title": "Hlasování o mapách",
   "app.containers.Ranked.MatchDetail.date": "Datum zápasu",
   "app.containers.Ranked.MatchDetail.joinMatch": "Přidat se",
   "app.containers.Ranked.MatchDetail.leaguesBreadcrumb": "Ligy a sezóny",

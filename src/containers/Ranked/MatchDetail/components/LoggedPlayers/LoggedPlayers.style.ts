@@ -35,13 +35,12 @@ export const Tag = styled(AntDTag)`
   border: none;
   border-radius: 8px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      font-size: 16px;
       padding: 0.25rem 0.75rem;
     `}
   `};

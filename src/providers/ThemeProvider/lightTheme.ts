@@ -7,6 +7,11 @@ export const LightAntDTheme = {
   colorTextLabel: '#2c302c',
   colorText: '#2c302c',
 };
+export const LightAntDComponentTheme = {
+  Progress: {
+    defaultColor: '#425742',
+  },
+};
 
 // https://www.figma.com/community/file/840895380520234275/gruvbox-syntax-highlighting
 export const LightAppTheme = {

@@ -30,6 +30,7 @@ export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       await leaveMatch.mutateAsync();
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       showNotification(messages.deleteSuccess);
+      onClose();
     } catch {
       showNotification(messages.deleteFailed, undefined, NotificationType.ERROR);
     }

@@ -9,6 +9,12 @@ export const DarkAntDTheme = {
   colorTextPlaceholder: '#84847f',
 };
 
+export const DarkAntDComponentTheme = {
+  Progress: {
+    defaultColor: '#ff757e',
+  },
+};
+
 export const DarkAppTheme = {
   text: '#e8e8e8',
   background: '#1a1a1a',

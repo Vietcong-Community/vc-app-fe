@@ -38,6 +38,7 @@ import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
 
 import { LoggedPlayers } from './components/LoggedPlayers/LoggedPlayers';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
+import { MapVoteResult } from './components/MapVoteResult/MapVoteResult';
 import { messages } from './messages';
 
 import * as S from './MatchDetail.style';
@@ -197,6 +198,8 @@ export const MatchDetail: React.FC = () => {
               <S.TeamsContainer>
                 <LoggedPlayers players={matchDetail.data?.hostMatchPlayers ?? []} />
               </S.TeamsContainer>
+              <Gap defaultHeight={32} height={{ md: 16 }} />
+              <MapVoteResult maps={maps.data?.items ?? []} mapVotes={votedMaps.data?.items ?? []} />
             </Card>
           </S.ContentContainer>
         </S.MatchInformationContainer>
@@ -306,7 +309,7 @@ export const MatchDetail: React.FC = () => {
       {!!userMe.data && (
         <LeaveRankedMatchModal
           isOpen={isLeaveMatchModalOpen}
-          onClose={() => setIsJoinMatchModalOpen(false)}
+          onClose={() => setIsLeaveMatchModalOpen(false)}
           matchId={query.matchId}
           user={userMe.data}
         />

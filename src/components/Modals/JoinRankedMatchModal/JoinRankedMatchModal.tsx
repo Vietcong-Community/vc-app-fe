@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { Form, Modal } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -27,6 +28,7 @@ export const JoinRankedMatchModal: React.FC<IProps> = (props: IProps) => {
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const firstPickedMapId = Form.useWatch('firstMapId', form);
   const secondPickedMapId = Form.useWatch('secondMapId', form);
@@ -41,6 +43,7 @@ export const JoinRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       await voteForMap.mutateAsync({ mapId: values.firstMapId, matchId });
       await voteForMap.mutateAsync({ mapId: values.secondMapId, matchId });
       showNotification(messages.joinSuccess, messages.joinSuccessDescription);
+      await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       onClose();
       form.resetFields();
     } catch {

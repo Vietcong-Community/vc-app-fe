@@ -8,8 +8,8 @@ import { theme } from '../../theme/theme';
 
 import { IThemeContext, ThemeContext } from './ThemeContext';
 import { LOCAL_STORAGE_THEME_KEY, ThemeType } from './constants';
-import { DarkAntDTheme, DarkAppTheme } from './darkTheme';
-import { LightAntDTheme, LightAppTheme } from './lightTheme';
+import { DarkAntDComponentTheme, DarkAntDTheme, DarkAppTheme } from './darkTheme';
+import { LightAntDComponentTheme, LightAntDTheme, LightAppTheme } from './lightTheme';
 
 interface IProps {
   children?: React.ReactNode;
@@ -28,6 +28,14 @@ export const ThemeProvider: React.FC<IProps> = (props: IProps) => {
       localStorage.setItem(LOCAL_STORAGE_THEME_KEY, ThemeType.LIGHT);
     }
   }, []);
+
+  const antDComponentTheme = useMemo(() => {
+    if (selectedTheme === ThemeType.DARK) {
+      return DarkAntDComponentTheme;
+    }
+
+    return LightAntDComponentTheme;
+  }, [selectedTheme]);
 
   const antDTheme = useMemo(() => {
     if (selectedTheme === ThemeType.DARK) {
@@ -61,6 +69,9 @@ export const ThemeProvider: React.FC<IProps> = (props: IProps) => {
       <ConfigProvider
         locale={locale}
         theme={{
+          components: {
+            ...antDComponentTheme,
+          },
           token: {
             ...antDTheme,
             fontFamily: 'Poppins, serif',

@@ -744,6 +744,7 @@
   "app.containers.Ranked.MatchDetail.close": "",
   "app.containers.Ranked.MatchDetail.competitiveDetailBreadcrumb": "",
   "app.containers.Ranked.MatchDetail.components.LoggedPlayers.players": "",
+  "app.containers.Ranked.MatchDetail.components.MapVoteResult.title": "",
   "app.containers.Ranked.MatchDetail.date": "",
   "app.containers.Ranked.MatchDetail.joinMatch": "",
   "app.containers.Ranked.MatchDetail.leaguesBreadcrumb": "",

@@ -126,6 +126,9 @@ export const RankedSeasonDetailCont: React.FC = () => {
         <TopPlayersOfTheDay seasonId={query.seasonId} />
         <Gap defaultHeight={16} />
         <Flex justify="flex-end" style={{ gap: 8 }}>
+          <Button onClick={() => setIsCreateMatchModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
+            <FormattedMessage {...messages.createMatch} />
+          </Button>
           <Button onClick={() => setIsMapListModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.openMapListModal} />
           </Button>

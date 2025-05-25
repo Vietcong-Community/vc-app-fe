@@ -4,13 +4,13 @@ import { get, post } from '../../apiFactory';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { RankedEndpoints } from './endpoints';
-import { ICreateRankedMatch } from './interfaces';
+import { ICreateRankedMatch, IVoteItem } from './interfaces';
 
 export const useMapVoteState = (matchId: string) => {
   return useQuery({
     queryKey: ['mapVoteState', matchId],
     queryFn: async () => {
-      const { data } = await get<{ items: {} }>(RankedEndpoints.MAP_VOTE_STATE, { matchId });
+      const { data } = await get<{ items: IVoteItem[]; total: number }>(RankedEndpoints.MAP_VOTE_STATE, { matchId });
       return data;
     },
   });

@@ -33,6 +33,9 @@ export enum Routes {
   SET_CHAMPIONSHIP_MATCH_DETAIL = '/mistrovstvi-cr/zadani-vysledku-zapasu/:matchId',
   CONFIRM_CHAMPIONSHIP_MATCH_DETAIL = '/mistrovstvi-cr/potvrzeni-vysledku-zapasu/:matchId',
   TOURNAMENT_MAP_PICK = '/skrtani-map/:matchId',
+  // RANKED
+  RANKED_SEASON_DETAIL = '/kompetetivni-mod/:seasonId',
+  RANKED_MATCH_DETAIL = '/kompetetivni-mod/zapas/:matchId',
   // ARTICLES
   ARTICLES = '/clanky',
   ARTICLE_DETAIL = '/clanek/:articleId',

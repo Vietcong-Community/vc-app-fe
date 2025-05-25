@@ -28,6 +28,8 @@ import { SeasonDetailCont } from '../containers/League/SeasonDetail/SeasonDetail
 import { SetMatchScoreCont } from '../containers/League/SetMatchResult/SetMatchResult.cont';
 import { NotFoundPage } from '../containers/NotFoundPage/NotFoundPage';
 import { PrivatePasswordChangeCont } from '../containers/PrivateChangePassword/PrivateChangePassword';
+import { MatchDetail as RankedMatchDetailCont } from '../containers/Ranked/MatchDetail/MatchDetail.cont';
+import { RankedSeasonDetailCont } from '../containers/Ranked/SeasonDetail/SeasonDetail.cont';
 import { StatisticsCont } from '../containers/Statistics/Statistics.cont';
 import { TeamDetailCont } from '../containers/Teams/TeamDetail/TeamDetail';
 import { ChangePasswordCont } from '../containers/Users/ChangePassword/ChangePassword.cont';
@@ -66,6 +68,9 @@ export const routesObject: RouteObject[] = [
       { element: <AcceptMatchChallengeCont />, path: Routes.MATCH_CHALLENGE },
       { element: <ConfirmMatchResultCont />, path: Routes.CONFIRM_MATCH_SCORE },
       { element: <SetMatchScoreCont />, path: Routes.SET_MATCH_SCORE },
+      // RANKED
+      { element: <RankedSeasonDetailCont />, path: Routes.RANKED_SEASON_DETAIL },
+      { element: <RankedMatchDetailCont />, path: Routes.RANKED_MATCH_DETAIL },
 
       // ADMIN ROUTES
       { element: <AdminCreateMatchCont />, path: Routes.ADMIN_CREATE_MATCH },

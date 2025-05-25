@@ -3,8 +3,8 @@ import React from 'react';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { useRouter } from '../../../../../hooks/RouterHook';
-import { Routes } from '../../../../../routes/enums';
+import { useRouter } from '../../../hooks/RouterHook';
+import { Routes } from '../../../routes/enums';
 
 import { messages } from './messages';
 

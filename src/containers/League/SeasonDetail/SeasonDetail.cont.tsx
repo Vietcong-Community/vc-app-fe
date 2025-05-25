@@ -30,6 +30,7 @@ import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { JoinSeasonModal } from '../../../components/Modals/JoinSeasonModal/JoinSeasonModal';
 import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModal/SeasonMapListModal';
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
+import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
 import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -46,7 +47,6 @@ import { removeURLParameter } from '../../../utils/urlUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
 import { ILadderTableRow, LADDER_COLUMNS } from '../types';
 
-import { AdminMenu } from './components/AdminMenu/AdminMenu';
 import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
@@ -71,8 +71,11 @@ export const SeasonDetailCont: React.FC = () => {
   const maps = useMapsInSeason(query.seasonId);
 
   useEffect(() => {
-    if (season.data?.type && season.data?.type !== SeasonType.SEASON) {
+    if (season.data?.type && season.data?.type === SeasonType.TOURNAMENT) {
       navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', query.seasonId));
+    }
+    if (season.data?.type && season.data?.type === SeasonType.RANKED) {
+      navigate(Routes.RANKED_SEASON_DETAIL.replace(':seasonId', query.seasonId));
     }
   }, [season.data?.type]);
 

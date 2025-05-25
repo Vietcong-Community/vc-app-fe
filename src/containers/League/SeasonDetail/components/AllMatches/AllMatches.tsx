@@ -28,13 +28,14 @@ import { messages } from './messages';
 import * as S from './AllMatches.style';
 
 interface IProps {
+  matchUrl?: string;
   seasonLadder: ILadderItem[];
   seasonMaps: IMap[];
   seasonId: string;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
-  const { seasonId, seasonMaps, seasonLadder } = props;
+  const { matchUrl = Routes.MATCH_DETAIL, seasonId, seasonMaps, seasonLadder } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
   const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
@@ -129,7 +130,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
           loading={matches.isLoading}
           onPageChange={onMatchPageChange}
           onRow={(item) => {
-            const onClick = () => navigate(Routes.MATCH_DETAIL.replace(':matchId', item.id));
+            const onClick = () => navigate(matchUrl.replace(':matchId', item.id));
 
             return {
               onClick,

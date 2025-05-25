@@ -2,15 +2,15 @@ import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
   menuLabel: {
-    id: 'app.containers.League.SeasonDetail.components.AdminMenu.menuLabel',
+    id: 'app.components.Season.AdminMenu.menuLabel',
     defaultMessage: 'ADMIN SPRÁVA',
   },
   createMatch: {
-    id: 'app.containers.League.SeasonDetail.components.AdminMenu.createMatch',
+    id: 'app.components.Season.AdminMenu.createMatch',
     defaultMessage: 'Nový zápas',
   },
   setSeasonMaps: {
-    id: 'app.containers.League.SeasonDetail.components.AdminMenu.setSeasonMaps',
+    id: 'app.components.Season.AdminMenu.setSeasonMaps',
     defaultMessage: 'Nastavit mapy',
   },
 });

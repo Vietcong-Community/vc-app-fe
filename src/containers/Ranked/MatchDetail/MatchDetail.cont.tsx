@@ -370,7 +370,7 @@ export const MatchDetail: React.FC = () => {
           userId={userMe.data.id}
         />
       )}
-      {(!!userMe.data || playerToRemoveFromMatch) && (
+      {userMe.data?.id && (
         <LeaveRankedMatchModal
           isOpen={isLeaveMatchModalOpen}
           onClose={() => {

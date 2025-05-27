@@ -15,7 +15,8 @@ export const messages = defineMessages({
   },
   description: {
     id: 'app.components.Modals.CreateRankedMatchModal.description',
-    defaultMessage: 'Vytváříš nový zápas pro kompetetivní mód. Vyber si dvě preferované mapy, datum a čas zápasu.',
+    defaultMessage:
+      'Vytváříš nový zápas pro kompetetivní mód. Hlasuj pro dvě <b>preferované mapy</b> a vyber čas zápasu.',
   },
   firstPreferredMap: {
     id: 'app.components.Modals.CreateRankedMatchModal.firstPreferredMap',
@@ -27,7 +28,7 @@ export const messages = defineMessages({
   },
   startDate: {
     id: 'app.components.Modals.CreateRankedMatchModal.startDate',
-    defaultMessage: 'Datum a čas zápasu',
+    defaultMessage: 'Čas zápasu',
   },
   createSuccess: {
     id: 'app.components.Modals.CreateRankedMatchModal.createSuccess',

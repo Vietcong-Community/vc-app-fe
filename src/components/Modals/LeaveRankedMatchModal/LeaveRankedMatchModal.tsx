@@ -15,11 +15,12 @@ interface IProps {
   isOpen: boolean;
   onClose: () => void;
   matchId: string;
-  user: IUser;
+  user?: IUser;
+  userId: string;
 }
 
 export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
-  const { isOpen, onClose, matchId, user } = props;
+  const { isOpen, onClose, matchId, user, userId } = props;
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
@@ -27,7 +28,8 @@ export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
 
   const onDeleteRound = async () => {
     try {
-      await leaveMatch.mutateAsync({});
+      const payload = userId === user?.id ? {} : { userForLeave: user?.id };
+      await leaveMatch.mutateAsync(payload);
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       await queryClient.refetchQueries({ queryKey: ['mapVoteState', matchId] });
       showNotification(messages.deleteSuccess);
@@ -47,7 +49,7 @@ export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       confirmLoading={leaveMatch.isPending}
       open={isOpen}
     >
-      <FormattedMessage {...messages.description} values={{ value: user.nickname }} />
+      <FormattedMessage {...messages.description} values={{ value: user?.nickname }} />
     </Modal>
   );
 };

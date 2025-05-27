@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons/faCircleXmark';
 import { faCrown } from '@fortawesome/free-solid-svg-icons/faCrown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Flex } from 'antd';
@@ -17,12 +18,19 @@ import { messages } from './messages';
 import * as S from './LoggedPlayers.style';
 
 interface IProps {
+  isCurrentUserOwnerOfMatch: boolean;
   matchOwner?: IUser;
   players: IMatchPlayer[];
+  setRemovePlayerFromMatch: (user: IUser) => void;
+  userId?: string;
 }
 
 export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
-  const { matchOwner, players } = props;
+  const { isCurrentUserOwnerOfMatch, matchOwner, players, setRemovePlayerFromMatch, userId } = props;
+
+  const handleOnDeleteClick = (user: IUser) => {
+    setRemovePlayerFromMatch(user);
+  };
 
   return (
     <>
@@ -46,6 +54,16 @@ export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
                     style={{ marginRight: 8 }}
                   />
                   {item.user.nickname}
+                  {isCurrentUserOwnerOfMatch && userId !== item.user.id && (
+                    <div
+                      onClick={(event) => {
+                        event.preventDefault();
+                        handleOnDeleteClick(item.user);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faCircleXmark} style={{ marginLeft: 8, fontSize: 16 }} />
+                    </div>
+                  )}
                 </S.Tag>
               </Link>
             );

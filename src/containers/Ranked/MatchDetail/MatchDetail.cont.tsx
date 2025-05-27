@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
+import { IUser } from '../../../api/hooks/interfaces';
 import { useMapsInSeason, useMatchDetail } from '../../../api/hooks/league/api';
 import { IMatchRound } from '../../../api/hooks/league/interfaces';
 import { useMapVoteState } from '../../../api/hooks/ranked/api';
@@ -52,6 +53,7 @@ export const MatchDetail: React.FC = () => {
   const [isUpdateMatchModalOpen, setIsUpdateMatchModalOpen] = useState<boolean>(false);
   const [isCreateRoundModalOpen, setIsCreateRoundModalOpen] = useState<boolean>(false);
   const [isAddPlayerToMatchModalOpen, setIsAddPlayerToMatchModalOpen] = useState<boolean>(false);
+  const [playerToRemoveFromMatch, setPlayerToRemoveFromMatch] = useState<IUser | undefined>();
   const { formatMessage } = useIntl();
 
   const matchDetail = useMatchDetail(query.matchId);
@@ -207,8 +209,14 @@ export const MatchDetail: React.FC = () => {
               <S.TeamsContainer>
                 {matchStatusIsNew && (
                   <LoggedPlayers
+                    isCurrentUserOwnerOfMatch={isCurrentUserOwnerOfMatch}
                     matchOwner={matchDetail.data?.createdBy}
                     players={matchDetail.data?.hostMatchPlayers ?? []}
+                    setRemovePlayerFromMatch={(user) => {
+                      setPlayerToRemoveFromMatch(user);
+                      setIsLeaveMatchModalOpen(true);
+                    }}
+                    userId={userMe.data?.id}
                   />
                 )}
                 {!matchStatusIsNew && (
@@ -362,12 +370,16 @@ export const MatchDetail: React.FC = () => {
           userId={userMe.data.id}
         />
       )}
-      {!!userMe.data && (
+      {(!!userMe.data || playerToRemoveFromMatch) && (
         <LeaveRankedMatchModal
           isOpen={isLeaveMatchModalOpen}
-          onClose={() => setIsLeaveMatchModalOpen(false)}
+          onClose={() => {
+            setPlayerToRemoveFromMatch(undefined);
+            setIsLeaveMatchModalOpen(false);
+          }}
           matchId={query.matchId}
-          user={userMe.data}
+          user={playerToRemoveFromMatch ?? userMe.data}
+          userId={userMe.data?.id}
         />
       )}
     </ContentLayout>

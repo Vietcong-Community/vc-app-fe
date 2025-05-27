@@ -11,6 +11,7 @@ import { NotificationType } from '../../../providers/NotificationsProvider/enums
 import { DatePickerField, DEFAULT_SYSTEM_DATE_TIME_FORMAT } from '../../Fields/DatePickerField/DatePickerField';
 import { SelectField } from '../../Fields/SelectField/SelectField';
 import { FormComponent } from '../../Form/FormComponent';
+import { Gap } from '../../Gap/Gap';
 
 import { fields, IFormData } from './CreateRankedMatchModal.fields';
 import { messages } from './messages';
@@ -77,6 +78,8 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       open={isOpen}
     >
       <FormComponent form={form} id="create-match" onSubmit={onSubmit}>
+        <FormattedMessage {...messages.description} />
+        <Gap defaultHeight={16} />
         <SelectField
           {...fields.firstMapId}
           label={<FormattedMessage {...messages.firstPreferredMap} />}
@@ -95,6 +98,7 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
           placeholder={formatMessage(messages.startDate)}
           showTime
           minimalDate={dayjs()}
+          maximalDate={dayjs()}
         />
       </FormComponent>
     </Modal>

@@ -23,6 +23,7 @@ import { ContentLayout } from '../../../components/Layouts/ContentLayout/Content
 import { Comments } from '../../../components/Match/Comments/Comments';
 import { FilesForMatchScore } from '../../../components/Match/FilesForMatchScore/FilesForMatchScore';
 import { Rounds } from '../../../components/Match/Rounds/Rounds';
+import { Team } from '../../../components/Match/Team/Team';
 import { AddPlayerToMatchModal } from '../../../components/Modals/AddPlayerToMatchModal/AddPlayerToMatchModal';
 import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/CreateMatchModal';
 import { JoinRankedMatchModal } from '../../../components/Modals/JoinRankedMatchModal/JoinRankedMatchModal';
@@ -78,12 +79,18 @@ export const MatchDetail: React.FC = () => {
     }
   }, [matchDetail.data?.season?.type]);
 
+  const goToPlayerDetail = (id: string) => {
+    navigate(Routes.USER_PROFILE.replace(':id', id));
+  };
+
+  const matchStatusIsNew = matchDetail.data?.status === MatchStatus.NEW;
   const currentUserIsInMatch =
     !!userMe.data?.id &&
     matchDetail.isFetched &&
     matchDetail.data?.hostMatchPlayers?.find((item) => item.user.id === userMe.data?.id);
-  const canCurrentUserLeave = currentUserIsInMatch; // TODO MATCH STATUS CHECK
-  const canCurrentUserJoin = !currentUserIsInMatch; // TODO MATCH STATUS CHECK
+  const canCurrentUserLeave = currentUserIsInMatch && matchStatusIsNew;
+  const canCurrentUserJoin = !currentUserIsInMatch && matchStatusIsNew;
+  const isCurrentUserOwnerOfMatch = userMe.data?.id === matchDetail.data?.createdBy?.id;
   const showUploadRoundImagesAlert =
     matchDetail.data?.status === MatchStatus.WAITING_FOR_SCORE_CONFIRMATION &&
     some(matchDetail.data?.rounds ?? [], (item: IMatchRound) => !item.screenshot && !item.scoreFile);
@@ -127,9 +134,9 @@ export const MatchDetail: React.FC = () => {
         <H1>
           <FormattedMessage {...messages.title} />
         </H1>
-        {userIsAdmin && ( // TODO IS USER OWNER OF MATCH
+        {(userIsAdmin || isCurrentUserOwnerOfMatch) && (
           <ManageMenu
-            canEnterResult={false} // TODO IS USER OWNER OF MATCH
+            canEnterResult={isCurrentUserOwnerOfMatch}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             setIsAddPlayerToMatchModalOpen={setIsAddPlayerToMatchModalOpen}
@@ -198,17 +205,55 @@ export const MatchDetail: React.FC = () => {
               </S.MobileResultContent>
               <Gap defaultHeight={0} height={{ md: 16 }} />
               <S.TeamsContainer>
-                <LoggedPlayers
-                  matchOwner={matchDetail.data?.createdBy}
-                  players={matchDetail.data?.hostMatchPlayers ?? []}
-                />
+                {matchStatusIsNew && (
+                  <LoggedPlayers
+                    matchOwner={matchDetail.data?.createdBy}
+                    players={matchDetail.data?.hostMatchPlayers ?? []}
+                  />
+                )}
+                {!matchStatusIsNew && (
+                  <>
+                    <Team
+                      defaultLineUpOpen
+                      goToPlayerDetail={goToPlayerDetail}
+                      map={matchDetail.data?.challengerMap}
+                      matchId={query.matchId}
+                      matchStatus={matchDetail.data?.status}
+                      playerInMatchIdsAddedToSeasonStatistics={
+                        matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
+                      }
+                      players={matchDetail.data?.challengerMatchPlayers ?? []}
+                      showLineUp
+                      showTeamName={false}
+                      team={matchDetail.data?.challenger?.team}
+                    />
+                    <Team
+                      defaultLineUpOpen
+                      goToPlayerDetail={goToPlayerDetail}
+                      map={matchDetail.data?.opponentMap}
+                      matchId={query.matchId}
+                      matchStatus={matchDetail.data?.status}
+                      playerInMatchIdsAddedToSeasonStatistics={
+                        matchDetail.data?.playerInMatchIdsAddedToSeasonStatistics ?? []
+                      }
+                      players={matchDetail.data?.opponentMatchPlayers ?? []}
+                      showLineUp
+                      showTeamName={false}
+                      team={matchDetail.data?.opponent?.team}
+                    />
+                  </>
+                )}
               </S.TeamsContainer>
-              <Gap defaultHeight={32} height={{ md: 16 }} />
-              <MapVoteResult
-                maps={maps.data?.items ?? []}
-                mapVotes={votedMaps.data?.items ?? []}
-                totalVotes={votedMaps.data?.total ?? 0}
-              />
+              {matchStatusIsNew && (
+                <>
+                  <Gap defaultHeight={32} height={{ md: 16 }} />
+                  <MapVoteResult
+                    maps={maps.data?.items ?? []}
+                    mapVotes={votedMaps.data?.items ?? []}
+                    totalVotes={votedMaps.data?.total ?? 0}
+                  />
+                </>
+              )}
             </Card>
           </S.ContentContainer>
         </S.MatchInformationContainer>

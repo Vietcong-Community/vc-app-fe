@@ -4,7 +4,7 @@ import { get, post } from '../../apiFactory';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { RankedEndpoints } from './endpoints';
-import { ICreateRankedMatch, IVoteItem } from './interfaces';
+import { ICreateRankedMatch, ILeaveMatch, IVoteItem } from './interfaces';
 
 export const useMapVoteState = (matchId: string) => {
   return useQuery({
@@ -41,8 +41,8 @@ export const usePickMapForRankedMatch = () => {
 
 export const useLeaveRankedMatch = (matchId: string) => {
   return useMutation({
-    mutationFn: async () => {
-      const { data } = await post<undefined, undefined>(RankedEndpoints.LEAVE_MATCH, undefined, {
+    mutationFn: async (payload: ILeaveMatch) => {
+      const { data } = await post<ILeaveMatch, undefined>(RankedEndpoints.LEAVE_MATCH, payload, {
         matchId,
       });
       return data;

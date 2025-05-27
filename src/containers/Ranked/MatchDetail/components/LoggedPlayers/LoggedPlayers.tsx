@@ -35,8 +35,6 @@ export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
           {players.map((item) => {
             const isPlayerMatchOwner = item.user.id === matchOwner?.id;
 
-            console.log(matchOwner?.id);
-
             return (
               <Link to={Routes.USER_PROFILE.replace(':id', item.user.id)}>
                 <S.Tag>

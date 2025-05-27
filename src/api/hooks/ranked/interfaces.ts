@@ -8,3 +8,7 @@ export interface IVoteItem {
   mapId: string;
   percentage: number;
 }
+
+export interface ILeaveMatch {
+  userForLeave?: string;
+}

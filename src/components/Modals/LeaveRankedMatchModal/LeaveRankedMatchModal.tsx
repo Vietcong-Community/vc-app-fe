@@ -27,7 +27,7 @@ export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
 
   const onDeleteRound = async () => {
     try {
-      await leaveMatch.mutateAsync();
+      await leaveMatch.mutateAsync({});
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       await queryClient.refetchQueries({ queryKey: ['mapVoteState', matchId] });
       showNotification(messages.deleteSuccess);

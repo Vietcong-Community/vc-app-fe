@@ -29,14 +29,16 @@ export interface ITeamMatchPlayer extends IMatchPlayer {
 }
 
 interface IProps {
+  defaultLineUpOpen?: boolean;
   eloPoints?: number;
   goToPlayerDetail: (id: string) => void;
-  goToTeamDetail: (id: string) => void;
+  goToTeamDetail?: (id: string) => void;
   map?: IMap;
   matchId: string;
   matchStatus?: MatchStatus;
   showLineUp: boolean;
   showMap?: boolean;
+  showTeamName?: boolean;
   players: ITeamMatchPlayer[];
   playerInMatchIdsAddedToSeasonStatistics: string[];
   team?: ITeam;
@@ -44,6 +46,7 @@ interface IProps {
 
 export const Team: React.FC<IProps> = (props: IProps) => {
   const {
+    defaultLineUpOpen = false,
     eloPoints,
     goToPlayerDetail,
     goToTeamDetail,
@@ -54,14 +57,15 @@ export const Team: React.FC<IProps> = (props: IProps) => {
     playerInMatchIdsAddedToSeasonStatistics,
     showLineUp,
     showMap = true,
+    showTeamName = true,
     team,
   } = props;
   const [isRemovePlayerFromMatchModalOpen, setIsRemovePlayerFromMatchModalOpen] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(defaultLineUpOpen);
 
   const navigateToTeam = () => {
     if (team?.id) {
-      goToTeamDetail(team.id);
+      goToTeamDetail?.(team.id);
     }
   };
 
@@ -76,13 +80,15 @@ export const Team: React.FC<IProps> = (props: IProps) => {
   return (
     <>
       <Card style={{ textAlign: 'start' }}>
-        <S.TeamInfo>
-          <div style={{ alignItems: 'center', cursor: 'pointer', display: 'flex', gap: 8, justifyContent: 'center' }}>
-            <Avatar shape="square" size={48} icon={getTeamIcon()} style={{ minWidth: 48 }} />
-            <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
-          </div>
-          <S.TeamTag>{team?.tag ?? ''}</S.TeamTag>
-        </S.TeamInfo>
+        {showTeamName && (
+          <S.TeamInfo>
+            <div style={{ alignItems: 'center', cursor: 'pointer', display: 'flex', gap: 8, justifyContent: 'center' }}>
+              <Avatar shape="square" size={48} icon={getTeamIcon()} style={{ minWidth: 48 }} />
+              <S.TeamLabel onClick={navigateToTeam}>{team?.name ?? ''}</S.TeamLabel>
+            </div>
+            <S.TeamTag>{team?.tag ?? ''}</S.TeamTag>
+          </S.TeamInfo>
+        )}
         {eloPoints && (
           <>
             <Gap defaultHeight={8} />
@@ -198,10 +204,14 @@ export const Team: React.FC<IProps> = (props: IProps) => {
             </AnimatedHeightContainer>
           </>
         )}
-        <Gap defaultHeight={32} />
-        <S.LinkButton onClick={navigateToTeam}>
-          <FormattedMessage {...messages.goToTeamDetail} />
-        </S.LinkButton>
+        {showTeamName && (
+          <>
+            <Gap defaultHeight={32} />
+            <S.LinkButton onClick={navigateToTeam}>
+              <FormattedMessage {...messages.goToTeamDetail} />
+            </S.LinkButton>
+          </>
+        )}
       </Card>
       <RemovePlayerFromMatchModal
         isOpen={isRemovePlayerFromMatchModalOpen}

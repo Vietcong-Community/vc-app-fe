@@ -10,7 +10,10 @@ export const useMapVoteState = (matchId: string) => {
   return useQuery({
     queryKey: ['mapVoteState', matchId],
     queryFn: async () => {
-      const { data } = await get<{ items: IVoteItem[]; total: number }>(RankedEndpoints.MAP_VOTE_STATE, { matchId });
+      const { data } = await get<{ mapPickList: { items: IVoteItem[]; total: number } }>(
+        RankedEndpoints.MAP_VOTE_STATE,
+        { matchId },
+      );
       return data;
     },
   });

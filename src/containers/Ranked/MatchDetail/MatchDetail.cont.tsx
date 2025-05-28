@@ -257,8 +257,8 @@ export const MatchDetail: React.FC = () => {
                   <Gap defaultHeight={32} height={{ md: 16 }} />
                   <MapVoteResult
                     maps={maps.data?.items ?? []}
-                    mapVotes={votedMaps.data?.items ?? []}
-                    totalVotes={votedMaps.data?.total ?? 0}
+                    mapVotes={votedMaps.data?.mapPickList.items ?? []}
+                    totalVotes={votedMaps.data?.mapPickList.total ?? 0}
                   />
                 </>
               )}

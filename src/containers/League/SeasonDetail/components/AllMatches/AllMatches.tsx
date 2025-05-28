@@ -29,13 +29,14 @@ import * as S from './AllMatches.style';
 
 interface IProps {
   matchUrl?: string;
-  seasonLadder: ILadderItem[];
+  seasonLadder?: ILadderItem[];
   seasonMaps: IMap[];
   seasonId: string;
+  showSeasonTeams?: boolean;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
-  const { matchUrl = Routes.MATCH_DETAIL, seasonId, seasonMaps, seasonLadder } = props;
+  const { matchUrl = Routes.MATCH_DETAIL, seasonId, seasonMaps, seasonLadder, showSeasonTeams = true } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
   const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
@@ -151,6 +152,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         maps={seasonMaps}
         onSubmit={onFilterSubmit}
         seasonLadder={seasonLadder}
+        showSeasonTeams={showSeasonTeams}
       />
     </>
   );

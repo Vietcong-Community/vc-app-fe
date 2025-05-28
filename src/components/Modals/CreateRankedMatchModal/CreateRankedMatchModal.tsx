@@ -7,7 +7,9 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { IMap } from '../../../api/hooks/interfaces';
 import { useCreateRankedMatch, usePickMapForRankedMatch } from '../../../api/hooks/ranked/api';
 import { useNotifications } from '../../../hooks/NotificationsHook';
+import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
+import { Routes } from '../../../routes/enums';
 import { DatePickerField, DEFAULT_SYSTEM_DATE_TIME_FORMAT } from '../../Fields/DatePickerField/DatePickerField';
 import { SelectField } from '../../Fields/SelectField/SelectField';
 import { FormComponent } from '../../Form/FormComponent';
@@ -25,6 +27,7 @@ interface IProps {
 
 export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
   const { isOpen, onClose, maps, seasonId } = props;
+  const { navigate } = useRouter();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -46,6 +49,7 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       showNotification(messages.createSuccess, messages.createSuccessDescription);
       onClose();
       form.resetFields();
+      navigate(Routes.RANKED_MATCH_DETAIL.replace(':matchId', matchId));
     } catch {
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
     } finally {

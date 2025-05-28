@@ -4,4 +4,5 @@ export enum RankedEndpoints {
   MAP_VOTE_STATE = '/matches/{matchId}/face-it/map-results',
   LEAVE_MATCH = '/matches/{matchId}/face-it/leave-match',
   ADMIN_CLOSE_MATCH = '/matches/{matchId}/face-it/close-match',
+  CAN_CREATE_NEW_MATCH = '/seasons/{seasonId}/face-it/can-create-new-match',
 }

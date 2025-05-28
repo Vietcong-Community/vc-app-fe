@@ -140,7 +140,12 @@ export const TEAM_ROLE_SELECT_OPTIONS = [
 ];
 
 export const MATCH_STATUS_SELECT_OPTIONS = [
-  { id: MatchStatus.NEW, value: MatchStatus.NEW, label: <FormattedMessage {...messages.matchStatusNew} /> },
+  {
+    id: MatchStatus.NEW,
+    value: MatchStatus.NEW,
+    label: <FormattedMessage {...messages.matchStatusNew} />,
+    disabled: true,
+  },
   {
     id: MatchStatus.ACCEPTED,
     value: MatchStatus.ACCEPTED,
@@ -165,6 +170,7 @@ export const MATCH_STATUS_SELECT_OPTIONS = [
     id: MatchStatus.FINISHED,
     value: MatchStatus.FINISHED,
     label: <FormattedMessage {...messages.matchStatusFinished} />,
+    disabled: true,
   },
 ];
 

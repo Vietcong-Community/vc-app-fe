@@ -5,7 +5,9 @@ import { Button, Dropdown, MenuProps } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useAddMatchStatsToOverallStats, useRecalculatePlayerStats } from '../../../../../api/hooks/league/api';
+import { ConfirmRankedMatchResultModal } from '../../../../../components/Modals/ConfirmRankedMatchResultModal/ConfirmRankedMatchResultModal';
 import { DeleteMatchModal } from '../../../../../components/Modals/DeleteMatchModal/DeleteMatchModal';
+import { LockRankedMatchModal } from '../../../../../components/Modals/LockRankedMatchModal/LockRankedMatchModal';
 import { MatchStatusModal } from '../../../../../components/Modals/MatchStatusModal/MatchStatusModal';
 import { MatchStatus } from '../../../../../constants/enums';
 import { useNotifications } from '../../../../../hooks/NotificationsHook';
@@ -39,8 +41,10 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     userIsAdmin,
     userIsStatisticsAdmin,
   } = props;
+  const [isLockMatchModalOpen, setIsLockMatchModalOpen] = useState<boolean>(false);
   const [isMatchStatusModalOpen, setIsMatchStatusModalOpen] = useState<boolean>(false);
   const [isDeleteMatchModalOpen, setIsDeleteMatchModalOpen] = useState<boolean>(false);
+  const [isConfirmScoreModalOpen, setIsConfirmScoreModalOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
 
@@ -67,13 +71,19 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.matchStatusUpdate} />,
       key: '1',
       onClick: () => setIsMatchStatusModalOpen(true),
-      disabled: !userIsAdmin,
+      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.updateMatch} />,
       key: '4',
       onClick: () => setIsUpdateMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED || !userIsAdmin,
+    },
+    {
+      label: <FormattedMessage {...messages.lockMatch} />,
+      key: '9',
+      onClick: () => setIsLockMatchModalOpen(true),
+      disabled: status !== MatchStatus.NEW || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.deleteMatch} />,
@@ -91,7 +101,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.recalculatePlayerStats} />,
       key: '3',
       onClick: recalculateStats,
-      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
+      disabled: !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.updateOverallStatistics} />,
@@ -112,15 +122,15 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.addPlayer} />,
       key: '7',
       onClick: () => setIsAddPlayerToMatchModalOpen(true),
-      disabled: status === MatchStatus.FINISHED || !userIsAdmin,
+      disabled: !userIsAdmin,
     },
   ];
 
   const items: MenuProps['items'] = [
     {
-      label: <FormattedMessage {...messages.enterTheResult} />,
+      label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '1',
-      onClick: () => {},
+      onClick: () => setIsConfirmScoreModalOpen(true),
       disabled: status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
     },
   ];
@@ -152,6 +162,16 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
         onClose={() => setIsDeleteMatchModalOpen(false)}
         matchId={matchId}
         seasonId={seasonId}
+      />
+      <ConfirmRankedMatchResultModal
+        isOpen={isConfirmScoreModalOpen}
+        onClose={() => setIsConfirmScoreModalOpen(false)}
+        matchId={matchId}
+      />
+      <LockRankedMatchModal
+        isOpen={isLockMatchModalOpen}
+        onClose={() => setIsLockMatchModalOpen(false)}
+        matchId={matchId}
       />
     </>
   );

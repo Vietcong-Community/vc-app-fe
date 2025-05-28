@@ -21,11 +21,21 @@ interface IProps {
   isSubmitting?: boolean;
   onSubmit: (values: IFormData) => void;
   maps: IMap[];
-  seasonLadder: ILadderItem[];
+  seasonLadder?: ILadderItem[];
+  showSeasonTeams?: boolean;
 }
 
 export const MatchFilterModal: React.FC<IProps> = (props: IProps) => {
-  const { closeModal, initialValues, isOpen, isSubmitting = false, maps, onSubmit, seasonLadder } = props;
+  const {
+    closeModal,
+    initialValues,
+    isOpen,
+    isSubmitting = false,
+    maps,
+    onSubmit,
+    seasonLadder = [],
+    showSeasonTeams = true,
+  } = props;
   const { formatMessage } = useIntl();
   const [form] = Form.useForm<IFormData>();
 
@@ -51,12 +61,14 @@ export const MatchFilterModal: React.FC<IProps> = (props: IProps) => {
           placeholder={formatMessage(messages.map)}
           options={mapsOptions}
         />
-        <SelectField
-          {...fields.teamId}
-          label={<FormattedMessage {...messages.team} />}
-          placeholder={formatMessage(messages.team)}
-          options={teamOptions}
-        />
+        {showSeasonTeams && (
+          <SelectField
+            {...fields.teamId}
+            label={<FormattedMessage {...messages.team} />}
+            placeholder={formatMessage(messages.team)}
+            options={teamOptions}
+          />
+        )}
         <SelectField
           {...fields.status}
           label={<FormattedMessage {...messages.status} />}

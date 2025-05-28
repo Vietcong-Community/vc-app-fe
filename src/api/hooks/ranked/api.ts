@@ -49,3 +49,24 @@ export const useLeaveRankedMatch = (matchId: string) => {
     },
   });
 };
+
+export const useLockMatch = (matchId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await post<undefined, undefined>(RankedEndpoints.ADMIN_CLOSE_MATCH, undefined, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
+export const useCanCreateNewMatch = (seasonId: string) => {
+  return useQuery({
+    queryKey: ['canCreateNewMatch', seasonId],
+    queryFn: async () => {
+      const { data } = await get<{ canCreateMatch: boolean }>(RankedEndpoints.CAN_CREATE_NEW_MATCH, { seasonId });
+      return data;
+    },
+  });
+};

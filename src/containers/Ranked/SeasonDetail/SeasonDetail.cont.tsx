@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useMapsInSeason, useSeasonsDetail } from '../../../api/hooks/league/api';
+import { useCanCreateNewMatch } from '../../../api/hooks/ranked/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
@@ -44,6 +45,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
   const userMe = useUserMe('always', [401]);
   const season = useSeasonsDetail(query.seasonId);
   const maps = useMapsInSeason(query.seasonId);
+  const canCreateNewMatch = useCanCreateNewMatch(query.seasonId);
 
   useEffect(() => {
     if (season.data?.type && season.data?.type === SeasonType.SEASON) {
@@ -126,7 +128,11 @@ export const RankedSeasonDetailCont: React.FC = () => {
         <TopPlayersOfTheDay seasonId={query.seasonId} />
         <Gap defaultHeight={16} />
         <Flex justify="flex-end" style={{ gap: 8 }}>
-          <Button onClick={() => setIsCreateMatchModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
+          <Button
+            onClick={() => setIsCreateMatchModalOpen(true)}
+            disabled={!canCreateNewMatch.data?.canCreateMatch}
+            variant={MainButtonVariant.SECONDARY}
+          >
             <FormattedMessage {...messages.createMatch} />
           </Button>
           <Button onClick={() => setIsMapListModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
@@ -146,9 +152,9 @@ export const RankedSeasonDetailCont: React.FC = () => {
         <Divider style={{ margin: '16px 0' }} />
         <AllMatches
           matchUrl={Routes.RANKED_MATCH_DETAIL}
-          seasonLadder={[]}
           seasonMaps={maps.data?.items ?? []}
           seasonId={query.seasonId}
+          showSeasonTeams={false}
         />
       </EaseInOutContainer>
       <Gap defaultHeight={48} />
@@ -159,7 +165,9 @@ export const RankedSeasonDetailCont: React.FC = () => {
       />
       <CreateRankedMatchModal
         isOpen={isCreateMatchModalOpen}
-        onClose={() => setIsCreateMatchModalOpen(false)}
+        onClose={() => {
+          setIsCreateMatchModalOpen(false);
+        }}
         seasonId={query.seasonId}
         maps={maps.data?.items ?? []}
       />

@@ -19,6 +19,7 @@ import {
   IEliminateMapModalConfig,
 } from '../../../components/Modals/EliminateMapModal/EliminateMapModal';
 import { ResetMapPickModal } from '../../../components/Modals/ResetMapPickModal/ResetMapPickModal';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { UNSET_MAP_NAME } from '../../../constants/constants';
 import { MatchStatus, MatchType, Role } from '../../../constants/enums';
@@ -165,6 +166,14 @@ export const MapPickCont: React.FC = () => {
     isPossibleToManageMatch.allowed &&
     ((challengerEliminationTurn && isPossibleToManageMatch.myTeamId === matchDetail.data?.challenger?.team?.id) ||
       (opponentEliminationTurn && isPossibleToManageMatch.myTeamId === matchDetail.data?.opponent?.team?.id));
+
+  if (matchDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.matchBreadcrumb)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

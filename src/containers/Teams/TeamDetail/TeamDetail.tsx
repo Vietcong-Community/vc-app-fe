@@ -19,6 +19,7 @@ import { Button } from '../../../components/Button/Button';
 import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { Role, TeamRole } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
@@ -101,6 +102,14 @@ export const TeamDetailCont: React.FC = () => {
   const goToPlayerDetail = (id: string) => navigate(Routes.USER_PROFILE.replace(':id', id));
 
   const showLoading = team.isLoading || userMe.isLoading || teamPlayers.isLoading;
+
+  if (team.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.title)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <>

@@ -98,31 +98,33 @@ export interface IMatchPlayer {
 }
 
 export interface IMatch {
-  id: string;
-  challenger: ILadderItem;
-  opponent: ILadderItem;
-  startDate: string;
-  challengerEloRowAmount?: number;
-  opponentEloRowAmount?: number;
-  endDate?: string;
-  challengerMap: IMap;
-  opponentMap?: IMap;
-  status: MatchStatus;
-  challengerScore?: number;
-  opponentScore?: number;
-  createdAt: string;
-  createdBy: IUser;
   confirmationOpponentDate?: string;
   confirmedBy?: IUser;
+  createdAt: string;
+  createdBy: IUser;
+  endDate?: string;
+  hostMatchPlayers?: IMatchPlayer[];
+  challenger: ILadderItem;
+  challengerEloRowAmount?: number;
+  challengerMap: IMap;
+  challengerMatchPlayers?: IMatchPlayer[];
+  challengerScore?: number;
+  id: string;
+  maximalPlayers?: number;
+  minimalPlayers?: number;
+  opponent: ILadderItem;
+  opponentEloRowAmount?: number;
+  opponentMap?: IMap;
+  opponentMatchPlayers?: IMatchPlayer[];
+  opponentScore?: number;
+  playerInMatchIdsAddedToSeasonStatistics: string[];
   rejectedAt?: string;
   rejectedBy?: IUser;
-  season: ISeason;
-  hostMatchPlayers?: IMatchPlayer[];
-  challengerMatchPlayers?: IMatchPlayer[];
-  opponentMatchPlayers?: IMatchPlayer[];
-  playerInMatchIdsAddedToSeasonStatistics: string[];
-  rounds: IMatchRound[];
   round?: number;
+  rounds: IMatchRound[];
+  season: ISeason;
+  startDate: string;
+  status: MatchStatus;
   type: MatchType;
 }
 

@@ -83,4 +83,8 @@ export const messages = defineMessages({
     id: 'app.containers.League.MatchDetail.statisticsNotSynced',
     defaultMessage: 'Statistiky ještě nebyly připsány.',
   },
+  matchNotFound: {
+    id: 'app.containers.League.MatchDetail.matchNotFound',
+    defaultMessage: 'Zápas se nepodařilo najít',
+  },
 });

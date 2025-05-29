@@ -17,6 +17,7 @@ import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModal/SeasonMapListModal';
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -75,6 +76,14 @@ export const ChampionshipDetailCont: React.FC = () => {
         seasonTeamId: item.id,
       };
     }) ?? [];
+
+  if (season.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

@@ -17,6 +17,7 @@ import { Divider } from '../../../components/Divider/Divider';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
@@ -65,6 +66,14 @@ export const ProfileCont: React.FC = () => {
   };
 
   const showRealName = userDetail.data?.firstName || userDetail.data?.lastName;
+
+  if (userDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.title)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-profile', title: <FormattedMessage {...messages.title} /> }]}>

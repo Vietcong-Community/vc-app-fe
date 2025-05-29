@@ -19,6 +19,7 @@ import { ContentLayout } from '../../../components/Layouts/ContentLayout/Content
 import { CreateRankedMatchModal } from '../../../components/Modals/CreateRankedMatchModal/CreateRankedMatchModal';
 import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModal/SeasonMapListModal';
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
 import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -57,6 +58,14 @@ export const RankedSeasonDetailCont: React.FC = () => {
   }, [season.data?.type]);
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
+
+  if (season.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

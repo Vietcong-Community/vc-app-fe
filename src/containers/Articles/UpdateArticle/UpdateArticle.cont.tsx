@@ -12,6 +12,7 @@ import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbIte
 import { Editor } from '../../../components/Editor/Editor';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { Role } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
@@ -69,6 +70,14 @@ export const UpdateArticleCont: React.FC = () => {
       showNotification(messages.updateFailed, undefined, NotificationType.ERROR);
     }
   };
+
+  if (articleDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

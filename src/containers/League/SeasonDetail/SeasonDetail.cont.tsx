@@ -30,6 +30,7 @@ import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { JoinSeasonModal } from '../../../components/Modals/JoinSeasonModal/JoinSeasonModal';
 import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModal/SeasonMapListModal';
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
 import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { Table } from '../../../components/Table/Table';
@@ -131,6 +132,13 @@ export const SeasonDetailCont: React.FC = () => {
   const isPossibleToCreateMatch = canUserManageMatch(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
   const teamsToJoinSeason = canUserJoinSeasonWithTeam(myTeams.data?.items ?? [], seasonTeams.data?.items ?? []);
 
+  if (season.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound />
+      </ContentLayout>
+    );
+  }
   return (
     <ContentLayout
       breadcrumbItems={[

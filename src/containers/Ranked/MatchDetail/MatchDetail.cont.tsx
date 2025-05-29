@@ -31,6 +31,7 @@ import { JoinRankedMatchModal } from '../../../components/Modals/JoinRankedMatch
 import { LeaveRankedMatchModal } from '../../../components/Modals/LeaveRankedMatchModal/LeaveRankedMatchModal';
 import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { MatchStatus, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
@@ -86,6 +87,7 @@ export const MatchDetail: React.FC = () => {
   };
 
   const matchStatusIsNew = matchDetail.data?.status === MatchStatus.NEW;
+  const matchIsFull = (matchDetail.data?.hostMatchPlayers?.length ?? 0) >= (matchDetail.data?.maximalPlayers ?? 0);
   const currentUserIsInMatch =
     !!userMe.data?.id &&
     matchDetail.isFetched &&
@@ -103,6 +105,14 @@ export const MatchDetail: React.FC = () => {
     ) &&
     matchDetail.data?.rounds?.length !== 4;
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
+
+  if (matchDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.title)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout
@@ -139,6 +149,7 @@ export const MatchDetail: React.FC = () => {
         {(userIsAdmin || isCurrentUserOwnerOfMatch) && (
           <ManageMenu
             canEnterResult={isCurrentUserOwnerOfMatch}
+            canLockMatch={(matchDetail.data?.hostMatchPlayers?.length ?? 0) >= (matchDetail.data?.minimalPlayers ?? 0)}
             matchId={query.matchId}
             seasonId={matchDetail.data?.season?.id}
             setIsAddPlayerToMatchModalOpen={setIsAddPlayerToMatchModalOpen}
@@ -269,7 +280,7 @@ export const MatchDetail: React.FC = () => {
           <>
             <Gap defaultHeight={16} />
             <Flex justify="flex-end" style={{ gap: 8 }}>
-              {canCurrentUserJoin && (
+              {canCurrentUserJoin && !matchIsFull && (
                 <Button
                   onClick={() => setIsJoinMatchModalOpen(true)}
                   variant={MainButtonVariant.PRIMARY}

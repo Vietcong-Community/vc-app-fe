@@ -10,6 +10,7 @@ import { EaseInOutContainer } from '../../../components/Animations/EaseInOutCont
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { Nation } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
@@ -54,6 +55,14 @@ export const SetChampionshipMatchScoreCont: React.FC = () => {
   };
 
   const showLoading = matchDetail.isLoading && !!matchDetail.data;
+
+  if (matchDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.matchDetailBreadcrumb)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

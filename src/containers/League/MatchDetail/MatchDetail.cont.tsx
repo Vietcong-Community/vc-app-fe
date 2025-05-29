@@ -26,6 +26,7 @@ import { AddPlayerToMatchModal } from '../../../components/Modals/AddPlayerToMat
 import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/CreateMatchModal';
 import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { MatchStatus, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
@@ -127,6 +128,14 @@ export const MatchDetail: React.FC = () => {
     () => getOpponentHosts(matchDetail.data?.hostMatchPlayers, matchDetail.data?.rounds?.[0]),
     [matchDetail.isFetching],
   );
+
+  if (matchDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.title)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

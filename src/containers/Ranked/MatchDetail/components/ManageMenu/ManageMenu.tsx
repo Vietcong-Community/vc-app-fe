@@ -17,6 +17,7 @@ import { messages } from './messages';
 
 interface IProps {
   canEnterResult?: boolean;
+  canLockMatch?: boolean;
   matchId: string;
   seasonId?: string;
   setIsAddPlayerToMatchModalOpen: (value: boolean) => void;
@@ -31,6 +32,7 @@ interface IProps {
 export const ManageMenu: React.FC<IProps> = (props: IProps) => {
   const {
     canEnterResult = false,
+    canLockMatch = false,
     matchId,
     seasonId,
     setIsAddPlayerToMatchModalOpen,
@@ -83,7 +85,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.lockMatch} />,
       key: '9',
       onClick: () => setIsLockMatchModalOpen(true),
-      disabled: status !== MatchStatus.NEW || !userIsAdmin,
+      disabled: status !== MatchStatus.NEW || !userIsAdmin || !canLockMatch,
     },
     {
       label: <FormattedMessage {...messages.deleteMatch} />,

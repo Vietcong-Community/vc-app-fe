@@ -17,6 +17,7 @@ import { DEFAULT_USER_DATE_FORMAT_WITH_TIME } from '../../../components/Fields/D
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H2 } from '../../../components/Titles/H2/H2';
 import { Role } from '../../../constants/enums';
 import { useNotifications } from '../../../hooks/NotificationsHook';
@@ -109,6 +110,14 @@ export const ArticleDetailCont: React.FC = () => {
       disabled: articleDetail.data?.isPublished,
     },
   ];
+
+  if (articleDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound name={formatMessage(messages.title)} />
+      </ContentLayout>
+    );
+  }
 
   return (
     <>

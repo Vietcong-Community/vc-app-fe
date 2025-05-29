@@ -14,6 +14,7 @@ import {
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
+import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
@@ -54,6 +55,14 @@ export const AcceptMatchChallengeCont: React.FC = () => {
   };
 
   const showLoading = maps.isLoading || matchDetail.isLoading;
+
+  if (matchDetail.isError) {
+    return (
+      <ContentLayout>
+        <ResourceNotFound />
+      </ContentLayout>
+    );
+  }
 
   return (
     <ContentLayout

@@ -32,6 +32,8 @@ import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModa
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
+import { AllMatches } from '../../../components/Season/AllMatches/AllMatches';
+import { ILadderTableRow, LADDER_COLUMNS } from '../../../components/Season/AllMatches/types';
 import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -46,9 +48,7 @@ import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { canUserJoinSeasonWithTeam, canUserManageMatch } from '../../../utils/matchUtils';
 import { removeURLParameter } from '../../../utils/urlUtils';
 import { MatchRow } from '../components/MatchRow/MatchRow';
-import { ILadderTableRow, LADDER_COLUMNS } from '../types';
 
-import { AllMatches } from './components/AllMatches/AllMatches';
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 import { messages } from './messages';

@@ -131,7 +131,10 @@ export interface IMatch {
 export interface IMatchListItem {
   id: string;
   challenger: ILadderItem;
+  challengerMatchPlayers?: IMatchPlayer[];
   opponent?: ILadderItem;
+  opponentMatchPlayers?: IMatchPlayer[];
+  hostMatchPlayers?: IMatchPlayer[];
   startDate: string;
   endDate?: string;
   status: MatchStatus;

@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useMapsInSeason, useSeasonsDetail } from '../../../api/hooks/league/api';
 import { useCanCreateNewMatch } from '../../../api/hooks/ranked/api';
+import { Alert } from '../../../components/Alert/Alert';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
@@ -21,6 +22,7 @@ import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModa
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
+import { AllMatches } from '../../../components/Season/AllMatches/AllMatches';
 import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { H1 } from '../../../components/Titles/H1/H1';
 import { H2 } from '../../../components/Titles/H2/H2';
@@ -29,7 +31,6 @@ import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
-import { AllMatches } from '../../League/SeasonDetail/components/AllMatches/AllMatches';
 import { TopPlayersOfTheDay } from '../../League/SeasonDetail/components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 
 import { messages } from './messages';
@@ -148,6 +149,17 @@ export const RankedSeasonDetailCont: React.FC = () => {
             <FormattedMessage {...messages.openMapListModal} />
           </Button>
         </Flex>
+        {canCreateNewMatch.isSuccess && !canCreateNewMatch.data?.canCreateMatch && (
+          <>
+            <Gap defaultHeight={16} />
+            <Alert
+              title={formatMessage(messages.createNewMatchIsNotPossible)}
+              type="info"
+              showIcon
+              style={{ textAlign: 'start' }}
+            />
+          </>
+        )}
         <Divider style={{ margin: '16px 0' }} />
         <Statistics
           customTitle={
@@ -164,6 +176,8 @@ export const RankedSeasonDetailCont: React.FC = () => {
           seasonMaps={maps.data?.items ?? []}
           seasonId={query.seasonId}
           showSeasonTeams={false}
+          showTeamNames={false}
+          showPlayers
         />
       </EaseInOutContainer>
       <Gap defaultHeight={48} />

@@ -176,6 +176,12 @@ export const MatchDetail: React.FC = () => {
             <Gap defaultHeight={16} />
           </>
         )}
+        {matchIsFull && canCurrentUserJoin && !currentUserIsInMatch && matchStatusIsNew && (
+          <>
+            <Alert title={formatMessage(messages.matchIsFull)} type="info" showIcon style={{ textAlign: 'start' }} />
+            <Gap defaultHeight={16} />
+          </>
+        )}
         <S.MatchInformationContainer>
           <S.ContentContainer>
             <Card>
@@ -281,8 +287,9 @@ export const MatchDetail: React.FC = () => {
           <>
             <Gap defaultHeight={16} />
             <Flex justify="flex-end" style={{ gap: 8 }}>
-              {canCurrentUserJoin && !matchIsFull && (
+              {canCurrentUserJoin && (
                 <Button
+                  disabled={matchIsFull}
                   onClick={() => setIsJoinMatchModalOpen(true)}
                   variant={MainButtonVariant.PRIMARY}
                   style={{ color: 'white', fontWeight: 'bold' }}

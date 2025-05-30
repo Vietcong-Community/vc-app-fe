@@ -69,4 +69,10 @@ export const messages = defineMessages({
     id: 'app.containers.Ranked.MatchDetail.leaveMatch',
     defaultMessage: 'Opustit zápas',
   },
+  matchIsFull: {
+    id: 'app.containers.Ranked.MatchDetail.matchIsFull',
+    defaultMessage:
+      'Zápas je plně obsazen a ty v něm bohužel nejsi. I to se může stát. Sleduj kanál na discordu, pokud někdo ' +
+      'zápas opustí, uvidíš zde upozornění.',
+  },
 });

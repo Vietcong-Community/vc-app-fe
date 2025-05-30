@@ -4,12 +4,12 @@ import { Form, Modal } from 'antd';
 import { sortBy } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { IMap } from '../../../../../api/hooks/interfaces';
-import { ILadderItem } from '../../../../../api/hooks/league/interfaces';
-import { DatePickerField } from '../../../../../components/Fields/DatePickerField/DatePickerField';
-import { SelectField } from '../../../../../components/Fields/SelectField/SelectField';
-import { FormComponent } from '../../../../../components/Form/FormComponent';
-import { MATCH_STATUS_SELECT_OPTIONS } from '../../../../../utils/mappingLabelUtils';
+import { IMap } from '../../../api/hooks/interfaces';
+import { ILadderItem } from '../../../api/hooks/league/interfaces';
+import { MATCH_STATUS_SELECT_OPTIONS } from '../../../utils/mappingLabelUtils';
+import { DatePickerField } from '../../Fields/DatePickerField/DatePickerField';
+import { SelectField } from '../../Fields/SelectField/SelectField';
+import { FormComponent } from '../../Form/FormComponent';
 
 import { fields, IFormData } from './MatchFilterModal.fields';
 import { messages } from './messages';

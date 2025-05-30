@@ -6,24 +6,24 @@ import { Flex } from 'antd';
 import isEmpty from 'lodash/isEmpty';
 import { FormattedMessage } from 'react-intl';
 
-import { IMap } from '../../../../../api/hooks/interfaces';
-import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
-import { ILadderItem } from '../../../../../api/hooks/league/interfaces';
-import { Gap } from '../../../../../components/Gap/Gap';
-import { TableWithPagination } from '../../../../../components/TableWithPagination/Table';
-import { H2 } from '../../../../../components/Titles/H2/H2';
-import { MatchStatus } from '../../../../../constants/enums';
-import { useRouter } from '../../../../../hooks/RouterHook';
-import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
-import { Routes } from '../../../../../routes/enums';
-import { BreakPoints } from '../../../../../theme/theme';
-import { formatDateForUser } from '../../../../../utils/dateUtils';
-import { mapMatchStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
-import { IMatchesTableRow, MATCH_COLUMNS } from '../../../types';
+import { IMap } from '../../../api/hooks/interfaces';
+import { useSeasonMatchList } from '../../../api/hooks/league/api';
+import { ILadderItem } from '../../../api/hooks/league/interfaces';
+import { MatchStatus } from '../../../constants/enums';
+import { useRouter } from '../../../hooks/RouterHook';
+import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
+import { Routes } from '../../../routes/enums';
+import { BreakPoints } from '../../../theme/theme';
+import { formatDateForUser } from '../../../utils/dateUtils';
+import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { Gap } from '../../Gap/Gap';
+import { TableWithPagination } from '../../TableWithPagination/Table';
+import { H2 } from '../../Titles/H2/H2';
 import { MatchFilterModal } from '../MatchFilterModal/MatchFilterModal';
 import { IFormData } from '../MatchFilterModal/MatchFilterModal.fields';
 
 import { messages } from './messages';
+import { IMatchesTableRow, MATCH_COLUMNS } from './types';
 
 import * as S from './AllMatches.style';
 
@@ -33,10 +33,20 @@ interface IProps {
   seasonMaps: IMap[];
   seasonId: string;
   showSeasonTeams?: boolean;
+  showTeamNames?: boolean;
+  showPlayers?: boolean;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
-  const { matchUrl = Routes.MATCH_DETAIL, seasonId, seasonMaps, seasonLadder, showSeasonTeams = true } = props;
+  const {
+    matchUrl = Routes.MATCH_DETAIL,
+    seasonId,
+    seasonMaps,
+    seasonLadder,
+    showSeasonTeams = true,
+    showTeamNames = true,
+    showPlayers = false,
+  } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
   const [selectedMatchPage, setSelectedMatchPage] = useState<number>(1);
@@ -77,6 +87,11 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         ].includes(item.status as MatchStatus)
           ? `${item.challengerScore} - ${item.opponentScore}`
           : '? - ?',
+        players: [
+          ...(item.challengerMatchPlayers ?? []),
+          ...(item.opponentMatchPlayers ?? []),
+          ...(item.hostMatchPlayers ?? []),
+        ],
       };
     }) ?? [];
 
@@ -126,7 +141,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
           </>
         )}
         <TableWithPagination
-          columns={MATCH_COLUMNS(isSmallerThanMd)}
+          columns={MATCH_COLUMNS(isSmallerThanMd, showTeamNames, showPlayers)}
           data={allMatchesTableData}
           loading={matches.isLoading}
           onPageChange={onMatchPageChange}

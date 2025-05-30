@@ -1,5 +1,5 @@
-import { IFormFields } from '../../../../../@types/forms';
-import { MatchStatus } from '../../../../../constants/enums';
+import { IFormFields } from '../../../@types/forms';
+import { MatchStatus } from '../../../constants/enums';
 
 export interface IFormData {
   teamId?: string;

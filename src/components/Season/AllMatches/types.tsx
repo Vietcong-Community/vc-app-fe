@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TableColumnsType } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import { MatchStatus } from '../../constants/enums';
+import { IMatchPlayer } from '../../../api/hooks/league/interfaces';
+import { MatchStatus } from '../../../constants/enums';
 
 import { messages } from './messages';
 
-import * as S from './League.style';
+import * as S from './AllMatches.style';
 
 export interface IMatchesTableRow {
   id: string;
@@ -21,11 +22,22 @@ export interface IMatchesTableRow {
   opponentElo?: number;
   challengerTeamName: string;
   opponentTeamName: string;
+  players?: IMatchPlayer[];
 }
 
-export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRow> => {
+export const MATCH_COLUMNS = (
+  hidden: boolean,
+  showTeamNames: boolean,
+  showPlayers: boolean,
+): TableColumnsType<IMatchesTableRow> => {
   return [
-    { title: <FormattedMessage {...messages.matchDate} />, dataIndex: 'date', key: '0', defaultSortOrder: 'descend' },
+    {
+      title: <FormattedMessage {...messages.matchDate} />,
+      dataIndex: 'date',
+      key: '0',
+      defaultSortOrder: 'descend',
+      hidden: showPlayers && hidden,
+    },
     {
       title: <FormattedMessage {...messages.matches} />,
       render: (_, record) => {
@@ -37,10 +49,20 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
 
         return (
           <>
-            <b>{record.challengerTeamName}</b> - <b>{record.opponentTeamName}</b>
-            <br />
+            {showPlayers && (
+              <>
+                {record.date}
+                <br />{' '}
+              </>
+            )}
+            {showTeamNames && (
+              <>
+                <b>{record.challengerTeamName}</b> - <b>{record.opponentTeamName}</b>
+                <br />
+              </>
+            )}
             <span>
-              {showElo && (
+              {showElo && showTeamNames && (
                 <>
                   <S.EloPoints
                     $isWinning={challengerEloAmountGreaterThanZero}
@@ -52,7 +74,7 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
                 </>
               )}
               <b>{record.result}</b>
-              {showElo && (
+              {showElo && showTeamNames && (
                 <>
                   <S.EloPoints $isWinning={opponentEloAmountGreaterThanZero} $isLosing={opponentEloAmountLowerThanZero}>
                     {' '}
@@ -64,22 +86,37 @@ export const MATCH_COLUMNS = (hidden: boolean): TableColumnsType<IMatchesTableRo
             </span>
             <br />
             <FormattedMessage {...messages.matchStatus} />: <b>{record.status}</b>
+            {showPlayers && (
+              <>
+                <br />
+                {record.players?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)}
+              </>
+            )}
           </>
         );
       },
       hidden: !hidden,
     },
     {
+      title: <FormattedMessage {...messages.players} />,
+      dataIndex: 'players',
+      key: '5',
+      hidden: hidden || !showPlayers,
+      render: (_, record) => {
+        return <>{record.players?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)}</>;
+      },
+    },
+    {
       title: <FormattedMessage {...messages.challenger} />,
       dataIndex: 'challengerTeamName',
       key: '1',
-      hidden,
+      hidden: hidden || !showTeamNames,
     },
     {
       title: <FormattedMessage {...messages.opponent} />,
       dataIndex: 'opponentTeamName',
       key: '2',
-      hidden,
+      hidden: hidden || !showTeamNames,
     },
     {
       title: <FormattedMessage {...messages.result} />,

@@ -12,6 +12,7 @@ import { Button } from '../../../../../components/Button/Button';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { LinkButton } from '../../../../../components/LinkButton/LinkButton';
+import { ILadderTableRow, LADDER_COLUMNS } from '../../../../../components/Season/AllMatches/types';
 import { Table } from '../../../../../components/Table/Table';
 import { MatchStatus, SeasonStatus } from '../../../../../constants/enums';
 import { useRouter } from '../../../../../hooks/RouterHook';
@@ -21,7 +22,6 @@ import { BreakPoints } from '../../../../../theme/theme';
 import { canUserManageMatch } from '../../../../../utils/matchUtils';
 import { FutureMatches } from '../../../SeasonDetail/components/FutureMatches/FutureMatches';
 import { MatchRow } from '../../../components/MatchRow/MatchRow';
-import { ILadderTableRow, LADDER_COLUMNS } from '../../../types';
 
 import { messages } from './messages';
 

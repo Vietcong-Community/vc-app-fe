@@ -2,71 +2,77 @@ import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
   allMatchesTitle: {
-    id: 'app.containers.League.SeasonDetail.allMatchesTitle',
+    id: 'app.containers.Ranked.SeasonDetail.allMatchesTitle',
     defaultMessage: 'Seznam všech zápasů',
   },
   playersLadder: {
-    id: 'app.containers.League.SeasonDetail.playersLadder',
+    id: 'app.containers.Ranked.SeasonDetail.playersLadder',
     defaultMessage: 'Pořadí hráčů',
   },
   seasonInformationTitle: {
-    id: 'app.containers.League.SeasonDetail.seasonInformationTitle',
+    id: 'app.containers.Ranked.SeasonDetail.seasonInformationTitle',
     defaultMessage: 'Základní informace',
   },
   upcomingMatches: {
-    id: 'app.containers.League.SeasonDetail.upcomingMatches',
+    id: 'app.containers.Ranked.SeasonDetail.upcomingMatches',
     defaultMessage: 'Nadcházející zápasy',
   },
   noUpcomingMatches: {
-    id: 'app.containers.League.SeasonDetail.noUpcomingMatches',
+    id: 'app.containers.Ranked.SeasonDetail.noUpcomingMatches',
     defaultMessage: 'Žádný zápas není naplánován.',
   },
   createMatchLink: {
-    id: 'app.containers.League.SeasonDetail.createMatchLink',
+    id: 'app.containers.Ranked.SeasonDetail.createMatchLink',
     defaultMessage: 'Nový zápas můžete vytvořit <b>zde</b>.',
   },
   finishedMatches: {
-    id: 'app.containers.League.SeasonDetail.finishedMatches',
+    id: 'app.containers.Ranked.SeasonDetail.finishedMatches',
     defaultMessage: 'Nejnovější odehrané zápasy',
   },
   allMatches: {
-    id: 'app.containers.League.SeasonDetail.allMatches',
+    id: 'app.containers.Ranked.SeasonDetail.allMatches',
     defaultMessage: 'Přejít na všechny zápasy',
   },
   noFinishedMatches: {
-    id: 'app.containers.League.SeasonDetail.noFinishedMatches',
+    id: 'app.containers.Ranked.SeasonDetail.noFinishedMatches',
     defaultMessage: 'Nic tu není, koukejte něco odehrát!',
   },
   createMatch: {
-    id: 'app.containers.League.SeasonDetail.createMatch',
+    id: 'app.containers.Ranked.SeasonDetail.createMatch',
     defaultMessage: 'Nový zápas',
   },
   seasonStatus: {
-    id: 'app.containers.League.SeasonDetail.seasonStatus',
+    id: 'app.containers.Ranked.SeasonDetail.seasonStatus',
     defaultMessage: 'Stav',
   },
   seasonBeginDate: {
-    id: 'app.containers.League.SeasonDetail.seasonBeginDate',
+    id: 'app.containers.Ranked.SeasonDetail.seasonBeginDate',
     defaultMessage: 'Datum zahájení',
   },
   seasonEndDate: {
-    id: 'app.containers.League.SeasonDetail.seasonEndDate',
+    id: 'app.containers.Ranked.SeasonDetail.seasonEndDate',
     defaultMessage: 'Datum ukončení',
   },
   dateNotSpecified: {
-    id: 'app.containers.League.SeasonDetail.dateNotSpecified',
+    id: 'app.containers.Ranked.SeasonDetail.dateNotSpecified',
     defaultMessage: 'Nespecifikované',
   },
   leaguesBreadcrumb: {
-    id: 'app.containers.League.SeasonDetail.leaguesBreadcrumb',
+    id: 'app.containers.Ranked.SeasonDetail.leaguesBreadcrumb',
     defaultMessage: 'Ligy a sezóny',
   },
   competetiveDetailBreadcrumb: {
-    id: 'app.containers.League.SeasonDetail.competetiveDetailBreadcrumb',
+    id: 'app.containers.Ranked.SeasonDetail.competetiveDetailBreadcrumb',
     defaultMessage: 'Kompetetivní mód',
   },
   openMapListModal: {
-    id: 'app.containers.League.SeasonDetail.openMapListModal',
+    id: 'app.containers.Ranked.SeasonDetail.openMapListModal',
     defaultMessage: 'Seznam map',
+  },
+  createNewMatchIsNotPossible: {
+    id: 'app.containers.Ranked.SeasonDetail.createNewMatchIsNotPossible',
+    defaultMessage:
+      'Pokud bys chtěl vytvořit nový zápas, ale tlačítko je zašedlé, je to pravděpodobně proto, že již existuje ' +
+      'zápas na dnešní den, který nemá zaplněnou kapacitu. Přihlaš se do něj nebo nehraješ!',
   },
 });

@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.League.teamName',
     defaultMessage: 'Tým',
   },
+  players: {
+    id: 'app.containers.League.players',
+    defaultMessage: 'Hráči',
+  },
   matches: {
     id: 'app.containers.League.matches',
     defaultMessage: 'Zápasy',

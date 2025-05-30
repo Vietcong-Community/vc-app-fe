@@ -60,7 +60,7 @@ export const JoinRankedMatchModal: React.FC<IProps> = (props: IProps) => {
         ?.filter((item) => item.id !== secondPickedMapId)
         ?.map((item) => ({ id: item.id, value: item.id, label: item.name })) ?? []
     );
-  }, [secondPickedMapId, isOpen]);
+  }, [secondPickedMapId, isOpen, JSON.stringify(maps)]);
 
   const secondMapsOptions = useMemo(() => {
     return (
@@ -68,7 +68,7 @@ export const JoinRankedMatchModal: React.FC<IProps> = (props: IProps) => {
         ?.filter((item) => item.id !== firstPickedMapId)
         ?.map((item) => ({ id: item.id, value: item.id, label: item.name })) ?? []
     );
-  }, [firstPickedMapId, isOpen]);
+  }, [firstPickedMapId, isOpen, JSON.stringify(maps)]);
 
   return (
     <Modal

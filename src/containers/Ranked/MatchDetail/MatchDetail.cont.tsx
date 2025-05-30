@@ -228,6 +228,7 @@ export const MatchDetail: React.FC = () => {
                       setIsLeaveMatchModalOpen(true);
                     }}
                     userId={userMe.data?.id}
+                    userIsAdmin={userIsAdmin}
                   />
                 )}
                 {!matchStatusIsNew && (

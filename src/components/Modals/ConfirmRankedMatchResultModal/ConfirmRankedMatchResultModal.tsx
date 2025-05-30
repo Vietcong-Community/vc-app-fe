@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Modal } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useConfirmMatchScore } from '../../../api/hooks/league/api';
+import { useConfirmMatchScore } from '../../../api/hooks/ranked/api';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 

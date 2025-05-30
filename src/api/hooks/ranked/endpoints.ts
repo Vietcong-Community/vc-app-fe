@@ -5,4 +5,5 @@ export enum RankedEndpoints {
   LEAVE_MATCH = '/matches/{matchId}/face-it/leave-match',
   ADMIN_CLOSE_MATCH = '/matches/{matchId}/face-it/close-match',
   CAN_CREATE_NEW_MATCH = '/seasons/{seasonId}/face-it/can-create-new-match',
+  CONFIRM_MATCH_SCORE = '/matches/{matchId}/face-it/confirm-match-score',
 }

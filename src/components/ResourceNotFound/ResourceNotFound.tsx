@@ -27,7 +27,7 @@ export const ResourceNotFound: React.FC<IProps> = (props: IProps) => {
 
   return (
     <S.Container>
-      <Gap defaultHeight={16} />
+      <Gap defaultHeight={48} height={{ sm: 24 }} />
       <H2>
         <FormattedMessage {...messages.title} values={{ value: name ?? formatMessage(messages.notSpecified) }} />
       </H2>

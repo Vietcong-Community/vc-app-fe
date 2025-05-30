@@ -64,6 +64,17 @@ export const useLockMatch = (matchId: string) => {
   });
 };
 
+export const useConfirmMatchScore = (matchId: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await post<undefined, undefined>(RankedEndpoints.CONFIRM_MATCH_SCORE, undefined, {
+        matchId,
+      });
+      return data;
+    },
+  });
+};
+
 export const useCanCreateNewMatch = (seasonId: string) => {
   return useQuery({
     queryKey: ['canCreateNewMatch', seasonId],

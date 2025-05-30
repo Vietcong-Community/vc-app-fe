@@ -23,10 +23,18 @@ interface IProps {
   players: IMatchPlayer[];
   setRemovePlayerFromMatch: (user: IUser) => void;
   userId?: string;
+  userIsAdmin?: boolean;
 }
 
 export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
-  const { isCurrentUserOwnerOfMatch, matchOwner, players, setRemovePlayerFromMatch, userId } = props;
+  const {
+    isCurrentUserOwnerOfMatch,
+    matchOwner,
+    players,
+    setRemovePlayerFromMatch,
+    userId,
+    userIsAdmin = false,
+  } = props;
 
   const handleOnDeleteClick = (user: IUser) => {
     setRemovePlayerFromMatch(user);
@@ -54,7 +62,7 @@ export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
                     style={{ marginRight: 8 }}
                   />
                   {item.user.nickname}
-                  {isCurrentUserOwnerOfMatch && userId !== item.user.id && (
+                  {(isCurrentUserOwnerOfMatch || userIsAdmin) && userId !== item.user.id && (
                     <div
                       onClick={(event) => {
                         event.preventDefault();

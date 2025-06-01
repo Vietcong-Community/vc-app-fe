@@ -28,11 +28,27 @@ import { GlobalSearch } from './components/GlobalSearch/GlobalSearch';
 import { MobileMenu } from './components/MobileMenu/MobileMenu';
 import { MyMatches } from './components/MyMatches/MyMatches';
 import { messages } from './messages';
+import firstColors from './testLogo/1_barevna.png';
+import firstWhite from './testLogo/1_bila.png';
+import firstBlack from './testLogo/1_cerna.png';
+import firstGrey from './testLogo/1_seda.png';
+import firstGreen from './testLogo/1_zelena.png';
+import secondColors1 from './testLogo/2_barevna_1.png';
+import secondColors2 from './testLogo/2_barevna_2.png';
+import secondWhite from './testLogo/2_bila.png';
+import secondBlack from './testLogo/2_cerna.png';
+import secondGrey from './testLogo/2_seda.png';
+import secondGreen from './testLogo/2_zelena.png';
+import thirdColors from './testLogo/3_barevna.png';
+import thirdWhite from './testLogo/3_bila.png';
+import thirdBlack from './testLogo/3_cerna.png';
+import thirdGrey from './testLogo/3_seda.png';
+import thirdGreen from './testLogo/3_zelena.png';
 
 import * as S from './Header.style';
 
 export const Header: React.FC = () => {
-  const { navigate } = useRouter();
+  const { navigate, query } = useRouter<{ v?: string }>();
   const [matchesDrawerOpen, setMatchesDrawerOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isMainMenuOpen, setIsMainMenuOpen] = useState<boolean>(true);
@@ -61,6 +77,61 @@ export const Header: React.FC = () => {
     queryClient.removeQueries({ queryKey: ['userMe'] });
     queryClient.removeQueries({ queryKey: ['loggedUserTeams'] });
     navigate(Routes.HOME, { replace: true });
+  };
+
+  const getLogoSrc = () => {
+    if (!query?.v) {
+      return logo;
+    }
+
+    if (query?.v === '1_barevna') {
+      return firstColors;
+    }
+    if (query?.v === '1_bila') {
+      return firstWhite;
+    }
+    if (query?.v === '1_cerna') {
+      return firstBlack;
+    }
+    if (query?.v === '1_seda') {
+      return firstGrey;
+    }
+    if (query?.v === '1_zelena') {
+      return firstGreen;
+    }
+    if (query?.v === '2_barevna_1') {
+      return secondColors1;
+    }
+    if (query?.v === '2_barevna_2') {
+      return secondColors2;
+    }
+    if (query?.v === '2_bila') {
+      return secondWhite;
+    }
+    if (query?.v === '2_cerna') {
+      return secondBlack;
+    }
+    if (query?.v === '2_seda') {
+      return secondGrey;
+    }
+    if (query?.v === '2_zelena') {
+      return secondGreen;
+    }
+    if (query?.v === '3_barevna') {
+      return thirdColors;
+    }
+    if (query?.v === '3_bila') {
+      return thirdWhite;
+    }
+    if (query?.v === '3_cerna') {
+      return thirdBlack;
+    }
+    if (query?.v === '3_seda') {
+      return thirdGrey;
+    }
+    if (query?.v === '3_zelena') {
+      return thirdGreen;
+    }
   };
 
   const loggedUserMenu = [
@@ -146,7 +217,7 @@ export const Header: React.FC = () => {
         <S.Content>
           <S.LeftSection>
             <S.Logo onClick={() => navigate(Routes.HOME)}>
-              <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
+              <img src={getLogoSrc()} alt="Vietcong" style={{ height: '90%' }} />
             </S.Logo>
             <S.MenuContainer>
               {!isSearchOpen && (

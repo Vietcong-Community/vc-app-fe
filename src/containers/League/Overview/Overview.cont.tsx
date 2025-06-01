@@ -18,7 +18,7 @@ import { messages } from './messages';
 
 export const OverviewCont: React.FC = () => {
   const { pathname } = useRouter();
-  const leaguesWithSeasons = useLeaguesWithSeasonsList(SeasonType.SEASON);
+  const leaguesWithSeasons = useLeaguesWithSeasonsList([SeasonType.SEASON]);
   const { formatMessage } = useIntl();
 
   return (

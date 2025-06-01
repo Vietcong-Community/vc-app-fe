@@ -21,7 +21,7 @@ const SPRING_FB_LINK = 'https://www.facebook.com/events/645052631336457/';
 export const ChampionshipOverview: React.FC = () => {
   const leagues = useLeagueList();
 
-  const leaguesWithSeasons = useLeaguesWithSeasonsList(SeasonType.TOURNAMENT);
+  const leaguesWithSeasons = useLeaguesWithSeasonsList([SeasonType.TOURNAMENT]);
 
   return (
     <ContentLayout breadcrumbItems={[{ key: 'bc-championship', title: <FormattedMessage {...messages.title} /> }]}>

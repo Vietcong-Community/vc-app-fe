@@ -44,6 +44,12 @@ import thirdWhite from './testLogo/3_bila.png';
 import thirdBlack from './testLogo/3_cerna.png';
 import thirdGrey from './testLogo/3_seda.png';
 import thirdGreen from './testLogo/3_zelena.png';
+import ctvrtaColors from './testLogo/4_barevna.png';
+import ctvrtaBlack from './testLogo/4_cerna.png';
+import ctvrtaGrey from './testLogo/4_seda.png';
+import fifthBlack from './testLogo/5_cerny.png';
+import fifthGrey from './testLogo/5_seda.png';
+import fifthGreen from './testLogo/5_zelena.png';
 
 import * as S from './Header.style';
 
@@ -132,6 +138,26 @@ export const Header: React.FC = () => {
     if (query?.v === '3_zelena') {
       return thirdGreen;
     }
+    if (query?.v === '4_cerna') {
+      return ctvrtaBlack;
+    }
+    if (query?.v === '4_seda') {
+      return ctvrtaGrey;
+    }
+    if (query?.v === '4_barevna') {
+      return ctvrtaColors;
+    }
+    if (query?.v === '5_cerna') {
+      return fifthBlack;
+    }
+    if (query?.v === '5_seda') {
+      return fifthGrey;
+    }
+    if (query?.v === '5_zelena') {
+      return fifthGreen;
+    }
+
+    return logo;
   };
 
   const loggedUserMenu = [

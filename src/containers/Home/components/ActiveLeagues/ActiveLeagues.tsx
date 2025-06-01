@@ -13,7 +13,7 @@ import { messages } from './messages';
 import * as S from './ActiveLeagues.style';
 
 export const ActiveLeagues: React.FC = () => {
-  const leaguesWithSeasons = useLeaguesWithSeasonsList(SeasonType.SEASON);
+  const leaguesWithSeasons = useLeaguesWithSeasonsList([SeasonType.SEASON, SeasonType.FACEIT]);
 
   return (
     <>

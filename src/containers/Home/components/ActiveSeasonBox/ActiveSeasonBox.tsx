@@ -25,7 +25,8 @@ export const ActiveSeasonBox: React.FC<IProps> = (props: IProps) => {
 
   const activeSeason = seasons.find(
     (item) =>
-      (item.status === SeasonStatus.ACTIVE || item.status === SeasonStatus.NEW) && item.type === SeasonType.SEASON,
+      (item.status === SeasonStatus.ACTIVE || item.status === SeasonStatus.NEW) &&
+      (item.type === SeasonType.SEASON || item.type === SeasonType.FACEIT),
   );
 
   if (!activeSeason) {
@@ -33,7 +34,7 @@ export const ActiveSeasonBox: React.FC<IProps> = (props: IProps) => {
   }
 
   const getIcon = () => {
-    if (leagueDetail.type === LeagueType.TEAMPLAY) {
+    if (leagueDetail.type === LeagueType.TEAMPLAY || leagueDetail.type === LeagueType.FACEIT) {
       return (
         <S.Icons>
           <FontAwesomeIcon icon={faPeopleGroup} style={{ fontSize: 20 }} />

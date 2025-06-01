@@ -46,9 +46,9 @@ export const useLeagueList = () => {
   });
 };
 
-export const useLeaguesWithSeasonsList = (seasonType?: SeasonType) => {
+export const useLeaguesWithSeasonsList = (seasonTypes?: SeasonType[]) => {
   return useQuery({
-    queryKey: ['leagueWithSeasons', seasonType],
+    queryKey: ['leagueWithSeasons', seasonTypes?.join(',')],
     queryFn: async () => {
       const { data } = await get<{ items: ILeagueDetail[] }>(LeagueEndpoints.LEAGUES);
 
@@ -57,8 +57,8 @@ export const useLeaguesWithSeasonsList = (seasonType?: SeasonType) => {
       for (const item of data.items) {
         const seasons = await get<{ items: ISeason[] }>(LeagueEndpoints.LEAGUE_SEASONS, { id: item.id });
 
-        if (seasonType) {
-          const filteredSeasons = seasons.data?.items.filter((item) => item.type === seasonType);
+        if (seasonTypes) {
+          const filteredSeasons = seasons.data?.items.filter((item) => seasonTypes.includes(item.type));
 
           if (filteredSeasons.length > 0) {
             result.push({ league: item, seasons: filteredSeasons });

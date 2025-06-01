@@ -23,10 +23,11 @@ interface IProps {
   onClose: () => void;
   maps: IMap[];
   seasonId: string;
+  userIsAdmin: boolean;
 }
 
 export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
-  const { isOpen, onClose, maps, seasonId } = props;
+  const { isOpen, onClose, maps, seasonId, userIsAdmin } = props;
   const { navigate } = useRouter();
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
@@ -102,7 +103,7 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
           placeholder={formatMessage(messages.startDate)}
           showTime
           minimalDate={dayjs()}
-          maximalDate={dayjs()}
+          maximalDate={!userIsAdmin ? dayjs() : undefined}
         />
       </FormComponent>
     </Modal>

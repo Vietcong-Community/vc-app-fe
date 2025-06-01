@@ -140,7 +140,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
         <Flex justify="flex-end" style={{ gap: 8 }}>
           <Button
             onClick={() => setIsCreateMatchModalOpen(true)}
-            disabled={!canCreateNewMatch.data?.canCreateMatch}
+            disabled={!canCreateNewMatch.data?.canCreateMatch || !userIsAdmin}
             variant={MainButtonVariant.SECONDARY}
           >
             <FormattedMessage {...messages.createMatch} />
@@ -193,6 +193,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
         }}
         seasonId={query.seasonId}
         maps={maps.data?.items ?? []}
+        userIsAdmin={userIsAdmin}
       />
       <SeasonMapsPickerModal
         closeModal={() => setIsSeasonMapsPickerModalOpen(false)}

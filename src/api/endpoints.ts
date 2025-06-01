@@ -1,3 +1,4 @@
+import { AchievementEndpoints } from './hooks/achievements/endpoints';
 import { AdminEndpoints } from './hooks/admin/endpoints';
 import { ArticlesEndpoints } from './hooks/articles/endpoints';
 import { AuthEndpoints } from './hooks/auth/endpoints';
@@ -10,6 +11,7 @@ import { UsersEndpoints } from './hooks/users/endpoints';
 
 export type Endpoints =
   | AdminEndpoints
+  | AchievementEndpoints
   | ArticlesEndpoints
   | AuthEndpoints
   | FilesEndpoints

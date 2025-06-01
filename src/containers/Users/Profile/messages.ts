@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.Profile.createdAt',
     defaultMessage: 'Členem od: ',
   },
+  achievementsTitle: {
+    id: 'app.containers.Profile.achievementsTitle',
+    defaultMessage: 'Úspěchy a ocenění',
+  },
   myTeamsTitle: {
     id: 'app.containers.Profile.myTeamsTitle',
     defaultMessage: 'Týmy',

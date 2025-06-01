@@ -9,6 +9,7 @@ import { compact } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useUserAchievements } from '../../../api/hooks/achievements/api';
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useUserDetail, useUserTeams } from '../../../api/hooks/users/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
@@ -19,11 +20,13 @@ import { ContentLayout } from '../../../components/Layouts/ContentLayout/Content
 import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H2 } from '../../../components/Titles/H2/H2';
+import { Role } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
 import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
+import { Achievements } from '../components/Achievements/Achievements';
 import { CreateTeamModalForm } from '../components/CreateTeamModal/CreateTeamModal.form';
 import { MyTeam } from '../components/MyTeam/MyTeam';
 
@@ -41,9 +44,11 @@ export const ProfileCont: React.FC = () => {
   const userMe = useUserMe('always', [401]);
   const userDetail = useUserDetail(query.id);
   const userTeams = useUserTeams(query.id);
+  const userAchievements = useUserAchievements(query.id);
 
   const showLoading = userDetail.isLoading;
   const showActionsOnProfile = userMe.data?.id === query.id;
+  const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
   const getUserIcon = () => {
     if (userDetail.data?.image?.url) {
@@ -137,6 +142,20 @@ export const ProfileCont: React.FC = () => {
         </S.Container>
       </EaseInOutContainer>
       <Gap defaultHeight={16} height={{ md: 8 }} />
+      {userIsAdmin && (
+        <EaseInOutContainer isOpen={!userAchievements.isLoading}>
+          <S.MyTeamsTitle>
+            <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              <H2>
+                <FormattedMessage {...messages.achievementsTitle} />
+              </H2>
+            </div>
+            <Divider style={{ margin: 'auto', maxWidth: 740 }} />
+          </S.MyTeamsTitle>
+          <Gap defaultHeight={16} />
+          <Achievements />
+        </EaseInOutContainer>
+      )}
       <EaseInOutContainer isOpen={!userTeams.isLoading}>
         <S.MyTeamsTitle>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', width: '100%' }}>

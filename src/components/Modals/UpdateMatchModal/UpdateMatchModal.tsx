@@ -57,7 +57,7 @@ export const UpdateMatchModal: React.FC<IProps> = (props: IProps) => {
     try {
       if (showDate) {
         const endDate = dayjs(values.startDate).add(1, 'hour').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
-        await updateMatch.mutateAsync({ ...values, endDate });
+        await updateMatch.mutateAsync({ ...initialValues, ...values, endDate });
       } else {
         await updateMatch.mutateAsync(values);
       }

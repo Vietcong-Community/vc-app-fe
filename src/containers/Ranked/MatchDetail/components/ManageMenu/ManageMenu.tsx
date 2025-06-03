@@ -133,7 +133,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
       label: <FormattedMessage {...messages.confirmTheResult} />,
       key: '1',
       onClick: () => setIsConfirmScoreModalOpen(true),
-      disabled: status !== MatchStatus.ACCEPTED || (!canEnterResult && !userIsAdmin),
+      disabled: status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION || (!canEnterResult && !userIsAdmin),
     },
   ];
 

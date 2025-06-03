@@ -50,6 +50,8 @@ import ctvrtaGrey from './testLogo/4_seda.png';
 import fifthBlack from './testLogo/5_cerny.png';
 import fifthGrey from './testLogo/5_seda.png';
 import fifthGreen from './testLogo/5_zelena.png';
+import sixVersion1 from './testLogo/6_verze_1.png';
+import sixVersion2 from './testLogo/6_verze_2.png';
 
 import * as S from './Header.style';
 
@@ -155,6 +157,12 @@ export const Header: React.FC = () => {
     }
     if (query?.v === '5_zelena') {
       return fifthGreen;
+    }
+    if (query?.v === '6_verze_1') {
+      return sixVersion1;
+    }
+    if (query?.v === '6_verze_2') {
+      return sixVersion2;
     }
 
     return logo;

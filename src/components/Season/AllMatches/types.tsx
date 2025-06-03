@@ -37,6 +37,23 @@ export const MATCH_COLUMNS = (
       key: '0',
       defaultSortOrder: 'descend',
       hidden: showPlayers && hidden,
+      render: (_, record) => {
+        if (showPlayers) {
+          return (
+            <>
+              <b>{record.date}</b>
+              <br />
+              {record.status === MatchStatus.NEW ? (
+                <FormattedMessage {...messages.freeSlots} values={{ value: 12 - (record.players?.length ?? 0) }} />
+              ) : (
+                <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
+              )}
+            </>
+          );
+        }
+
+        return record.date;
+      },
     },
     {
       title: <FormattedMessage {...messages.matches} />,
@@ -51,7 +68,7 @@ export const MATCH_COLUMNS = (
           <>
             {showPlayers && (
               <>
-                {record.date}
+                <b>{record.date}</b>
                 <br />{' '}
               </>
             )}
@@ -88,6 +105,12 @@ export const MATCH_COLUMNS = (
             <FormattedMessage {...messages.matchStatus} />: <b>{record.status}</b>
             {showPlayers && (
               <>
+                <br />
+                {record.status === MatchStatus.NEW ? (
+                  <FormattedMessage {...messages.freeSlots} values={{ value: 12 - (record.players?.length ?? 0) }} />
+                ) : (
+                  <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
+                )}
                 <br />
                 {record.players?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)}
               </>

@@ -25,6 +25,14 @@ export const messages = defineMessages({
     id: 'app.components.Season.AllMatches.players',
     defaultMessage: 'Hráči',
   },
+  freeSlots: {
+    id: 'app.components.Season.AllMatches.freeSlots',
+    defaultMessage: 'Volná místa: {value}',
+  },
+  playersCount: {
+    id: 'app.components.Season.AllMatches.playersCount',
+    defaultMessage: 'Počet hráčů: {value}',
+  },
   matches: {
     id: 'app.components.Season.AllMatches.matches',
     defaultMessage: 'Zápasy',

@@ -153,7 +153,8 @@ export const ProfileCont: React.FC = () => {
             <Divider style={{ margin: 'auto', maxWidth: 740 }} />
           </S.MyTeamsTitle>
           <Gap defaultHeight={16} />
-          <Achievements />
+          <Achievements achievements={userAchievements.data?.items ?? []} nickname={userDetail.data?.nickname ?? ''} />
+          <Gap defaultHeight={32} />
         </EaseInOutContainer>
       )}
       <EaseInOutContainer isOpen={!userTeams.isLoading}>

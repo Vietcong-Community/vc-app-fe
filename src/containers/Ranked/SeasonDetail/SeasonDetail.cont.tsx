@@ -140,7 +140,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
         <Flex justify="flex-end" style={{ gap: 8 }}>
           <Button
             onClick={() => setIsCreateMatchModalOpen(true)}
-            disabled={!canCreateNewMatch.data?.canCreateMatch || !userIsAdmin}
+            disabled={!canCreateNewMatch.data?.canCreateMatch}
             variant={MainButtonVariant.SECONDARY}
           >
             <FormattedMessage {...messages.createMatch} />

@@ -28,6 +28,7 @@ export const ConfirmRankedMatchResultModal: React.FC<IProps> = (props: IProps) =
       await confirmMatchScore.mutateAsync();
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       showNotification(messages.confirmSuccess);
+      onClose();
     } catch {
       showNotification(messages.confirmFailed, undefined, NotificationType.ERROR);
     }

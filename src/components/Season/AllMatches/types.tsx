@@ -43,7 +43,7 @@ export const MATCH_COLUMNS = (
             <>
               <b>{record.date}</b>
               <br />
-              {record.status === MatchStatus.NEW ? (
+              {record.matchStatus === MatchStatus.NEW ? (
                 <FormattedMessage {...messages.freeSlots} values={{ value: 12 - (record.players?.length ?? 0) }} />
               ) : (
                 <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
@@ -106,7 +106,7 @@ export const MATCH_COLUMNS = (
             {showPlayers && (
               <>
                 <br />
-                {record.status === MatchStatus.NEW ? (
+                {record.matchStatus === MatchStatus.NEW ? (
                   <FormattedMessage {...messages.freeSlots} values={{ value: 12 - (record.players?.length ?? 0) }} />
                 ) : (
                   <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />

@@ -154,7 +154,7 @@ export const MATCH_COLUMNS = (
         const showElo = record.matchStatus === MatchStatus.FINISHED;
         return (
           <span>
-            {showElo && (
+            {showElo && showTeamNames && (
               <>
                 <S.EloPoints
                   $isWinning={challengerEloAmountGreaterThanZero}
@@ -166,7 +166,7 @@ export const MATCH_COLUMNS = (
               </>
             )}
             <b>{record.result}</b>
-            {showElo && (
+            {showElo && showTeamNames && (
               <>
                 <S.EloPoints $isWinning={opponentEloAmountGreaterThanZero} $isLosing={opponentEloAmountLowerThanZero}>
                   {' '}

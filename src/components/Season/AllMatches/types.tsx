@@ -22,6 +22,7 @@ export interface IMatchesTableRow {
   opponentElo?: number;
   challengerTeamName: string;
   opponentTeamName: string;
+  maximalPlayers?: number;
   players?: IMatchPlayer[];
 }
 
@@ -44,7 +45,10 @@ export const MATCH_COLUMNS = (
               <b>{record.date}</b>
               <br />
               {record.matchStatus === MatchStatus.NEW ? (
-                <FormattedMessage {...messages.freeSlots} values={{ value: 12 - (record.players?.length ?? 0) }} />
+                <FormattedMessage
+                  {...messages.freeSlots}
+                  values={{ value: (record.maximalPlayers ?? 12) - (record.players?.length ?? 0) }}
+                />
               ) : (
                 <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
               )}
@@ -107,7 +111,10 @@ export const MATCH_COLUMNS = (
               <>
                 <br />
                 {record.matchStatus === MatchStatus.NEW ? (
-                  <FormattedMessage {...messages.freeSlots} values={{ value: 12 - (record.players?.length ?? 0) }} />
+                  <FormattedMessage
+                    {...messages.freeSlots}
+                    values={{ value: (record.maximalPlayers ?? 12) - (record.players?.length ?? 0) }}
+                  />
                 ) : (
                   <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
                 )}

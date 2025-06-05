@@ -80,6 +80,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         challengerElo: item.challengerEloRowAmount,
         opponentElo: item.opponentEloRowAmount,
         matchStatus: item.status,
+        maximalPlayers: item.maximalPlayers,
         result: [
           MatchStatus.FINISHED,
           MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,

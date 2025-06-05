@@ -144,6 +144,8 @@ export interface IMatchListItem {
   opponentEloRowAmount?: number;
   commentsCount?: number;
   round?: number;
+  maximalPlayers?: number;
+  minimalPlayers?: number;
   type: MatchType;
 }
 

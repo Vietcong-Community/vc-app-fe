@@ -1,6 +1,7 @@
 export interface ICreateRankedMatch {
   startDate: string;
   endDate: string;
+  maximalPlayers: number;
 }
 
 export interface IVoteItem {

@@ -18,6 +18,10 @@ export const messages = defineMessages({
     defaultMessage:
       'Vytváříš nový zápas pro kompetetivní mód. Hlasuj pro dvě <b>preferované mapy</b> a vyber čas zápasu.',
   },
+  playersCount: {
+    id: 'app.components.Modals.CreateRankedMatchModal.playersCount',
+    defaultMessage: 'Počet hráčů',
+  },
   firstPreferredMap: {
     id: 'app.components.Modals.CreateRankedMatchModal.firstPreferredMap',
     defaultMessage: 'První mapa',

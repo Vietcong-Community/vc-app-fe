@@ -10,6 +10,7 @@ import { useNotifications } from '../../../hooks/NotificationsHook';
 import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
 import { Routes } from '../../../routes/enums';
+import { MAXIMAL_PLAYERS_SELECT_OPTIONS } from '../../../utils/mappingLabelUtils';
 import { DatePickerField, DEFAULT_SYSTEM_DATE_TIME_FORMAT } from '../../Fields/DatePickerField/DatePickerField';
 import { SelectField } from '../../Fields/SelectField/SelectField';
 import { FormComponent } from '../../Form/FormComponent';
@@ -43,7 +44,11 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
     try {
       setIsSubmitting(true);
       const endDate = dayjs(values.startDate).add(1, 'hour').format(DEFAULT_SYSTEM_DATE_TIME_FORMAT);
-      const result = await createRankedMatch.mutateAsync({ startDate: values.startDate, endDate });
+      const result = await createRankedMatch.mutateAsync({
+        maximalPlayers: values.maximalPlayers,
+        startDate: values.startDate,
+        endDate,
+      });
       const matchId = result.id;
       await voteForMap.mutateAsync({ mapId: values.firstMapId, matchId });
       await voteForMap.mutateAsync({ mapId: values.secondMapId, matchId });
@@ -85,6 +90,12 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       <FormComponent form={form} id="create-match" onSubmit={onSubmit}>
         <FormattedMessage {...messages.description} />
         <Gap defaultHeight={16} />
+        <SelectField
+          {...fields.maximalPlayers}
+          label={<FormattedMessage {...messages.playersCount} />}
+          placeholder={formatMessage(messages.playersCount)}
+          options={MAXIMAL_PLAYERS_SELECT_OPTIONS}
+        />
         <SelectField
           {...fields.firstMapId}
           label={<FormattedMessage {...messages.firstPreferredMap} />}

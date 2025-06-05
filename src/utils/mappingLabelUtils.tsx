@@ -85,6 +85,19 @@ export const mapNumberOfPlayersToTranslation = (playersCount?: PlayersCount): Re
   }
 };
 
+export const mapMaximalPlayersToTranslation = (maximalPlayers?: number): ReactNode | undefined => {
+  switch (maximalPlayers) {
+    case 8:
+      return <FormattedMessage {...messages.fourVsFour} />;
+    case 10:
+      return <FormattedMessage {...messages.fiveVsFive} />;
+    case 12:
+      return <FormattedMessage {...messages.sixVsSix} />;
+    default:
+      return undefined;
+  }
+};
+
 export const mapMatchResultToTranslation = (result?: MatchResult): ReactNode | undefined => {
   switch (result) {
     case MatchResult.WIN:
@@ -123,6 +136,12 @@ export const mapTeamRoleToTranslation = (teamRole?: TeamRole): ReactNode | undef
       return undefined;
   }
 };
+
+export const MAXIMAL_PLAYERS_SELECT_OPTIONS = [
+  { id: 8, value: 8, label: <FormattedMessage {...messages.fourVsFour} /> },
+  { id: 10, value: 10, label: <FormattedMessage {...messages.fiveVsFive} /> },
+  { id: 12, value: 12, label: <FormattedMessage {...messages.sixVsSix} /> },
+];
 
 export const NATION_SELECT_OPTIONS = [
   { id: Nation.US, value: Nation.US, label: <FormattedMessage {...messages.usNation} /> },

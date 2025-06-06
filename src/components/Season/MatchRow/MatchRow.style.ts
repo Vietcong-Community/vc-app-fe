@@ -120,6 +120,12 @@ export const RightColumn = styled.div<{ $alignToEnd: boolean }>`
     props.$alignToEnd &&
     css`
       align-items: flex-end;
+
+      ${() => makeMediaQuery(BreakPoints.md)`
+        ${css`
+          align-items: center;
+        `}
+      `};
     `}
 `;
 

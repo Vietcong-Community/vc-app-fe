@@ -23,7 +23,7 @@ export const messages = defineMessages({
   },
   joinSuccessDescription: {
     id: 'app.components.Modals.JoinRankedMatchModal.joinSuccessDescription',
-    defaultMessage: 'Připojil ses k zápasu, hlídej si discord a buď na zápas připravený včas!',
+    defaultMessage: 'Připojil ses k zápasu, hlídej si Discord a buď na zápas připravený včas!',
   },
   joinFailed: {
     id: 'app.components.Modals.JoinRankedMatchModal.joinFailed',

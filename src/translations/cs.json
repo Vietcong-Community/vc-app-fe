@@ -145,7 +145,7 @@
   "app.components.Modals.JoinRankedMatchModal.firstPreferredMap": "První mapa",
   "app.components.Modals.JoinRankedMatchModal.joinFailed": "Připojení se nezdařilo",
   "app.components.Modals.JoinRankedMatchModal.joinSuccess": "Připojil ses k zápasu!",
-  "app.components.Modals.JoinRankedMatchModal.joinSuccessDescription": "Připojil ses k zápasu, hlídej si discord a buď na zápas připravený včas!",
+  "app.components.Modals.JoinRankedMatchModal.joinSuccessDescription": "Připojil ses k zápasu, hlídej si Discord a buď na zápas připravený včas!",
   "app.components.Modals.JoinRankedMatchModal.secondPreferredMap": "Druhá mapa",
   "app.components.Modals.JoinRankedMatchModal.title": "Připojit se k zápasu",
   "app.components.Modals.JoinSeasonModal.joinFailed": "Zase jsme to posrali. Zkuste to později nebo napište panu hhackerovi.",

@@ -36,6 +36,7 @@ interface IProps {
   showTeamNames?: boolean;
   showPlayers?: boolean;
   userIsAdmin?: boolean;
+  userId?: string;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
@@ -48,6 +49,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
     showTeamNames = true,
     showPlayers = false,
     userIsAdmin = false,
+    userId,
   } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
@@ -165,7 +167,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
           </>
         )}
         <TableWithPagination
-          columns={MATCH_COLUMNS(isSmallerThanMd, showTeamNames, showPlayers, userIsAdmin)}
+          columns={MATCH_COLUMNS(isSmallerThanMd, showTeamNames, showPlayers, userIsAdmin, userId)}
           data={allMatchesTableData}
           loading={matches.isLoading}
           onPageChange={onMatchPageChange}

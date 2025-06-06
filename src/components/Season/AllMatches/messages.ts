@@ -29,6 +29,10 @@ export const messages = defineMessages({
     id: 'app.components.Season.AllMatches.playersCount',
     defaultMessage: 'Počet hráčů: {value}',
   },
+  userLoggedIn: {
+    id: 'app.components.Season.AllMatches.userLoggedIn',
+    defaultMessage: 'JSI PŘIHLÁŠEN',
+  },
   teams: {
     id: 'app.components.Season.AllMatches.teams',
     defaultMessage: 'Týmy',

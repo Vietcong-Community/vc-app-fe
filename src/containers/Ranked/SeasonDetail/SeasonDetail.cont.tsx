@@ -142,6 +142,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
           canCreateNewMatch={canCreateNewMatch.data?.canCreateMatch || userIsAdmin}
           onMatchCreateClick={() => setIsCreateMatchModalOpen(true)}
           seasonId={query.seasonId}
+          userId={userMe.data?.id}
           userIsAdmin={userIsAdmin}
         />
         <Gap defaultHeight={16} />
@@ -189,6 +190,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
           showTeamNames={false}
           showPlayers
           userIsAdmin={userIsAdmin}
+          userId={userMe.data?.id}
         />
       </EaseInOutContainer>
       <Gap defaultHeight={48} />

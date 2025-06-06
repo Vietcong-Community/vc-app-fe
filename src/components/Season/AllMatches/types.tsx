@@ -37,6 +37,7 @@ export const MATCH_COLUMNS = (
   showTeamNames: boolean,
   showPlayers: boolean,
   userIsAdmin = false,
+  userId?: string,
 ): TableColumnsType<IMatchesTableRow> => {
   return [
     {
@@ -81,6 +82,7 @@ export const MATCH_COLUMNS = (
         const opponentEloAmountGreaterThanZero = (record?.opponentElo ?? 0) > 0;
         const opponentEloAmountLowerThanZero = (record?.opponentElo ?? 0) < 0;
         const showElo = record.matchStatus === MatchStatus.FINISHED;
+        const userIsInMatch = !!record.hostPlayers?.find((item) => item.user.id === userId);
 
         return (
           <>
@@ -138,6 +140,14 @@ export const MATCH_COLUMNS = (
                   {...messages.playersCount}
                   values={{ value: `${record.joinPlayersCount ?? 0}/${record.maximalPlayers}` }}
                 />
+                {userIsInMatch && (
+                  <>
+                    <br />
+                    <b>
+                      <FormattedMessage {...messages.userLoggedIn} />
+                    </b>
+                  </>
+                )}
                 <br />
                 {record.matchStatus === MatchStatus.NEW && (
                   <>
@@ -174,6 +184,8 @@ export const MATCH_COLUMNS = (
       key: '5',
       hidden: hidden || !showPlayers,
       render: (_, record) => {
+        const userIsInMatch = !!record.hostPlayers?.find((item) => item.user.id === userId);
+
         return (
           <>
             {record.matchStatus === MatchStatus.NEW && (
@@ -181,7 +193,14 @@ export const MATCH_COLUMNS = (
                 {userIsAdmin ? (
                   record.hostPlayers?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)
                 ) : (
-                  <FormattedMessage {...messages.playersHaveNotBeenRevealed} />
+                  <>
+                    {userIsInMatch && (
+                      <b style={{ marginRight: 8 }}>
+                        <FormattedMessage {...messages.userLoggedIn} />
+                      </b>
+                    )}
+                    <FormattedMessage {...messages.playersHaveNotBeenRevealed} />
+                  </>
                 )}
               </>
             )}

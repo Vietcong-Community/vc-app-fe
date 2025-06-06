@@ -2,11 +2,13 @@ import { ReactNode } from 'react';
 
 import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TableColumnsType } from 'antd';
+import { TableColumnsType, Tag } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { IMatchPlayer } from '../../../api/hooks/league/interfaces';
-import { MatchStatus } from '../../../constants/enums';
+import { MatchStatus, PlayersCount } from '../../../constants/enums';
+import { mapNumberOfPlayersToTranslation } from '../../../utils/mappingLabelUtils';
+import { Gap } from '../../Gap/Gap';
 
 import { messages } from './messages';
 
@@ -23,19 +25,25 @@ export interface IMatchesTableRow {
   challengerTeamName: string;
   opponentTeamName: string;
   maximalPlayers?: number;
-  players?: IMatchPlayer[];
+  matchPlayerCountOptions?: PlayersCount[];
+  hostPlayers?: IMatchPlayer[];
+  challengerPlayers?: IMatchPlayer[];
+  opponentPlayers?: IMatchPlayer[];
+  joinPlayersCount?: number;
 }
 
 export const MATCH_COLUMNS = (
   hidden: boolean,
   showTeamNames: boolean,
   showPlayers: boolean,
+  userIsAdmin = false,
 ): TableColumnsType<IMatchesTableRow> => {
   return [
     {
       title: <FormattedMessage {...messages.matchDate} />,
       dataIndex: 'date',
       key: '0',
+      width: 170,
       defaultSortOrder: 'descend',
       hidden: showPlayers && hidden,
       render: (_, record) => {
@@ -44,14 +52,20 @@ export const MATCH_COLUMNS = (
             <>
               <b>{record.date}</b>
               <br />
-              {record.matchStatus === MatchStatus.NEW ? (
-                <FormattedMessage
-                  {...messages.freeSlots}
-                  values={{ value: (record.maximalPlayers ?? 12) - (record.players?.length ?? 0) }}
-                />
-              ) : (
-                <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
-              )}
+              <FormattedMessage
+                {...messages.playersCount}
+                values={{ value: `${record.joinPlayersCount ?? 0}/${record.maximalPlayers}` }}
+              />
+              {record.matchPlayerCountOptions &&
+                record.matchStatus === MatchStatus.NEW &&
+                record.matchPlayerCountOptions.length > 0 && (
+                  <>
+                    <br />
+                    {record.matchPlayerCountOptions.map((item) => (
+                      <Tag>{mapNumberOfPlayersToTranslation(item)}</Tag>
+                    ))}
+                  </>
+                )}
             </>
           );
         }
@@ -73,7 +87,17 @@ export const MATCH_COLUMNS = (
             {showPlayers && (
               <>
                 <b>{record.date}</b>
-                <br />{' '}
+                <br />
+                {record.matchPlayerCountOptions &&
+                  record.matchStatus === MatchStatus.NEW &&
+                  record.matchPlayerCountOptions.length > 0 && (
+                    <>
+                      {record.matchPlayerCountOptions.map((item) => (
+                        <Tag>{mapNumberOfPlayersToTranslation(item)}</Tag>
+                      ))}
+                      <br />
+                    </>
+                  )}
               </>
             )}
             {showTeamNames && (
@@ -110,16 +134,33 @@ export const MATCH_COLUMNS = (
             {showPlayers && (
               <>
                 <br />
-                {record.matchStatus === MatchStatus.NEW ? (
-                  <FormattedMessage
-                    {...messages.freeSlots}
-                    values={{ value: (record.maximalPlayers ?? 12) - (record.players?.length ?? 0) }}
-                  />
-                ) : (
-                  <FormattedMessage {...messages.playersCount} values={{ value: record.players?.length ?? 0 }} />
-                )}
+                <FormattedMessage
+                  {...messages.playersCount}
+                  values={{ value: `${record.joinPlayersCount ?? 0}/${record.maximalPlayers}` }}
+                />
                 <br />
-                {record.players?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)}
+                {record.matchStatus === MatchStatus.NEW && (
+                  <>
+                    {userIsAdmin ? (
+                      record.hostPlayers?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)
+                    ) : (
+                      <FormattedMessage {...messages.playersHaveNotBeenRevealed} />
+                    )}
+                  </>
+                )}
+                {record.matchStatus !== MatchStatus.NEW && (
+                  <>
+                    <b>
+                      <FormattedMessage {...messages.teams} />
+                    </b>
+                    <Gap defaultHeight={8} />
+                    {record.challengerPlayers?.map((player) => (
+                      <S.ChallengerTag>{player.user.nickname}</S.ChallengerTag>
+                    ))}
+                    <Gap defaultHeight={12} />
+                    {record.opponentPlayers?.map((player) => <S.OpponentTag>{player.user.nickname}</S.OpponentTag>)}
+                  </>
+                )}
               </>
             )}
           </>
@@ -133,7 +174,26 @@ export const MATCH_COLUMNS = (
       key: '5',
       hidden: hidden || !showPlayers,
       render: (_, record) => {
-        return <>{record.players?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)}</>;
+        return (
+          <>
+            {record.matchStatus === MatchStatus.NEW && (
+              <>
+                {userIsAdmin ? (
+                  record.hostPlayers?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)
+                ) : (
+                  <FormattedMessage {...messages.playersHaveNotBeenRevealed} />
+                )}
+              </>
+            )}
+            {record.matchStatus !== MatchStatus.NEW && (
+              <>
+                {record.challengerPlayers?.map((player) => <S.ChallengerTag>{player.user.nickname}</S.ChallengerTag>)}
+                <Gap defaultHeight={12} />
+                {record.opponentPlayers?.map((player) => <S.OpponentTag>{player.user.nickname}</S.OpponentTag>)}
+              </>
+            )}
+          </>
+        );
       },
     },
     {

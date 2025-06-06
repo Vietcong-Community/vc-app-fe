@@ -19,6 +19,20 @@ export const Tag = styled(AntDTag)`
   font-size: 14px;
 `;
 
+export const ChallengerTag = styled(AntDTag)`
+  background-color: ${(props: IThemeProps) => props.theme.colors.grey};
+  border: none;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  font-size: 14px;
+`;
+
+export const OpponentTag = styled(AntDTag)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent50};
+  border: none;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  font-size: 14px;
+`;
+
 export const Icons = styled.div`
   display: flex;
   gap: 16px;

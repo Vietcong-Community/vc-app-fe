@@ -33,6 +33,7 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { TopPlayersOfTheDay } from '../../League/SeasonDetail/components/TopPlayersOfTheDay/TopPlayersOfTheDay';
 
+import { TodayMatches } from './components/TodayMatches/TodayMatches';
 import { messages } from './messages';
 
 import * as S from './SeasonDetail.style';
@@ -47,7 +48,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
   const userMe = useUserMe('always', [401]);
   const season = useSeasonsDetail(query.seasonId);
   const maps = useMapsInSeason(query.seasonId);
-  const canCreateNewMatch = useCanCreateNewMatch(query.seasonId);
+  const canCreateNewMatch = useCanCreateNewMatch(query.seasonId, [401]);
 
   useEffect(() => {
     if (season.data?.type && season.data?.type === SeasonType.SEASON) {
@@ -137,14 +138,23 @@ export const RankedSeasonDetailCont: React.FC = () => {
         <Gap defaultHeight={16} />
         <TopPlayersOfTheDay seasonId={query.seasonId} />
         <Gap defaultHeight={16} />
+        <TodayMatches
+          canCreateNewMatch={canCreateNewMatch.data?.canCreateMatch || userIsAdmin}
+          onMatchCreateClick={() => setIsCreateMatchModalOpen(true)}
+          seasonId={query.seasonId}
+          userIsAdmin={userIsAdmin}
+        />
+        <Gap defaultHeight={16} />
         <Flex justify="flex-end" style={{ gap: 8 }}>
-          <Button
-            onClick={() => setIsCreateMatchModalOpen(true)}
-            disabled={!canCreateNewMatch.data?.canCreateMatch}
-            variant={MainButtonVariant.SECONDARY}
-          >
-            <FormattedMessage {...messages.createMatch} />
-          </Button>
+          {!!userMe.data && (
+            <Button
+              onClick={() => setIsCreateMatchModalOpen(true)}
+              disabled={!canCreateNewMatch.data?.canCreateMatch}
+              variant={MainButtonVariant.SECONDARY}
+            >
+              <FormattedMessage {...messages.createMatch} />
+            </Button>
+          )}
           <Button onClick={() => setIsMapListModalOpen(true)} variant={MainButtonVariant.SECONDARY}>
             <FormattedMessage {...messages.openMapListModal} />
           </Button>
@@ -178,6 +188,7 @@ export const RankedSeasonDetailCont: React.FC = () => {
           showSeasonTeams={false}
           showTeamNames={false}
           showPlayers
+          userIsAdmin={userIsAdmin}
         />
       </EaseInOutContainer>
       <Gap defaultHeight={48} />

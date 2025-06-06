@@ -1,8 +1,8 @@
-import { Tag } from 'antd';
+import { Tag as AntDTag, Tag } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { BreakPoints, IThemeProps } from '../../../../theme/theme';
-import { makeMediaQuery } from '../../../../utils/mediaQuery';
+import { BreakPoints, IThemeProps } from '../../../theme/theme';
+import { makeMediaQuery } from '../../../utils/mediaQuery';
 
 export const Container = styled.div`
   align-items: center;
@@ -99,15 +99,28 @@ export const LeftColumn = styled.div`
   flex-direction: column;
   gap: 8px;
   justify-content: start;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      align-items: center;
+      gap: 12px;
+    `}
+  `};
 `;
 
-export const RightColumn = styled.div`
+export const RightColumn = styled.div<{ $alignToEnd: boolean }>`
   align-items: center;
   display: flex;
-  flex: 1;
+  flex: 2;
   flex-direction: column;
   gap: 4px;
   justify-content: center;
+
+  ${(props: IThemeProps & { $alignToEnd: boolean }) =>
+    props.$alignToEnd &&
+    css`
+      align-items: flex-end;
+    `}
 `;
 
 export const MatchTags = styled.div`
@@ -169,6 +182,44 @@ export const Comments = styled.div`
     ${css`
       display: flex;
       gap: 4px;
+    `}
+  `};
+`;
+
+export const PlayerTag = styled(AntDTag)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent70};
+  border: none;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  font-size: 14px;
+  margin-left: 8px;
+  margin-right: 0;
+`;
+
+export const ChallengerTag = styled(AntDTag)`
+  background-color: ${(props: IThemeProps) => props.theme.colors.grey};
+  border: none;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  font-size: 14px;
+  margin-left: 8px;
+  margin-right: 0;
+`;
+
+export const OpponentTag = styled(AntDTag)`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.accent50};
+  border: none;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  font-size: 14px;
+  margin-left: 8px;
+  margin-right: 0;
+`;
+
+export const MatchCountTags = styled.div`
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      width: 100%;
     `}
   `};
 `;

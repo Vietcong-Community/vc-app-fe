@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { get, post } from '../../apiFactory';
+import { IgnoredErrorCodes } from '../../types';
 import { IIdentifiedEntity } from '../interfaces';
 
 import { RankedEndpoints } from './endpoints';
@@ -75,12 +76,18 @@ export const useConfirmMatchScore = (matchId: string) => {
   });
 };
 
-export const useCanCreateNewMatch = (seasonId: string) => {
+export const useCanCreateNewMatch = (seasonId: string, ignoreErrorCodes?: IgnoredErrorCodes, enabled = true) => {
   return useQuery({
     queryKey: ['canCreateNewMatch', seasonId],
     queryFn: async () => {
-      const { data } = await get<{ canCreateMatch: boolean }>(RankedEndpoints.CAN_CREATE_NEW_MATCH, { seasonId });
+      const { data } = await get<{ canCreateMatch: boolean }>(
+        RankedEndpoints.CAN_CREATE_NEW_MATCH,
+        { seasonId },
+        undefined,
+        ignoreErrorCodes,
+      );
       return data;
     },
+    enabled,
   });
 };

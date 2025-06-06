@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { IMap } from '../../../api/hooks/interfaces';
 import { useSeasonMatchList } from '../../../api/hooks/league/api';
 import { ILadderItem } from '../../../api/hooks/league/interfaces';
-import { MatchStatus } from '../../../constants/enums';
+import { MatchStatus, PlayersCount } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
@@ -35,6 +35,7 @@ interface IProps {
   showSeasonTeams?: boolean;
   showTeamNames?: boolean;
   showPlayers?: boolean;
+  userIsAdmin?: boolean;
 }
 
 export const AllMatches: React.FC<IProps> = (props: IProps) => {
@@ -46,6 +47,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
     showSeasonTeams = true,
     showTeamNames = true,
     showPlayers = false,
+    userIsAdmin = false,
   } = props;
   const { width } = useWindowDimensions();
   const { navigate } = useRouter();
@@ -71,6 +73,24 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         return isSmallerThanMd ? item.opponent?.team.tag : item.opponent?.team.name;
       };
 
+      const getMatchPlayerCountOptions = () => {
+        if (!showPlayers || !item.maximalPlayers) {
+          return [];
+        }
+
+        if (item.maximalPlayers === 12) {
+          return [PlayersCount.FOUR, PlayersCount.FIVE, PlayersCount.SIX];
+        }
+
+        if (item.maximalPlayers === 10) {
+          return [PlayersCount.FOUR, PlayersCount.FIVE];
+        }
+
+        if (item.maximalPlayers === 8) {
+          return [PlayersCount.FOUR];
+        }
+      };
+
       return {
         id: item.id,
         date: formatDateForUser(item.startDate) ?? '',
@@ -80,6 +100,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         challengerElo: item.challengerEloRowAmount,
         opponentElo: item.opponentEloRowAmount,
         matchStatus: item.status,
+        matchPlayerCountOptions: getMatchPlayerCountOptions(),
         maximalPlayers: item.maximalPlayers,
         result: [
           MatchStatus.FINISHED,
@@ -88,11 +109,13 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
         ].includes(item.status as MatchStatus)
           ? `${item.challengerScore} - ${item.opponentScore}`
           : '? - ?',
-        players: [
-          ...(item.challengerMatchPlayers ?? []),
-          ...(item.opponentMatchPlayers ?? []),
-          ...(item.hostMatchPlayers ?? []),
-        ],
+        hostPlayers: item.hostMatchPlayers ?? [],
+        challengerPlayers: item.challengerMatchPlayers ?? [],
+        opponentPlayers: item.opponentMatchPlayers ?? [],
+        joinPlayersCount:
+          (item.hostMatchPlayers?.length ?? 0) +
+          (item.challengerMatchPlayers?.length ?? 0) +
+          (item.opponentMatchPlayers?.length ?? 0),
       };
     }) ?? [];
 
@@ -142,7 +165,7 @@ export const AllMatches: React.FC<IProps> = (props: IProps) => {
           </>
         )}
         <TableWithPagination
-          columns={MATCH_COLUMNS(isSmallerThanMd, showTeamNames, showPlayers)}
+          columns={MATCH_COLUMNS(isSmallerThanMd, showTeamNames, showPlayers, userIsAdmin)}
           data={allMatchesTableData}
           loading={matches.isLoading}
           onPageChange={onMatchPageChange}

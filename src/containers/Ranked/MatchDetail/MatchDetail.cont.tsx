@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider, Flex, Spin } from 'antd';
+import { Divider, Flex, Spin, Tag } from 'antd';
 import dayjs from 'dayjs';
 import { compact, some } from 'lodash';
 import { Helmet } from 'react-helmet';
@@ -33,11 +33,11 @@ import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/Sort
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { MatchStatus, Role, SeasonType } from '../../../constants/enums';
+import { MatchStatus, PlayersCount, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { Routes } from '../../../routes/enums';
 import { formatDateForUser } from '../../../utils/dateUtils';
-import { mapMatchStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { mapMatchStatusToTranslation, mapNumberOfPlayersToTranslation } from '../../../utils/mappingLabelUtils';
 
 import { LoggedPlayers } from './components/LoggedPlayers/LoggedPlayers';
 import { ManageMenu } from './components/ManageMenu/ManageMenu';
@@ -105,6 +105,28 @@ export const MatchDetail: React.FC = () => {
     ) &&
     matchDetail.data?.rounds?.length !== 4;
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
+  const challengerScore = matchDetail.data?.challengerScore;
+  const opponentScore = matchDetail.data?.opponentScore;
+
+  const getMatchPlayerCountOptions = () => {
+    if (!matchDetail.data?.maximalPlayers) {
+      return [];
+    }
+
+    if (matchDetail.data?.maximalPlayers === 12) {
+      return [PlayersCount.FOUR, PlayersCount.FIVE, PlayersCount.SIX];
+    }
+
+    if (matchDetail.data?.maximalPlayers === 10) {
+      return [PlayersCount.FOUR, PlayersCount.FIVE];
+    }
+
+    if (matchDetail.data?.maximalPlayers === 8) {
+      return [PlayersCount.FOUR];
+    }
+
+    return [];
+  };
 
   if (matchDetail.isError) {
     return (
@@ -192,16 +214,20 @@ export const MatchDetail: React.FC = () => {
                   </S.InformationLabel>
                   <br />
                   <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
+                  <br />
+
+                  {matchStatusIsNew &&
+                    getMatchPlayerCountOptions().map((item) => <Tag>{mapNumberOfPlayersToTranslation(item)}</Tag>)}
                 </div>
                 <S.MiddleContent>
-                  <FormattedMessage {...messages.result} />
-                  <S.DesktopScore>
-                    {scoreExists ? (
-                      <>{`${matchDetail.data?.challengerScore ?? '?'} : ${matchDetail.data?.opponentScore ?? '?'}`}</>
-                    ) : (
-                      '? : ?'
-                    )}
-                  </S.DesktopScore>
+                  {!matchStatusIsNew && (
+                    <>
+                      <FormattedMessage {...messages.result} />
+                      <S.DesktopScore>
+                        {scoreExists ? <>{`${challengerScore ?? '?'} : ${opponentScore ?? '?'}`}</> : '? : ?'}
+                      </S.DesktopScore>
+                    </>
+                  )}
                 </S.MiddleContent>
                 <div style={{ flex: 1, textAlign: 'end' }}>
                   <S.InformationLabel>
@@ -212,22 +238,23 @@ export const MatchDetail: React.FC = () => {
                 </div>
               </Flex>
               <br />
-              <S.MobileResultContent>
-                <FormattedMessage {...messages.result} />
-                <S.MobileScore>
-                  {scoreExists ? (
-                    <>{`${matchDetail.data?.challengerScore} : ${matchDetail.data?.opponentScore}`}</>
-                  ) : (
-                    ' ? : ?'
-                  )}
-                </S.MobileScore>
-              </S.MobileResultContent>
-              <Gap defaultHeight={0} height={{ md: 16 }} />
+              {!matchStatusIsNew && (
+                <>
+                  <S.MobileResultContent>
+                    <FormattedMessage {...messages.result} />
+                    <S.MobileScore>
+                      {scoreExists ? <>{`${challengerScore} : ${opponentScore}`}</> : ' ? : ?'}
+                    </S.MobileScore>
+                  </S.MobileResultContent>
+                  <Gap defaultHeight={0} height={{ md: 16 }} />
+                </>
+              )}
               <S.TeamsContainer>
                 {matchStatusIsNew && (
                   <LoggedPlayers
                     isCurrentUserOwnerOfMatch={isCurrentUserOwnerOfMatch}
                     matchOwner={matchDetail.data?.createdBy}
+                    maximalPlayers={matchDetail.data?.maximalPlayers ?? 12}
                     players={matchDetail.data?.hostMatchPlayers ?? []}
                     setRemovePlayerFromMatch={(user) => {
                       setPlayerToRemoveFromMatch(user);
@@ -270,7 +297,7 @@ export const MatchDetail: React.FC = () => {
                   </>
                 )}
               </S.TeamsContainer>
-              {matchStatusIsNew && (
+              {userIsAdmin && (
                 <>
                   <Gap defaultHeight={32} height={{ md: 16 }} />
                   <MapVoteResult
@@ -348,8 +375,8 @@ export const MatchDetail: React.FC = () => {
           challengerMapId: matchDetail.data?.challengerMap?.id,
           opponentMapId: matchDetail.data?.opponentMap?.id,
           startDate: dayjs(matchDetail.data?.startDate) as unknown as string,
-          challengerScore: matchDetail.data?.challengerScore,
-          opponentScore: matchDetail.data?.opponentScore,
+          challengerScore,
+          opponentScore,
         }}
         onClose={() => setIsUpdateMatchModalOpen(false)}
         matchId={query.matchId}

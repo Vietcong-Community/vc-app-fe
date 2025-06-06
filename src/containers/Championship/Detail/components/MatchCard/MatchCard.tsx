@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom';
 
 import { IMatchListItem } from '../../../../../api/hooks/league/interfaces';
 import { DEFAULT_USER_DATE_FORMAT_WITH_TIME } from '../../../../../components/Fields/DatePickerField/DatePickerField';
+import { messages } from '../../../../../components/Season/MatchRow/messages';
 import { MatchStatus } from '../../../../../constants/enums';
 import { Routes } from '../../../../../routes/enums';
 import { theme } from '../../../../../theme/theme';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
-import { messages } from '../../../../League/components/MatchRow/messages';
 
 import * as S from './MatchCard.style';
 

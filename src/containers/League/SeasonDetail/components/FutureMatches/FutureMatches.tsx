@@ -8,8 +8,8 @@ import { IMatchListItem } from '../../../../../api/hooks/league/interfaces';
 import { EaseInOutContainer } from '../../../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
 import { Card } from '../../../../../components/Card/Card';
 import { Gap } from '../../../../../components/Gap/Gap';
+import { MatchRow } from '../../../../../components/Season/MatchRow/MatchRow';
 import { MatchStatus } from '../../../../../constants/enums';
-import { MatchRow } from '../../../components/MatchRow/MatchRow';
 
 import { messages } from './messages';
 

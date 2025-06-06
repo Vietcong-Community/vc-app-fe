@@ -7,13 +7,13 @@ import { FormattedMessage } from 'react-intl';
 
 import { IMeMatch } from '../../../../api/hooks/users/interfaces';
 import { MatchStatus } from '../../../../constants/enums';
-import { messages } from '../../../../containers/League/components/MatchRow/messages';
 import { useRouter } from '../../../../hooks/RouterHook';
 import { Routes } from '../../../../routes/enums';
 import { theme } from '../../../../theme/theme';
 import { formatDateForUser } from '../../../../utils/dateUtils';
 import { mapMatchStatusToTranslation } from '../../../../utils/mappingLabelUtils';
 import { DEFAULT_USER_DATE_FORMAT_WITH_TIME } from '../../../Fields/DatePickerField/DatePickerField';
+import { messages } from '../../../Season/MatchRow/messages';
 
 import * as S from './Match.style';
 

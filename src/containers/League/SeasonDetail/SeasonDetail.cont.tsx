@@ -34,6 +34,7 @@ import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceN
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
 import { AllMatches } from '../../../components/Season/AllMatches/AllMatches';
 import { ILadderTableRow, LADDER_COLUMNS } from '../../../components/Season/AllMatches/types';
+import { MatchRow } from '../../../components/Season/MatchRow/MatchRow';
 import { Statistics } from '../../../components/Season/Statistics/Statistics';
 import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -47,7 +48,6 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
 import { canUserJoinSeasonWithTeam, canUserManageMatch } from '../../../utils/matchUtils';
 import { removeURLParameter } from '../../../utils/urlUtils';
-import { MatchRow } from '../components/MatchRow/MatchRow';
 
 import { FutureMatches } from './components/FutureMatches/FutureMatches';
 import { TopPlayersOfTheDay } from './components/TopPlayersOfTheDay/TopPlayersOfTheDay';

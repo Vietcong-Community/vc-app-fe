@@ -6,7 +6,7 @@ import { makeMediaQuery } from '../../utils/mediaQuery';
 export const Container = styled.header`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.background};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  height: 5.4rem;
+  height: 4.4rem;
   position: sticky;
   top: 0;
   width: 100%;
@@ -23,7 +23,7 @@ export const Content = styled.div`
   align-items: center;
   box-sizing: border-box;
   display: flex;
-  height: 5.4rem;
+  height: 4.4rem;
   justify-content: space-between; /* Zajistí, že mezi levým, středním a pravým obsahem bude prostor */
   margin: 0 auto;
   max-width: ${(props: IThemeProps) => props.theme.sizes.maxPageWidth};

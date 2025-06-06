@@ -20,6 +20,7 @@ import * as S from './LoggedPlayers.style';
 interface IProps {
   isCurrentUserOwnerOfMatch: boolean;
   matchOwner?: IUser;
+  maximalPlayers: number;
   players: IMatchPlayer[];
   setRemovePlayerFromMatch: (user: IUser) => void;
   userId?: string;
@@ -30,6 +31,7 @@ export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
   const {
     isCurrentUserOwnerOfMatch,
     matchOwner,
+    maximalPlayers,
     players,
     setRemovePlayerFromMatch,
     userId,
@@ -44,7 +46,7 @@ export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
     <>
       <Flex align="flex-start" vertical>
         <S.Subtitle>
-          <FormattedMessage {...messages.loggedPlayers} /> ({players.length ?? 0})
+          <FormattedMessage {...messages.loggedPlayers} /> ({players.length ?? 0}/{maximalPlayers})
         </S.Subtitle>
         <Gap defaultHeight={8} />
         <S.PlayerTags>
@@ -55,13 +57,19 @@ export const LoggedPlayers: React.FC<IProps> = (props: IProps) => {
               <Link to={Routes.USER_PROFILE.replace(':id', item.user.id)}>
                 <S.Tag>
                   {isPlayerMatchOwner && <FontAwesomeIcon icon={faCrown} style={{ marginRight: 8, fontSize: 16 }} />}
-                  <Avatar
-                    size={24}
-                    shape="square"
-                    icon={item.user?.image?.url ? <img src={item.user.image.url} alt="" /> : <UserOutlined />}
-                    style={{ marginRight: 8 }}
-                  />
-                  {item.user.nickname}
+                  {userIsAdmin && (
+                    <Avatar
+                      size={24}
+                      shape="square"
+                      icon={item.user?.image?.url ? <img src={item.user.image.url} alt="" /> : <UserOutlined />}
+                      style={{ marginRight: 8 }}
+                    />
+                  )}
+                  {userIsAdmin || userId === item.user.id ? (
+                    item.user.nickname
+                  ) : (
+                    <FormattedMessage {...messages.player} />
+                  )}
                   {(isCurrentUserOwnerOfMatch || userIsAdmin) && userId !== item.user.id && (
                     <div
                       onClick={(event) => {

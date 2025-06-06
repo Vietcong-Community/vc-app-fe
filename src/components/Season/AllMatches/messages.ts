@@ -25,13 +25,13 @@ export const messages = defineMessages({
     id: 'app.components.Season.AllMatches.players',
     defaultMessage: 'Hráči',
   },
-  freeSlots: {
-    id: 'app.components.Season.AllMatches.freeSlots',
-    defaultMessage: 'Volná místa: {value}',
-  },
   playersCount: {
     id: 'app.components.Season.AllMatches.playersCount',
     defaultMessage: 'Počet hráčů: {value}',
+  },
+  teams: {
+    id: 'app.components.Season.AllMatches.teams',
+    defaultMessage: 'Týmy',
   },
   matches: {
     id: 'app.components.Season.AllMatches.matches',
@@ -100,5 +100,9 @@ export const messages = defineMessages({
   matchStatus: {
     id: 'app.components.Season.AllMatches.matchStatus',
     defaultMessage: 'Stav',
+  },
+  playersHaveNotBeenRevealed: {
+    id: 'app.components.Season.AllMatches.playersHaveNotBeenRevealed',
+    defaultMessage: 'Hráči ještě nebyli odhaleni, počkej do uzamčení zápasu a rozřazení do týmů.',
   },
 });

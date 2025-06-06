@@ -99,11 +99,7 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
     <Link to={detailUrl.replace(':matchId', match.id)}>
       <S.Container>
         <S.LeftColumn>
-          {isRanked ? (
-            <b>{formatDateForUser(match.startDate, DEFAULT_USER_DATE_FORMAT_WITH_TIME) ?? ''}</b>
-          ) : (
-            <>{formatDateForUser(match.startDate, DEFAULT_USER_DATE_FORMAT_WITH_TIME) ?? ''}</>
-          )}
+          {formatDateForUser(match.startDate, DEFAULT_USER_DATE_FORMAT_WITH_TIME) ?? ''}
           {isRanked && match.status !== MatchStatus.NEW && (
             <>
               {isSmallerThanMd && (

@@ -30,7 +30,7 @@ export const TodayMatches: React.FC<IProps> = (props: IProps) => {
   const todayMatches = useSeasonMatchList(
     seasonId,
     {
-      startDateFrom: dayjs().subtract(1, 'd').startOf('d')?.format(DEFAULT_SYSTEM_DATE_FORMAT),
+      startDateFrom: dayjs().startOf('d')?.format(DEFAULT_SYSTEM_DATE_FORMAT),
       startDateTo: dayjs().add(1, 'd').startOf('d')?.format(DEFAULT_SYSTEM_DATE_FORMAT),
       limit: 5,
       page: selectedPage,

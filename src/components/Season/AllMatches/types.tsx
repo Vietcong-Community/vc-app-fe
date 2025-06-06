@@ -43,7 +43,7 @@ export const MATCH_COLUMNS = (
       title: <FormattedMessage {...messages.matchDate} />,
       dataIndex: 'date',
       key: '0',
-      width: 170,
+      width: 190,
       defaultSortOrder: 'descend',
       hidden: showPlayers && hidden,
       render: (_, record) => {

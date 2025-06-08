@@ -819,6 +819,7 @@
   "app.containers.Ranked.MatchDetail.map": "Mapy: ",
   "app.containers.Ranked.MatchDetail.matchBreadcrumb": "Detail zápasu",
   "app.containers.Ranked.MatchDetail.matchIsFull": "Zápas je plně obsazen a ty v něm bohužel nejsi. I to se může stát. Sleduj kanál na discordu, pokud někdo zápas opustí, uvidíš zde upozornění.",
+  "app.containers.Ranked.MatchDetail.matchOwner": "Správce zápasu",
   "app.containers.Ranked.MatchDetail.open": "Otevřít",
   "app.containers.Ranked.MatchDetail.result": "Výsledek",
   "app.containers.Ranked.MatchDetail.roundsDescription": "Výsledky po kolech",

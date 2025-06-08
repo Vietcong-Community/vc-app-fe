@@ -9,6 +9,10 @@ export const messages = defineMessages({
     id: 'app.containers.Ranked.MatchDetail.date',
     defaultMessage: 'Datum zápasu',
   },
+  matchOwner: {
+    id: 'app.containers.Ranked.MatchDetail.matchOwner',
+    defaultMessage: 'Správce zápasu',
+  },
   result: {
     id: 'app.containers.Ranked.MatchDetail.result',
     defaultMessage: 'Výsledek',

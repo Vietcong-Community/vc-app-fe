@@ -61,7 +61,7 @@ export const MiddleContent = styled.div`
 export const MobileResultContent = styled.div`
   display: none;
   flex-direction: column;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
 
   ${() => makeMediaQuery(BreakPoints.md)`

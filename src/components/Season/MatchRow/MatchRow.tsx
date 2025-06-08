@@ -96,6 +96,7 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
     nowTime.isAfter(startTime) &&
     nowTime.isBefore(endTime) &&
     match.status !== MatchStatus.FINISHED &&
+    match.status !== MatchStatus.NEW &&
     match.status !== MatchStatus.WAITING_FOR_SCORE_CONFIRMATION;
 
   return (

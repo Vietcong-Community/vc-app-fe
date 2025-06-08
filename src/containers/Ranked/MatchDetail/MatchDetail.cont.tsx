@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import { compact, some } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { IUser } from '../../../api/hooks/interfaces';
@@ -35,7 +36,9 @@ import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceN
 import { H1 } from '../../../components/Titles/H1/H1';
 import { MatchStatus, PlayersCount, Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
+import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
+import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapMatchStatusToTranslation, mapNumberOfPlayersToTranslation } from '../../../utils/mappingLabelUtils';
 
@@ -56,6 +59,8 @@ export const MatchDetail: React.FC = () => {
   const [isAddPlayerToMatchModalOpen, setIsAddPlayerToMatchModalOpen] = useState<boolean>(false);
   const [playerToRemoveFromMatch, setPlayerToRemoveFromMatch] = useState<IUser | undefined>();
   const { formatMessage } = useIntl();
+  const { width } = useWindowDimensions();
+  const isSmallerThanSm = width < BreakPoints.sm;
 
   const matchDetail = useMatchDetail(query.matchId);
   const votedMaps = useMapVoteState(query.matchId);
@@ -215,7 +220,28 @@ export const MatchDetail: React.FC = () => {
                   <br />
                   <S.InformationValue>{formatDateForUser(matchDetail.data?.startDate)}</S.InformationValue>
                   <br />
+                  {isSmallerThanSm && (
+                    <>
+                      <S.InformationLabel>
+                        <FormattedMessage {...messages.status} />
+                      </S.InformationLabel>
+                      <br />
+                      <S.InformationValue>{mapMatchStatusToTranslation(matchDetail.data?.status)}</S.InformationValue>
+                      <br />
+                    </>
+                  )}
 
+                  {!matchStatusIsNew && (
+                    <>
+                      <S.InformationLabel>
+                        <FormattedMessage {...messages.matchOwner} />
+                      </S.InformationLabel>
+                      <br />
+                      <Link to={Routes.USER_PROFILE.replace(':id', matchDetail.data?.createdBy?.id ?? '')}>
+                        <S.InformationValue>{matchDetail.data?.createdBy.nickname}</S.InformationValue>
+                      </Link>
+                    </>
+                  )}
                   {matchStatusIsNew &&
                     getMatchPlayerCountOptions().map((item) => <Tag>{mapNumberOfPlayersToTranslation(item)}</Tag>)}
                 </div>
@@ -229,13 +255,15 @@ export const MatchDetail: React.FC = () => {
                     </>
                   )}
                 </S.MiddleContent>
-                <div style={{ flex: 1, textAlign: 'end' }}>
-                  <S.InformationLabel>
-                    <FormattedMessage {...messages.status} />
-                  </S.InformationLabel>
-                  <br />
-                  <S.InformationValue>{mapMatchStatusToTranslation(matchDetail.data?.status)}</S.InformationValue>
-                </div>
+                {!isSmallerThanSm && (
+                  <div style={{ flex: 1, textAlign: 'end' }}>
+                    <S.InformationLabel>
+                      <FormattedMessage {...messages.status} />
+                    </S.InformationLabel>
+                    <br />
+                    <S.InformationValue>{mapMatchStatusToTranslation(matchDetail.data?.status)}</S.InformationValue>
+                  </div>
+                )}
               </Flex>
               <br />
               {!matchStatusIsNew && (
@@ -327,6 +355,7 @@ export const MatchDetail: React.FC = () => {
               {canCurrentUserLeave && (
                 <Button
                   onClick={() => setIsLeaveMatchModalOpen(true)}
+                  disabled={matchDetail.data?.hostMatchPlayers?.length === 1}
                   variant={MainButtonVariant.PRIMARY}
                   style={{ color: 'white', fontWeight: 'bold' }}
                 >

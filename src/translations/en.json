@@ -819,6 +819,7 @@
   "app.containers.Ranked.MatchDetail.map": "",
   "app.containers.Ranked.MatchDetail.matchBreadcrumb": "",
   "app.containers.Ranked.MatchDetail.matchIsFull": "",
+  "app.containers.Ranked.MatchDetail.matchOwner": "",
   "app.containers.Ranked.MatchDetail.open": "",
   "app.containers.Ranked.MatchDetail.result": "",
   "app.containers.Ranked.MatchDetail.roundsDescription": "",

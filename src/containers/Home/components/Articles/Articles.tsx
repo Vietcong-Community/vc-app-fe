@@ -98,11 +98,11 @@ export const Articles: React.FC = () => {
                   </div>
                   <S.MetaInfoRow>
                     <S.CommentCount>
-                      {formatDateForUser(newestArticle.createdAt)} &nbsp;
-                      <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {newestArticle.commentsCount ?? 0}
+                      {formatDateForUser(item.createdAt)} &nbsp;
+                      <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {item.commentsCount ?? 0}
                     </S.CommentCount>
                     <div>
-                      <Tag>{newestArticle.category.name}</Tag>
+                      <Tag>{item.category.name}</Tag>
                     </div>
                   </S.MetaInfoRow>
                 </Card>

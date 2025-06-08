@@ -28,6 +28,7 @@ export const LockRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       await lockMatch.mutateAsync();
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       showNotification(messages.confirmSuccess);
+      onClose();
     } catch {
       showNotification(messages.confirmFailed, undefined, NotificationType.ERROR);
     }

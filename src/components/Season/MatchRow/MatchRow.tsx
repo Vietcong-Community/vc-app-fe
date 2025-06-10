@@ -179,9 +179,29 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
                     </div>
                   )}
                   {userIsAdmin && match.status === MatchStatus.NEW && (
-                    <div>{match.hostMatchPlayers?.map((item) => <S.PlayerTag>{item.user.nickname}</S.PlayerTag>)}</div>
+                    <S.HostPlayers>
+                      {match.hostMatchPlayers?.map((item) => <S.PlayerTag>{item.user.nickname}</S.PlayerTag>)}
+                    </S.HostPlayers>
+                  )}
+                  {isSmallerThanMd && (
+                    <FormattedMessage
+                      {...messages.players}
+                      values={{
+                        value: match.hostMatchPlayers?.length ?? 0,
+                        maximalPlayers: match.maximalPlayers ?? 12,
+                      }}
+                    />
                   )}
                   <S.MatchCountTags>
+                    {!isSmallerThanMd && (
+                      <FormattedMessage
+                        {...messages.players}
+                        values={{
+                          value: match.hostMatchPlayers?.length ?? 0,
+                          maximalPlayers: match.maximalPlayers ?? 12,
+                        }}
+                      />
+                    )}
                     {isRanked &&
                       match.status === MatchStatus.NEW &&
                       getMatchPlayerCountOptions().map((item) => (

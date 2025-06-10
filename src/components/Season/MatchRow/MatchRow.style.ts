@@ -229,3 +229,12 @@ export const MatchCountTags = styled.div`
     `}
   `};
 `;
+
+export const HostPlayers = styled.div`
+  text-align: end;
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      text-align: center;
+    `}
+  `};
+`;

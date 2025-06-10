@@ -8,11 +8,18 @@ export const LeagueBanner = styled.div`
   border-radius: 128px 32px 32px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
   padding: 2rem 6rem;
+  flex: 2;
   text-align: start;
   width: 100%;
   a {
     color: ${(props: IThemeProps) => props.theme.mainColors.text};
   }
+
+  ${() => makeMediaQuery(BreakPoints.xl)`
+      ${css`
+        flex: 1;
+      `}
+    `};
 
   ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
@@ -33,6 +40,7 @@ export const RankedBanner = styled.div`
   border-radius: 32px 32px 128px 32px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
   padding: 2rem 6rem;
+  flex: 1;
   text-align: start;
   width: 100%;
   a {

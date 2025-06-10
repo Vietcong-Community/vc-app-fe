@@ -10,7 +10,6 @@ import { FormattedMessage } from 'react-intl';
 import { IAchievement } from '../../../../api/hooks/achievements/interfaces';
 import { Gap } from '../../../../components/Gap/Gap';
 import { formatDateForUser } from '../../../../utils/dateUtils';
-import makerImg from '../Achievements/web-maker.png';
 
 import { messages } from './messages';
 
@@ -24,8 +23,6 @@ interface IProps {
 export const AchievementDetailModal: React.FC<IProps> = (props: IProps) => {
   const { achievement, setAchievement } = props;
   const noIcon = isEmpty(achievement?.type.icon) || isNil(achievement?.type.icon);
-
-  const webMaker = achievement?.type.name === 'Tvůrce VietcongHUBu';
 
   const noRecordName = isEmpty(achievement?.record.name);
 
@@ -41,10 +38,10 @@ export const AchievementDetailModal: React.FC<IProps> = (props: IProps) => {
           size={128}
           shape="square"
           icon={
-            noIcon && !webMaker ? (
+            noIcon ? (
               <FontAwesomeIcon icon={faTrophy} style={{ fontSize: 64 }} />
             ) : (
-              <>{webMaker ? <img src={makerImg} alt="" /> : <img src={achievement?.type.icon} alt="" />}</>
+              <img src={achievement?.type.icon} alt="" />
             )
           }
           style={{ background: 'white' }}

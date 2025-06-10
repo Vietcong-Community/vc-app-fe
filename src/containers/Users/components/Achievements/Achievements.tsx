@@ -16,7 +16,6 @@ import { BreakPoints } from '../../../../theme/theme';
 import { AchievementDetailModal } from '../AchievementDetailModal/AchievementDetailModal';
 
 import { messages } from './messages';
-import makerImg from './web-maker.png';
 
 import * as S from './Achievements.style';
 
@@ -101,18 +100,16 @@ export const Achievements: React.FC<IProps> = (props: IProps) => {
           {achievements.map((item) => {
             const noIcon = isEmpty(item.type.icon) || isNil(item.type.icon);
 
-            const webMaker = item.type.name === 'Tvůrce VietcongHUBu';
-
             return (
               <S.AchievementItem onClick={() => setAchievementDetail(item)}>
                 <S.AchievementIconAvatar
                   size={64}
                   shape="square"
                   icon={
-                    noIcon && !webMaker ? (
+                    noIcon ? (
                       <FontAwesomeIcon icon={faTrophy} style={{ fontSize: 32 }} />
                     ) : (
-                      <>{webMaker ? <img src={makerImg} alt="" /> : <img src={item.type.icon} alt="" />}</>
+                      <img src={item.type.icon} alt="" />
                     )
                   }
                   style={{ background: 'white' }}

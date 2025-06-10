@@ -63,7 +63,7 @@ export const MatchDetail: React.FC = () => {
   const isSmallerThanSm = width < BreakPoints.sm;
 
   const matchDetail = useMatchDetail(query.matchId);
-  const votedMaps = useMapVoteState(query.matchId);
+  const votedMaps = useMapVoteState(query.matchId, [401]);
   const maps = useMapsInSeason(matchDetail.data?.season?.id);
 
   const matchIsNotFinished = !!matchDetail.data?.status && matchDetail.data.status !== MatchStatus.FINISHED;

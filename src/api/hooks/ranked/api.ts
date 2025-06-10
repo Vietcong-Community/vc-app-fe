@@ -7,13 +7,15 @@ import { IIdentifiedEntity } from '../interfaces';
 import { RankedEndpoints } from './endpoints';
 import { ICreateRankedMatch, ILeaveMatch, IVoteItem } from './interfaces';
 
-export const useMapVoteState = (matchId: string) => {
+export const useMapVoteState = (matchId: string, ignoreErrorCodes?: IgnoredErrorCodes) => {
   return useQuery({
     queryKey: ['mapVoteState', matchId],
     queryFn: async () => {
       const { data } = await get<{ mapPickList: { items: IVoteItem[]; total: number } }>(
         RankedEndpoints.MAP_VOTE_STATE,
         { matchId },
+        undefined,
+        ignoreErrorCodes,
       );
       return data;
     },

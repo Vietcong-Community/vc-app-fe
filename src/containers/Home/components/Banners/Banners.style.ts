@@ -5,7 +5,7 @@ import { makeMediaQuery } from '../../../../utils/mediaQuery';
 
 export const LeagueBanner = styled.div`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
-  border-radius: 128px 32px;
+  border-radius: 128px 32px 32px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
   padding: 2rem 6rem;
   text-align: start;
@@ -16,14 +16,39 @@ export const LeagueBanner = styled.div`
 
   ${() => makeMediaQuery(BreakPoints.lg)`
     ${css`
-      border-radius: 100px 24px;
+      border-radius: 100px 24px 24px;
       padding: 2rem 4rem;
     `}
   `};
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      border-radius: 60px 16px;
+      border-radius: 60px 16px 16px;
+      padding: 2rem;
+    `}
+  `};
+`;
+export const RankedBanner = styled.div`
+  background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary60};
+  border-radius: 32px 32px 128px 32px;
+  color: ${(props: IThemeProps) => props.theme.colors.white};
+  padding: 2rem 6rem;
+  text-align: start;
+  width: 100%;
+  a {
+    color: ${(props: IThemeProps) => props.theme.mainColors.text};
+  }
+
+  ${() => makeMediaQuery(BreakPoints.lg)`
+    ${css`
+      border-radius: 24px 24px 100px 24px;
+      padding: 2rem 4rem;
+    `}
+  `};
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      border-radius: 16px 16px 60px 16px;
       padding: 2rem;
     `}
   `};

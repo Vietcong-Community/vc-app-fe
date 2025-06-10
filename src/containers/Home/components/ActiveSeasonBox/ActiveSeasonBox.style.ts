@@ -7,6 +7,7 @@ export const Container = styled.div`
   align-items: center;
   background-color: ${(props: IThemeProps) => props.theme.mainColors.accent35};
   border-radius: 8px;
+  color: ${(props: IThemeProps) => props.theme.colors.black};
   cursor: pointer;
   display: flex;
   flex-direction: column;

@@ -25,6 +25,38 @@ export const messages = defineMessages({
     id: 'app.containers.Home.components.Banners.joinHubLink',
     defaultMessage: 'CHCI HRÁT',
   },
+  rankedTitle: {
+    id: 'app.containers.Home.components.Banners.rankedTitle',
+    defaultMessage: 'Kompetetivní liga',
+  },
+  rankedDescription: {
+    id: 'app.containers.Home.components.Banners.rankedDescription',
+    defaultMessage: 'Utkej se s hráči z Česka a Slovenska. Každý zápas, zabití a vlajka se počítá.',
+  },
+  rankedPlayers: {
+    id: 'app.containers.Home.components.Banners.rankedPlayers',
+    defaultMessage: 'Hraješ s novým týmem v každém zápase',
+  },
+  rankedPower: {
+    id: 'app.containers.Home.components.Banners.rankedPower',
+    defaultMessage: 'Týmy i soupeři se <b>losují podle výkonnosti</b>',
+  },
+  rankedTime: {
+    id: 'app.containers.Home.components.Banners.rankedTime',
+    defaultMessage: 'Čas zápasů si domlouváte sami',
+  },
+  rankedStatistics: {
+    id: 'app.containers.Home.components.Banners.rankedStatistics',
+    defaultMessage: '<b>Statistiky a žebříčky</b> v reálném čase',
+  },
+  rankedResults: {
+    id: 'app.containers.Home.components.Banners.rankedResults',
+    defaultMessage: 'Umísti se v celorepublikovém pořadí',
+  },
+  rankedLink: {
+    id: 'app.containers.Home.components.Banners.rankedLink',
+    defaultMessage: 'ZAPOJ SE DO LIGY',
+  },
   leaguesTitle: {
     id: 'app.containers.Home.components.Banners.leaguesTitle',
     defaultMessage: 'Liga & VietcongHUB',

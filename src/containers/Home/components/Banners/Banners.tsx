@@ -18,31 +18,61 @@ import * as S from './Banners.style';
 export const Banners: React.FC = () => {
   return (
     <>
-      <S.LeagueBanner>
-        <H2>
-          <FormattedMessage {...messages.leaguesTitle} />
-        </H2>
-        <FormattedMessage {...messages.leagues} />
-        <ul style={{ marginTop: 12 }}>
-          <li>
-            <FormattedMessage {...messages.leaguesPlayers} />
-          </li>
-          <li>
-            <FormattedMessage {...messages.leaguesCommunity} />
-          </li>
-          <li>
-            <FormattedMessage {...messages.leaguesTraining} />
-          </li>
-          <li>
-            <FormattedMessage {...messages.leaguesEmotions} />
-          </li>
-        </ul>
-        <Link to={Routes.LEAGUE}>
-          <Button variant={MainButtonVariant.OUTLINED} style={{ fontSize: 16, fontWeight: 600 }}>
-            <FormattedMessage {...messages.leaguesLink} />
-          </Button>
-        </Link>
-      </S.LeagueBanner>
+      <S.OtherBanners>
+        <S.LeagueBanner>
+          <H2>
+            <FormattedMessage {...messages.leaguesTitle} />
+          </H2>
+          <FormattedMessage {...messages.leagues} />
+          <ul style={{ marginTop: 12 }}>
+            <li>
+              <FormattedMessage {...messages.leaguesPlayers} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.leaguesCommunity} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.leaguesTraining} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.leaguesEmotions} />
+            </li>
+          </ul>
+          <Link to={Routes.LEAGUE}>
+            <Button variant={MainButtonVariant.OUTLINED} style={{ fontSize: 16, fontWeight: 600 }}>
+              <FormattedMessage {...messages.leaguesLink} />
+            </Button>
+          </Link>
+        </S.LeagueBanner>
+        <S.RankedBanner>
+          <H2>
+            <FormattedMessage {...messages.rankedTitle} />
+          </H2>
+          <FormattedMessage {...messages.rankedDescription} />
+          <ul style={{ marginTop: 12 }}>
+            <li>
+              <FormattedMessage {...messages.rankedPlayers} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.rankedPower} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.rankedTime} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.rankedStatistics} />
+            </li>
+            <li>
+              <FormattedMessage {...messages.rankedResults} />
+            </li>
+          </ul>
+          <Link to={'/kompetetivni-mod/644481d4-9f10-43d1-a4fc-d49c688b7a93'}>
+            <Button variant={MainButtonVariant.OUTLINED} style={{ fontSize: 16, fontWeight: 600 }}>
+              <FormattedMessage {...messages.rankedLink} />
+            </Button>
+          </Link>
+        </S.RankedBanner>
+      </S.OtherBanners>
       <Gap defaultHeight={32} />
       <S.OtherBanners>
         <S.ChampionshipBanner>

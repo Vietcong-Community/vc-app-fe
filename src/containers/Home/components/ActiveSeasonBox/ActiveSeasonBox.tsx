@@ -4,11 +4,11 @@ import { faLeftRight } from '@fortawesome/free-solid-svg-icons/faLeftRight';
 import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
 import { faPerson } from '@fortawesome/free-solid-svg-icons/faPerson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 import { ILeagueDetail, ISeason } from '../../../../api/hooks/league/interfaces';
 import { Gap } from '../../../../components/Gap/Gap';
 import { LeagueType, SeasonStatus, SeasonType } from '../../../../constants/enums';
-import { useRouter } from '../../../../hooks/RouterHook';
 import { Routes } from '../../../../routes/enums';
 import { mapLeagueTypeToTranslation } from '../../../../utils/mappingLabelUtils';
 
@@ -21,7 +21,6 @@ interface IProps {
 
 export const ActiveSeasonBox: React.FC<IProps> = (props: IProps) => {
   const { leagueDetail, seasons } = props;
-  const { navigate } = useRouter();
 
   const activeSeason = seasons.find(
     (item) =>
@@ -61,14 +60,28 @@ export const ActiveSeasonBox: React.FC<IProps> = (props: IProps) => {
     }
   };
 
+  const getRoute = () => {
+    if (activeSeason.type === SeasonType.FACEIT) {
+      return Routes.RANKED_SEASON_DETAIL.replace(':seasonId', activeSeason.id);
+    } else if (activeSeason.type === SeasonType.SEASON) {
+      return Routes.SEASON_DETAIL.replace(':seasonId', activeSeason.id);
+    } else if (activeSeason.type === SeasonType.TOURNAMENT) {
+      return Routes.CHAMPIONSHIP_DETAIL.replace(':id', activeSeason.id);
+    }
+
+    return '';
+  };
+
   return (
-    <S.Container onClick={() => navigate(Routes.SEASON_DETAIL.replace(':seasonId', activeSeason.id))}>
-      {getIcon()}
-      <S.TypeTitle>{mapLeagueTypeToTranslation(leagueDetail.type)}</S.TypeTitle>
-      <Gap defaultHeight={8} />
-      <b>{leagueDetail.name}</b>
-      {activeSeason.name}
-      <Gap defaultHeight={16} />
-    </S.Container>
+    <Link to={getRoute()} style={{ textDecoration: 'none', maxWidth: 250, width: '100%' }}>
+      <S.Container>
+        {getIcon()}
+        <S.TypeTitle>{mapLeagueTypeToTranslation(leagueDetail.type)}</S.TypeTitle>
+        <Gap defaultHeight={8} />
+        <b>{leagueDetail.name}</b>
+        {activeSeason.name}
+        <Gap defaultHeight={16} />
+      </S.Container>
+    </Link>
   );
 };

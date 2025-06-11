@@ -87,7 +87,7 @@ export const CreateRankedMatchModal: React.FC<IProps> = (props: IProps) => {
       confirmLoading={isSubmitting}
       open={isOpen}
     >
-      <FormComponent form={form} id="create-match" onSubmit={onSubmit}>
+      <FormComponent form={form} id="create-match" initialValues={{ maximalPlayers: 10 }} onSubmit={onSubmit}>
         <FormattedMessage {...messages.description} />
         <Gap defaultHeight={16} />
         <SelectField

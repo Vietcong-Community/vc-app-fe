@@ -13,11 +13,35 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+export const Section = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  max-width: 800px;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+`;
+
+export const SectionText = styled.div`
+  flex: 1 1 50%;
+  padding: 1rem;
+`;
+
+export const SectionImage = styled.img`
+  height: auto;
+  flex: 1 1 50%;
+  border-radius: 12px;
+  max-width: 40%;
 `;
 
 export const Link = styled.div`

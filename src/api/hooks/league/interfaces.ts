@@ -110,6 +110,7 @@ export interface IMatch {
   challengerMatchPlayers?: IMatchPlayer[];
   challengerScore?: number;
   id: string;
+  isLoggedToMatch?: boolean;
   maximalPlayers?: number;
   minimalPlayers?: number;
   opponent: ILadderItem;
@@ -147,6 +148,7 @@ export interface IMatchListItem {
   maximalPlayers?: number;
   minimalPlayers?: number;
   type: MatchType;
+  isLoggedToMatch?: boolean;
 }
 
 export interface IMatchListQuery extends IPagination {

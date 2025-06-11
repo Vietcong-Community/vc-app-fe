@@ -21,12 +21,11 @@ interface IProps {
   canCreateNewMatch: boolean;
   onMatchCreateClick?: () => void;
   seasonId: string;
-  userId?: string;
   userIsAdmin?: boolean;
 }
 
 export const TodayMatches: React.FC<IProps> = (props: IProps) => {
-  const { canCreateNewMatch, onMatchCreateClick, seasonId, userId, userIsAdmin } = props;
+  const { canCreateNewMatch, onMatchCreateClick, seasonId, userIsAdmin } = props;
   const [selectedPage, setSelectedPage] = React.useState<number>(1);
   const todayMatches = useSeasonMatchList(
     seasonId,
@@ -85,7 +84,6 @@ export const TodayMatches: React.FC<IProps> = (props: IProps) => {
                     match={item}
                     showPlayers
                     showTeams={false}
-                    userId={userId}
                     userIsAdmin={userIsAdmin}
                   />
                 );

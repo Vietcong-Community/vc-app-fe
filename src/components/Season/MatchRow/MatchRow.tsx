@@ -26,7 +26,6 @@ interface IProps {
   match: IMatchListItem;
   showPlayers?: boolean;
   showTeams?: boolean;
-  userId?: string;
   userIsAdmin?: boolean;
 }
 
@@ -37,7 +36,6 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
     match,
     showPlayers = false,
     showTeams = true,
-    userId,
     userIsAdmin = false,
   } = props;
   const { width } = useWindowDimensions();
@@ -65,7 +63,6 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
   const opponentEloAmountGreaterThanZero = (match?.opponentEloRowAmount ?? 0) > 0;
   const opponentEloAmountLowerThanZero = (match?.opponentEloRowAmount ?? 0) < 0;
   const showElo = match.status === MatchStatus.FINISHED && showTeams;
-  const userIsInMatch = !!match.hostMatchPlayers?.find((item) => item.user.id === userId);
 
   const getMatchPlayerCountOptions = () => {
     if (!showPlayers || !match.maximalPlayers) {
@@ -164,7 +161,7 @@ export const MatchRow: React.FC<IProps> = (props: IProps) => {
                 <>
                   {!userIsAdmin && match.status === MatchStatus.NEW && (
                     <div>
-                      {userIsInMatch && (
+                      {match.isLoggedToMatch && (
                         <b style={{ marginRight: 8 }}>
                           <FormattedMessage {...messages.userLoggedIn} />
                         </b>

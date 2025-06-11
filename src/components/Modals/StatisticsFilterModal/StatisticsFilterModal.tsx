@@ -50,7 +50,6 @@ export const StatisticsFilterModal: React.FC<IProps> = (props: IProps) => {
       return { id: item.team.id, value: item.team.id, label: item.team.name };
     }) ?? [];
 
-  console.log(initialTeams);
   useEffect(() => {
     if (isOpen) {
       setPlayers(initialPlayers);
@@ -81,8 +80,6 @@ export const StatisticsFilterModal: React.FC<IProps> = (props: IProps) => {
   };
 
   const handleSubmit = (values: IFormData) => {
-    console.log(players);
-
     onSubmit({ players, teamIds: values.teams });
   };
 

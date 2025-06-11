@@ -30,6 +30,7 @@ export interface IMatchesTableRow {
   challengerPlayers?: IMatchPlayer[];
   opponentPlayers?: IMatchPlayer[];
   joinPlayersCount?: number;
+  isLoggedToMatch?: boolean;
 }
 
 export const MATCH_COLUMNS = (
@@ -37,7 +38,6 @@ export const MATCH_COLUMNS = (
   showTeamNames: boolean,
   showPlayers: boolean,
   userIsAdmin = false,
-  userId?: string,
 ): TableColumnsType<IMatchesTableRow> => {
   return [
     {
@@ -82,7 +82,6 @@ export const MATCH_COLUMNS = (
         const opponentEloAmountGreaterThanZero = (record?.opponentElo ?? 0) > 0;
         const opponentEloAmountLowerThanZero = (record?.opponentElo ?? 0) < 0;
         const showElo = record.matchStatus === MatchStatus.FINISHED;
-        const userIsInMatch = !!record.hostPlayers?.find((item) => item.user.id === userId);
 
         return (
           <>
@@ -140,7 +139,7 @@ export const MATCH_COLUMNS = (
                   {...messages.playersCount}
                   values={{ value: `${record.joinPlayersCount ?? 0}/${record.maximalPlayers}` }}
                 />
-                {userIsInMatch && (
+                {record.isLoggedToMatch && (
                   <>
                     <br />
                     <b>
@@ -184,8 +183,6 @@ export const MATCH_COLUMNS = (
       key: '5',
       hidden: hidden || !showPlayers,
       render: (_, record) => {
-        const userIsInMatch = !!record.hostPlayers?.find((item) => item.user.id === userId);
-
         return (
           <>
             {record.matchStatus === MatchStatus.NEW && (
@@ -194,7 +191,7 @@ export const MATCH_COLUMNS = (
                   record.hostPlayers?.map((player) => <S.Tag>{player.user.nickname}</S.Tag>)
                 ) : (
                   <>
-                    {userIsInMatch && (
+                    {record.isLoggedToMatch && (
                       <b style={{ marginRight: 8 }}>
                         <FormattedMessage {...messages.userLoggedIn} />
                       </b>

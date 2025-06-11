@@ -310,10 +310,7 @@ export const MapPickCont: React.FC = () => {
               <S.MapTags>
                 {challengerPickedMaps.length === 0 && <FormattedMessage {...messages.nothingPickedYet} />}
                 {challengerPickedMaps.map((item) => {
-                  console.log(item);
                   const map = seasonMaps.data?.items?.find((map) => map.id === item.mapId);
-                  console.log(map);
-                  console.log(seasonMaps.data);
                   if (!map) {
                     return null;
                   }

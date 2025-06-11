@@ -93,10 +93,7 @@ export const MatchDetail: React.FC = () => {
 
   const matchStatusIsNew = matchDetail.data?.status === MatchStatus.NEW;
   const matchIsFull = (matchDetail.data?.hostMatchPlayers?.length ?? 0) >= (matchDetail.data?.maximalPlayers ?? 0);
-  const currentUserIsInMatch =
-    !!userMe.data?.id &&
-    matchDetail.isFetched &&
-    matchDetail.data?.hostMatchPlayers?.find((item) => item.user.id === userMe.data?.id);
+  const currentUserIsInMatch = matchDetail.isFetched && matchDetail.data?.isLoggedToMatch;
   const canCurrentUserLeave = currentUserIsInMatch && matchStatusIsNew;
   const canCurrentUserJoin = !currentUserIsInMatch && matchStatusIsNew;
   const isCurrentUserOwnerOfMatch = userMe.data?.id === matchDetail.data?.createdBy?.id;

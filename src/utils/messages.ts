@@ -85,6 +85,10 @@ export const messages = defineMessages({
     id: 'app.utils.teamplay',
     defaultMessage: 'Teamplay',
   },
+  ranked: {
+    id: 'app.utils.ranked',
+    defaultMessage: 'Kompetetivní',
+  },
   twovstwo: {
     id: 'app.utils.twovstwo',
     defaultMessage: '2v2',

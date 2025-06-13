@@ -88,6 +88,7 @@ export interface IMatchRound {
 
 export interface IMatchPlayer {
   id: string;
+  actualRanking?: number | null;
   flags: number;
   kills: number;
   deaths: number;
@@ -306,4 +307,8 @@ export interface ICreatePlayerRoundStats {
 export interface IEliminatedMap {
   mapId: string;
   pickedBy: string;
+}
+
+export interface IAddPlayerToMatch {
+  seasonTeamId?: string;
 }

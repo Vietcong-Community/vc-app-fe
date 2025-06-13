@@ -7,21 +7,26 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { IUser } from '../../../api/hooks/interfaces';
 import { useLeaveRankedMatch } from '../../../api/hooks/ranked/api';
 import { useNotifications } from '../../../hooks/NotificationsHook';
+import { useRouter } from '../../../hooks/RouterHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
+import { Routes } from '../../../routes/enums';
 
 import { messages } from './messages';
 
 interface IProps {
+  isLastPlayer: boolean;
   isOpen: boolean;
   onClose: () => void;
   matchId: string;
+  seasonId?: string;
   user?: IUser;
   userId: string;
 }
 
 export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
-  const { isOpen, onClose, matchId, user, userId } = props;
+  const { isLastPlayer, isOpen, onClose, matchId, seasonId, user, userId } = props;
   const { formatMessage } = useIntl();
+  const { navigate } = useRouter();
   const { showNotification } = useNotifications();
   const queryClient = useQueryClient();
   const leaveMatch = useLeaveRankedMatch(matchId);
@@ -30,8 +35,12 @@ export const LeaveRankedMatchModal: React.FC<IProps> = (props: IProps) => {
     try {
       const payload = userId === user?.id ? {} : { userForLeave: user?.id };
       await leaveMatch.mutateAsync(payload);
-      await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
-      await queryClient.refetchQueries({ queryKey: ['mapVoteState', matchId] });
+      if (isLastPlayer && seasonId) {
+        navigate(Routes.RANKED_SEASON_DETAIL.replace(':seasonId', seasonId));
+      } else {
+        await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
+        await queryClient.refetchQueries({ queryKey: ['mapVoteState', matchId] });
+      }
       showNotification(messages.deleteSuccess);
       onClose();
     } catch {

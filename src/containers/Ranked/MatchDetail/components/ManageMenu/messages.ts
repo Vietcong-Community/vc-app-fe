@@ -57,6 +57,10 @@ export const messages = defineMessages({
     id: 'app.containers.Ranked.MatchDetail.components.ManageMenu.addPlayer',
     defaultMessage: 'Přidat hráče k zápasu',
   },
+  switchPlayerTeam: {
+    id: 'app.containers.Ranked.MatchDetail.components.ManageMenu.switchPlayerTeam',
+    defaultMessage: 'Změnit hráči tým',
+  },
   updateOverallStatistics: {
     id: 'app.containers.Ranked.MatchDetail.components.ManageMenu.updateOverallStatistics',
     defaultMessage: 'Aktualizovat celkové statistiky',

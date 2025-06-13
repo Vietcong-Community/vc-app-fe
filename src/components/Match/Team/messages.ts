@@ -39,4 +39,8 @@ export const messages = defineMessages({
     id: 'app.components.Match.Team.statisticsNotSynced',
     defaultMessage: 'Statistiky ještě nebyly připsány.',
   },
+  rank: {
+    id: 'app.components.Match.Team.rank',
+    defaultMessage: 'Umístění při rozřazení: <b>{value}</b>',
+  },
 });

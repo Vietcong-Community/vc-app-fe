@@ -21,6 +21,10 @@ export const messages = defineMessages({
     id: 'app.components.Modals.AddPlayerToMatch.opponentUserId',
     defaultMessage: 'Hráči oponenta',
   },
+  teamIdForHostPlayers: {
+    id: 'app.components.Modals.AddPlayerToMatch.teamIdForHostPlayers',
+    defaultMessage: 'Tým pro přiřazení hráčů',
+  },
   allPlayers: {
     id: 'app.components.Modals.AddPlayerToMatch.allPlayers',
     defaultMessage: 'Všichni hráči',

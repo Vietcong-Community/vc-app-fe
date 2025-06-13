@@ -93,3 +93,15 @@ export const useCanCreateNewMatch = (seasonId: string, ignoreErrorCodes?: Ignore
     enabled,
   });
 };
+
+export const useSwitchPlayerTeams = (matchId: string) => {
+  return useMutation({
+    mutationFn: async (playerId: string) => {
+      const { data } = await post<undefined, undefined>(RankedEndpoints.SWITCH_PLAYER_TEAMS, undefined, {
+        matchId,
+        playerId,
+      });
+      return data;
+    },
+  });
+};

@@ -23,6 +23,7 @@ interface IProps {
   setIsAddPlayerToMatchModalOpen: (value: boolean) => void;
   setIsCreateRoundModalOpen: (value: boolean) => void;
   setIsSortRoundsModalOpen: (value: boolean) => void;
+  setIsSwitchPlayerTeamModalOpen: (value: boolean) => void;
   setIsUpdateMatchModalOpen: (value: boolean) => void;
   status?: MatchStatus;
   userIsStatisticsAdmin: boolean;
@@ -38,6 +39,7 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     setIsAddPlayerToMatchModalOpen,
     setIsCreateRoundModalOpen,
     setIsSortRoundsModalOpen,
+    setIsSwitchPlayerTeamModalOpen,
     setIsUpdateMatchModalOpen,
     status,
     userIsAdmin,
@@ -77,19 +79,19 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
     {
       label: <FormattedMessage {...messages.updateMatch} />,
-      key: '4',
+      key: '2',
       onClick: () => setIsUpdateMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.lockMatch} />,
-      key: '9',
+      key: '3',
       onClick: () => setIsLockMatchModalOpen(true),
       disabled: status !== MatchStatus.NEW || !userIsAdmin || !canLockMatch,
     },
     {
       label: <FormattedMessage {...messages.deleteMatch} />,
-      key: '2',
+      key: '4',
       onClick: () => setIsDeleteMatchModalOpen(true),
       disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
@@ -101,13 +103,13 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
     {
       label: <FormattedMessage {...messages.recalculatePlayerStats} />,
-      key: '3',
+      key: '6',
       onClick: recalculateStats,
       disabled: !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.updateOverallStatistics} />,
-      key: '8',
+      key: '7',
       onClick: updateOverallStats,
       disabled: !(
         (userIsAdmin || userIsStatisticsAdmin) &&
@@ -116,15 +118,21 @@ export const ManageMenu: React.FC<IProps> = (props: IProps) => {
     },
     {
       label: <FormattedMessage {...messages.createRound} />,
-      key: '6',
+      key: '8',
       onClick: () => setIsCreateRoundModalOpen(true),
       disabled: status === MatchStatus.FINISHED || !userIsAdmin,
     },
     {
       label: <FormattedMessage {...messages.addPlayer} />,
-      key: '7',
+      key: '9',
       onClick: () => setIsAddPlayerToMatchModalOpen(true),
       disabled: !userIsAdmin,
+    },
+    {
+      label: <FormattedMessage {...messages.switchPlayerTeam} />,
+      key: '10',
+      onClick: () => setIsSwitchPlayerTeamModalOpen(true),
+      disabled: !userIsAdmin || status !== MatchStatus.ACCEPTED,
     },
   ];
 

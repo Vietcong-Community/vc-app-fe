@@ -39,7 +39,7 @@ export const JoinRankedMatchModal: React.FC<IProps> = (props: IProps) => {
   const onSubmit = async (values: IFormData) => {
     try {
       setIsSubmitting(true);
-      await joinRankedMatch.mutateAsync(userId);
+      await joinRankedMatch.mutateAsync({ userId });
       await voteForMap.mutateAsync({ mapId: values.firstMapId, matchId });
       await voteForMap.mutateAsync({ mapId: values.secondMapId, matchId });
       showNotification(messages.joinSuccess, messages.joinSuccessDescription);

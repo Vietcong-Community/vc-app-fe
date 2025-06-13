@@ -108,15 +108,17 @@ export const LinkButton = styled.div`
 `;
 
 export const Player = styled.div`
+  align-items: center;
   border-radius: 8px;
   background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary20};
   display: flex;
-  padding: 0.25rem 0.5rem;
-  font-size: 12px;
+  padding: 0.5rem;
+  font-size: 14px;
   justify-content: space-between;
 
-  ${() => makeMediaQuery(BreakPoints.md)`
+  ${() => makeMediaQuery(BreakPoints.sm)`
     ${css`
+      align-items: start;
       flex-direction: column;
     `}
   `};
@@ -131,15 +133,17 @@ export const LineUp = styled.div`
 export const Statistics = styled.div`
   align-items: center;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
   justify-content: flex-start;
+  padding-top: 4px;
 
   > * {
     align-items: center;
     display: flex;
+    flex-direction: column;
     gap: 6px;
     justify-content: flex-start;
-    width: 35px;
+    width: 25px;
   }
 `;
 

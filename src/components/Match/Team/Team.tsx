@@ -38,6 +38,7 @@ interface IProps {
   matchStatus?: MatchStatus;
   showLineUp: boolean;
   showMap?: boolean;
+  showRanks?: boolean;
   showTeamName?: boolean;
   players: ITeamMatchPlayer[];
   playerInMatchIdsAddedToSeasonStatistics: string[];
@@ -57,6 +58,7 @@ export const Team: React.FC<IProps> = (props: IProps) => {
     playerInMatchIdsAddedToSeasonStatistics,
     showLineUp,
     showMap = true,
+    showRanks = false,
     showTeamName = true,
     team,
   } = props;
@@ -146,41 +148,46 @@ export const Team: React.FC<IProps> = (props: IProps) => {
 
                     return (
                       <S.Player>
-                        <div
-                          style={{
-                            cursor: 'pointer',
-                            display: 'flex',
-                            gap: 8,
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                          }}
-                          onClick={() => goToPlayerDetail(player.user.id)}
-                        >
-                          <Avatar
-                            size={24}
-                            icon={
-                              player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />
-                            }
-                          />
-                          <b>
-                            {player.isHost ? '(H) ' : ''}
-                            {player.user.nickname}
-                          </b>
-                          <FontAwesomeIcon
-                            icon={playerStatsSynced ? faUserCheck : faUserXmark}
-                            style={{ color: playerStatsSynced ? theme.colors.green : theme.colors.red }}
-                          />
+                        <div>
+                          <div
+                            style={{
+                              cursor: 'pointer',
+                              display: 'flex',
+                              gap: 8,
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                            }}
+                            onClick={() => goToPlayerDetail(player.user.id)}
+                          >
+                            <Avatar
+                              size={32}
+                              icon={
+                                player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />
+                              }
+                            />
+                            <b>
+                              {player.isHost ? '(H) ' : ''}
+                              {player.user.nickname}
+                            </b>
+                            <FontAwesomeIcon
+                              icon={playerStatsSynced ? faUserCheck : faUserXmark}
+                              style={{ color: playerStatsSynced ? theme.colors.green : theme.colors.red }}
+                            />
+                          </div>
+                          {showRanks && player.actualRanking && (
+                            <FormattedMessage {...messages.rank} values={{ value: player.actualRanking }} />
+                          )}
                         </div>
                         <Gap defaultHeight={8} />
                         <S.Statistics>
                           <div>
-                            <FontAwesomeIcon icon={faFlag} /> {player.flags}
+                            <FontAwesomeIcon icon={faFlag} style={{ fontSize: 14 }} /> {player.flags}
                           </div>
                           <div>
-                            <FontAwesomeIcon icon={faSkull} /> {player.kills}
+                            <FontAwesomeIcon icon={faSkull} style={{ fontSize: 14 }} /> {player.kills}
                           </div>
                           <div>
-                            <FontAwesomeIcon icon={faCross} /> {player.deaths}
+                            <FontAwesomeIcon icon={faCross} style={{ fontSize: 14 }} /> {player.deaths}
                           </div>
                         </S.Statistics>
                       </S.Player>

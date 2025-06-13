@@ -69,6 +69,10 @@ export const messages = defineMessages({
     id: 'app.containers.Ranked.MatchDetail.joinMatch',
     defaultMessage: 'Přidat se',
   },
+  deleteMatch: {
+    id: 'app.containers.Ranked.MatchDetail.deleteMatch',
+    defaultMessage: 'Smazat zápas',
+  },
   leaveMatch: {
     id: 'app.containers.Ranked.MatchDetail.leaveMatch',
     defaultMessage: 'Opustit zápas',

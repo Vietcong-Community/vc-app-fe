@@ -31,6 +31,7 @@ import { CreateRoundModal } from '../../../components/Modals/CreateRoundModal/Cr
 import { JoinRankedMatchModal } from '../../../components/Modals/JoinRankedMatchModal/JoinRankedMatchModal';
 import { LeaveRankedMatchModal } from '../../../components/Modals/LeaveRankedMatchModal/LeaveRankedMatchModal';
 import { SortRoundsModal } from '../../../components/Modals/SortRoundsModal/SortRoundsModal';
+import { SwitchPlayerTeamModal } from '../../../components/Modals/SwitchPlayerTeamModal/SwitchPlayerTeamModal';
 import { UpdateMatchModal } from '../../../components/Modals/UpdateMatchModal/UpdateMatchModal';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -52,6 +53,7 @@ import * as S from './MatchDetail.style';
 export const MatchDetail: React.FC = () => {
   const { navigate, query } = useRouter<{ matchId: string }>();
   const [isJoinMatchModalOpen, setIsJoinMatchModalOpen] = useState<boolean>(false);
+  const [isSwitchPlayerTeamModalOpen, setIsSwitchPlayerTeamModalOpen] = useState<boolean>(false);
   const [isLeaveMatchModalOpen, setIsLeaveMatchModalOpen] = useState<boolean>(false);
   const [isSortRoundsModalOpen, setIsSortRoundsModalOpen] = useState<boolean>(false);
   const [isUpdateMatchModalOpen, setIsUpdateMatchModalOpen] = useState<boolean>(false);
@@ -130,6 +132,18 @@ export const MatchDetail: React.FC = () => {
     return [];
   };
 
+  const getTeamSelectOptions = () => {
+    const options = [];
+    if (matchDetail.data?.challenger) {
+      options.push({ value: matchDetail.data?.challenger?.id, label: matchDetail.data?.challenger?.team?.name });
+    }
+    if (matchDetail.data?.opponent) {
+      options.push({ value: matchDetail.data?.opponent?.id, label: matchDetail.data?.opponent?.team?.name });
+    }
+
+    return options;
+  };
+
   if (matchDetail.isError) {
     return (
       <ContentLayout>
@@ -179,6 +193,7 @@ export const MatchDetail: React.FC = () => {
             setIsAddPlayerToMatchModalOpen={setIsAddPlayerToMatchModalOpen}
             setIsCreateRoundModalOpen={setIsCreateRoundModalOpen}
             setIsSortRoundsModalOpen={setIsSortRoundsModalOpen}
+            setIsSwitchPlayerTeamModalOpen={setIsSwitchPlayerTeamModalOpen}
             setIsUpdateMatchModalOpen={setIsUpdateMatchModalOpen}
             status={matchDetail.data?.status}
             userIsAdmin={userIsAdmin}
@@ -302,6 +317,7 @@ export const MatchDetail: React.FC = () => {
                       }
                       players={matchDetail.data?.challengerMatchPlayers ?? []}
                       showLineUp
+                      showRanks
                       showTeamName={false}
                       team={matchDetail.data?.challenger?.team}
                     />
@@ -316,6 +332,7 @@ export const MatchDetail: React.FC = () => {
                       }
                       players={matchDetail.data?.opponentMatchPlayers ?? []}
                       showLineUp
+                      showRanks
                       showTeamName={false}
                       team={matchDetail.data?.opponent?.team}
                     />
@@ -352,12 +369,13 @@ export const MatchDetail: React.FC = () => {
               {canCurrentUserLeave && (
                 <Button
                   onClick={() => setIsLeaveMatchModalOpen(true)}
-                  disabled={matchDetail.data?.hostMatchPlayers?.length === 1}
                   variant={MainButtonVariant.PRIMARY}
                   style={{ color: 'white', fontWeight: 'bold' }}
                 >
                   <FontAwesomeIcon icon={faRightFromBracket} />
-                  <FormattedMessage {...messages.leaveMatch} />
+                  <FormattedMessage
+                    {...(matchDetail.data?.hostMatchPlayers?.length === 1 ? messages.deleteMatch : messages.leaveMatch)}
+                  />
                 </Button>
               )}
             </Flex>
@@ -430,8 +448,10 @@ export const MatchDetail: React.FC = () => {
         onClose={() => setIsAddPlayerToMatchModalOpen(false)}
         opponentTeamId={matchDetail.data?.opponent?.team?.id}
         matchId={query.matchId}
+        teamSelectOptions={getTeamSelectOptions()}
         showChallengerTeamPlayers={false}
         showOpponentTeamPlayers={false}
+        showTeamSelectForHostPlayers
       />
       {userMe.data?.id && (
         <JoinRankedMatchModal
@@ -444,16 +464,27 @@ export const MatchDetail: React.FC = () => {
       )}
       {userMe.data?.id && (
         <LeaveRankedMatchModal
+          isLastPlayer={(matchDetail.data?.hostMatchPlayers?.length ?? 0) === 1}
           isOpen={isLeaveMatchModalOpen}
           onClose={() => {
             setPlayerToRemoveFromMatch(undefined);
             setIsLeaveMatchModalOpen(false);
           }}
           matchId={query.matchId}
+          seasonId={matchDetail.data?.season?.id}
           user={playerToRemoveFromMatch ?? userMe.data}
           userId={userMe.data?.id}
         />
       )}
+      <SwitchPlayerTeamModal
+        matchId={query.matchId}
+        onClose={() => setIsSwitchPlayerTeamModalOpen(false)}
+        isOpen={isSwitchPlayerTeamModalOpen}
+        players={[
+          ...(matchDetail.data?.challengerMatchPlayers ?? []),
+          ...(matchDetail.data?.opponentMatchPlayers ?? []),
+        ]}
+      />
     </ContentLayout>
   );
 };

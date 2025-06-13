@@ -9,15 +9,16 @@ import { Routes } from '../../../routes/enums';
 import { messages } from './messages';
 
 interface IProps {
+  isCreateMatchDisabled?: boolean;
   setOpenSeasonMapsModal: (value: boolean) => void;
   seasonId: string;
 }
 
 export const AdminMenu: React.FC<IProps> = (props: IProps) => {
-  const { seasonId, setOpenSeasonMapsModal } = props;
+  const { isCreateMatchDisabled = false, seasonId, setOpenSeasonMapsModal } = props;
   const { navigate } = useRouter<{ id: string }>();
 
-  const onConfirmMatch = async () => {
+  const onCreateMatch = async () => {
     navigate(Routes.ADMIN_CREATE_MATCH.replace(':seasonId', seasonId));
   };
 
@@ -25,7 +26,8 @@ export const AdminMenu: React.FC<IProps> = (props: IProps) => {
     {
       label: <FormattedMessage {...messages.createMatch} />,
       key: '1',
-      onClick: onConfirmMatch,
+      onClick: onCreateMatch,
+      disabled: isCreateMatchDisabled,
     },
     {
       label: <FormattedMessage {...messages.setSeasonMaps} />,

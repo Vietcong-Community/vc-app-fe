@@ -6,4 +6,5 @@ export enum RankedEndpoints {
   ADMIN_CLOSE_MATCH = '/matches/{matchId}/face-it/close-match',
   CAN_CREATE_NEW_MATCH = '/seasons/{seasonId}/face-it/can-create-new-match',
   CONFIRM_MATCH_SCORE = '/matches/{matchId}/face-it/confirm-match-score',
+  SWITCH_PLAYER_TEAMS = '/matches/{matchId}/face-it/players/{playerId}/switch-team',
 }

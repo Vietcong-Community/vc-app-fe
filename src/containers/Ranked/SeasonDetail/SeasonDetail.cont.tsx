@@ -94,7 +94,11 @@ export const RankedSeasonDetailCont: React.FC = () => {
 
           <S.ActionButtons>
             {userIsAdmin && (
-              <AdminMenu seasonId={query.seasonId} setOpenSeasonMapsModal={setIsSeasonMapsPickerModalOpen} />
+              <AdminMenu
+                isCreateMatchDisabled
+                seasonId={query.seasonId}
+                setOpenSeasonMapsModal={setIsSeasonMapsPickerModalOpen}
+              />
             )}
           </S.ActionButtons>
         </Flex>

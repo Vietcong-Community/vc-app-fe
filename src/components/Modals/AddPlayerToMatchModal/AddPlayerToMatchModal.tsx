@@ -12,7 +12,7 @@ import { useTeamPlayers } from '../../../api/hooks/teams/api';
 import { useUserList } from '../../../api/hooks/users/api';
 import { useNotifications } from '../../../hooks/NotificationsHook';
 import { NotificationType } from '../../../providers/NotificationsProvider/enums';
-import { SelectField } from '../../Fields/SelectField/SelectField';
+import { ISelectOptionType, SelectField } from '../../Fields/SelectField/SelectField';
 import { FormComponent } from '../../Form/FormComponent';
 import { Gap } from '../../Gap/Gap';
 
@@ -25,8 +25,10 @@ interface IProps {
   onClose: () => void;
   opponentTeamId?: string;
   matchId: string;
+  teamSelectOptions?: ISelectOptionType[];
   showChallengerTeamPlayers?: boolean;
   showOpponentTeamPlayers?: boolean;
+  showTeamSelectForHostPlayers?: boolean;
 }
 
 export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
@@ -36,8 +38,10 @@ export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
     onClose,
     opponentTeamId,
     matchId,
+    teamSelectOptions,
     showChallengerTeamPlayers = true,
     showOpponentTeamPlayers = true,
+    showTeamSelectForHostPlayers = false,
   } = props;
   const { formatMessage } = useIntl();
   const { showNotification } = useNotifications();
@@ -70,7 +74,18 @@ export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
     ]);
 
     try {
-      await Promise.all(userIds.map(async (item) => await addPlayerToMatch.mutateAsync(item)));
+      await Promise.all(
+        userIds.map(
+          async (item) =>
+            await addPlayerToMatch.mutateAsync({
+              userId: item,
+              data: {
+                seasonTeamId:
+                  showTeamSelectForHostPlayers && values.teamIdForHostPlayers ? values.teamIdForHostPlayers : undefined,
+              },
+            }),
+        ),
+      );
       await queryClient.refetchQueries({ queryKey: ['matchDetail', matchId] });
       showNotification(messages.createSuccess);
       onClose();
@@ -79,6 +94,7 @@ export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
       setUserQuery({});
     } catch {
       showNotification(messages.createFailed, undefined, NotificationType.ERROR);
+    } finally {
       setSubmitting(false);
     }
   };
@@ -147,6 +163,14 @@ export const AddPlayerToMatchModal: React.FC<IProps> = (props: IProps) => {
               placeholder={formatMessage(messages.opponentUserId)}
               options={opponentPlayersOptions}
               mode="multiple"
+            />
+          )}
+          {showTeamSelectForHostPlayers && (
+            <SelectField
+              {...fields.teamIdForHostPlayers}
+              label={<FormattedMessage {...messages.teamIdForHostPlayers} />}
+              placeholder={formatMessage(messages.teamIdForHostPlayers)}
+              options={teamSelectOptions ?? []}
             />
           )}
           <Form.Item

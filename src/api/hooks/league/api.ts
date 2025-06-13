@@ -10,6 +10,7 @@ import { IAvatarUpload } from '../teams/interfaces';
 import { LeagueEndpoints } from './endpoints';
 import {
   IAcceptMatchChallenge,
+  IAddPlayerToMatch,
   ICreateMatchChallenge,
   ICreatePlayerRoundStats,
   ICreateRound,
@@ -494,11 +495,15 @@ export const useSeasonStatsList = (
 
 export const useAddPlayerToMatch = (matchId: string) => {
   return useMutation({
-    mutationFn: async (userId: string) => {
-      const { data } = await post<undefined, undefined>(LeagueEndpoints.ADD_PLAYER_TO_MATCH, undefined, {
-        matchId,
-        userId,
-      });
+    mutationFn: async (payload: { userId: string; data?: IAddPlayerToMatch }) => {
+      const { data } = await post<IAddPlayerToMatch | undefined, undefined>(
+        LeagueEndpoints.ADD_PLAYER_TO_MATCH,
+        payload.data,
+        {
+          matchId,
+          userId: payload.userId,
+        },
+      );
       return data;
     },
   });

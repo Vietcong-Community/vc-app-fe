@@ -12,12 +12,17 @@ import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../components/Titles/H1/H1';
 import { H2 } from '../../components/Titles/H2/H2';
+import { useWindowDimensions } from '../../hooks/WindowDimensionsHook';
+import { BreakPoints } from '../../theme/theme';
 
 import { messages } from './messages';
 
 import * as S from './AboutUs.style';
 
 export const AboutUsCont: React.FC = () => {
+  const { width } = useWindowDimensions();
+  const isSmallerThanMd = width < BreakPoints.md;
+
   return (
     <>
       <ContentLayout breadcrumbItems={[{ key: 'bc-mcrvc', title: <FormattedMessage {...messages.title} /> }]}>
@@ -50,7 +55,7 @@ export const AboutUsCont: React.FC = () => {
             </S.Section>
             <Gap defaultHeight={18} />
             <motion.div
-              initial={{ x: 400, opacity: 0 }}
+              initial={{ x: isSmallerThanMd ? 0 : 400, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
               viewport={{ once: false, amount: 0.3 }}
@@ -68,7 +73,7 @@ export const AboutUsCont: React.FC = () => {
               </S.Section>
             </motion.div>
             <motion.div
-              initial={{ x: -400, opacity: 0 }}
+              initial={{ x: isSmallerThanMd ? 0 : -400, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
               viewport={{ once: false, amount: 0.3 }}
@@ -86,7 +91,7 @@ export const AboutUsCont: React.FC = () => {
               </S.Section>
             </motion.div>
             <motion.div
-              initial={{ x: 400, opacity: 0 }}
+              initial={{ x: isSmallerThanMd ? 0 : 400, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
               viewport={{ once: false, amount: 0.3 }}
@@ -104,7 +109,7 @@ export const AboutUsCont: React.FC = () => {
               </S.Section>
             </motion.div>
             <motion.div
-              initial={{ x: -400, opacity: 0 }}
+              initial={{ x: isSmallerThanMd ? 0 : -400, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
               viewport={{ once: false, amount: 0.3 }}

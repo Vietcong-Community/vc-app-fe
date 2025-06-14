@@ -12,8 +12,12 @@ export const messages = defineMessages({
       'V každé sezóně budeme bedlivě sledovat tvoje statistiky, na základě kterých můžeš získávat mnoho ocenění! ' +
       'Proto neváhej, prozkoumávej a přidej se do ligy podle svých preferencí.',
   },
-  leaguesTitle: {
-    id: 'app.containers.League.Overview.leaguesTitle',
-    defaultMessage: 'Seznam lig',
+  activeSeasons: {
+    id: 'app.containers.League.Overview.activeSeasons',
+    defaultMessage: 'Probíhající sezóny',
+  },
+  archivedSeasons: {
+    id: 'app.containers.League.Overview.archivedSeasons',
+    defaultMessage: 'Ukončené sezóny',
   },
 });

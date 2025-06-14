@@ -59,6 +59,8 @@ export const mapLeagueTypeToTranslation = (type?: LeagueType): ReactNode | undef
       return <FormattedMessage {...messages.teamplay} />;
     case LeagueType.TWOVSTWO:
       return <FormattedMessage {...messages.twovstwo} />;
+    case LeagueType.FACEIT:
+      return <FormattedMessage {...messages.ranked} />;
     default:
       return undefined;
   }

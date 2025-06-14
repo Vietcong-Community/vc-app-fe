@@ -49,7 +49,7 @@ export const useLeagueList = () => {
 
 export const useLeaguesWithSeasonsList = (seasonTypes?: SeasonType[]) => {
   return useQuery({
-    queryKey: ['leagueWithSeasons', seasonTypes?.join(',')],
+    queryKey: ['leagueWithSeasonsTypes', seasonTypes?.join(',')],
     queryFn: async () => {
       const { data } = await get<{ items: ILeagueDetail[] }>(LeagueEndpoints.LEAGUES);
 

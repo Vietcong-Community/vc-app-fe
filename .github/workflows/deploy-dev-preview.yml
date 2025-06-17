@@ -1,0 +1,28 @@
+name: Production preview
+
+on:
+  push:
+    branches:
+      - feature/next
+
+jobs:
+  build-image:
+    uses: ./.github/workflows/build-image.yml
+    name: Build image
+    with:
+      image_tag: vietcong-hub-fe:${GITHUB_SHA::8}
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+  deploy-production-preview:
+    uses: ./.github/workflows/update-app-template.yml
+    name: Deploy production preview to cluster
+    needs: [build-image]
+    with:
+      namespace: vietcong-hub
+      release_name: vietcong-hub-dev
+      values_file: helm-charts/app/values-dev.yaml
+      revision: ${GITHUB_SHA::8}
+      helm_dir: app
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}

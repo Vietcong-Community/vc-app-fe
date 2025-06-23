@@ -1,9 +1,10 @@
+import { motion } from 'motion/react';
 import styled, { css } from 'styled-components';
 
 import { BreakPoints, IThemeProps } from '../../../../theme/theme';
 import { makeMediaQuery } from '../../../../utils/mediaQuery';
 
-export const LeagueBanner = styled.div`
+export const LeagueBanner = styled(motion.div)`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.primary};
   border-radius: 128px 32px 32px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
@@ -35,7 +36,8 @@ export const LeagueBanner = styled.div`
     `}
   `};
 `;
-export const RankedBanner = styled.div`
+
+export const RankedBanner = styled(motion.div)`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary60};
   border-radius: 32px 32px 128px 32px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
@@ -62,7 +64,7 @@ export const RankedBanner = styled.div`
   `};
 `;
 
-export const ChampionshipBanner = styled.div`
+export const ChampionshipBanner = styled(motion.div)`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.accent60};
   border-radius: 32px 32px 32px 128px;
   color: ${(props: IThemeProps) => props.theme.colors.white};
@@ -89,7 +91,7 @@ export const ChampionshipBanner = styled.div`
   `};
 `;
 
-export const JoinBanner = styled.div`
+export const JoinBanner = styled(motion.div)`
   background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary};
   border-radius: 32px 128px 32px 32px;
   color: ${(props: IThemeProps) => props.theme.colors.white};

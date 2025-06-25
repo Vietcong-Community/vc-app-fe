@@ -23,7 +23,7 @@ export const Banners: React.FC = () => {
           initial={{ x: -700, opacity: 0 }}
           animate={{ x: 0, opacity: 0.9 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          whileHover={{ x: -30, opacity: 1 }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
         >
           <H2>
             <FormattedMessage {...messages.leaguesTitle} />
@@ -53,7 +53,7 @@ export const Banners: React.FC = () => {
           initial={{ y: -700, opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           animate={{ y: 0, opacity: 0.9 }}
-          whileHover={{ y: -30, opacity: 1 }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
         >
           <H2>
             <FormattedMessage {...messages.rankedTitle} />
@@ -89,7 +89,7 @@ export const Banners: React.FC = () => {
           initial={{ y: 700, opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           animate={{ y: 0, opacity: 0.9 }}
-          whileHover={{ y: 30, opacity: 1 }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
         >
           <H2>
             <FormattedMessage {...messages.championshipTitle} />
@@ -117,7 +117,7 @@ export const Banners: React.FC = () => {
           initial={{ x: 700, opacity: 0 }}
           animate={{ x: 0, opacity: 0.9 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          whileHover={{ x: 30, opacity: 1 }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
         >
           <H2>
             <FormattedMessage {...messages.joinHubTitle} />

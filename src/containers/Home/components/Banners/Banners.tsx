@@ -19,7 +19,12 @@ export const Banners: React.FC = () => {
   return (
     <>
       <S.OtherBanners>
-        <S.LeagueBanner>
+        <S.LeagueBanner
+          initial={{ x: -700, opacity: 0 }}
+          animate={{ x: 0, opacity: 0.9 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
+        >
           <H2>
             <FormattedMessage {...messages.leaguesTitle} />
           </H2>
@@ -44,7 +49,12 @@ export const Banners: React.FC = () => {
             </Button>
           </Link>
         </S.LeagueBanner>
-        <S.RankedBanner>
+        <S.RankedBanner
+          initial={{ y: -700, opacity: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          animate={{ y: 0, opacity: 0.9 }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
+        >
           <H2>
             <FormattedMessage {...messages.rankedTitle} />
           </H2>
@@ -75,7 +85,12 @@ export const Banners: React.FC = () => {
       </S.OtherBanners>
       <Gap defaultHeight={32} />
       <S.OtherBanners>
-        <S.ChampionshipBanner>
+        <S.ChampionshipBanner
+          initial={{ y: 700, opacity: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          animate={{ y: 0, opacity: 0.9 }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
+        >
           <H2>
             <FormattedMessage {...messages.championshipTitle} />
           </H2>
@@ -98,7 +113,12 @@ export const Banners: React.FC = () => {
             </Button>
           </Link>
         </S.ChampionshipBanner>
-        <S.JoinBanner>
+        <S.JoinBanner
+          initial={{ x: 700, opacity: 0 }}
+          animate={{ x: 0, opacity: 0.9 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          whileHover={{ scale: 1.05, opacity: 1 }}
+        >
           <H2>
             <FormattedMessage {...messages.joinHubTitle} />
           </H2>

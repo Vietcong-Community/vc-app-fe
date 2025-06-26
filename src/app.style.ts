@@ -20,6 +20,7 @@ export const AppContainer = styled.div`
   min-height: 100vh;
   padding: 0;
   position: relative;
+  overflow: hidden;
   text-align: center;
 
   ${() => makeMediaQuery(BreakPoints.md)`

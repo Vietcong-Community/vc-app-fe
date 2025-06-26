@@ -1,10 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  title: {
-    id: 'app.components.Footer.title',
-    defaultMessage: 'Lovecong Copyright 2025',
-  },
   about: {
     id: 'app.components.Footer.about',
     defaultMessage: 'O nás',

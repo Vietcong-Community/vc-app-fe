@@ -358,7 +358,7 @@ export const MatchDetail: React.FC = () => {
             <Flex justify="flex-end" style={{ gap: 8 }}>
               {canCurrentUserJoin && (
                 <Button
-                  disabled={matchIsFull}
+                  disabled={matchIsFull && !userIsAdmin}
                   onClick={() => setIsJoinMatchModalOpen(true)}
                   variant={MainButtonVariant.PRIMARY}
                   style={{ color: 'white', fontWeight: 'bold' }}

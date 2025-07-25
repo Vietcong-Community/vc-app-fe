@@ -14,7 +14,8 @@ import { Avatar, Divider, Space, Switch } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { Transition } from 'react-transition-group';
 
-import logo from '../../../../assets/vclogo-removebg-preview.png';
+import blackLogo from '../../../../assets/mainLogoBlack.png';
+import whiteLogo from '../../../../assets/mainLogoWhite.png';
 import { useRouter } from '../../../../hooks/RouterHook';
 import { LanguageContext } from '../../../../providers/LanguageProvider/LanguageContext';
 import { PreferredLanguage } from '../../../../providers/LanguageProvider/constants';
@@ -60,6 +61,17 @@ export const MobileMenu: React.FC<IProps> = (props) => {
   const { selectedLanguage, toggleLanguage } = useContext(LanguageContext);
 
   const { navigate, pathname } = useRouter();
+
+  const getLogoSrc = () => {
+    if (selectedTheme === ThemeType.LIGHT) {
+      return blackLogo;
+    }
+    if (selectedTheme === ThemeType.DARK) {
+      return whiteLogo;
+    }
+
+    return blackLogo;
+  };
 
   const onMenuItemClick = (path: string) => {
     navigate(path);
@@ -133,7 +145,7 @@ export const MobileMenu: React.FC<IProps> = (props) => {
             <S.Container isOpen={isOpen}>
               <S.Header>
                 <S.Logo onClick={() => onMenuItemClick(Routes.HOME)}>
-                  <img src={logo} alt="Vietcong" style={{ height: '90%' }} />
+                  <img src={getLogoSrc()} alt="Vietcong" style={{ height: '80%' }} />
                 </S.Logo>
                 <S.MobileHamburger isOpen={isOpen} onClick={onCloseButtonClick}>
                   <span />

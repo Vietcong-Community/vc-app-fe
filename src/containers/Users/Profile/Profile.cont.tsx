@@ -20,7 +20,6 @@ import { ContentLayout } from '../../../components/Layouts/ContentLayout/Content
 import { ReactQuillRenderer } from '../../../components/ReactQuillRenderer/ReactQuillRenderer';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { H2 } from '../../../components/Titles/H2/H2';
-import { Role } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
 import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
@@ -48,7 +47,6 @@ export const ProfileCont: React.FC = () => {
 
   const showLoading = userDetail.isLoading;
   const showActionsOnProfile = userMe.data?.id === query.id;
-  const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
   const getUserIcon = () => {
     if (userDetail.data?.image?.url) {
@@ -142,21 +140,19 @@ export const ProfileCont: React.FC = () => {
         </S.Container>
       </EaseInOutContainer>
       <Gap defaultHeight={16} height={{ md: 8 }} />
-      {userIsAdmin && (
-        <EaseInOutContainer isOpen={!userAchievements.isLoading}>
-          <S.MyTeamsTitle>
-            <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-              <H2>
-                <FormattedMessage {...messages.achievementsTitle} />
-              </H2>
-            </div>
-            <Divider style={{ margin: 'auto', maxWidth: 740 }} />
-          </S.MyTeamsTitle>
-          <Gap defaultHeight={16} />
-          <Achievements achievements={userAchievements.data?.items ?? []} nickname={userDetail.data?.nickname ?? ''} />
-          <Gap defaultHeight={32} />
-        </EaseInOutContainer>
-      )}
+      <EaseInOutContainer isOpen={!userAchievements.isLoading}>
+        <S.MyTeamsTitle>
+          <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+            <H2>
+              <FormattedMessage {...messages.achievementsTitle} />
+            </H2>
+          </div>
+          <Divider style={{ margin: 'auto', maxWidth: 740 }} />
+        </S.MyTeamsTitle>
+        <Gap defaultHeight={16} />
+        <Achievements achievements={userAchievements.data?.items ?? []} nickname={userDetail.data?.nickname ?? ''} />
+        <Gap defaultHeight={32} />
+      </EaseInOutContainer>
       <EaseInOutContainer isOpen={!userTeams.isLoading}>
         <S.MyTeamsTitle>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', width: '100%' }}>

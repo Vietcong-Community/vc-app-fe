@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { motion } from 'framer-motion';
-import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import bambiPic from '../../assets/AboutUsPage/bambi3.webp';
 import bascciPic from '../../assets/AboutUsPage/bascci.webp';
@@ -21,11 +22,15 @@ import * as S from './AboutUs.style';
 
 export const AboutUsCont: React.FC = () => {
   const { width } = useWindowDimensions();
+  const { formatMessage } = useIntl();
   const isSmallerThanMd = width < BreakPoints.md;
+  const mobileOffset = width / 2;
+  console.log(mobileOffset);
 
   return (
     <>
-      <ContentLayout breadcrumbItems={[{ key: 'bc-mcrvc', title: <FormattedMessage {...messages.title} /> }]}>
+      <Helmet title={formatMessage(messages.title)} />
+      <ContentLayout breadcrumbItems={[{ key: 'bc-aboutUs', title: <FormattedMessage {...messages.title} /> }]}>
         <S.Container>
           <H1>
             <FormattedMessage {...messages.title} />
@@ -52,12 +57,12 @@ export const AboutUsCont: React.FC = () => {
               </p>
             </S.SectionText>
           </S.Section>
-          <Gap defaultHeight={18} />
+          <Gap defaultHeight={18} height={{ md: 0 }} />
           <motion.div
-            initial={{ x: isSmallerThanMd ? 100 : 400, opacity: 0 }}
+            initial={{ x: isSmallerThanMd ? mobileOffset : 400, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: isSmallerThanMd, amount: 0.3 }}
           >
             <S.Section>
               <S.SectionImage src={trapperPic} alt={'Trapper'} />
@@ -72,12 +77,12 @@ export const AboutUsCont: React.FC = () => {
             </S.Section>
           </motion.div>
           <motion.div
-            initial={{ x: isSmallerThanMd ? -100 : -400, opacity: 0 }}
+            initial={{ x: isSmallerThanMd ? -mobileOffset : -400, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: isSmallerThanMd, amount: 0.3 }}
           >
-            <S.Section>
+            <S.Section $revertOnMobile>
               <S.SectionText>
                 <H2>
                   <FormattedMessage {...messages.hhackerTitle} />
@@ -90,10 +95,10 @@ export const AboutUsCont: React.FC = () => {
             </S.Section>
           </motion.div>
           <motion.div
-            initial={{ x: isSmallerThanMd ? 100 : 400, opacity: 0 }}
+            initial={{ x: isSmallerThanMd ? mobileOffset : 400, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: isSmallerThanMd, amount: 0.3 }}
           >
             <S.Section>
               <S.SectionImage src={bascciPic} alt={'Bascci'} />
@@ -108,12 +113,12 @@ export const AboutUsCont: React.FC = () => {
             </S.Section>
           </motion.div>
           <motion.div
-            initial={{ x: isSmallerThanMd ? -100 : -400, opacity: 0 }}
+            initial={{ x: isSmallerThanMd ? -mobileOffset : -400, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: isSmallerThanMd, amount: 0.3 }}
           >
-            <S.Section>
+            <S.Section $revertOnMobile>
               <S.SectionText>
                 <H2>
                   <FormattedMessage {...messages.bambiTitle} />

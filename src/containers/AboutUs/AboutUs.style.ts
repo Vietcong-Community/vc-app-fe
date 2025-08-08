@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints, IThemeProps } from '../../theme/theme';
+import { BreakPoints } from '../../theme/theme';
 import { makeMediaQuery } from '../../utils/mediaQuery';
 
 export const Container = styled.div`
@@ -10,56 +10,56 @@ export const Container = styled.div`
   justify-content: center;
   margin: auto;
   width: 100%;
-`;
-
-export const Content = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 800px;
-`;
-
-export const Link = styled.div`
-  display: inline;
-  font-weight: bold;
-
-  &:hover {
-    cursor: pointer;
-    color: ${(props: IThemeProps) => props.theme.mainColors.accent};
-  }
-
-  a {
-    color: ${(props: IThemeProps) => props.theme.mainColors.text};
-    text-decoration: none;
-
-    &:hover {
-      cursor: pointer;
-      color: ${(props: IThemeProps) => props.theme.mainColors.accent};
-    }
-  }
-`;
-
-export const Image = styled.img`
-  height: auto;
-  max-width: 100%;
-  padding-left: 50px;
-
-  ${() => makeMediaQuery(BreakPoints.lg)`
-    ${css`
-      padding-left: 40px;
-    `}
-  `};
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      padding-left: 30px;
+      overflow: hidden;
+    `}
+  `};
+`;
+
+export const Section = styled.div<{ $revertOnMobile?: boolean }>`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1000px;
+  overflow: hidden;
+  width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+      justify-content: center;
     `}
   `};
 
-  ${() => makeMediaQuery(BreakPoints.sm)`
-    ${css`
-      padding-left: 20px;
+  ${(props) =>
+    props.$revertOnMobile &&
+    css`
+      ${() => makeMediaQuery(BreakPoints.md)`
+        ${css`
+          flex-direction: column-reverse;
+        `}
+      `};
     `}
-  `};
+`;
+
+export const SectionText = styled.div`
+  flex: 1 1 50%;
+  padding: 1rem;
+`;
+
+export const SectionImage = styled.img`
+  height: auto;
+  flex: 1 1 50%;
+  border-radius: 12px;
+  max-width: 40%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 60%;
+  }
 `;

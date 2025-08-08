@@ -25,6 +25,9 @@ export const Section = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -43,6 +46,11 @@ export const SectionImage = styled.img`
   flex: 1 1 50%;
   border-radius: 12px;
   max-width: 40%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 60%;
+  }
 `;
 
 export const Link = styled.div`

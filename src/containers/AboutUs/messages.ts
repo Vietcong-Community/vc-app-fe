@@ -22,9 +22,9 @@ export const messages = defineMessages({
     defaultMessage:
       'Jsme komunita věrných fanoušků legendární hry Vietcong, tvořená převážně bývalými hráči ESL ligy, kteří na ' +
       'tuto ikonickou střílečku nikdy nezanevřeli. Po jejím vyřazení z ESL jsme udržovali scénu při životě formou ' +
-      'občasných offline turnajů konaných jednou až dvakrát ročně.' +
+      'občasných offline turnajů konaných jednou až dvakrát ročně. ' +
       'Dnes jako VietcongHub.eu opět otevíráme prostor pro kompetitivní hraní, a to nejen pro zkušené veterány, ' +
-      'ale i pro nováčky, kteří si chtějí vyzkoušet, co Vietcong znamená.' +
+      'ale i pro nováčky, kteří si chtějí vyzkoušet, co Vietcong znamená. ' +
       'Naším cílem je oživit komunitu, podpořit fair play a zapojit nové hráče do turnajů v ' +
       'rámci MČRVC – Mistrovství České republiky ve Vietcongu.',
   },

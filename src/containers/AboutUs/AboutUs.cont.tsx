@@ -30,103 +30,101 @@ export const AboutUsCont: React.FC = () => {
           <H1>
             <FormattedMessage {...messages.title} />
           </H1>
-          <S.Content>
+          <S.Section>
+            <S.SectionText>
+              <H2>
+                <FormattedMessage {...messages.aboutUsTitle} />
+              </H2>
+              <p>
+                <FormattedMessage {...messages.aboutUs} />
+              </p>
+            </S.SectionText>
+            <S.SectionImage src={communityPic} alt="Komunita" width="50%" style={{ maxWidth: '32%' }} />
+          </S.Section>
+          <Gap defaultHeight={28} />
+          <S.Section>
+            <S.SectionText>
+              <H2>
+                <FormattedMessage {...messages.whoIsHidingTitle} />
+              </H2>
+              <p>
+                <FormattedMessage {...messages.whoIsHiding} />
+              </p>
+            </S.SectionText>
+          </S.Section>
+          <Gap defaultHeight={18} />
+          <motion.div
+            initial={{ x: isSmallerThanMd ? 100 : 400, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+          >
+            <S.Section>
+              <S.SectionImage src={trapperPic} alt={'Trapper'} />
+              <S.SectionText>
+                <H2>
+                  <FormattedMessage {...messages.trapperTitle} />
+                </H2>
+                <p>
+                  <FormattedMessage {...messages.trapper} />
+                </p>
+              </S.SectionText>
+            </S.Section>
+          </motion.div>
+          <motion.div
+            initial={{ x: isSmallerThanMd ? -100 : -400, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+          >
             <S.Section>
               <S.SectionText>
                 <H2>
-                  <FormattedMessage {...messages.aboutUsTitle} />
+                  <FormattedMessage {...messages.hhackerTitle} />
                 </H2>
                 <p>
-                  <FormattedMessage {...messages.aboutUs} />
+                  <FormattedMessage {...messages.hhacker} />
                 </p>
               </S.SectionText>
-              <S.SectionImage src={communityPic} alt="Komunita" />
+              <S.SectionImage src={hhackerPic} alt={'hhacker'} />
             </S.Section>
-            <Gap defaultHeight={28} />
+          </motion.div>
+          <motion.div
+            initial={{ x: isSmallerThanMd ? 100 : 400, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+          >
+            <S.Section>
+              <S.SectionImage src={bascciPic} alt={'Bascci'} />
+              <S.SectionText>
+                <H2>
+                  <FormattedMessage {...messages.bascciTitle} />
+                </H2>
+                <p>
+                  <FormattedMessage {...messages.bascci} />
+                </p>
+              </S.SectionText>
+            </S.Section>
+          </motion.div>
+          <motion.div
+            initial={{ x: isSmallerThanMd ? -100 : -400, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+          >
             <S.Section>
               <S.SectionText>
                 <H2>
-                  <FormattedMessage {...messages.whoIsHidingTitle} />
+                  <FormattedMessage {...messages.bambiTitle} />
                 </H2>
                 <p>
-                  <FormattedMessage {...messages.whoIsHiding} />
+                  <FormattedMessage {...messages.bambi} />
                 </p>
               </S.SectionText>
+              <S.SectionImage src={bambiPic} alt={'Bambi'} />
             </S.Section>
-            <Gap defaultHeight={18} />
-            <motion.div
-              initial={{ x: isSmallerThanMd ? 0 : 400, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: false, amount: 0.3 }}
-            >
-              <S.Section>
-                <S.SectionImage src={trapperPic} alt={'Trapper'} />
-                <S.SectionText>
-                  <H2>
-                    <FormattedMessage {...messages.trapperTitle} />
-                  </H2>
-                  <p>
-                    <FormattedMessage {...messages.trapper} />
-                  </p>
-                </S.SectionText>
-              </S.Section>
-            </motion.div>
-            <motion.div
-              initial={{ x: isSmallerThanMd ? 0 : -400, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: false, amount: 0.3 }}
-            >
-              <S.Section>
-                <S.SectionText>
-                  <H2>
-                    <FormattedMessage {...messages.hhackerTitle} />
-                  </H2>
-                  <p>
-                    <FormattedMessage {...messages.hhacker} />
-                  </p>
-                </S.SectionText>
-                <S.SectionImage src={hhackerPic} alt={'hhacker'} />
-              </S.Section>
-            </motion.div>
-            <motion.div
-              initial={{ x: isSmallerThanMd ? 0 : 400, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: false, amount: 0.3 }}
-            >
-              <S.Section>
-                <S.SectionImage src={bascciPic} alt={'Bascci'} />
-                <S.SectionText>
-                  <H2>
-                    <FormattedMessage {...messages.bascciTitle} />
-                  </H2>
-                  <p>
-                    <FormattedMessage {...messages.bascci} />
-                  </p>
-                </S.SectionText>
-              </S.Section>
-            </motion.div>
-            <motion.div
-              initial={{ x: isSmallerThanMd ? 0 : -400, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: false, amount: 0.3 }}
-            >
-              <S.Section>
-                <S.SectionText>
-                  <H2>
-                    <FormattedMessage {...messages.bambiTitle} />
-                  </H2>
-                  <p>
-                    <FormattedMessage {...messages.bambi} />
-                  </p>
-                </S.SectionText>
-                <S.SectionImage src={bambiPic} alt={'Bambi'} />
-              </S.Section>
-            </motion.div>
-          </S.Content>
+          </motion.div>
         </S.Container>
         <Gap defaultHeight={48} />
       </ContentLayout>

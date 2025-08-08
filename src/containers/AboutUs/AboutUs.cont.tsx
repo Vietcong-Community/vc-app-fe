@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import bambiPic from '../../assets/AboutUsPage/bambi3.webp';
+import bambiPic from '../../assets/AboutUsPage/bambi.webp';
 import bascciPic from '../../assets/AboutUsPage/bascci.webp';
 import communityPic from '../../assets/AboutUsPage/community_mcrvc1.png';
 import hhackerPic from '../../assets/AboutUsPage/hhacker.webp';
-import trapperPic from '../../assets/AboutUsPage/trapper4.webp';
+import trapperPic from '../../assets/AboutUsPage/trapper.webp';
 import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../components/Titles/H1/H1';
@@ -25,7 +25,6 @@ export const AboutUsCont: React.FC = () => {
   const { formatMessage } = useIntl();
   const isSmallerThanMd = width < BreakPoints.md;
   const mobileOffset = width / 2;
-  console.log(mobileOffset);
 
   return (
     <>

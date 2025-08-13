@@ -368,7 +368,7 @@
   "app.containers.Articles.CreateArticle.createFailed": "Create article failed",
   "app.containers.Articles.CreateArticle.createSuccess": "Article was successfully created",
   "app.containers.Articles.CreateArticle.insufficientPrivileges": "You have insufficient privileges",
-  "app.containers.Articles.CreateArticle.title": "Ne article",
+  "app.containers.Articles.CreateArticle.title": "New article",
   "app.containers.Articles.Overview.components.ArticlePreview.notPublished": "Not published",
   "app.containers.Articles.UpdateArticle.articles": "Articles",
   "app.containers.Articles.UpdateArticle.insufficientPrivileges": "You do not have sufficient permissions to view this page.",

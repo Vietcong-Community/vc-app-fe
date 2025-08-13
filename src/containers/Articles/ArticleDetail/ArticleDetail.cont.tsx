@@ -226,7 +226,7 @@ export const ArticleDetailCont: React.FC = () => {
                       )
                     </span>
                   </S.AuthorName>
-                  <span style={{ fontSize: 14 }}>{articleDetail.data?.createdBy?.description}</span>
+                  <span style={{ fontSize: 14 }}>{articleDetail.data?.createdBy?.shortDescription ?? ''}</span>
                 </S.AuthorInfo>
               </S.AuthorContainer>
               <Gap defaultHeight={32} />

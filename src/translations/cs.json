@@ -959,6 +959,7 @@
   "app.containers.Users.EditProfile.otherDataTab": "Ostatní",
   "app.containers.Users.EditProfile.personalDataTab": "Osobní data",
   "app.containers.Users.EditProfile.profileBreadcrumb": "Profil",
+  "app.containers.Users.EditProfile.shortDescriptionLabel": "Krátký popis",
   "app.containers.Users.EditProfile.socialDataTab": "Účty",
   "app.containers.Users.EditProfile.steamLinkLabel": "Steam",
   "app.containers.Users.EditProfile.surnameLabel": "Příjmení",

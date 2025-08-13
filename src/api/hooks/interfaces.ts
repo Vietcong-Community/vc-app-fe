@@ -21,6 +21,7 @@ export interface IUser {
   twitchLink?: string;
   steamLink?: string;
   description?: string;
+  shortDescription?: string;
   image: {
     id: string;
     url: string;

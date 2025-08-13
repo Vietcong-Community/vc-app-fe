@@ -21,6 +21,10 @@ export const messages = defineMessages({
     id: 'app.containers.Users.EditProfile.emailLabel',
     defaultMessage: 'E-mail',
   },
+  shortDescriptionLabel: {
+    id: 'app.containers.Users.EditProfile.shortDescriptionLabel',
+    defaultMessage: 'Krátký popis',
+  },
   facebookLinkLabel: {
     id: 'app.containers.Users.EditProfile.facebookLinkLabel',
     defaultMessage: 'Facebook',

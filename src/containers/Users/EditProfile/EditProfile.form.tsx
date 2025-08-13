@@ -83,6 +83,11 @@ export const EditProfileForm: React.FC<IProps> = (props: IProps) => {
                       placeholder={formatMessage(messages.emailLabel)}
                       normalize={(value) => parseToLowerCase(removeWhiteSpaces(value))}
                     />
+                    <InputField
+                      {...fields.shortDescription}
+                      label={<FormattedMessage {...messages.shortDescriptionLabel} />}
+                      placeholder={formatMessage(messages.shortDescriptionLabel)}
+                    />
                   </>
                 ),
                 key: 'edit-profile-tab-1',

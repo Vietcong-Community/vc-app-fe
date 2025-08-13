@@ -72,6 +72,7 @@ export const EditProfileCont: React.FC = () => {
     firstName: userMe.data?.firstName,
     lastName: userMe.data?.lastName,
     description: userMe.data?.description,
+    shortDescription: userMe.data?.shortDescription,
     facebookLink: userMe.data?.facebookLink,
     twitchLink: userMe.data?.twitchLink,
     steamLink: userMe.data?.steamLink,

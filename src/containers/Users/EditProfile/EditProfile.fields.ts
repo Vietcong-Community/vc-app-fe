@@ -11,6 +11,7 @@ export interface IFormData {
   twitchLink?: string;
   steamLink?: string;
   description?: string;
+  shortDescription?: string;
 }
 
 export const fields: IFormFields<IFormData> = {
@@ -52,5 +53,10 @@ export const fields: IFormFields<IFormData> = {
   description: {
     name: 'description',
     required: false,
+  },
+  shortDescription: {
+    name: 'shortDescription',
+    required: false,
+    rules: [maxLength(255)],
   },
 };

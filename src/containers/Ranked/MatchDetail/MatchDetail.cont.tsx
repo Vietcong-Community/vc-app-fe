@@ -106,8 +106,7 @@ export const MatchDetail: React.FC = () => {
     userIsAdmin &&
     [MatchStatus.ACCEPTED, MatchStatus.CONFIRMED_SCORE_BY_SYSTEM, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].includes(
       matchDetail.data?.status as MatchStatus,
-    ) &&
-    matchDetail.data?.rounds?.length !== 4;
+    );
   const matchMaps = compact([matchDetail.data?.challengerMap, matchDetail.data?.opponentMap]);
   const challengerScore = matchDetail.data?.challengerScore;
   const opponentScore = matchDetail.data?.opponentScore;

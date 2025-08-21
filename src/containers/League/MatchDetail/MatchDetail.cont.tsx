@@ -110,8 +110,7 @@ export const MatchDetail: React.FC = () => {
     userIsAdmin &&
     [MatchStatus.ACCEPTED, MatchStatus.CONFIRMED_SCORE_BY_SYSTEM, MatchStatus.WAITING_FOR_SCORE_CONFIRMATION].includes(
       matchDetail.data?.status as MatchStatus,
-    ) &&
-    matchDetail.data?.rounds?.length !== 4;
+    );
 
   const showLineUp = [
     MatchStatus.WAITING_FOR_SCORE_CONFIRMATION,

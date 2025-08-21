@@ -4,6 +4,7 @@ import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
 import { faCross } from '@fortawesome/free-solid-svg-icons/faCross';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
 import { faSkull } from '@fortawesome/free-solid-svg-icons/faSkull';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faUserCheck } from '@fortawesome/free-solid-svg-icons/faUserCheck';
 import { faUserXmark } from '@fortawesome/free-solid-svg-icons/faUserXmark';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,6 +32,7 @@ export interface ITeamMatchPlayer extends IMatchPlayer {
 interface IProps {
   defaultLineUpOpen?: boolean;
   eloPoints?: number;
+  enableRemovePlayerFromMatch?: boolean;
   goToPlayerDetail: (id: string) => void;
   goToTeamDetail?: (id: string) => void;
   map?: IMap;
@@ -49,6 +51,7 @@ export const Team: React.FC<IProps> = (props: IProps) => {
   const {
     defaultLineUpOpen = false,
     eloPoints,
+    enableRemovePlayerFromMatch = false,
     goToPlayerDetail,
     goToTeamDetail,
     map,
@@ -62,7 +65,9 @@ export const Team: React.FC<IProps> = (props: IProps) => {
     showTeamName = true,
     team,
   } = props;
-  const [isRemovePlayerFromMatchModalOpen, setIsRemovePlayerFromMatchModalOpen] = useState<boolean>(false);
+  const [removePlayerFromMatchId, setRemovePlayerFromMatchId] = useState<
+    { playerId: string; nickname: string } | undefined
+  >(undefined);
   const [isOpen, setIsOpen] = useState<boolean>(defaultLineUpOpen);
 
   const navigateToTeam = () => {
@@ -145,52 +150,72 @@ export const Team: React.FC<IProps> = (props: IProps) => {
                     const playerStatsSynced = !!playerInMatchIdsAddedToSeasonStatistics.find(
                       (item) => item === player.id,
                     );
+                    const showStatistics = matchStatus !== MatchStatus.NEW && matchStatus !== MatchStatus.ACCEPTED;
 
                     return (
-                      <S.Player>
-                        <div>
-                          <div
-                            style={{
-                              cursor: 'pointer',
-                              display: 'flex',
-                              gap: 8,
-                              justifyContent: 'flex-start',
-                              alignItems: 'center',
-                            }}
-                            onClick={() => goToPlayerDetail(player.user.id)}
-                          >
-                            <Avatar
-                              size={32}
-                              icon={
-                                player.user?.image?.url ? <img src={player.user.image.url} alt="" /> : <UserOutlined />
-                              }
-                            />
-                            <b>
-                              {player.isHost ? '(H) ' : ''}
-                              {player.user.nickname}
-                            </b>
-                            <FontAwesomeIcon
-                              icon={playerStatsSynced ? faUserCheck : faUserXmark}
-                              style={{ color: playerStatsSynced ? theme.colors.green : theme.colors.red }}
-                            />
+                      <S.PlayerContainer>
+                        <S.Player>
+                          <div>
+                            <div
+                              style={{
+                                cursor: 'pointer',
+                                display: 'flex',
+                                gap: 8,
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                              }}
+                              onClick={() => goToPlayerDetail(player.user.id)}
+                            >
+                              <Avatar
+                                size={32}
+                                icon={
+                                  player.user?.image?.url ? (
+                                    <img src={player.user.image.url} alt="" />
+                                  ) : (
+                                    <UserOutlined />
+                                  )
+                                }
+                              />
+                              <b>
+                                {player.isHost ? '(H) ' : ''}
+                                {player.user.nickname}
+                              </b>
+                              <FontAwesomeIcon
+                                icon={playerStatsSynced ? faUserCheck : faUserXmark}
+                                style={{ color: playerStatsSynced ? theme.colors.green : theme.colors.red }}
+                              />
+                            </div>
+                            {showRanks && player.actualRanking && (
+                              <FormattedMessage {...messages.rank} values={{ value: player.actualRanking }} />
+                            )}
                           </div>
-                          {showRanks && player.actualRanking && (
-                            <FormattedMessage {...messages.rank} values={{ value: player.actualRanking }} />
+                          <Gap defaultHeight={8} />
+                          {showStatistics && (
+                            <>
+                              <S.Statistics>
+                                <div>
+                                  <FontAwesomeIcon icon={faFlag} style={{ fontSize: 14 }} /> {player.flags}
+                                </div>
+                                <div>
+                                  <FontAwesomeIcon icon={faSkull} style={{ fontSize: 14 }} /> {player.kills}
+                                </div>
+                                <div>
+                                  <FontAwesomeIcon icon={faCross} style={{ fontSize: 14 }} /> {player.deaths}
+                                </div>
+                              </S.Statistics>
+                            </>
                           )}
-                        </div>
-                        <Gap defaultHeight={8} />
-                        <S.Statistics>
-                          <div>
-                            <FontAwesomeIcon icon={faFlag} style={{ fontSize: 14 }} /> {player.flags}
-                          </div>
-                          <div>
-                            <FontAwesomeIcon icon={faSkull} style={{ fontSize: 14 }} /> {player.kills}
-                          </div>
-                          <div>
-                            <FontAwesomeIcon icon={faCross} style={{ fontSize: 14 }} /> {player.deaths}
-                          </div>
-                        </S.Statistics>
-                      </S.Player>
+                        </S.Player>
+                        {enableRemovePlayerFromMatch && (
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            style={{ color: theme.colors.red, cursor: 'pointer', fontSize: 18, marginLeft: 8 }}
+                            onClick={() =>
+                              setRemovePlayerFromMatchId({ playerId: player.id, nickname: player.user.nickname })
+                            }
+                          />
+                        )}
+                      </S.PlayerContainer>
                     );
                   })}
                   {(matchStatus === MatchStatus.FINISHED ||
@@ -221,10 +246,11 @@ export const Team: React.FC<IProps> = (props: IProps) => {
         )}
       </Card>
       <RemovePlayerFromMatchModal
-        isOpen={isRemovePlayerFromMatchModalOpen}
-        onClose={() => setIsRemovePlayerFromMatchModalOpen(false)}
+        isOpen={!!removePlayerFromMatchId}
+        onClose={() => setRemovePlayerFromMatchId(undefined)}
         matchId={matchId}
-        playerId={''} // TODO REMOVE
+        nickname={removePlayerFromMatchId?.nickname}
+        playerId={removePlayerFromMatchId?.playerId}
       />
     </>
   );

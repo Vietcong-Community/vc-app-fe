@@ -5,7 +5,6 @@ export enum Events {
 export const gaPushEvent = (event: Events, additionalParams?: object) => {
   // @ts-expect-error It is defined but it's not
   const { dataLayer } = window;
-  console.log(dataLayer);
   if (dataLayer) {
     dataLayer.push({ event, ...additionalParams });
   } else {

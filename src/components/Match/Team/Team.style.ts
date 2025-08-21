@@ -115,6 +115,7 @@ export const Player = styled.div`
   padding: 0.5rem;
   font-size: 14px;
   justify-content: space-between;
+  width: 100%;
 
   ${() => makeMediaQuery(BreakPoints.sm)`
     ${css`
@@ -153,4 +154,11 @@ export const StatisticsHint = styled.div`
   gap: 8px;
   font-size: 12px;
   flex-direction: column;
+`;
+
+export const PlayerContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 `;

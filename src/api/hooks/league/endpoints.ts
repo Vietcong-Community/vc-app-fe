@@ -33,4 +33,5 @@ export enum LeagueEndpoints {
   ELIMINATED_MAPS = '/matches/{matchId}/playoff-eliminated-map-list',
   ELIMINATE_PLAYOFF_MAP = '/matches/{matchId}/eliminate-playoff-map',
   REVERT_PLAYOFF_MAP_ELIMINATION = '/matches/{matchId}/revert-playoff-elimination',
+  REMOVE_PLAYER_FROM_MATCH = '/matches/player-in-match/{playerId}',
 }

@@ -565,3 +565,14 @@ export const useRevertMapElimination = (matchId: string) => {
     },
   });
 };
+
+export const useRemovePlayerFromMatch = () => {
+  return useMutation({
+    mutationFn: async (playerId: string) => {
+      const { data } = await del(LeagueEndpoints.REMOVE_PLAYER_FROM_MATCH, {
+        playerId,
+      });
+      return data;
+    },
+  });
+};

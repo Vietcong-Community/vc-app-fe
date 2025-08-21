@@ -308,6 +308,7 @@ export const MatchDetail: React.FC = () => {
                   <>
                     <Team
                       defaultLineUpOpen
+                      enableRemovePlayerFromMatch={userIsAdmin && matchDetail.data?.status !== MatchStatus.FINISHED}
                       goToPlayerDetail={goToPlayerDetail}
                       map={matchDetail.data?.challengerMap}
                       matchId={query.matchId}
@@ -323,6 +324,7 @@ export const MatchDetail: React.FC = () => {
                     />
                     <Team
                       defaultLineUpOpen
+                      enableRemovePlayerFromMatch={userIsAdmin && matchDetail.data?.status !== MatchStatus.FINISHED}
                       goToPlayerDetail={goToPlayerDetail}
                       map={matchDetail.data?.opponentMap}
                       matchId={query.matchId}

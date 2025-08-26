@@ -19,30 +19,23 @@ import { SeasonMapListModal } from '../../../components/Modals/SeasonMapListModa
 import { SeasonMapsPickerModal } from '../../../components/Modals/SeasonMapsPickerModal/SeasonMapsPickerModal';
 import { ResourceNotFound } from '../../../components/ResourceNotFound/ResourceNotFound';
 import { AdminMenu } from '../../../components/Season/AdminMenu/AdminMenu';
-import { Table } from '../../../components/Table/Table';
 import { H1 } from '../../../components/Titles/H1/H1';
-import { H2 } from '../../../components/Titles/H2/H2';
 import { Role, SeasonType } from '../../../constants/enums';
 import { useRouter } from '../../../hooks/RouterHook';
-import { useWindowDimensions } from '../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../routes/enums';
-import { BreakPoints } from '../../../theme/theme';
 import { formatDateForUser } from '../../../utils/dateUtils';
-import { mapSeasonStatusToTranslation } from '../../../utils/mappingLabelUtils';
+import { mapSeasonTypeToTranslation } from '../../../utils/mappingLabelUtils';
 
-import { GroupMatches } from './components/GroupMatches/GroupMatches';
+import { Groups } from './components/Groups/Groups';
 import { PlayOff } from './components/PlayOff/PlayOff';
 import { Statistics } from './components/Statistics/Statistics';
 import { messages } from './messages';
-import { LADDER_COLUMNS, ILadderTableRow } from './types';
 
 import * as S from './Detail.style';
 
 export const ChampionshipDetailCont: React.FC = () => {
   const { navigate, query } = useRouter<{ id: string }>();
-  const { width } = useWindowDimensions();
   const { formatMessage } = useIntl();
-  const isSmallerThanMd = width < BreakPoints.md;
   const [isMapListModalOpen, setIsMapListModalOpen] = useState<boolean>(false);
   const [isSeasonMapsPickerModalOpen, setIsSeasonMapsPickerModalOpen] = useState<boolean>(false);
 
@@ -62,21 +55,6 @@ export const ChampionshipDetailCont: React.FC = () => {
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
 
-  const ladderTableData: ILadderTableRow[] =
-    ladder.data?.items?.map((item, index) => {
-      return {
-        id: item.team.id,
-        position: index + 1,
-        name: item.team.name,
-        countOfMatches: item.countOfMatches,
-        wins: item.wins,
-        draws: item.draws,
-        loses: item.loses,
-        points: item.points ?? 0,
-        seasonTeamId: item.id,
-      };
-    }) ?? [];
-
   if (season.isError) {
     return (
       <ContentLayout>
@@ -90,7 +68,7 @@ export const ChampionshipDetailCont: React.FC = () => {
       breadcrumbItems={[
         {
           key: 'bc-league',
-          onClick: () => navigate(Routes.LEAGUE),
+          onClick: () => navigate(Routes.CHAMPIONSHIP),
           title: (
             <BreadcrumbItem>
               <FormattedMessage {...messages.leaguesBreadcrumb} />
@@ -118,31 +96,22 @@ export const ChampionshipDetailCont: React.FC = () => {
           <S.SeasonInfoContainer>
             <div>
               <S.InformationLabel>
-                <FormattedMessage {...messages.seasonStatus} />
+                <FormattedMessage {...messages.seasonType} />
               </S.InformationLabel>
-              : <S.InformationValue>{mapSeasonStatusToTranslation(season.data?.status)}</S.InformationValue>
+              <br />
+              <S.InformationValue>{mapSeasonTypeToTranslation(season.data?.type)}</S.InformationValue>
             </div>
             <div>
               <S.InformationLabel>
-                <FormattedMessage {...messages.seasonBeginDate} />
+                <FormattedMessage {...messages.seasonDate} />
               </S.InformationLabel>
-              :{' '}
+              <br />
               <S.InformationValue>
-                {season.data?.startDate ? (
-                  formatDateForUser(season.data.startDate, DEFAULT_USER_DATE_FORMAT)
-                ) : (
-                  <FormattedMessage {...messages.dateNotSpecified} />
-                )}
-              </S.InformationValue>
-            </div>
-            <div>
-              <S.InformationLabel>
-                <FormattedMessage {...messages.seasonEndDate} />
-              </S.InformationLabel>
-              :{' '}
-              <S.InformationValue>
-                {season.data?.endDate ? (
-                  formatDateForUser(season.data.endDate, DEFAULT_USER_DATE_FORMAT)
+                {season.data?.startDate && season.data?.endDate ? (
+                  <>
+                    {formatDateForUser(season.data.startDate, DEFAULT_USER_DATE_FORMAT)} -{' '}
+                    {formatDateForUser(season.data.endDate, DEFAULT_USER_DATE_FORMAT)}
+                  </>
                 ) : (
                   <FormattedMessage {...messages.dateNotSpecified} />
                 )}
@@ -157,31 +126,9 @@ export const ChampionshipDetailCont: React.FC = () => {
           </Button>
         </Flex>
         <Divider style={{ margin: '16px 0' }} />
-        <Flex vertical align="flex-start">
-          <H2>
-            <FormattedMessage {...messages.ladderTitle} />
-          </H2>
-          <Table
-            columns={LADDER_COLUMNS(isSmallerThanMd)}
-            onRow={(item) => {
-              return {
-                onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-                style: {
-                  cursor: 'pointer',
-                },
-              };
-            }}
-            data={ladderTableData}
-            loading={ladder.isLoading}
-            pagination={{ hideOnSinglePage: true, pageSize: 20 }}
-            style={{ width: '100%' }}
-          />
-        </Flex>
-        <Divider style={{ margin: '16px 0' }} />
-        {!!ladder.data && <GroupMatches championshipId={query.id} roundsCount={ladder.data?.items?.length - 1} />}
+        <Groups ladder={ladder.data?.items ?? []} ladderIsLoading={ladder.isLoading} />
         <Divider style={{ margin: '16px 0' }} />
         <PlayOff seasonId={query.id} />
-        <Divider style={{ margin: '16px 0' }} />
         <Statistics seasonId={query.id} teams={ladder.data?.items ?? []} />
         <Gap defaultHeight={64} height={{ sm: 32 }} />
       </EaseInOutContainer>

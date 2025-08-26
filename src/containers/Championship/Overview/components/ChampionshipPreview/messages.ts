@@ -1,9 +1,9 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  group: {
-    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.group',
-    defaultMessage: 'Základní skupina',
+  participants: {
+    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.participants',
+    defaultMessage: 'Účastníci',
   },
   goToDetail: {
     id: 'app.containers.Championship.Overview.component.ChampionshipPreview.goToDetail',
@@ -57,16 +57,12 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.Overview.component.ChampionshipPreview.dateNotSpecified',
     defaultMessage: 'Nespecifikované',
   },
-  seasonStatus: {
-    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.seasonStatus',
-    defaultMessage: 'Stav',
+  seasonType: {
+    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.seasonType',
+    defaultMessage: 'Formát turnaje',
   },
-  seasonBeginDate: {
-    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.seasonBeginDate',
-    defaultMessage: 'Datum zahájení',
-  },
-  seasonEndDate: {
-    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.seasonEndDate',
-    defaultMessage: 'Datum ukončení',
+  seasonDate: {
+    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.seasonDate',
+    defaultMessage: 'Datum',
   },
 });

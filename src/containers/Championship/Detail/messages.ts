@@ -1,9 +1,17 @@
 import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
-  ladderTitle: {
-    id: 'app.containers.Championship.Detail.ladderTitle',
+  singleLadderTitle: {
+    id: 'app.containers.Championship.Detail.singleLadderTitle',
     defaultMessage: 'Základní skupina',
+  },
+  multiLadderTitle: {
+    id: 'app.containers.Championship.Detail.multiLadderTitle',
+    defaultMessage: 'Základní skupiny',
+  },
+  groupName: {
+    id: 'app.containers.Championship.Detail.groupName',
+    defaultMessage: 'Skupina {value}',
   },
   statisticsTitle: {
     id: 'app.containers.Championship.Detail.statisticsTitle',
@@ -17,17 +25,13 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.Detail.allMatches',
     defaultMessage: 'Přejít na všechny zápasy',
   },
-  seasonStatus: {
-    id: 'app.containers.Championship.Detail.seasonStatus',
-    defaultMessage: 'Stav',
+  seasonType: {
+    id: 'app.containers.Championship.Detail.seasonType',
+    defaultMessage: 'Formát turnaje',
   },
-  seasonBeginDate: {
-    id: 'app.containers.Championship.Detail.seasonBeginDate',
-    defaultMessage: 'Datum zahájení',
-  },
-  seasonEndDate: {
-    id: 'app.containers.Championship.Detail.seasonEndDate',
-    defaultMessage: 'Datum ukončení',
+  seasonDate: {
+    id: 'app.containers.Championship.Detail.seasonDate',
+    defaultMessage: 'Datum',
   },
   statisticsDescription: {
     id: 'app.containers.Championship.Detail.statisticsDescription',

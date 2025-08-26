@@ -11,18 +11,19 @@ import { messages } from './messages';
 
 interface IProps {
   championshipId: string;
+  isSingleGroup: boolean;
   roundsCount: number;
 }
 
 export const GroupMatches: React.FC<IProps> = (props: IProps) => {
-  const { championshipId, roundsCount } = props;
+  const { championshipId, isSingleGroup, roundsCount } = props;
 
   const items = Array.from({ length: roundsCount }).map((_, i) => {
     const roundId = i + 1;
     return {
       label: <FormattedMessage {...messages.roundName} values={{ value: roundId }} />,
       key: roundId.toString(),
-      children: <MatchRoundsTabs id={championshipId} round={roundId} />,
+      children: <MatchRoundsTabs id={championshipId} isSingleGroup={isSingleGroup} round={roundId} />,
     };
   });
 

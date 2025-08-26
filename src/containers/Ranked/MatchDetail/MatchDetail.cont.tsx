@@ -81,7 +81,11 @@ export const MatchDetail: React.FC = () => {
   const showLoading = matchDetail.isLoading;
 
   useEffect(() => {
-    if (matchDetail.data?.season?.type && matchDetail.data?.season.type === SeasonType.TOURNAMENT) {
+    if (
+      matchDetail.data?.season?.type &&
+      (matchDetail.data?.season.type === SeasonType.TOURNAMENT ||
+        matchDetail.data?.season.type === SeasonType.TOURNAMENT_DE)
+    ) {
       navigate(Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', query.matchId));
     }
     if (matchDetail.data?.season?.type && matchDetail.data?.season.type === SeasonType.SEASON) {

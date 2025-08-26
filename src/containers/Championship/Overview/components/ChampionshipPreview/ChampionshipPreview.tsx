@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Flex } from 'antd';
+import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Avatar, Flex } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -11,19 +13,15 @@ import { Card } from '../../../../../components/Card/Card';
 import { Divider } from '../../../../../components/Divider/Divider';
 import { DEFAULT_USER_DATE_FORMAT } from '../../../../../components/Fields/DatePickerField/DatePickerField';
 import { Gap } from '../../../../../components/Gap/Gap';
-import { Table } from '../../../../../components/Table/Table';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 import { useRouter } from '../../../../../hooks/RouterHook';
-import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
-import { BreakPoints } from '../../../../../theme/theme';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
-import { mapSeasonStatusToTranslation } from '../../../../../utils/mappingLabelUtils';
-import { ILadderTableRow, LADDER_COLUMNS } from '../../../Detail/types';
+import { mapSeasonTypeToTranslation } from '../../../../../utils/mappingLabelUtils';
 
 import { messages } from './messages';
 
-import * as S from '../../../Detail/Detail.style';
+import * as S from './ChampionshipPreview.style';
 
 interface IProps {
   seasonDetail: ISeason;
@@ -32,25 +30,8 @@ interface IProps {
 export const ChampionshipPreview: React.FC<IProps> = (props: IProps) => {
   const { seasonDetail } = props;
   const { navigate } = useRouter();
-  const { width } = useWindowDimensions();
-  const isSmallerThanMd = width < BreakPoints.md;
 
   const ladder = useSeasonLadder(seasonDetail.id);
-
-  const ladderTableData: ILadderTableRow[] =
-    ladder.data?.items?.map((item, index) => {
-      return {
-        id: item.team.id,
-        position: index + 1,
-        name: item.team.name,
-        countOfMatches: item.countOfMatches,
-        wins: item.wins,
-        draws: item.draws,
-        loses: item.loses,
-        points: item.points ?? 0,
-        seasonTeamId: item.id,
-      };
-    }) ?? [];
 
   return (
     <Card>
@@ -67,31 +48,22 @@ export const ChampionshipPreview: React.FC<IProps> = (props: IProps) => {
         <S.SeasonInfoContainer>
           <div>
             <S.InformationLabel>
-              <FormattedMessage {...messages.seasonStatus} />
+              <FormattedMessage {...messages.seasonType} />
             </S.InformationLabel>
-            : <S.InformationValue>{mapSeasonStatusToTranslation(seasonDetail.status)}</S.InformationValue>
+            <br />
+            <S.InformationValue>{mapSeasonTypeToTranslation(seasonDetail.type)}</S.InformationValue>
           </div>
           <div>
             <S.InformationLabel>
-              <FormattedMessage {...messages.seasonBeginDate} />
+              <FormattedMessage {...messages.seasonDate} />
             </S.InformationLabel>
-            :{' '}
+            <br />
             <S.InformationValue>
-              {seasonDetail.startDate ? (
-                formatDateForUser(seasonDetail.startDate, DEFAULT_USER_DATE_FORMAT)
-              ) : (
-                <FormattedMessage {...messages.dateNotSpecified} />
-              )}
-            </S.InformationValue>
-          </div>
-          <div>
-            <S.InformationLabel>
-              <FormattedMessage {...messages.seasonEndDate} />
-            </S.InformationLabel>
-            :{' '}
-            <S.InformationValue>
-              {seasonDetail.endDate ? (
-                formatDateForUser(seasonDetail.endDate, DEFAULT_USER_DATE_FORMAT)
+              {seasonDetail.startDate && seasonDetail.endDate ? (
+                <>
+                  {formatDateForUser(seasonDetail.startDate, DEFAULT_USER_DATE_FORMAT)} -{' '}
+                  {formatDateForUser(seasonDetail.endDate, DEFAULT_USER_DATE_FORMAT)}
+                </>
               ) : (
                 <FormattedMessage {...messages.dateNotSpecified} />
               )}
@@ -102,23 +74,29 @@ export const ChampionshipPreview: React.FC<IProps> = (props: IProps) => {
       <Divider style={{ margin: '16px 0' }} />
       <Flex vertical align="flex-start">
         <H2>
-          <FormattedMessage {...messages.group} />
+          <FormattedMessage {...messages.participants} />
         </H2>
-        <Table
-          columns={LADDER_COLUMNS(isSmallerThanMd)}
-          onRow={(item) => {
-            return {
-              onClick: () => navigate(Routes.TEAM_DETAIL.replace(':id', item.id)),
-              style: {
-                cursor: 'pointer',
-              },
+        <S.Participants>
+          {ladder.data?.items?.map((item) => {
+            const getUserIcon = () => {
+              if (item.team?.image?.url) {
+                return <img alt="" src={item.team?.image?.url} style={{ borderRadius: 4, objectFit: 'contain' }} />;
+              }
+
+              return <FontAwesomeIcon icon={faPeopleGroup} />;
             };
-          }}
-          data={ladderTableData}
-          loading={ladder.isLoading}
-          pagination={{ hideOnSinglePage: true, pageSize: 20 }}
-          style={{ width: '100%' }}
-        />
+
+            return (
+              <S.Participant
+                key={`participant-${item.id}`}
+                onClick={() => navigate(Routes.TEAM_DETAIL.replace(':id', item.team.id))}
+              >
+                <Avatar shape="square" size={64} icon={getUserIcon()} style={{ padding: 4 }} />
+                <div style={{ fontWeight: 500 }}>{item.team.name}</div>
+              </S.Participant>
+            );
+          })}
+        </S.Participants>
       </Flex>
     </Card>
   );

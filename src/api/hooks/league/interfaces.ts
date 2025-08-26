@@ -29,6 +29,7 @@ export interface ISeason {
 export interface ILadderItem {
   id: string;
   team: ITeam;
+  group?: string;
   wins: number;
   draws: number;
   loses: number;

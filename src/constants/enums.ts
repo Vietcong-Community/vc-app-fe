@@ -34,6 +34,7 @@ export enum LeagueType {
 export enum SeasonType {
   SEASON = 'SEASON',
   TOURNAMENT = 'TOURNAMENT',
+  TOURNAMENT_DE = 'TOURNAMENT_DE',
   FACEIT = 'FACEIT',
 }
 

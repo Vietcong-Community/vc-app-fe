@@ -20,6 +20,7 @@ export const Content = styled.div`
 `;
 
 export const Dates = styled.div`
+  align-items: center;
   display: flex;
   gap: 16px;
 

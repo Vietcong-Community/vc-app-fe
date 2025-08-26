@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Spin } from 'antd';
+import { groupBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { useMatchDetail, useSeasonMatchList } from '../../../../../api/hooks/league/api';
@@ -14,12 +15,19 @@ import * as S from './MatchRoundsTab.style';
 
 interface IProps {
   id: string;
+  isSingleGroup: boolean;
   round: number;
 }
 
 export const MatchRoundsTabs: React.FC<IProps> = (props: IProps) => {
-  const { id, round } = props;
+  const { id, isSingleGroup, round } = props;
   const matches = useSeasonMatchList(id, { page: 1, limit: 50, round, types: MatchType.GROUP }, 'always');
+
+  const groupedMatches = isSingleGroup
+    ? (matches.data?.matches ?? [])
+    : groupBy(matches.data?.matches, 'challenger.group');
+
+  console.log(groupedMatches);
 
   const firstMatch = useMatchDetail(matches.data?.matches?.[0]?.id);
 

@@ -9,6 +9,7 @@ import {
   Nation,
   PlayersCount,
   SeasonStatus,
+  SeasonType,
   StatisticsSortType,
   TeamRole,
 } from '../constants/enums';
@@ -23,6 +24,17 @@ export const mapSeasonStatusToTranslation = (status?: SeasonStatus): ReactNode |
       return <FormattedMessage {...messages.seasonStatusActive} />;
     case SeasonStatus.ARCHIVED:
       return <FormattedMessage {...messages.seasonStatusArchived} />;
+    default:
+      return undefined;
+  }
+};
+
+export const mapSeasonTypeToTranslation = (type?: SeasonType): ReactNode | undefined => {
+  switch (type) {
+    case SeasonType.TOURNAMENT_DE:
+      return <FormattedMessage {...messages.doubleElimination} />;
+    case SeasonType.TOURNAMENT:
+      return <FormattedMessage {...messages.singleElimination} />;
     default:
       return undefined;
   }

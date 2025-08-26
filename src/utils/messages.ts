@@ -145,4 +145,12 @@ export const messages = defineMessages({
     id: 'app.utils.statisticsSortTypeAvgUsage',
     defaultMessage: 'Průměrná užitečnost',
   },
+  singleElimination: {
+    id: 'app.utils.singleElimination',
+    defaultMessage: 'Skupina a pavouk',
+  },
+  doubleElimination: {
+    id: 'app.utils.doubleElimination',
+    defaultMessage: 'Skupina a double-elimination',
+  },
 });

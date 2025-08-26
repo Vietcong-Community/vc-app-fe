@@ -54,7 +54,10 @@ export const RankedSeasonDetailCont: React.FC = () => {
     if (season.data?.type && season.data?.type === SeasonType.SEASON) {
       navigate(Routes.SEASON_DETAIL.replace(':seasonId', query.seasonId));
     }
-    if (season.data?.type && season.data?.type === SeasonType.TOURNAMENT) {
+    if (
+      season.data?.type &&
+      (season.data?.type === SeasonType.TOURNAMENT || season.data?.type === SeasonType.TOURNAMENT_DE)
+    ) {
       navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', query.seasonId));
     }
   }, [season.data?.type]);

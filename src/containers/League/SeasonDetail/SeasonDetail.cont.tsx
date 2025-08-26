@@ -72,7 +72,10 @@ export const SeasonDetailCont: React.FC = () => {
   const maps = useMapsInSeason(query.seasonId);
 
   useEffect(() => {
-    if (season.data?.type && season.data?.type === SeasonType.TOURNAMENT) {
+    if (
+      season.data?.type &&
+      (season.data?.type === SeasonType.TOURNAMENT || season.data?.type === SeasonType.TOURNAMENT_DE)
+    ) {
       navigate(Routes.CHAMPIONSHIP_DETAIL.replace(':id', query.seasonId));
     }
     if (season.data?.type && season.data?.type === SeasonType.FACEIT) {

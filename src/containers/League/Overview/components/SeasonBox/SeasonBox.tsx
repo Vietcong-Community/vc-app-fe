@@ -60,7 +60,7 @@ export const SeasonBox: React.FC<IProps> = (props: IProps) => {
       return Routes.RANKED_SEASON_DETAIL.replace(':seasonId', season.id);
     } else if (season.type === SeasonType.SEASON) {
       return Routes.SEASON_DETAIL.replace(':seasonId', season.id);
-    } else if (season.type === SeasonType.TOURNAMENT) {
+    } else if (season.type === SeasonType.TOURNAMENT || season.type === SeasonType.TOURNAMENT_DE) {
       return Routes.CHAMPIONSHIP_DETAIL.replace(':id', season.id);
     }
 

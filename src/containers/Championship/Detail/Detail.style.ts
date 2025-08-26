@@ -20,6 +20,7 @@ export const ActionButtons = styled.div`
 export const SeasonInfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  text-align: start;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`

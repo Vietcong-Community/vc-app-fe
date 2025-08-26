@@ -7,20 +7,26 @@ import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { useArticlesList } from '../../../../api/hooks/articles/api';
-import helicopter from '../../../../assets/heli-footer-dark-design.webp';
-import { Card } from '../../../../components/Card/Card';
-import { Gap } from '../../../../components/Gap/Gap';
-import { H2 } from '../../../../components/Titles/H2/H2';
-import { Routes } from '../../../../routes/enums';
-import { formatDateForUser } from '../../../../utils/dateUtils';
+import { useArticlesList } from '../../api/hooks/articles/api';
+import helicopter from '../../assets/heli-footer-dark-design.webp';
+import { Routes } from '../../routes/enums';
+import { formatDateForUser } from '../../utils/dateUtils';
+import { Card } from '../Card/Card';
+import { Gap } from '../Gap/Gap';
+import { H2 } from '../Titles/H2/H2';
 
 import { messages } from './messages';
 
 import * as S from './Articles.style';
 
-export const Articles: React.FC = () => {
-  const articles = useArticlesList({ published: true, page: 1, limit: 4 });
+interface IProps {
+  categoryId?: string;
+  newestArticleAlone?: boolean;
+}
+
+export const Articles: React.FC<IProps> = (props: IProps) => {
+  const { categoryId, newestArticleAlone = true } = props;
+  const articles = useArticlesList({ published: true, page: 1, limit: 4, categoryId });
 
   const sortedArticles =
     articles.data?.articles?.sort((a, b) => {
@@ -32,7 +38,7 @@ export const Articles: React.FC = () => {
     }) ?? [];
 
   const newestArticle = sortedArticles?.[0];
-  const otherArticles = sortedArticles?.slice(1, 4);
+  const otherArticles = !newestArticleAlone ? sortedArticles?.slice(0, 3) : sortedArticles?.slice(1, 4);
 
   return (
     <>
@@ -42,7 +48,7 @@ export const Articles: React.FC = () => {
       <Gap defaultHeight={16} />
       {articles.isLoading && <Spin size="large" />}
       <S.Container>
-        {newestArticle && (
+        {newestArticleAlone && newestArticle && (
           <S.NewestArticle>
             <Link to={Routes.ARTICLE_DETAIL.replace(':articleId', newestArticle.id)} style={{ textDecoration: 'none' }}>
               <Card

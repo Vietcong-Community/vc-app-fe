@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useLeagueList, useLeaguesWithSeasonsList } from '../../../api/hooks/league/api';
+import { Articles } from '../../../components/Articles/Articles';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
 import { H1 } from '../../../components/Titles/H1/H1';
@@ -74,6 +75,8 @@ export const ChampionshipOverview: React.FC = () => {
           </>
         );
       })}
+      <Gap defaultHeight={32} />
+      <Articles categoryId="02c0ca14-15c4-44ec-ad59-1cf474c7916b" newestArticleAlone={false} />
       <Gap defaultHeight={32} />
     </ContentLayout>
   );

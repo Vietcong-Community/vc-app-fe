@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
-import { BreakPoints, IThemeProps } from '../../../../theme/theme';
-import { makeMediaQuery } from '../../../../utils/mediaQuery';
+import { BreakPoints, IThemeProps } from '../../theme/theme';
+import { makeMediaQuery } from '../../utils/mediaQuery';
 
 export const Container = styled.div`
   display: flex;

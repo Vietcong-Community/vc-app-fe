@@ -3,11 +3,11 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 
+import { Articles } from '../../components/Articles/Articles';
 import { Gap } from '../../components/Gap/Gap';
 import { ContentLayout } from '../../components/Layouts/ContentLayout/ContentLayout';
 
 import { ActiveLeagues } from './components/ActiveLeagues/ActiveLeagues';
-import { Articles } from './components/Articles/Articles';
 import { Banners } from './components/Banners/Banners';
 import { messages } from './messages';
 

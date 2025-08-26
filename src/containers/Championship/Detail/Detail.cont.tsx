@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useUserMe } from '../../../api/hooks/auth/api';
 import { useMapsInSeason, useSeasonLadder, useSeasonsDetail } from '../../../api/hooks/league/api';
 import { EaseInOutContainer } from '../../../components/Animations/EaseInOutContainer/EaseInOutContainer';
+import { Articles } from '../../../components/Articles/Articles';
 import { BreadcrumbItem } from '../../../components/BreadcrumbItem/BreadcrumbItem';
 import { Button } from '../../../components/Button/Button';
 import { MainButtonVariant } from '../../../components/Button/enums';
@@ -131,6 +132,8 @@ export const ChampionshipDetailCont: React.FC = () => {
         <PlayOff seasonId={query.id} />
         <Statistics seasonId={query.id} teams={ladder.data?.items ?? []} />
         <Gap defaultHeight={64} height={{ sm: 32 }} />
+        <Articles categoryId="02c0ca14-15c4-44ec-ad59-1cf474c7916b" newestArticleAlone={false} />
+        <Gap defaultHeight={32} />
       </EaseInOutContainer>
       <SeasonMapsPickerModal
         closeModal={() => setIsSeasonMapsPickerModalOpen(false)}

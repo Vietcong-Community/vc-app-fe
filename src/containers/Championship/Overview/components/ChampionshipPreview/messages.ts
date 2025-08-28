@@ -65,4 +65,12 @@ export const messages = defineMessages({
     id: 'app.containers.Championship.Overview.component.ChampionshipPreview.seasonDate',
     defaultMessage: 'Datum',
   },
+  close: {
+    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.close',
+    defaultMessage: 'Sbalit',
+  },
+  open: {
+    id: 'app.containers.Championship.Overview.component.ChampionshipPreview.open',
+    defaultMessage: 'Rozbalit',
+  },
 });

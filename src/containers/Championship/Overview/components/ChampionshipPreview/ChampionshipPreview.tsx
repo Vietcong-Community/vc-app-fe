@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Flex } from 'antd';
@@ -8,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import { useSeasonLadder } from '../../../../../api/hooks/league/api';
 import { ISeason } from '../../../../../api/hooks/league/interfaces';
+import { AnimatedHeightContainer } from '../../../../../components/Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Button } from '../../../../../components/Button/Button';
 import { Card } from '../../../../../components/Card/Card';
 import { Divider } from '../../../../../components/Divider/Divider';
@@ -15,6 +17,7 @@ import { DEFAULT_USER_DATE_FORMAT } from '../../../../../components/Fields/DateP
 import { Gap } from '../../../../../components/Gap/Gap';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 import { useRouter } from '../../../../../hooks/RouterHook';
+import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
 import { Routes } from '../../../../../routes/enums';
 import { formatDateForUser } from '../../../../../utils/dateUtils';
 import { mapSeasonTypeToTranslation } from '../../../../../utils/mappingLabelUtils';
@@ -30,6 +33,9 @@ interface IProps {
 export const ChampionshipPreview: React.FC<IProps> = (props: IProps) => {
   const { seasonDetail } = props;
   const { navigate } = useRouter();
+  const { width } = useWindowDimensions();
+  const isSmallerThanMd = width < 768;
+  const [isParticipantsExpanded, setIsParticipantsExpanded] = React.useState<boolean>(!isSmallerThanMd);
 
   const ladder = useSeasonLadder(seasonDetail.id);
 
@@ -73,30 +79,55 @@ export const ChampionshipPreview: React.FC<IProps> = (props: IProps) => {
       </Card>
       <Divider style={{ margin: '16px 0' }} />
       <Flex vertical align="flex-start">
-        <H2>
-          <FormattedMessage {...messages.participants} />
-        </H2>
-        <S.Participants>
-          {ladder.data?.items?.map((item) => {
-            const getUserIcon = () => {
-              if (item.team?.image?.url) {
-                return <img alt="" src={item.team?.image?.url} style={{ borderRadius: 4, objectFit: 'contain' }} />;
-              }
+        <S.ParticipantsTitle>
+          <div onClick={() => setIsParticipantsExpanded((val) => !val)}>
+            <FormattedMessage {...messages.participants} />
+          </div>
+          <div
+            onClick={() => setIsParticipantsExpanded((val) => !val)}
+            style={{ alignItems: 'center', display: 'flex', fontSize: 14, gap: 8, justifyContent: 'center' }}
+          >
+            {isParticipantsExpanded ? (
+              <>
+                <FormattedMessage {...messages.close} />
+                <S.Icon>
+                  <UpOutlined />
+                </S.Icon>
+              </>
+            ) : (
+              <>
+                <FormattedMessage {...messages.open} />
+                <S.Icon>
+                  <DownOutlined />
+                </S.Icon>
+              </>
+            )}
+          </div>
+        </S.ParticipantsTitle>
+        <AnimatedHeightContainer isOpen={isParticipantsExpanded}>
+          <Gap defaultHeight={16} />
+          <S.Participants>
+            {ladder.data?.items?.map((item) => {
+              const getUserIcon = () => {
+                if (item.team?.image?.url) {
+                  return <img alt="" src={item.team?.image?.url} style={{ borderRadius: 4, objectFit: 'contain' }} />;
+                }
 
-              return <FontAwesomeIcon icon={faPeopleGroup} />;
-            };
+                return <FontAwesomeIcon icon={faPeopleGroup} />;
+              };
 
-            return (
-              <S.Participant
-                key={`participant-${item.id}`}
-                onClick={() => navigate(Routes.TEAM_DETAIL.replace(':id', item.team.id))}
-              >
-                <Avatar shape="square" size={64} icon={getUserIcon()} style={{ padding: 4 }} />
-                <div style={{ fontWeight: 500 }}>{item.team.name}</div>
-              </S.Participant>
-            );
-          })}
-        </S.Participants>
+              return (
+                <S.Participant
+                  key={`participant-${item.id}`}
+                  onClick={() => navigate(Routes.TEAM_DETAIL.replace(':id', item.team.id))}
+                >
+                  <Avatar shape="square" size={isSmallerThanMd ? 42 : 64} icon={getUserIcon()} style={{ padding: 4 }} />
+                  <div style={{ fontWeight: 500 }}>{item.team.name}</div>
+                </S.Participant>
+              );
+            })}
+          </S.Participants>
+        </AnimatedHeightContainer>
       </Flex>
     </Card>
   );

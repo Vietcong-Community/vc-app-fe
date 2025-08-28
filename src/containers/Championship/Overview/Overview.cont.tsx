@@ -5,7 +5,8 @@ import { Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { useUserMe } from '../../../api/hooks/auth/api';
-import { useLeagueList, useLeaguesWithSeasonsList } from '../../../api/hooks/league/api';
+import { useLeaguesWithSeasonsList } from '../../../api/hooks/league/api';
+import { AnimatedHeightContainer } from '../../../components/Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Articles } from '../../../components/Articles/Articles';
 import { Gap } from '../../../components/Gap/Gap';
 import { ContentLayout } from '../../../components/Layouts/ContentLayout/ContentLayout';
@@ -21,7 +22,6 @@ import * as S from './Overview.style';
 const SPRING_FB_LINK = 'https://www.facebook.com/events/645052631336457/';
 
 export const ChampionshipOverview: React.FC = () => {
-  const leagues = useLeagueList();
   const userMe = useUserMe('always', [401]);
 
   const leaguesWithSeasons = useLeaguesWithSeasonsList([SeasonType.TOURNAMENT, SeasonType.TOURNAMENT_DE]);
@@ -60,21 +60,23 @@ export const ChampionshipOverview: React.FC = () => {
           </S.FacebookLink>
         </S.Content>
       </S.Container>
-      {leagues.isLoading && (
+      {leaguesWithSeasons.isLoading && (
         <>
           <Gap defaultHeight={36} />
           <Spin size="large" />
         </>
       )}
-      {leaguesWithSeasons.data?.map((item, index) => {
-        const isLast = index === leaguesWithSeasons.data?.length - 1;
-        return (
-          <>
-            <LeaguePreview leagueDetail={item.league} seasons={item.seasons} userIsAdmin={userIsAdmin} />
-            {!isLast && <Gap defaultHeight={32} />}
-          </>
-        );
-      })}
+      <AnimatedHeightContainer isOpen={!leaguesWithSeasons.isLoading && (leaguesWithSeasons.data?.length ?? 0) > 0}>
+        {leaguesWithSeasons.data?.map((item, index) => {
+          const isLast = index === leaguesWithSeasons.data?.length - 1;
+          return (
+            <>
+              <LeaguePreview leagueDetail={item.league} seasons={item.seasons} userIsAdmin={userIsAdmin} />
+              {!isLast && <Gap defaultHeight={32} />}
+            </>
+          );
+        })}
+      </AnimatedHeightContainer>
       <Gap defaultHeight={32} />
       <Articles categoryId="02c0ca14-15c4-44ec-ad59-1cf474c7916b" newestArticleAlone={false} />
       <Gap defaultHeight={32} />

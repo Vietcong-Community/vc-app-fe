@@ -11,6 +11,7 @@ import { useArticlesList } from '../../api/hooks/articles/api';
 import helicopter from '../../assets/heli-footer-dark-design.webp';
 import { Routes } from '../../routes/enums';
 import { formatDateForUser } from '../../utils/dateUtils';
+import { AnimatedHeightContainer } from '../Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Card } from '../Card/Card';
 import { Gap } from '../Gap/Gap';
 import { H2 } from '../Titles/H2/H2';
@@ -47,44 +48,14 @@ export const Articles: React.FC<IProps> = (props: IProps) => {
       </H2>
       <Gap defaultHeight={16} />
       {articles.isLoading && <Spin size="large" />}
-      <S.Container>
-        {newestArticleAlone && newestArticle && (
-          <S.NewestArticle>
-            <Link to={Routes.ARTICLE_DETAIL.replace(':articleId', newestArticle.id)} style={{ textDecoration: 'none' }}>
-              <Card
-                style={{ cursor: 'pointer' }}
-                hoverScale
-                bodyStyle={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '100%',
-                }}
+      <AnimatedHeightContainer isOpen={!articles.isLoading && (articles.data?.total ?? 0) > 0}>
+        <S.Container>
+          {newestArticleAlone && newestArticle && (
+            <S.NewestArticle>
+              <Link
+                to={Routes.ARTICLE_DETAIL.replace(':articleId', newestArticle.id)}
+                style={{ textDecoration: 'none' }}
               >
-                <div>
-                  <S.Image src={newestArticle.image?.url ?? helicopter} alt="" />
-                  <S.Title>{newestArticle.title}</S.Title>
-                  <Gap defaultHeight={16} />
-                  <S.Perex>{newestArticle.perex}</S.Perex>
-                  <Gap defaultHeight={16} />
-                  <S.MetaInfoRow>
-                    <S.CommentCount>
-                      {formatDateForUser(newestArticle.createdAt)} &nbsp;
-                      <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {newestArticle.commentsCount ?? 0}
-                    </S.CommentCount>
-                    <div>
-                      <Tag>{newestArticle.category.name}</Tag>
-                    </div>
-                  </S.MetaInfoRow>
-                </div>
-              </Card>
-            </Link>
-          </S.NewestArticle>
-        )}
-        {otherArticles && (
-          <S.OtherArticles>
-            {otherArticles?.map((item) => {
-              return (
                 <Card
                   style={{ cursor: 'pointer' }}
                   hoverScale
@@ -95,39 +66,74 @@ export const Articles: React.FC<IProps> = (props: IProps) => {
                     height: '100%',
                   }}
                 >
-                  <div style={{ textAlign: 'start' }}>
-                    <S.OtherArticleImage src={item.image?.url ?? helicopter} alt="" />
-                    <S.Title>{item.title}</S.Title>
+                  <div>
+                    <S.Image src={newestArticle.image?.url ?? helicopter} alt="" />
+                    <S.Title>{newestArticle.title}</S.Title>
                     <Gap defaultHeight={16} />
-                    <S.Perex>{item.perex}</S.Perex>
+                    <S.Perex>{newestArticle.perex}</S.Perex>
                     <Gap defaultHeight={16} />
+                    <S.MetaInfoRow>
+                      <S.CommentCount>
+                        {formatDateForUser(newestArticle.createdAt)} &nbsp;
+                        <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {newestArticle.commentsCount ?? 0}
+                      </S.CommentCount>
+                      <div>
+                        <Tag>{newestArticle.category.name}</Tag>
+                      </div>
+                    </S.MetaInfoRow>
                   </div>
-                  <S.MetaInfoRow>
-                    <S.CommentCount>
-                      {formatDateForUser(item.createdAt)} &nbsp;
-                      <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {item.commentsCount ?? 0}
-                    </S.CommentCount>
-                    <div>
-                      <Tag>{item.category.name}</Tag>
-                    </div>
-                  </S.MetaInfoRow>
                 </Card>
-              );
-            })}
-          </S.OtherArticles>
-        )}
-        {articles.data?.total && (
-          <>
-            <Link to={Routes.ARTICLES}>
-              <FormattedMessage
-                {...messages.goToAllArticles}
-                values={{ value: articles.data?.total > 0 ? `(${articles.data?.total ?? 0})` : '' }}
-              />
-            </Link>
-            <Gap defaultHeight={32} />
-          </>
-        )}
-      </S.Container>
+              </Link>
+            </S.NewestArticle>
+          )}
+          {otherArticles && (
+            <S.OtherArticles>
+              {otherArticles?.map((item) => {
+                return (
+                  <Card
+                    style={{ cursor: 'pointer' }}
+                    hoverScale
+                    bodyStyle={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      height: '100%',
+                    }}
+                  >
+                    <div style={{ textAlign: 'start' }}>
+                      <S.OtherArticleImage src={item.image?.url ?? helicopter} alt="" />
+                      <S.Title>{item.title}</S.Title>
+                      <Gap defaultHeight={16} />
+                      <S.Perex>{item.perex}</S.Perex>
+                      <Gap defaultHeight={16} />
+                    </div>
+                    <S.MetaInfoRow>
+                      <S.CommentCount>
+                        {formatDateForUser(item.createdAt)} &nbsp;
+                        <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {item.commentsCount ?? 0}
+                      </S.CommentCount>
+                      <div>
+                        <Tag>{item.category.name}</Tag>
+                      </div>
+                    </S.MetaInfoRow>
+                  </Card>
+                );
+              })}
+            </S.OtherArticles>
+          )}
+          {articles.data?.total && (
+            <>
+              <Link to={Routes.ARTICLES}>
+                <FormattedMessage
+                  {...messages.goToAllArticles}
+                  values={{ value: articles.data?.total > 0 ? `(${articles.data?.total ?? 0})` : '' }}
+                />
+              </Link>
+              <Gap defaultHeight={32} />
+            </>
+          )}
+        </S.Container>
+      </AnimatedHeightContainer>
     </>
   );
 };

@@ -18,11 +18,12 @@ import { mapMatchStatusToTranslation } from '../../../../../utils/mappingLabelUt
 import * as S from './MatchCard.style';
 
 interface IProps {
+  groupName?: string;
   match: IMatchListItem;
 }
 
 export const MatchCard: React.FC<IProps> = (props: IProps) => {
-  const { match } = props;
+  const { groupName, match } = props;
 
   const scoreExists = [
     MatchStatus.FINISHED,
@@ -55,54 +56,57 @@ export const MatchCard: React.FC<IProps> = (props: IProps) => {
   return (
     <Link to={Routes.CHAMPIONSHIP_MATCH_DETAIL.replace(':matchId', match.id)}>
       <S.Container>
-        <S.LeftColumn>
-          {formatDateForUser(match.startDate, DEFAULT_USER_DATE_FORMAT_WITH_TIME) ?? ''}
-          <S.MatchTags>
-            {showLiveTag && (
+        {groupName && <FormattedMessage {...messages.groupName} values={{ value: groupName }} tagName="span" />}
+        <S.Content>
+          <S.LeftColumn>
+            {formatDateForUser(match.startDate, DEFAULT_USER_DATE_FORMAT_WITH_TIME) ?? ''}
+            <S.MatchTags>
+              {showLiveTag && (
+                <S.LiveTag color={theme.colors.red}>
+                  <FormattedMessage {...messages.live} />
+                </S.LiveTag>
+              )}
+              <S.MatchStatusTag>{mapMatchStatusToTranslation(match.status)}</S.MatchStatusTag>
+              <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {match.commentsCount ?? 0}
+            </S.MatchTags>
+          </S.LeftColumn>
+          <S.RightColumn>
+            <S.Teams>
+              <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
+                {match.challenger?.team.tag}
+              </S.HighlightedText>
+              <span style={{ fontSize: 12, margin: '0 8px' }}>{' vs. '}</span>
+              <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
+                {match.opponent?.team.tag}
+              </S.HighlightedText>
+            </S.Teams>
+            <S.Score>
+              {scoreExists ? (
+                <>
+                  <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
+                    {match.challengerScore}
+                  </S.HighlightedText>{' '}
+                  -{' '}
+                  <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
+                    {match.opponentScore}
+                  </S.HighlightedText>
+                </>
+              ) : (
+                '? - ?'
+              )}
+            </S.Score>
+          </S.RightColumn>
+          {showLiveTag && (
+            <S.LiveTagMobile>
               <S.LiveTag color={theme.colors.red}>
                 <FormattedMessage {...messages.live} />
               </S.LiveTag>
-            )}
-            <S.MatchStatusTag>{mapMatchStatusToTranslation(match.status)}</S.MatchStatusTag>
+            </S.LiveTagMobile>
+          )}
+          <S.Comments>
             <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {match.commentsCount ?? 0}
-          </S.MatchTags>
-        </S.LeftColumn>
-        <S.RightColumn>
-          <S.Teams>
-            <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
-              {match.challenger?.team.tag}
-            </S.HighlightedText>
-            <span style={{ fontSize: 12, margin: '0 8px' }}>{' vs. '}</span>
-            <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
-              {match.opponent?.team.tag}
-            </S.HighlightedText>
-          </S.Teams>
-          <S.Score>
-            {scoreExists ? (
-              <>
-                <S.HighlightedText $isWinning={challengerWon} $isLosing={opponentWon}>
-                  {match.challengerScore}
-                </S.HighlightedText>{' '}
-                -{' '}
-                <S.HighlightedText $isWinning={opponentWon} $isLosing={challengerWon}>
-                  {match.opponentScore}
-                </S.HighlightedText>
-              </>
-            ) : (
-              '? - ?'
-            )}
-          </S.Score>
-        </S.RightColumn>
-        {showLiveTag && (
-          <S.LiveTagMobile>
-            <S.LiveTag color={theme.colors.red}>
-              <FormattedMessage {...messages.live} />
-            </S.LiveTag>
-          </S.LiveTagMobile>
-        )}
-        <S.Comments>
-          <FontAwesomeIcon icon={faComment} style={{ fontSize: 16 }} /> {match.commentsCount ?? 0}
-        </S.Comments>
+          </S.Comments>
+        </S.Content>
       </S.Container>
     </Link>
   );

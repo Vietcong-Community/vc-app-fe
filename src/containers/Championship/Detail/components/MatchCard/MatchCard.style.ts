@@ -5,25 +5,39 @@ import { BreakPoints, IThemeProps } from '../../../../../theme/theme';
 import { makeMediaQuery } from '../../../../../utils/mediaQuery';
 
 export const Container = styled.div`
-  align-items: center;
   background-color: ${(props: IThemeProps) => props.theme.mainColors.secondary10};
   box-shadow:
     rgba(0, 0, 0, 0.05) 0 6px 24px 0,
     rgba(0, 0, 0, 0.08) 0 0 0 1px;
   box-sizing: border-box;
   border-radius: 8px;
+  color: ${(props: IThemeProps) => props.theme.mainColors.text};
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  justify-content: space-between;
   padding: 0.5rem 1rem;
   position: relative;
-  color: ${(props: IThemeProps) => props.theme.mainColors.text};
+  text-align: start;
 
   &:hover {
     background-color: ${(props: IThemeProps) => props.theme.mainColors.accent30};
     transform: scale(1.025);
   }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      text-align: center;
+    `}
+  `};
+`;
+
+export const Content = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`

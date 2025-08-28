@@ -33,6 +33,13 @@ export const Participants = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   width: 100%;
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      flex-direction: column;
+      flex-wrap: initial;
+    `}
+  `};
 `;
 
 export const Participant = styled.div`
@@ -53,7 +60,37 @@ export const Participant = styled.div`
 
   ${() => makeMediaQuery(BreakPoints.md)`
     ${css`
-      max-width: calc(33% - 1rem);
+      flex-direction: row;
+      max-width: initial;
+      width: 100%;
     `}
   `};
+`;
+
+export const ParticipantsTitle = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: 16px;
+  font-weight: ${(props: IThemeProps) => props.theme.fontWeight.bold};
+  justify-content: space-between;
+  width: 100%;
+
+  > * {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ${() => makeMediaQuery(BreakPoints.md)`
+    ${css`
+      font-size: 14px;
+    `}
+  `};
+`;
+
+export const Icon = styled.div`
+  color: ${(props: IThemeProps) => props.theme.mainColors.secondary};
+  font-size: 20px;
+  font-weight: bold;
 `;

@@ -21,4 +21,8 @@ export const messages = defineMessages({
     id: 'app.components.Season.MatchRow.result',
     defaultMessage: 'Výsledek: ',
   },
+  groupName: {
+    id: 'app.components.Season.MatchRow.groupName',
+    defaultMessage: 'Skupina <b>{value}</b>',
+  },
 });

@@ -87,7 +87,11 @@ export const Groups: React.FC<IProps> = (props: IProps) => {
       </Flex>
       <Divider style={{ margin: '16px 0' }} />
       {!ladderIsLoading && ladder.length > 0 && (
-        <GroupMatches championshipId={query.id} isSingleGroup={isSingleGroup} roundsCount={ladder.length - 1} />
+        <GroupMatches
+          championshipId={query.id}
+          isSingleGroup={isSingleGroup}
+          roundsCount={isSingleGroup ? ladder.length - 1 : Math.round(ladder.length / 2) - 1}
+        />
       )}
     </>
   );

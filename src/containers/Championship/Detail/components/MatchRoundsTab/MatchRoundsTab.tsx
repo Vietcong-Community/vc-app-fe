@@ -23,11 +23,11 @@ export const MatchRoundsTabs: React.FC<IProps> = (props: IProps) => {
   const { id, isSingleGroup, round } = props;
   const matches = useSeasonMatchList(id, { page: 1, limit: 50, round, types: MatchType.GROUP }, 'always');
 
-  const groupedMatches = isSingleGroup
-    ? (matches.data?.matches ?? [])
-    : groupBy(matches.data?.matches, 'challenger.group');
+  const groupedMatches = groupBy(matches.data?.matches, 'challenger.group');
+  const groupNames = Object.keys(groupedMatches);
 
   console.log(groupedMatches);
+  console.log(groupNames);
 
   const firstMatch = useMatchDetail(matches.data?.matches?.[0]?.id);
 
@@ -47,8 +47,12 @@ export const MatchRoundsTabs: React.FC<IProps> = (props: IProps) => {
             <Spin size="large" />
           </>
         )}
-        {matches.data?.matches?.map((item) => {
-          return <MatchCard key={item.id} match={item} />;
+        {groupNames.map((groupName) => {
+          const groupMatches = groupedMatches[groupName];
+
+          return groupMatches.map((item) => {
+            return <MatchCard groupName={isSingleGroup ? undefined : groupName} key={item.id} match={item} />;
+          });
         })}
       </S.MatchContainer>
     </S.Container>

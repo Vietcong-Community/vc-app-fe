@@ -1,0 +1,19 @@
+image:
+  repository: registry.digitalocean.com/placestore/vietcong-hub-fe
+
+secretName: "app"
+
+ingress:
+  annotations: {
+    nginx.ingress.kubernetes.io/auth-type: basic,
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth,
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+  }
+  hosts:
+    - host: www.dev.vietconghub.eu
+  tls:
+    - secretName: vc-hub-app-dev.tls
+      hosts:
+        - dev.vietconghub.eu
+        - www.dev.vietconghub.eu
+

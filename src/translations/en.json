@@ -615,6 +615,7 @@
   "app.containers.HowToPlay.forthStep": "In the game’s main menu, select <i>“Multiplayer”</i> → <i>“Internet”</i>. The servers should display without problems. The master server fix should be correctly installed (it’s already part of the folder).",
   "app.containers.HowToPlay.forthStepTitle": "4. Multiplayer – How to See Servers",
   "app.containers.HowToPlay.hostsFile": "If you still don’t see the servers, go to <i>C:\\Windows\\System32\\drivers\\etc\\hosts</i> -> open 'hosts' as administrator and add <b>46.28.109.117 master.gamespy.com</b> to the last line -> save the notepad and run the game. The servers should now appear.",
+  "app.containers.HowToPlay.hostsFileAddition": "If you can’t open the file as administrator, type “Notepad” into the Windows search bar. Right-click and choose <b>“Run as administrator”</b>. In the opened Notepad, go to <b>File</b> -> <b>Open</b>, switch the file type to “All Files” and navigate to the Hosts file (see above). After editing, save the file.",
   "app.containers.HowToPlay.justPlay": "Just launch and play.",
   "app.containers.HowToPlay.listItem1": "Vietcong + Fist Alpha (full version)",
   "app.containers.HowToPlay.listItem2": "Patch 1.60 CZ/EN",

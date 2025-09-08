@@ -92,8 +92,8 @@ export const messages = defineMessages({
   forthStep: {
     id: 'app.containers.HowToPlay.forthStep',
     defaultMessage:
-      'V hlavním menu hry zvol <i>„Multiplayer“</i> → <i>„Internet“</i>. Servery by se měly bez problému zobrazit.' +
-      'Správně nainstalovaný master server fix (už je součástí složky)',
+      'V hlavním menu hry zvol <i>„Multiplayer“</i> → <i>„Internet“</i>. Servery by se měly bez problému zobrazit. ' +
+      'Správně nainstalovaný master server fix (už je součástí složky).',
   },
   hostsFile: {
     id: 'app.containers.HowToPlay.hostsFile',
@@ -101,6 +101,14 @@ export const messages = defineMessages({
       'Pokud přesto servery nevidíš, tak běž do <i>C:\\Windows\\System32\\drivers\\etc\\hosts</i> -> ' +
       'hosts otevři jako správce a do posledního řádku vlož <b>46.28.109.117 master.gamespy.com</b> ->' +
       ' potom notepad ulož a zapni hru. Servery by měly naskočit.',
+  },
+  hostsFileAddition: {
+    id: 'app.containers.HowToPlay.hostsFileAddition',
+    defaultMessage:
+      'Pokud se ti nedaří otevřít soubor jako správce, napiš do vyhledávacího pole ve Windows ' +
+      '"Poznámkový blok". Klikni pravým tlačítkem myši a zvol <b>"Spustit jako administrátor"</b>. V otevřeném ' +
+      'Poznámkovém bloku zvol <b>Soubor</b> -> <b>Otevřít</b>, přepni typ souboru na všechny a najdi cestu k  ' +
+      'souboru Hosts (viz výše). Po úpravě soubor ulož.',
   },
   fifthStepTitle: {
     id: 'app.containers.HowToPlay.fifthStepTitle',

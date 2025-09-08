@@ -127,6 +127,10 @@ export const HowToPlayCont: React.FC = () => {
         <Image src={hostsFileLocation} />
         <Image src={hostsFileEdit} />
       </S.Images>
+      <Gap defaultHeight={16} />
+      <S.Content style={{ textAlign: 'start' }}>
+        <FormattedMessage {...messages.hostsFileAddition} />
+      </S.Content>
       <Gap defaultHeight={32} />
       <H2>
         <FormattedMessage {...messages.fifthStepTitle} />

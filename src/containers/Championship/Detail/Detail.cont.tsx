@@ -133,9 +133,10 @@ export const ChampionshipDetailCont: React.FC = () => {
         {season.data?.type === SeasonType.TOURNAMENT && teamsCount > 1 && (
           <SingleElimination teamsCount={teamsCount} seasonId={query.id} />
         )}
-        {/*<PlayOff seasonId={query.id} />*/}
+        <Divider style={{ margin: '16px 0' }} />
         <Statistics seasonId={query.id} teams={ladder.data?.items ?? []} />
-        <Gap defaultHeight={64} height={{ sm: 32 }} />
+        <Divider style={{ margin: '16px 0' }} />
+        <Gap defaultHeight={48} height={{ sm: 32 }} />
         <Articles categoryId="02c0ca14-15c4-44ec-ad59-1cf474c7916b" newestArticleAlone={false} />
         <Gap defaultHeight={32} />
       </EaseInOutContainer>

@@ -24,12 +24,9 @@ export const Collapse: React.FC<IProps> = (props: IProps) => {
 
   return (
     <S.Container>
-      <Flex justify="space-between">
+      <Flex justify="space-between" onClick={() => setIsOpen((val) => !val)}>
         {title}
-        <div
-          onClick={() => setIsOpen((val) => !val)}
-          style={{ alignItems: 'center', display: 'flex', fontSize: 14, gap: 8, justifyContent: 'center' }}
-        >
+        <S.ActionSection>
           {isOpen ? (
             <>
               <FormattedMessage {...messages.close} />
@@ -45,7 +42,7 @@ export const Collapse: React.FC<IProps> = (props: IProps) => {
               </S.Icon>
             </>
           )}
-        </div>
+        </S.ActionSection>
       </Flex>
       {withDivider && <Divider />}
       <AnimatedHeightContainer isOpen={isOpen}>{children}</AnimatedHeightContainer>

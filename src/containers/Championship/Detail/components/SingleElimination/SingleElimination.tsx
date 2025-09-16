@@ -7,10 +7,11 @@ import { FormattedMessage } from 'react-intl';
 import { useSeasonMatchList } from '../../../../../api/hooks/league/api';
 import { AnimatedHeightContainer } from '../../../../../components/Animations/AnimatedHeightContainer/AnimatedHeightContainer';
 import { Collapse } from '../../../../../components/Collapse/Collapse';
-import { Divider } from '../../../../../components/Divider/Divider';
 import { H2 } from '../../../../../components/Titles/H2/H2';
 import { RoundColumn } from '../../../../../components/Tournament/RoundColumn/RoundColumn';
 import { MatchType } from '../../../../../constants/enums';
+import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
+import { BreakPoints } from '../../../../../theme/theme';
 
 import { messages } from './messages';
 
@@ -23,6 +24,8 @@ interface IProps {
 
 export const SingleElimination: React.FC<IProps> = (props: IProps) => {
   const { teamsCount, seasonId } = props;
+  const { width } = useWindowDimensions();
+  const isSmallerThanMd = width < BreakPoints.md;
 
   const matches = useSeasonMatchList(seasonId, {
     page: 1,
@@ -37,7 +40,8 @@ export const SingleElimination: React.FC<IProps> = (props: IProps) => {
   return (
     <AnimatedHeightContainer isOpen={matches.isFetched && matches.data?.total !== 0}>
       <Collapse
-        defaultOpen={false}
+        defaultOpen={!isSmallerThanMd}
+        withDivider={false}
         title={
           <H2>
             <FormattedMessage {...messages.title} />
@@ -64,7 +68,6 @@ export const SingleElimination: React.FC<IProps> = (props: IProps) => {
             })}
           </S.Content>
         </S.Container>
-        <Divider style={{ margin: '16px 0' }} />
       </Collapse>
     </AnimatedHeightContainer>
   );

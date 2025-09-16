@@ -36,6 +36,7 @@ export const Groups: React.FC<IProps> = (props: IProps) => {
   return (
     <>
       <Collapse
+        defaultOpen={!isSmallerThanMd}
         withDivider={false}
         title={
           <H2>
@@ -89,7 +90,7 @@ export const Groups: React.FC<IProps> = (props: IProps) => {
           })}
         </S.TablesContainer>
       </Collapse>
-      <Divider style={{ margin: '0' }} />
+      <Divider style={{ margin: '16px 0' }} />
       {!ladderIsLoading && ladder.length > 0 && (
         <GroupMatches
           championshipId={query.id}

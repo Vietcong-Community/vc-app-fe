@@ -11,3 +11,12 @@ export const Icon = styled.div`
   font-size: 20px;
   font-weight: bold;
 `;
+
+export const ActionSection = styled.div`
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  gap: 8px;
+  justify-content: center;
+`;

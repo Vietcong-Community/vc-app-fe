@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { Flex, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
+import { Collapse } from '../../../../../components/Collapse/Collapse';
 import { Gap } from '../../../../../components/Gap/Gap';
 import { H2 } from '../../../../../components/Titles/H2/H2';
+import { useWindowDimensions } from '../../../../../hooks/WindowDimensionsHook';
+import { BreakPoints } from '../../../../../theme/theme';
 import { MatchRoundsTabs } from '../MatchRoundsTab/MatchRoundsTab';
 
 import { messages } from './messages';
@@ -17,6 +20,8 @@ interface IProps {
 
 export const GroupMatches: React.FC<IProps> = (props: IProps) => {
   const { championshipId, isSingleGroup, roundsCount } = props;
+  const { width } = useWindowDimensions();
+  const isSmallerThanMd = width < BreakPoints.md;
 
   const items = Array.from({ length: roundsCount }).map((_, i) => {
     const roundId = i + 1;
@@ -28,14 +33,17 @@ export const GroupMatches: React.FC<IProps> = (props: IProps) => {
   });
 
   return (
-    <Flex vertical align="flex-start">
-      <Flex align="center" justify="space-between" style={{ width: '100%' }}>
+    <Collapse
+      defaultOpen={!isSmallerThanMd}
+      withDivider={false}
+      title={
         <H2>
           <FormattedMessage {...messages.subtitle} />{' '}
         </H2>
-      </Flex>
+      }
+    >
       <Gap defaultHeight={16} />
       <Tabs type="card" defaultActiveKey="1" items={items} style={{ width: '100%' }} />
-    </Flex>
+    </Collapse>
   );
 };

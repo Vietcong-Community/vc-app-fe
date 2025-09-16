@@ -2,27 +2,27 @@ import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
   title: {
-    id: 'app.containers.Championship.components.PlayOff.title',
+    id: 'app.components.Tournament.RoundColumn.title',
     defaultMessage: 'Pavouk',
   },
   playOffFinal: {
-    id: 'app.containers.Championship.components.PlayOff.playOffFinal',
+    id: 'app.components.Tournament.RoundColumn.playOffFinal',
     defaultMessage: 'Finále',
   },
   playOffSmallFinal: {
-    id: 'app.containers.Championship.components.PlayOff.playOffSmallFinal',
+    id: 'app.components.Tournament.RoundColumn.playOffSmallFinal',
     defaultMessage: 'Zápas o bronz',
   },
   semifinal: {
-    id: 'app.containers.Championship.components.PlayOff.semifinal',
+    id: 'app.components.Tournament.RoundColumn.semifinal',
     defaultMessage: 'Semifinále',
   },
   quarterFinal: {
-    id: 'app.containers.Championship.components.PlayOff.quarterFinal',
+    id: 'app.components.Tournament.RoundColumn.quarterFinal',
     defaultMessage: 'Čtvrtfinále',
   },
   preRound: {
-    id: 'app.containers.Championship.components.PlayOff.preRound',
+    id: 'app.components.Tournament.RoundColumn.preRound',
     defaultMessage: 'Předkolo',
   },
 });

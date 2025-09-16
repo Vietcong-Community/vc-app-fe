@@ -1,32 +1,54 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 
-import { Collapse as AntDCollapse } from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Flex } from 'antd';
+import { FormattedMessage } from 'react-intl';
+
+import { AnimatedHeightContainer } from '../Animations/AnimatedHeightContainer/AnimatedHeightContainer';
+import { Divider } from '../Divider/Divider';
+
+import { messages } from './messages';
 
 import * as S from './Collapse.style';
 
 interface IProps {
-  customStyle?: CSSProperties;
-  defaultActiveKey?: Array<string | number> | string | number;
-  destroyInactivePanel?: boolean;
-  items: {
-    children: ReactNode;
-    key: string | number;
-    label: ReactNode;
-  }[];
+  defaultOpen?: boolean;
+  children: ReactNode;
+  title?: ReactNode;
+  withDivider?: boolean;
 }
 
 export const Collapse: React.FC<IProps> = (props: IProps) => {
-  const { customStyle, defaultActiveKey, destroyInactivePanel = true, items } = props;
+  const { defaultOpen = true, children, title, withDivider = true } = props;
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
 
   return (
     <S.Container>
-      <AntDCollapse
-        defaultActiveKey={defaultActiveKey}
-        destroyInactivePanel={destroyInactivePanel}
-        items={items}
-        style={customStyle}
-        expandIconPosition="end"
-      />
+      <Flex justify="space-between">
+        {title}
+        <div
+          onClick={() => setIsOpen((val) => !val)}
+          style={{ alignItems: 'center', display: 'flex', fontSize: 14, gap: 8, justifyContent: 'center' }}
+        >
+          {isOpen ? (
+            <>
+              <FormattedMessage {...messages.close} />
+              <S.Icon>
+                <UpOutlined />
+              </S.Icon>
+            </>
+          ) : (
+            <>
+              <FormattedMessage {...messages.open} />
+              <S.Icon>
+                <DownOutlined />
+              </S.Icon>
+            </>
+          )}
+        </div>
+      </Flex>
+      {withDivider && <Divider />}
+      <AnimatedHeightContainer isOpen={isOpen}>{children}</AnimatedHeightContainer>
     </S.Container>
   );
 };

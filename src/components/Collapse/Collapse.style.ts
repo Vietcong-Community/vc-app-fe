@@ -1,17 +1,13 @@
-import { Collapse } from 'antd';
 import styled from 'styled-components';
 
 import { IThemeProps } from '../../theme/theme';
 
-export const Container = styled(Collapse)`
+export const Container = styled.div`
   width: 100%;
+`;
 
-  .ant-collapse {
-    background: linear-gradient(
-      160deg,
-      ${(props: IThemeProps) => props.theme.mainColors.primary},
-      ${(props: IThemeProps) => props.theme.mainColors.accent}
-    );
-    border: 1px solid ${(props: IThemeProps) => props.theme.mainColors.primary};
-  }
+export const Icon = styled.div`
+  color: ${(props: IThemeProps) => props.theme.mainColors.secondary};
+  font-size: 20px;
+  font-weight: bold;
 `;

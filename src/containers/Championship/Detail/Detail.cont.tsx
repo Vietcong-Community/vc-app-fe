@@ -28,7 +28,7 @@ import { formatDateForUser } from '../../../utils/dateUtils';
 import { mapSeasonTypeToTranslation } from '../../../utils/mappingLabelUtils';
 
 import { Groups } from './components/Groups/Groups';
-import { PlayOff } from './components/PlayOff/PlayOff';
+import { SingleElimination } from './components/SingleElimination/SingleElimination';
 import { Statistics } from './components/Statistics/Statistics';
 import { messages } from './messages';
 
@@ -55,6 +55,7 @@ export const ChampionshipDetailCont: React.FC = () => {
   }, [season.data?.type]);
 
   const userIsAdmin = !!userMe.data?.roles.includes(Role.ADMIN);
+  const teamsCount = ladder.data?.items?.length ?? 0;
 
   if (season.isError) {
     return (
@@ -129,7 +130,10 @@ export const ChampionshipDetailCont: React.FC = () => {
         <Divider style={{ margin: '16px 0' }} />
         <Groups ladder={ladder.data?.items ?? []} ladderIsLoading={ladder.isLoading} />
         <Divider style={{ margin: '16px 0' }} />
-        <PlayOff seasonId={query.id} />
+        {season.data?.type === SeasonType.TOURNAMENT && teamsCount > 1 && (
+          <SingleElimination teamsCount={teamsCount} seasonId={query.id} />
+        )}
+        {/*<PlayOff seasonId={query.id} />*/}
         <Statistics seasonId={query.id} teams={ladder.data?.items ?? []} />
         <Gap defaultHeight={64} height={{ sm: 32 }} />
         <Articles categoryId="02c0ca14-15c4-44ec-ad59-1cf474c7916b" newestArticleAlone={false} />

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Flex } from 'antd';
 import { groupBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { ILadderItem } from '../../../../../api/hooks/league/interfaces';
+import { Collapse } from '../../../../../components/Collapse/Collapse';
 import { Divider } from '../../../../../components/Divider/Divider';
 import { Table } from '../../../../../components/Table/Table';
 import { H2 } from '../../../../../components/Titles/H2/H2';
@@ -35,10 +35,14 @@ export const Groups: React.FC<IProps> = (props: IProps) => {
 
   return (
     <>
-      <Flex vertical align="flex-start">
-        <H2>
-          <FormattedMessage {...(isSingleGroup ? messages.singleLadderTitle : messages.multiLadderTitle)} />
-        </H2>
+      <Collapse
+        withDivider={false}
+        title={
+          <H2>
+            <FormattedMessage {...(isSingleGroup ? messages.singleLadderTitle : messages.multiLadderTitle)} />
+          </H2>
+        }
+      >
         <S.TablesContainer>
           {groupNames.map((groupName) => {
             const ladderItems = groups[groupName];
@@ -84,8 +88,8 @@ export const Groups: React.FC<IProps> = (props: IProps) => {
             );
           })}
         </S.TablesContainer>
-      </Flex>
-      <Divider style={{ margin: '16px 0' }} />
+      </Collapse>
+      <Divider style={{ margin: '0' }} />
       {!ladderIsLoading && ladder.length > 0 && (
         <GroupMatches
           championshipId={query.id}

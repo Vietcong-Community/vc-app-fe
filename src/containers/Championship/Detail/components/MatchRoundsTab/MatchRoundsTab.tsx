@@ -26,9 +26,6 @@ export const MatchRoundsTabs: React.FC<IProps> = (props: IProps) => {
   const groupedMatches = groupBy(matches.data?.matches, 'challenger.group');
   const groupNames = Object.keys(groupedMatches);
 
-  console.log(groupedMatches);
-  console.log(groupNames);
-
   const firstMatch = useMatchDetail(matches.data?.matches?.[0]?.id);
 
   return (
